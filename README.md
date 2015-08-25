@@ -13,7 +13,7 @@ Features
  Limitations
  ===========
 
-  - This doesn't work on Windows. The line that `require`s the audio player causes the app to hang. It's a bug with Node on Windows (I believe), as other audio libraries do the same thing
+ - This doesn't work on Windows. The line that `require`s the audio player causes the app to hang. It's a bug with Node on Windows (I believe), as other audio libraries do the same thing
 
  To-Do
  =====
@@ -21,4 +21,4 @@ Features
   - [ ] Add web UI to allow setting of times
   - [ ] Make bells.json reloadable
   - [ ] MOAR OPTIONS!
-  - [ ] Record & include some sample audio files 
+  - [ ] Record & include some sample audio files
