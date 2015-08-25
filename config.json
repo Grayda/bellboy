@@ -1,0 +1,13 @@
+{
+  "BellFile": "./bells.json",
+  "Email": {
+    "From": "graydav1@lavalla.vic.edu.au",
+    "Server": "lcckilex1",
+    "Username": "lavalla\\graydav1",
+    "Password": "",
+    "SubjectPrefix": "[School bells] - ",
+    "SSL": false
+  },
+  "DateFormat": "D MMMM YYYY, h:mm:ssa",
+  "Location": "Australia/Melbourne"
+}

@@ -1,0 +1,26 @@
+{
+  "Bells": [
+    {
+      "Enabled": true,
+      "Time": "* * * * *",
+      "File": "bell.mp3",
+      "Name": "Recess",
+      "Description": "Plays a bell at recess",
+      "Email": {
+        "Enabled": true,
+        "Body": "Job name is: <%= Item.Name %>",
+        "Subject": "Sent at: <%= Date %>"
+      }
+    },
+    {
+      "Enabled": false,
+      "Time": "* * * * *",
+      "File": "bell.mp3",
+      "Name": "Lunch",
+      "Description": "Plays a bell at lunch",
+      "Email": {
+        "Enabled": false
+      }
+    }
+  ]
+}
