@@ -10,13 +10,23 @@ Features
  - Cron-style syntax for setting up complex times
  - Designed to run on a Raspberry Pi
 
- Limitations
- ===========
+Installation
+============
+
+ - Clone somewhere
+ - Install `libasound2-dev` via apt-get (or whatever package manager) if building on Linux
+ - Install Visual Studio if building on Windows (you need to customize the installer and ensure C++ is installed as a programming language, otherwise you'll get CL.exe errors)
+ - Run `npm install`
+ - Edit `bells.json` and `config.json` accordingly
+ - Run `node index`
+
+Limitations
+===========
 
  - This doesn't work on Windows. The line that `require`s the audio player causes the app to hang. It's a bug with Node on Windows (I believe), as other audio libraries do the same thing
 
- To-Do
- =====
+To-Do
+=====
 
   - [ ] Add web UI to allow setting of times
   - [ ] Make bells.json reloadable

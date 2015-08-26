@@ -1,0 +1,59 @@
+html, body {
+  min-height: 100%;
+  height: 100%;
+}
+
+body {
+
+  padding: 0;
+  margin: 0;
+  color: black;
+  font-family: Roboto;
+  background: white;
+}
+
+table {
+  border: 1px solid black;
+}
+
+a:link {
+  color: #9f3357;
+}
+
+a:visited {
+  color:
+}
+
+#content {
+  padding: 2%;
+
+}
+
+th {
+  color: white;
+  background: #ff7e33;
+  border: none;
+}
+
+.currentTime {
+  float: right;
+}
+
+#header {
+  color: white;
+  min-height: 10%;
+  padding: 0.5%;
+  height: 10%;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c95433+1,9f3357+100 */
+  background: #c95433; /* Old browsers */
+  background: -moz-linear-gradient(left,  #c95433 1%, #9f3357 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(1%,#c95433), color-stop(100%,#9f3357)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  #c95433 1%,#9f3357 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left,  #c95433 1%,#9f3357 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  #c95433 1%,#9f3357 100%); /* IE10+ */
+  background: linear-gradient(to right,  #c95433 1%,#9f3357 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c95433', endColorstr='#9f3357',GradientType=1 ); /* IE6-9 */-webkit-box-shadow: 0px 10px 21px 4px rgba(0,0,0,0.27);
+-moz-box-shadow: 0px 10px 21px 4px rgba(0,0,0,0.27);
+box-shadow: 0px 10px 21px 4px rgba(0,0,0,0.27);
+
+}

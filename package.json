@@ -4,8 +4,10 @@
   "description": "A schedule-based school bell",
   "main": "index.js",
   "dependencies": {
+    "cli-table": "^0.3.1",
     "cron": "^1.0.9",
     "ejs": "^2.3.3",
+    "httpdispatcher": "^0.4.0",
     "moment": "^2.10.6",
     "player": "^0.5.0"
   },

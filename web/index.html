@@ -1,0 +1,27 @@
+<% include includes/header.html %>
+<h1>Currently loaded bells</h1>
+<table border=1 cellpadding=10 cellspacing=0>
+  <tr cellpadding=5>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Time</th>
+    <th>File</th>
+    <th>Email</th>
+    <th>Actions</th>
+  </tr>
+  <% items.forEach(function(item){ %>
+    <tr>
+      <td><%= item.ID %></td>
+      <td><%= item.Name %></td>
+      <td><%= item.Description %></td>
+      <td><%= item.Time %></td>
+      <td><%= item.File %></td>
+      <td><%= item.Email.Enabled %></td>
+      <td><a href="toggle.html?id=<%= item.ID %>&state=<% if (item.Enabled == true) { %>false<% } else { %>true<% } %>"> <% if (item.Enabled == true) { %>Disable<% } else { %>Enable<% } %></a> | <a href="edit.html?id=<%= item.ID %>">Edit</a></td>
+    </tr>
+  <% }); %>
+</table>
+<br />
+<a href="add.html">Add a new bell</a>
+<% include includes/footer.html %>

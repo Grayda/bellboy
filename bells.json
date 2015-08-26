@@ -1,11 +1,12 @@
 {
   "Bells": [
     {
+      "ID": "homeroom",
       "Enabled": true,
-      "Time": "* * * * *",
+      "Time": "11 9 * * 1,2,3,4,5",
       "File": "bell.mp3",
-      "Name": "Recess",
-      "Description": "Plays a bell at recess",
+      "Name": "Homeroom Bell",
+      "Description": "End of homeroom at 9:11am",
       "Email": {
         "Enabled": true,
         "Body": "Job name is: <%= Item.Name %>",
@@ -13,6 +14,7 @@
       }
     },
     {
+      "ID": "lunch",
       "Enabled": false,
       "Time": "* * * * *",
       "File": "bell.mp3",
