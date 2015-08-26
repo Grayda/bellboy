@@ -20,8 +20,17 @@ a:link {
   color: #9f3357;
 }
 
+a:active {
+  color: #9f3357;
+}
+
+#header a:visited, #header a:active, #header a:link {
+  color: white;
+  text-decoration: none;
+}
+
 a:visited {
-  color:
+  color: #9f3357;
 }
 
 #content {

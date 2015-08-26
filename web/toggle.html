@@ -1,3 +1,4 @@
 <% include includes/header.html %>
-<p><%= query %> is now <% if(state == true) { %>Enabled<% } else { %>Disabled<% } %></p>
+<h2><%= query %> is now <% if(state == "true") { %>Enabled<% } else { %>Disabled<% } %></h2>
+<a href="/">Click here to go back</a>
 <% include includes/footer.html %>

@@ -23,7 +23,7 @@ function start() {
 
   // Creates a new table with our headings
   var table = new Table({
-    head: ['Enabled', 'Name', 'Description', 'Time', 'File', 'Email'],
+    head: ['ID', 'Name', 'Description', 'Time', 'File', 'Email', 'Enabled'],
     style: { head: ['green', 'bold']}
   });
 
@@ -33,7 +33,7 @@ function start() {
   bells.Bells.forEach(function(item) {
       // Add details to the table
       table.push(
-        [item.Enabled, item.Name, item.Description, item.Time, item.File, item.Email.Enabled]
+        [item.ID, item.Name, item.Description, item.Time, item.File, item.Email.Enabled, item.Enabled]
       );
 
       // If this bell is enabled
@@ -43,7 +43,7 @@ function start() {
               // Let us know the job has been triggered
               console.log("Triggering job: " + item.Description + " at " + moment().format(config.DateFormat));
               // If we've got emails enabled for this job
-              if ( typeof item.Email.Enabled !== 'undefined' && item.Email.Enabled == true) {
+              if (typeof item.Email.Enabled !== 'undefined' && item.Email.Enabled == true) {
                 sendEmail(item)
               }
               // Actually play the audio
@@ -160,14 +160,17 @@ function startServer() {
 function toggleBell(bell, state) {
   bells.Bells.forEach(function(item) {
     if(item.ID == bell) {
+
       item.Enabled = state
       console.log(item.ID + " is now " + item.Enabled)
+      saveBells()
+      loadBells()
     }
   })
 }
 
 function saveSettings() {
-  fs.writeFile("./config.json", json.stringify(config))
+  fs.writeFile("./config.json", JSON.stringify(config, null, 2))
 }
 
 function loadSettings() {
@@ -176,8 +179,9 @@ function loadSettings() {
 
 function loadBells() {
   bells = JSON.parse(fs.readFileSync(config.BellFile, 'utf8'));
+  console.dir(bells)
 }
 
 function saveBells() {
-  fs.writeFile("./bells.json", json.stringify(bells))
+  fs.writeFileSync("./bells.json", JSON.stringify(bells, null, 2))
 }

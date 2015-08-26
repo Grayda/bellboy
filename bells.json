@@ -2,7 +2,7 @@
   "Bells": [
     {
       "ID": "homeroom",
-      "Enabled": true,
+      "Enabled": "false",
       "Time": "11 9 * * 1,2,3,4,5",
       "File": "bell.mp3",
       "Name": "Homeroom Bell",
@@ -15,7 +15,7 @@
     },
     {
       "ID": "lunch",
-      "Enabled": false,
+      "Enabled": "true",
       "Time": "* * * * *",
       "File": "bell.mp3",
       "Name": "Lunch",

@@ -1,13 +1,14 @@
 <% include includes/header.html %>
 <h1>Currently loaded bells</h1>
 <table border=1 cellpadding=10 cellspacing=0>
-  <tr cellpadding=5>
+  <tr cellpadding="5" class="colour">
     <th>ID</th>
     <th>Name</th>
     <th>Description</th>
     <th>Time</th>
     <th>File</th>
     <th>Email</th>
+    <th>Enabled</th>
     <th>Actions</th>
   </tr>
   <% items.forEach(function(item){ %>
@@ -15,10 +16,11 @@
       <td><%= item.ID %></td>
       <td><%= item.Name %></td>
       <td><%= item.Description %></td>
-      <td><%= item.Time %></td>
+      <td><a href="http://cronchecker.net/check?statement=<%= item.Time %> The Bell" title="Click here to read this in plain english" target="_blank"><%= item.Time %></a></td>
       <td><%= item.File %></td>
       <td><%= item.Email.Enabled %></td>
-      <td><a href="toggle.html?id=<%= item.ID %>&state=<% if (item.Enabled == true) { %>false<% } else { %>true<% } %>"> <% if (item.Enabled == true) { %>Disable<% } else { %>Enable<% } %></a> | <a href="edit.html?id=<%= item.ID %>">Edit</a></td>
+      <td><%= item.Enabled %></td>
+      <td><a href="toggle.html?id=<%= item.ID %>&state=<%= !item.Enabled %>"> <% if (item.Enabled == false) { %>Enable<% } else { %>Disable<% } %></a> | <a href="edit.html?id=<%= item.ID %>">Edit</a></td>
     </tr>
   <% }); %>
 </table>
