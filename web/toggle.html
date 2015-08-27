@@ -1,4 +1,9 @@
 <% include includes/header.html %>
 <h2><%= query %> is now <% if(state == "true") { %>Enabled<% } else { %>Disabled<% } %></h2>
 <a href="/">Click here to go back</a>
+<script language="javascript">
+  window.setTimeout(function() {
+    location.href = "/";
+  }, 2000);
+</script>
 <% include includes/footer.html %>

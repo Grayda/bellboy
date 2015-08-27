@@ -1,6 +1,6 @@
 <% include includes/header.html %>
 <h1>Currently loaded bells</h1>
-<table border=1 cellpadding=10 cellspacing=0>
+<table border=1 cellpadding=10 cellspacing=0 class="list">
   <tr cellpadding="5" class="colour">
     <th>ID</th>
     <th>Name</th>
@@ -20,7 +20,7 @@
       <td><%= item.File %></td>
       <td><%= item.Email.Enabled %></td>
       <td><%= item.Enabled %></td>
-      <td><a href="toggle.html?id=<%= item.ID %>&state=<%= !item.Enabled %>"> <% if (item.Enabled == false) { %>Enable<% } else { %>Disable<% } %></a> | <a href="edit.html?id=<%= item.ID %>">Edit</a></td>
+      <td><a href="toggle.html?id=<%= item.ID %>&state=<% if (item.Enabled == 'false') { %>true<% } else { %>false<% } %>"> <% if (item.Enabled == "false") { %>Enable<% } else if (item.Enabled == "false") { %>Disable<% } %></a> | <a href="edit.html?id=<%= item.ID %>">Edit</a></td>
     </tr>
   <% }); %>
 </table>

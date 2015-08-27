@@ -22,19 +22,12 @@ function start() {
 
 
   // Creates a new table with our headings
-  var table = new Table({
-    head: ['ID', 'Name', 'Description', 'Time', 'File', 'Email', 'Enabled'],
-    style: { head: ['green', 'bold']}
-  });
 
+  showTable()
   startServer()
 
   // Loop through all the bells we have
   bells.Bells.forEach(function(item) {
-      // Add details to the table
-      table.push(
-        [item.ID, item.Name, item.Description, item.Time, item.File, item.Email.Enabled, item.Enabled]
-      );
 
       // If this bell is enabled
       if(item.Enabled == true) {
@@ -53,11 +46,10 @@ function start() {
       }
   })
 
-      console.log(table.toString())
-      console.log("Time is a cron expression: Minute, Hour, Day, Month, Day of the week")
-      console.log()
+
 }
 
+// Play the audio file
 function playAudio(file) {
     console.log("Playing " + file)
     //player = new Player("./" + file)
@@ -104,16 +96,23 @@ function startServer() {
 
   // When we're switching a bell on or off
   dispatcher.onGet("/toggle.html", function(req,res) {
-    toggleBell(req.params.id, req.params.state)
-    file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
-    var options = {
-      items: bells.Bells,
-      Date: moment().format(config.DateFormat),
-      query: req.params.id,
-      state: req.params.state,
-      filename: "./web/header.html"
-    }
-    res.end(ejs.render(file, options))
+    try {
+    toggleBell(req.params.id, req.params.state, function() {
+      showTable()
+      file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
+      var options = {
+        items: bells.Bells,
+        Date: moment().format(config.DateFormat),
+        query: req.params.id,
+        state: req.params.state,
+        filename: "./web/header.html"
+      }
+
+      res.end(ejs.render(file, options))
+    })
+  } catch (ex) {
+    res.end("Cannot find file!")
+  }
   })
 
   // We've requested an image. Needs to be sent in binary
@@ -150,6 +149,18 @@ function startServer() {
 
   });
 
+  dispatcher.onGet("/add.html", function(req, res) {
+    file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
+    var options = {
+      items: bells.Bells,
+      Date: moment().format(config.DateFormat),
+      query: req,
+      filename: "./web/header.html"
+    }
+    res.end(ejs.render(file, options))
+
+  })
+
 
   server.listen(config.ServerPort, function(){
       console.log("Server listening on: http://localhost:%s", config.ServerPort);
@@ -157,16 +168,19 @@ function startServer() {
 
 }
 
-function toggleBell(bell, state) {
+function toggleBell(bell, state, callback) {
   bells.Bells.forEach(function(item) {
     if(item.ID == bell) {
-
       item.Enabled = state
       console.log(item.ID + " is now " + item.Enabled)
-      saveBells()
-      loadBells()
+      if(typeof callback === "function") { callback(); }
     }
+
   })
+
+
+
+
 }
 
 function saveSettings() {
@@ -179,9 +193,26 @@ function loadSettings() {
 
 function loadBells() {
   bells = JSON.parse(fs.readFileSync(config.BellFile, 'utf8'));
-  console.dir(bells)
 }
 
 function saveBells() {
-  fs.writeFileSync("./bells.json", JSON.stringify(bells, null, 2))
+  fs.writeFile("./bells.json", JSON.stringify(bells, null, 2))
+}
+
+function showTable() {
+  var table = new Table({
+    head: ['ID', 'Name', 'Description', 'Time', 'File', 'Email', 'Enabled'],
+    style: { head: ['green', 'bold']}
+  });
+
+  bells.Bells.forEach(function(item) {
+      // Add details to the table
+      table.push(
+        [item.ID, item.Name, item.Description, item.Time, item.File, item.Email.Enabled, item.Enabled]
+      );
+  })
+
+  console.log(table.toString())
+  console.log("Time is a cron expression: Minute, Hour, Day, Month, Day of the week")
+  console.log()
 }
