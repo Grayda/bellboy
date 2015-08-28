@@ -7,11 +7,15 @@
       "File": "bell.mp3",
       "Name": "Homeroom Bell",
       "Description": "Plays a bell at the end of homeroom",
-      "Email": {
-        "Enabled": true,
-        "Body": "Job name is: <%= Item.Name %>",
-        "Subject": "Sent at: <%= Date %>"
-      }
+      "Email": [
+        {
+          "Enabled": true,
+          "From": "graydav1@lavalla.vic.edu.au",
+          "To": "graydav1@lavalla.vic.edu.au",
+          "Body": "Job name is: <%= Item.Name %>",
+          "Subject": "Sent at: <%= Date %>"
+        }
+      ]
     },
     {
       "ID": "lunch",
@@ -20,9 +24,22 @@
       "File": "bell.mp3",
       "Name": "Lunch",
       "Description": "Plays a bell at lunch",
-      "Email": {
-        "Enabled": false
-      }
+      "Email": [
+        {
+          "Enabled": true,
+          "From": "graydav1@lavalla.vic.edu.au",
+          "To": "graydav1@lavalla.vic.edu.au",
+          "Body": "It's Stir Friday! Name is: <%= Item.Name %>",
+          "Subject": "Get in on it!"
+        },
+        {
+          "Enabled": true,
+          "From": "graydav1@lavalla.vic.edu.au",
+          "To": "graydav1@lavalla.vic.edu.au",
+          "Body": "Friday! Friday!: <%= Item.Name %>",
+          "Subject": "Gotta Get Down on Friday!!"
+        }
+      ]
     }
   ]
 }

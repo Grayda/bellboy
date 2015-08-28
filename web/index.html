@@ -18,9 +18,9 @@
       <td><%= item.Description %></td>
       <td><a href="http://cronchecker.net/check?statement=<%= item.Time %> The Bell" title="Click here to read this in plain english" target="_blank"><%= item.Time %></a></td>
       <td><%= item.File %></td>
-      <td><%= item.Email.Enabled %></td>
+      <td><%= item.Email[0].Enabled %></td>
       <td><%= item.Enabled %></td>
-      <td><a href="toggle.html?id=<%= item.ID %>&state=<% if (item.Enabled == 'false') { %>true<% } else { %>false<% } %>"> <% if (item.Enabled == "false") { %>Enable<% } else if (item.Enabled == "false") { %>Disable<% } %></a> | <a href="edit.html?id=<%= item.ID %>">Edit</a></td>
+      <td><a href="toggle.html?id=<%= item.ID %>&state=<% if (item.Enabled === false) { %>true<% } else { %>false<% } %>"><% if (item.Enabled === false) { %>Enable<% } else { %>Disable<% } %></a> | <a href="edit.html?id=<%= item.ID %>">Edit</a></td>
     </tr>
   <% }); %>
 </table>

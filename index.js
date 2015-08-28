@@ -9,6 +9,7 @@ var url = require("url"); // For parsing URLs
 var dispatcher = require('httpdispatcher'); // For handling our web server requests
 
 var config, bells
+var jobs = {}
 
 start()
 
@@ -29,12 +30,10 @@ function start() {
   // Loop through all the bells we have
   bells.Bells.forEach(function(item) {
 
-      // If this bell is enabled
-      if(item.Enabled == true) {
-          // Create a new Cron job at the specified .Time (a Cron expression)
-          new CronJob(item.Time, function() {
+        // Create a new Cron job at the specified .Time (a Cron expression)
+        jobs[item.ID] = new CronJob(item.Time, function() {
               // Let us know the job has been triggered
-              console.log("Triggering job: " + item.Description + " at " + moment().format(config.DateFormat));
+              console.log("Triggering job: " + item.Name + " at " + moment().format(config.DateFormat));
               // If we've got emails enabled for this job
               if (typeof item.Email.Enabled !== 'undefined' && item.Email.Enabled == true) {
                 sendEmail(item)
@@ -42,8 +41,8 @@ function start() {
               // Actually play the audio
               playAudio(item.File)
           // Replace "null" with a function() if you want something to run when the job completes, "true" = runs the job now, final param is timezone the job should run
-          }.bind(this), null, true, config.Location);
-      }
+        }.bind(this), null, item.Enabled, config.Location);
+
   })
 
 
@@ -57,16 +56,28 @@ function playAudio(file) {
 }
 
 function sendEmail(item) {
+  var options = {
+    Item: item,
+    Date: moment().format(config.DateFormat)
+  }
 
-    var options = {
-      Item: item,
-      Date: moment().format(config.DateFormat)
-    }
-    var tBody = ejs.render(item.Email.Body, options)
-    var tSubject = ejs.render(item.Email.Subject, options)
+  var table = new Table({
+    head: ['Server', 'From', 'To', 'Subject', 'Body', 'Sent'],
+    style: { head: ['green', 'bold']}
+  });
 
-    console.log(tSubject)
-    console.log(tBody)
+  item.Email.forEach(function(mail) {
+
+    var tBody = ejs.render(mail.Body, options)
+    var tSubject = ejs.render(mail.Subject, options)
+
+
+
+    table.push(
+      [config.Email.Server, mail.From, mail.To, tSubject, tBody, moment().format(config.DateFormat)]
+    );
+
+    console.log(table.toString())
 
     var email   = require("emailjs");
     var server  = email.server.connect({
@@ -79,12 +90,13 @@ function sendEmail(item) {
     // send the message and get a callback with an error or details of the message that was sent
     server.send({
         text:    tBody,
-        from:    item.Email.From,
-        to:      item.Email.To,
+        from:    mail.From,
+        to:      mail.To,
         subject: tSubject
     }, function(err, message) {
-        console.log(err || message);
+        if(err) { console.log(err) }
     });
+    })
 }
 
 function startServer() {
@@ -97,21 +109,23 @@ function startServer() {
   // When we're switching a bell on or off
   dispatcher.onGet("/toggle.html", function(req,res) {
     try {
-    toggleBell(req.params.id, req.params.state, function() {
+      var state = (req.params.state === "true")
+      toggleBell(req.params.id, state, function() {
       showTable()
       file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
       var options = {
         items: bells.Bells,
         Date: moment().format(config.DateFormat),
         query: req.params.id,
-        state: req.params.state,
+        state: state,
         filename: "./web/header.html"
       }
 
       res.end(ejs.render(file, options))
+      saveBells()
     })
   } catch (ex) {
-    res.end("Cannot find file!")
+    res.end("Cannot find file! " + ex)
   }
   })
 
@@ -171,6 +185,19 @@ function startServer() {
 function toggleBell(bell, state, callback) {
   bells.Bells.forEach(function(item) {
     if(item.ID == bell) {
+      console.log("==" + state)
+      try {
+        if(state === true) {
+          console.log("Starting Cron job for " + item.ID)
+          jobs[item.ID].start()
+        } else {
+          console.log("Stopping Cron job for " + item.ID)
+          jobs[item.ID].stop()
+        }
+      } catch(ex) {
+        console.log("Can't toggle bell: " + ex)
+      }
+
       item.Enabled = state
       console.log(item.ID + " is now " + item.Enabled)
       if(typeof callback === "function") { callback(); }
@@ -208,10 +235,9 @@ function showTable() {
   bells.Bells.forEach(function(item) {
       // Add details to the table
       table.push(
-        [item.ID, item.Name, item.Description, item.Time, item.File, item.Email.Enabled, item.Enabled]
+        [item.ID, item.Name, item.Description, item.Time, item.File, item.Email[0].Enabled, item.Enabled]
       );
   })
-
   console.log(table.toString())
   console.log("Time is a cron expression: Minute, Hour, Day, Month, Day of the week")
   console.log()
