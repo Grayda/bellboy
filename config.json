@@ -1,5 +1,7 @@
 {
   "BellFile": "./bells.json",
+  "AppName": "Bellboy",
+  "Version": "0.0.1",
   "Email": {
     "From": "you@your.domain",
     "Server": "",
@@ -7,6 +9,21 @@
     "Password": "password",
     "SubjectPrefix": "[School bells] - ",
     "SSL": false
+  },
+  "WebServer": true,
+  "WebTheme": {
+    "Background": "white",
+    "Colour": "Black",
+    "GradStart": "#c95433",
+    "GradEnd": "#9f3357",
+    "GradLink": "white",
+    "GradActiveLink": "white",
+    "GradVisitedLink": "white",
+    "TableBackground": "#ff7e33",
+    "TableColour": "white",
+    "Link": "#9f3357",
+    "ActiveLink": "#9f3357",
+    "VisitedLink": "#9f3357"
   },
   "ServerPort": 8080,
   "DateFormat": "D MMMM YYYY, h:mm:ssa",

@@ -1,45 +1,48 @@
 {
-  "Bells": [
-    {
-      "ID": "homeroom",
-      "Enabled": true,
-      "Time": "11 9 * * 1,2,3,4,5",
-      "File": "bell.mp3",
+  "Bells": {
+    "homeroom": {
+      "Enabled": false,
       "Name": "Homeroom Bell",
       "Description": "Plays a bell at the end of homeroom",
-      "Email": [
-        {
-          "Enabled": true,
-          "From": "graydav1@lavalla.vic.edu.au",
-          "To": "graydav1@lavalla.vic.edu.au",
-          "Body": "Job name is: <%= Item.Name %>",
-          "Subject": "Sent at: <%= Date %>"
-        }
-      ]
+      "Locked": "false",
+      "Time": "11 9 * * *",
+      "File": "bell.mp3",
+      "TriggerEmail": {
+        "Enabled": true,
+        "From": "graydav1@lavalla.vic.edu.au",
+        "To": "graydav1@lavalla.vic.edu.au",
+        "Body": "It was triggered on <%= Date %>",
+        "Subject": "<%= item.Name %> has been triggered"
+      },
+      "ChangeEmail": {
+        "Enabled": true,
+        "From": "graydav1@lavalla.vic.edu.au",
+        "To": "graydav1@lavalla.vic.edu.au",
+        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
+        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      }
     },
-    {
-      "ID": "lunch",
-      "Enabled": false,
+    "recess": {
+      "Enabled": true,
+      "Name": "Recess Bell",
+      "Description": "Plays a bell at recess.",
+      "Locked": "true",
       "Time": "* * * * *",
       "File": "bell.mp3",
-      "Name": "Lunch",
-      "Description": "Plays a bell at lunch",
-      "Email": [
-        {
-          "Enabled": true,
-          "From": "graydav1@lavalla.vic.edu.au",
-          "To": "graydav1@lavalla.vic.edu.au",
-          "Body": "It's Stir Friday! Name is: <%= Item.Name %>",
-          "Subject": "Get in on it!"
-        },
-        {
-          "Enabled": true,
-          "From": "graydav1@lavalla.vic.edu.au",
-          "To": "graydav1@lavalla.vic.edu.au",
-          "Body": "Friday! Friday!: <%= Item.Name %>",
-          "Subject": "Gotta Get Down on Friday!!"
-        }
-      ]
+      "TriggerEmail": {
+        "Enabled": "true",
+        "From": "graydav1@lavalla.vic.edu.au",
+        "To": "graydav1@lavalla.vic.edu.au",
+        "Body": "It was triggered on <%= Date %>",
+        "Subject": "<%= item.Name %> has been triggered"
+      },
+      "ChangeEmail": {
+        "Enabled": true,
+        "From": "graydav1@lavalla.vic.edu.au",
+        "To": "graydav1@lavalla.vic.edu.au",
+        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
+        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      }
     }
-  ]
+  }
 }

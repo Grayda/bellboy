@@ -1,29 +1,40 @@
 <% include includes/header.html %>
-<h1>Currently loaded bells</h1>
-<table border=1 cellpadding=10 cellspacing=0 class="list">
-  <tr cellpadding="5" class="colour">
-    <th>ID</th>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Time</th>
-    <th>File</th>
-    <th>Email</th>
-    <th>Enabled</th>
-    <th>Actions</th>
+<table border="0" cellpadding="10">
+  <tr valign="top">
+    <td width="75%">
+      <h1>Currently loaded bells</h1>
+      <table border=1 cellpadding=10 cellspacing=0 class="list">
+        <tr cellpadding="5" class="colour">
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Time</th>
+          <th>File</th>
+          <th>Email</th>
+          <th>Locked</th>
+          <th>Enabled</th>
+          <th>Actions</th>
+        </tr>
+        <% Object.keys(items).forEach(function(item){ %>
+          <tr>
+            <td><%= item %></td>
+            <td><%= items[item].Name %></td>
+            <td><%= items[item].Description %></td>
+            <td><a href="http://cronchecker.net/check?statement=<%= items[item].Time %> The Bell" title="Click here to read this in plain english" target="_blank"><%= items[item].Time %></a></td>
+            <td><%= items[item].File %></td>
+            <td><%= items[item].TriggerEmail.Enabled %></td>
+            <td><%= items[item].Locked %></td>
+            <td><%= items[item].Enabled %></td>
+            <td><a href="toggle.html?id=<%= item %>&state=<% if (items[item].Enabled === false) { %>true<% } else { %>false<% } %>"><% if (items[item].Enabled === false) { %>Enable<% } else { %>Disable<% } %></a> | <a href="edit.html?id=<%= item.ID %>">Edit</a></td>
+          </tr>
+        <% }); %>
+      </table>
+    </td>
+    <td width="25%" align="right">
+      <h1>Tasks</h1>
+      <a href="add.html">Add a new bell</a><br />
+      <a href="reload.html">Reload bells and config file</a>
+    </td>
   </tr>
-  <% items.forEach(function(item){ %>
-    <tr>
-      <td><%= item.ID %></td>
-      <td><%= item.Name %></td>
-      <td><%= item.Description %></td>
-      <td><a href="http://cronchecker.net/check?statement=<%= item.Time %> The Bell" title="Click here to read this in plain english" target="_blank"><%= item.Time %></a></td>
-      <td><%= item.File %></td>
-      <td><%= item.Email[0].Enabled %></td>
-      <td><%= item.Enabled %></td>
-      <td><a href="toggle.html?id=<%= item.ID %>&state=<% if (item.Enabled === false) { %>true<% } else { %>false<% } %>"><% if (item.Enabled === false) { %>Enable<% } else { %>Disable<% } %></a> | <a href="edit.html?id=<%= item.ID %>">Edit</a></td>
-    </tr>
-  <% }); %>
 </table>
-<br />
-<a href="add.html">Add a new bell</a>
 <% include includes/footer.html %>
