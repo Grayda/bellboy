@@ -11,6 +11,10 @@ var dispatcher = require('httpdispatcher'); // For handling our web server reque
 var config, bells // Our two json config files
 var jobs = {} // This will hold our cron jobs
 
+process.on('SIGUSR2', function () {
+    console.log("=================================== Shutting down!")
+});
+
 start()
 
 // Begin
@@ -40,12 +44,12 @@ function playAudio(file) {
 function sendEmail(item) {
   // variables that the template should have access to
   var options = {
-    mail: item.TriggerMail,
+    mail: item.TriggerEmail,
     item: item,
     Date: moment().format(config.DateFormat)
   }
   // Send the actual email.
-  sendRawEmail(mail.From, mail.To, mail.Subject, mail.Body, options)
+  sendRawEmail(item.TriggerEmail.From, item.TriggerEmail.To, item.TriggerEmail.Subject, item.TriggerEmail.Body, options)
 }
 
 // Function that sends an email. SendEmail is used by it, as is the function for ChangeEmail
@@ -258,7 +262,7 @@ function loadBells() {
                 console.log("Emailing Now..")
                 sendEmail(bells.Bells[item])
               }
-
+              thiswillcrash()
               // Actually play the audio
               playAudio(bells.Bells[item].File)
           // Replace "null" with a function() if you want something to run when the job completes. The next parameter determines

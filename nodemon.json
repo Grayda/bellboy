@@ -1,0 +1,10 @@
+{
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules"
+  ],
+  "events": {
+    "crash": "node ./crash.js"
+  },
+  "ext": "json html css jpg png gif htm js"
+}

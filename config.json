@@ -3,10 +3,10 @@
   "AppName": "Bellboy",
   "Version": "0.0.1",
   "Email": {
-    "From": "you@your.domain",
-    "Server": "",
-    "Username": "user",
-    "Password": "password",
+    "From": "example@example.com",
+    "Server": "smtp.example.com",
+    "Username": "example",
+    "Password": "example",
     "SubjectPrefix": "[School bells] - ",
     "SSL": false
   },
@@ -27,5 +27,10 @@
   },
   "ServerPort": 8080,
   "DateFormat": "D MMMM YYYY, h:mm:ssa",
-  "Location": "Australia/Melbourne"
+  "Location": "Australia/Melbourne",
+  "CrashEmail": {
+    "To": "example@example.com",
+    "Subject": "App has crashed",
+    "Body": "App has crashed. FIX IT!"
+  }
 }

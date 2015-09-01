@@ -29,6 +29,6 @@ To-Do
 =====
 
   - [ ] Add web UI to allow setting of times
-  - [ ] Make bells.json reloadable
+  - [x] Make bells.json reloadable
   - [ ] MOAR OPTIONS!
   - [ ] Record & include some sample audio files
