@@ -36,8 +36,12 @@ function start() {
 // Play the audio file
 function playAudio(file) {
     console.log("Playing " + file)
+    try {
     player = new Player("./" + file)
     player.play()
+  } catch(ex) {
+    
+  }
 }
 
 // Sends our trigger email.
