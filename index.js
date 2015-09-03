@@ -56,7 +56,7 @@ function sendEmail(item) {
 function sendRawEmail(from, to, subject, body, options) {
   // Take our options and parse our template
   var tBody = ejs.render(body, options)
-  var tSubject = ejs.render(subject, options)
+  var tSubject = ejs.render(config.Email.SubjectPrefix + subject, options)
 
   // Create a new table to show what email was sent.
   var table = new Table({
@@ -87,9 +87,7 @@ function sendRawEmail(from, to, subject, body, options) {
       from:    from,
       to:      to,
       subject: tSubject
-  }, function(err, message) {
-      table.push(["Error", "Hi"])
-  }.bind(this));
+  }, function(err, message) { console.log(err || message); });
 
   // Add our details to it. / Server From
 
@@ -262,7 +260,7 @@ function loadBells() {
                 console.log("Emailing Now..")
                 sendEmail(bells.Bells[item])
               }
-              thiswillcrash()
+
               // Actually play the audio
               playAudio(bells.Bells[item].File)
           // Replace "null" with a function() if you want something to run when the job completes. The next parameter determines

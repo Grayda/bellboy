@@ -34,12 +34,9 @@ try {
       text:    flags.get("body"),
       from:    flags.get("from"),
       to:      flags.get("to"),
-      subject: flags.get("subject")
-  }, function(err, message) {
-      console.dir(err)
-  });
+      subject: config.Email.SubjectPrefix + flags.get("subject")
+  }, function(err, message) { console.log(err || message); });
   console.log("Sent mail")
 } catch (ex) {
   console.log("Crash app failed: " + ex)
 }
-process.exit(0)
