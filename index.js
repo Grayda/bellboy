@@ -1,5 +1,5 @@
 var CronJob = require('cron').CronJob; // Handles the timing
-// var Player = require('player'); // Plays MP3s
+var Player = require('player'); // Plays MP3s
 var ejs = require('ejs'); // Text template engine, used for emails
 var moment = require("moment"); // For formatting of dates
 var Table = require('cli-table'); // Neatly presents data
@@ -36,8 +36,8 @@ function start() {
 // Play the audio file
 function playAudio(file) {
     console.log("Playing " + file)
-    //player = new Player("./" + file)
-    //player.play()
+    player = new Player("./" + file)
+    player.play()
 }
 
 // Sends our trigger email.

@@ -9,15 +9,15 @@
       "File": "bell.mp3",
       "TriggerEmail": {
         "Enabled": true,
-        "From": "graydav1@lavalla.vic.edu.au",
-        "To": "graydav1@lavalla.vic.edu.au",
+        "From": "",
+        "To": "",
         "Body": "It was triggered on <%= Date %>",
         "Subject": "<%= item.Name %> has been triggered!"
       },
       "ChangeEmail": {
         "Enabled": true,
-        "From": "graydav1@lavalla.vic.edu.au",
-        "To": "graydav1@lavalla.vic.edu.au",
+        "From": "",
+        "To": "",
         "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
         "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
       }
@@ -31,15 +31,15 @@
       "File": "bell.mp3",
       "TriggerEmail": {
         "Enabled": "true",
-        "From": "graydav1@lavalla.vic.edu.au",
-        "To": "graydav1@lavalla.vic.edu.au",
+        "From": "",
+        "To": "",
         "Body": "It was triggered on <%= Date %>",
         "Subject": "<%= item.Name %> has been triggered"
       },
       "ChangeEmail": {
         "Enabled": true,
-        "From": "graydav1@lavalla.vic.edu.au",
-        "To": "graydav1@lavalla.vic.edu.au",
+        "From": "",
+        "To": "",
         "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
         "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
       }
