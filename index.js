@@ -36,10 +36,11 @@ function start() {
 // Play the audio file
 function playAudio(file) {
     console.log("Playing " + file)
+
+    player = new Player("./" + file)
     player.on('error', function(err) {
       console.log("Error - All done?")
     })
-    player = new Player("./" + file)
     player.play()
 
 }
