@@ -11,35 +11,32 @@ var dispatcher = require('httpdispatcher'); // For handling our web server reque
 var config, bells // Our two json config files
 var jobs = {} // This will hold our cron jobs
 
-process.on('SIGUSR2', function () {
-    console.log("=================================== Shutting down!")
-});
-
+// Begin
 start()
 
-// Begin
 function start() {
-  console.log()
-  console.log("Loading settings..")
   loadSettings()
-  console.log("Loading bells..")
-  console.log()
+  c()
+  c("Loading settings..")
+
+  c("Loading bells..")
+  c()
   // loadBells() also calls showTable()
   loadBells()
-  console.log()
+  c()
 
   // Start the web server
-  startServer()
+  if(config.Server === true) { startServer() }
 
 }
 
 // Play the audio file
 function playAudio(file) {
-    console.log("Playing " + file)
+    c("Playing " + file)
 
     player = new Player("./" + file)
     player.on('error', function(err) {
-      console.log(err)
+      c(err)
     })
     player.play()
 
@@ -53,6 +50,7 @@ function sendEmail(item) {
     item: item,
     Date: moment().format(config.DateFormat)
   }
+
   // Send the actual email.
   sendRawEmail(item.TriggerEmail.From, item.TriggerEmail.To, item.TriggerEmail.Subject, item.TriggerEmail.Body, options)
 }
@@ -92,12 +90,12 @@ function sendRawEmail(from, to, subject, body, options) {
       from:    from,
       to:      to,
       subject: tSubject
-  }, function(err, message) { console.log(err || message); });
+  }, function(err, message) { c(err || message); });
 
   // Add our details to it. / Server From
 
 
-  console.log(table.toString())
+  c(table.toString())
 
 }
 
@@ -118,7 +116,7 @@ function startServer() {
       toggleBell(req.params.id, state, function(success) {
         // If change not successful, due to job being locked
         if(success == false) {
-          console.log("State NOT updated, as the job is locked")
+          c("State NOT updated, as the job is locked")
         } else {
           // Show an updated table of our jobs
           showTable()
@@ -204,7 +202,7 @@ function startServer() {
 
   // After our setup, set our server to listen
   server.listen(config.ServerPort, function(){
-      console.log("Server listening on: http://localhost:%s", config.ServerPort);
+      c("Server listening on: http://localhost:" + config.ServerPort);
   });
 
 }
@@ -217,16 +215,16 @@ function toggleBell(bell, state, callback) {
   if(locked == false) {
     // If state is going to be true, start the job
     if(state === true) {
-      console.log("Starting Cron job for " + bell)
+      c("Starting Cron job for " + bell)
       jobs[bell].start()
     } else {
       // Stop the job if we're disabling it
-      console.log("Stopping Cron job for " + bell)
+      c("Stopping Cron job for " + bell)
       jobs[bell].stop()
     }
     // Set the bell. It's your responsibility to call saveBells() later
     bells.Bells[bell].Enabled = state
-    console.log(bell + " is now " + bells.Bells[bell].Enabled)
+    c(bell + " is now " + bells.Bells[bell].Enabled)
     if(typeof callback === "function") { callback(true); }
   } else {
     if(typeof callback === "function") { callback(false); }
@@ -246,9 +244,9 @@ function loadBells() {
   bells = JSON.parse(fs.readFileSync(config.BellFile, 'utf8'));
 
   if(bells.Enabled === false) {
-    console.log("=======================================================================")
-    console.log("Bells are currently DISABLED. No bells will ring until they are enabled")
-    console.log("=======================================================================")
+    c("=======================================================================")
+    c("Bells are currently DISABLED. No bells will ring until they are enabled")
+    c("=======================================================================")
     return;
   }
 
@@ -266,17 +264,17 @@ function loadBells() {
         jobs[item] = new CronJob(bells.Bells[item].Time, function() {
             // If bells are DISABLED, just return. Don't process anything.
             if(bells.Enabled === false) {
-              console.log("=======================================================================")
-              console.log("Bells are currently DISABLED. No bells will ring until they are enabled")
-              console.log("=======================================================================")
+              c("=======================================================================")
+              c("Bells are currently DISABLED. No bells will ring until they are enabled")
+              c("=======================================================================")
               return;
             }
               // Let us know the job has been triggered
-              console.log("Triggering job: " + bells.Bells[item].Name + " at " + moment().format(config.DateFormat));
+              c("Triggering job: " + bells.Bells[item].Name + " at " + moment().format(config.DateFormat));
               // If we've got emails enabled for this job
               emailState = (bells.Bells[item].TriggerEmail.Enabled === "true")
               if (emailState == true) {
-                console.log("Emailing Now..")
+                c("Emailing Now..")
                 sendEmail(bells.Bells[item])
               }
 
@@ -308,7 +306,19 @@ function showTable() {
         [item, bells.Bells[item].Name, bells.Bells[item].Description, bells.Bells[item].Time, bells.Bells[item].File, bells.Bells[item].TriggerEmail.Enabled, bells.Bells[item].Enabled]
       );
   })
-  console.log(table.toString())
-  console.log("Time is a cron expression: Minute, Hour, Day, Month, Day of the week")
-  console.log()
+  c(table.toString())
+  c("Time is a cron expression: Minute, Hour, Day, Month, Day of the week")
+  c()
+}
+
+function c(text) {
+  if(text == null) {
+    console.log("")
+   } else {
+     console.log(text)
+    text = moment().format(config.DateFormat) + " - " + text
+    fs.appendFile(config.LogFile, text + "\r\n")
+
+  }
+
 }
