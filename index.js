@@ -1,5 +1,5 @@
 var CronJob = require('cron').CronJob; // Handles the timing
-var Player = require('player'); // Plays MP3s
+ // var Player = require('player'); // Plays MP3s
 var ejs = require('ejs'); // Text template engine, used for emails
 var moment = require("moment"); // For formatting of dates
 var Table = require('cli-table'); // Neatly presents data
@@ -39,7 +39,7 @@ function playAudio(file) {
 
     player = new Player("./" + file)
     player.on('error', function(err) {
-      console.log("Error - All done?")
+      console.log(err)
     })
     player.play()
 
@@ -245,18 +245,32 @@ function loadSettings() {
 function loadBells() {
   bells = JSON.parse(fs.readFileSync(config.BellFile, 'utf8'));
 
-
+  if(bells.Enabled === false) {
+    console.log("=======================================================================")
+    console.log("Bells are currently DISABLED. No bells will ring until they are enabled")
+    console.log("=======================================================================")
+    return;
+  }
 
   // Loop through all the bells we have
   // Because bells.Bells uses a string based key, we have to do it this way.
   Object.keys(bells.Bells).forEach(function(item) {
     try {
+
+
       jobs[item].stop()
     } catch(ex) {
 
     }
         // Create a new Cron job at the specified .Time (a Cron expression)
         jobs[item] = new CronJob(bells.Bells[item].Time, function() {
+            // If bells are DISABLED, just return. Don't process anything.
+            if(bells.Enabled === false) {
+              console.log("=======================================================================")
+              console.log("Bells are currently DISABLED. No bells will ring until they are enabled")
+              console.log("=======================================================================")
+              return;
+            }
               // Let us know the job has been triggered
               console.log("Triggering job: " + bells.Bells[item].Name + " at " + moment().format(config.DateFormat));
               // If we've got emails enabled for this job
