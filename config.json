@@ -3,6 +3,7 @@
   "AppName": "Bellboy",
   "Version": "0.0.1",
   "LogFile": "log.txt",
+  "Debug": true,
   "Email": {
     "From": "",
     "Server": "",

@@ -1,6 +1,10 @@
 var email   = require("emailjs");
 var config  = require("./config.json")
 var flags   = require('flags');
+var fs   = require('fs');
+var moment = require("moment"); // For formatting of dates
+
+c("App has crashed at " + moment().format(config.DateFormat))
 
 try {
 
@@ -15,12 +19,12 @@ try {
 
   flags.parse();
 
-  console.log("Sending email:")
-  console.log("Server: " + flags.get("server"))
-  console.log("To: " + flags.get("to"))
-  console.log("From: " + flags.get("from"))
-  console.log("Subject: " + flags.get("subject"))
-  console.log("Body: " + flags.get("body"))
+  c("Sending email:")
+  c("Server: " + flags.get("server"))
+  c("To: " + flags.get("to"))
+  c("From: " + flags.get("from"))
+  c("Subject: " + flags.get("subject"))
+  c("Body: " + flags.get("body"))
 
   var server  = email.server.connect({
       user:    flags.get("username"),
@@ -35,8 +39,18 @@ try {
       from:    flags.get("from"),
       to:      flags.get("to"),
       subject: config.Email.SubjectPrefix + flags.get("subject")
-  }, function(err, message) { console.log(err || message); });
-  console.log("Sent mail")
+  }, function(err, message) { c(err || message); });
+  c("Sent mail")
 } catch (ex) {
-  console.log("Crash app failed: " + ex)
+  c("Crash app failed: " + ex)
+}
+
+function c(text) {
+  if(text == null) {
+    console.log("")
+   } else {
+     console.log(text)
+    text = moment().format(config.DateFormat) + " - " + text
+    fs.appendFile(config.LogFile, text + "\r\n")
+  }
 }

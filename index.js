@@ -1,5 +1,4 @@
 var CronJob = require('cron').CronJob; // Handles the timing
- // var Player = require('player'); // Plays MP3s
 var ejs = require('ejs'); // Text template engine, used for emails
 var moment = require("moment"); // For formatting of dates
 var Table = require('cli-table'); // Neatly presents data
@@ -32,9 +31,15 @@ function start() {
 
 // Play the audio file
 function playAudio(file) {
-    c("Playing " + file)
-
-    player = new Player("./" + file)
+  rand = Math.floor(Math.random() * (file.length));
+  c("Playing " + file[rand])
+    if(config.Debug == true) {
+      c("Debug mode. Not playing audio!")
+      return
+    }
+    var Player = require('player'); // Plays MP3s
+    console.log(rand)
+    player = new Player("./" + file[rand])
     player.on('error', function(err) {
       c(err)
     })
