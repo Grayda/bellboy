@@ -19,5 +19,7 @@ echo "Copying startup script into /etc/init.d"
 sudo cp /home/pi/bellboy/bellboy.sh /etc/init.d/
 echo "Making the startup script executable"
 sudo chmod 755 /etc/init.d/bellboy.sh
-read -p "Press [Enter] key to reboot..."
+echo "Registering script"
+sudo update-rc.d bellboy.sh defaults
+read -p "Press [Enter] key to reboot.."
 sudo reboot
