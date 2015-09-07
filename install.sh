@@ -24,7 +24,7 @@ sudo npm install -g nodemon
 echo "Installing other dependencies.."
 npm install
 echo "Copying startup script to /etc/init.d.."
-cp bellboy.sh /etc/init.d/
+sudo cp bellboy.sh /etc/init.d/
 echo "Making the script executable"
 sudo chmod 755 /etc/init.d/bellboy.sh
 echo "Registering changes.."
