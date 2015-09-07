@@ -11,4 +11,4 @@
 # Description:       A simple script to launch bellboy as the RPi boots. Uses nodemon
 ### END INIT INFO
 
-nodemon /home/pi/bellboy/index.js
+/usr/local/bin/nodemon /home/pi/bellboy/index.js
