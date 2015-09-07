@@ -12,6 +12,7 @@ echo "CDing into /home/pi.."
 cd /home/pi
 echo "Cloning Bellboy into /home/pi.."
 git clone –b stable http://github.com/Grayda/bellboy.git
+cd /home/pi/bellboy
 echo "Installing nodemon globally.."
 sudo npm install -g nodemon
 echo "Installing other dependencies.."

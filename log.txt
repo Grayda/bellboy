@@ -1,0 +1,195 @@
+7 September 2015, 4:22:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:22:00pm
+7 September 2015, 4:22:00pm - Playing bell2.mp3
+7 September 2015, 4:22:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:23:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:23:00pm
+7 September 2015, 4:23:00pm - Playing bell2.mp3
+7 September 2015, 4:23:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:24:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:24:00pm
+7 September 2015, 4:24:00pm - Playing bell.mp3
+7 September 2015, 4:24:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:25:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:25:00pm
+7 September 2015, 4:25:00pm - Playing bell.mp3
+7 September 2015, 4:25:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:26:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:26:00pm
+7 September 2015, 4:26:00pm - Playing bell.mp3
+7 September 2015, 4:26:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:27:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:27:00pm
+7 September 2015, 4:27:00pm - Playing bell.mp3
+7 September 2015, 4:27:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:28:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:28:00pm
+7 September 2015, 4:28:00pm - Playing bell.mp3
+7 September 2015, 4:28:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:29:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:29:00pm
+7 September 2015, 4:29:00pm - Playing bell.mp3
+7 September 2015, 4:29:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:30:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:30:00pm
+7 September 2015, 4:30:00pm - Playing bell2.mp3
+7 September 2015, 4:30:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:31:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:31:00pm
+7 September 2015, 4:31:00pm - Playing bell2.mp3
+7 September 2015, 4:31:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:32:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:32:00pm
+7 September 2015, 4:32:00pm - Playing bell.mp3
+7 September 2015, 4:32:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:33:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:33:00pm
+7 September 2015, 4:33:00pm - Playing bell2.mp3
+7 September 2015, 4:33:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:34:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:34:00pm
+7 September 2015, 4:34:00pm - Playing bell2.mp3
+7 September 2015, 4:34:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:35:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:35:00pm
+7 September 2015, 4:35:00pm - Playing bell2.mp3
+7 September 2015, 4:35:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:36:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:36:00pm
+7 September 2015, 4:36:00pm - Playing bell2.mp3
+7 September 2015, 4:36:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:37:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:37:00pm
+7 September 2015, 4:37:00pm - Playing bell.mp3
+7 September 2015, 4:37:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:38:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:38:00pm
+7 September 2015, 4:38:00pm - Playing bell.mp3
+7 September 2015, 4:38:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:39:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:39:00pm
+7 September 2015, 4:39:00pm - Playing bell.mp3
+7 September 2015, 4:39:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:40:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:40:00pm
+7 September 2015, 4:40:00pm - Playing bell.mp3
+7 September 2015, 4:40:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:41:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:41:00pm
+7 September 2015, 4:41:00pm - Playing bell2.mp3
+7 September 2015, 4:41:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:42:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:42:00pm
+7 September 2015, 4:42:00pm - Playing bell.mp3
+7 September 2015, 4:42:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:43:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:43:00pm
+7 September 2015, 4:43:00pm - Playing bell.mp3
+7 September 2015, 4:43:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:44:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:44:00pm
+7 September 2015, 4:44:00pm - Playing bell.mp3
+7 September 2015, 4:44:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:45:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:45:00pm
+7 September 2015, 4:45:00pm - Playing bell2.mp3
+7 September 2015, 4:45:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:46:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:46:00pm
+7 September 2015, 4:46:00pm - Playing bell2.mp3
+7 September 2015, 4:46:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:47:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:47:00pm
+7 September 2015, 4:47:00pm - Playing bell2.mp3
+7 September 2015, 4:47:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:48:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:48:00pm
+7 September 2015, 4:48:00pm - Playing bell.mp3
+7 September 2015, 4:48:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:49:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:49:00pm
+7 September 2015, 4:49:00pm - Playing bell2.mp3
+7 September 2015, 4:49:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:50:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:50:00pm
+7 September 2015, 4:50:00pm - Playing bell2.mp3
+7 September 2015, 4:50:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:51:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:51:00pm
+7 September 2015, 4:51:00pm - Playing bell2.mp3
+7 September 2015, 4:51:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:52:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:52:00pm
+7 September 2015, 4:52:00pm - Playing bell.mp3
+7 September 2015, 4:52:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:53:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:53:00pm
+7 September 2015, 4:53:00pm - Playing bell.mp3
+7 September 2015, 4:53:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:54:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:54:00pm
+7 September 2015, 4:54:00pm - Playing bell.mp3
+7 September 2015, 4:54:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:55:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:55:00pm
+7 September 2015, 4:55:00pm - Playing bell.mp3
+7 September 2015, 4:55:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:56:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:56:00pm
+7 September 2015, 4:56:00pm - Playing bell2.mp3
+7 September 2015, 4:56:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:57:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:57:00pm
+7 September 2015, 4:57:00pm - Playing bell.mp3
+7 September 2015, 4:57:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:58:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:58:00pm
+7 September 2015, 4:58:00pm - Playing bell2.mp3
+7 September 2015, 4:58:00pm - Debug mode. Not playing audio!
+7 September 2015, 4:59:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 4:59:00pm
+7 September 2015, 4:59:00pm - Playing bell2.mp3
+7 September 2015, 4:59:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:00:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:00:00pm
+7 September 2015, 5:00:00pm - Playing bell2.mp3
+7 September 2015, 5:00:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:01:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:01:00pm
+7 September 2015, 5:01:00pm - Playing bell2.mp3
+7 September 2015, 5:01:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:02:00pm - Playing bell.mp3
+7 September 2015, 5:02:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:02:00pm
+7 September 2015, 5:02:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:03:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:03:00pm
+7 September 2015, 5:03:00pm - Playing bell2.mp3
+7 September 2015, 5:03:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:04:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:04:00pm
+7 September 2015, 5:04:00pm - Playing bell2.mp3
+7 September 2015, 5:04:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:05:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:05:00pm
+7 September 2015, 5:05:00pm - Playing bell.mp3
+7 September 2015, 5:05:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:06:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:06:00pm
+7 September 2015, 5:06:00pm - Playing bell.mp3
+7 September 2015, 5:06:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:07:00pm - Playing bell.mp3
+7 September 2015, 5:07:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:07:00pm
+7 September 2015, 5:07:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:08:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:08:00pm
+7 September 2015, 5:08:00pm - Playing bell2.mp3
+7 September 2015, 5:08:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:09:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:09:00pm
+7 September 2015, 5:09:00pm - Playing bell.mp3
+7 September 2015, 5:09:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:10:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:10:00pm
+7 September 2015, 5:10:00pm - Playing bell2.mp3
+7 September 2015, 5:10:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:11:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:11:00pm
+7 September 2015, 5:11:00pm - Playing bell.mp3
+7 September 2015, 5:11:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:12:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:12:00pm
+7 September 2015, 5:12:00pm - Playing bell.mp3
+7 September 2015, 5:12:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:13:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:13:00pm
+7 September 2015, 5:13:00pm - Playing bell.mp3
+7 September 2015, 5:13:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:14:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:14:00pm
+7 September 2015, 5:14:00pm - Playing bell.mp3
+7 September 2015, 5:14:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:15:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:15:00pm
+7 September 2015, 5:15:00pm - Playing bell.mp3
+7 September 2015, 5:15:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:16:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:16:00pm
+7 September 2015, 5:16:00pm - Playing bell.mp3
+7 September 2015, 5:16:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:17:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:17:00pm
+7 September 2015, 5:17:00pm - Playing bell2.mp3
+7 September 2015, 5:17:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:18:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:18:00pm
+7 September 2015, 5:18:00pm - Playing bell.mp3
+7 September 2015, 5:18:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:19:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:19:00pm
+7 September 2015, 5:19:00pm - Playing bell.mp3
+7 September 2015, 5:19:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:20:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:20:00pm
+7 September 2015, 5:20:00pm - Playing bell2.mp3
+7 September 2015, 5:20:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:21:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:21:00pm
+7 September 2015, 5:21:00pm - Playing bell.mp3
+7 September 2015, 5:21:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:22:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:22:00pm
+7 September 2015, 5:22:00pm - Playing bell.mp3
+7 September 2015, 5:22:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:23:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:23:00pm
+7 September 2015, 5:23:00pm - Playing bell2.mp3
+7 September 2015, 5:23:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:24:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:24:00pm
+7 September 2015, 5:24:00pm - Playing bell2.mp3
+7 September 2015, 5:24:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:25:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:25:00pm
+7 September 2015, 5:25:00pm - Playing bell2.mp3
+7 September 2015, 5:25:00pm - Debug mode. Not playing audio!
+7 September 2015, 5:26:00pm - Triggering job: Test Bell - EVERY MINUTE at 7 September 2015, 5:26:00pm
+7 September 2015, 5:26:00pm - Playing bell2.mp3
+7 September 2015, 5:26:00pm - Debug mode. Not playing audio!
