@@ -3,8 +3,8 @@
 
 ### BEGIN INIT INFO
 # Provides:          bellboy
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Starts Bellboy at boot
@@ -12,4 +12,4 @@
 ### END INIT INFO
 
 cd /home/pi/bellboy
-/bin/bash/ /usr/local/bin/nodemon /home/pi/bellboy/index.js
+exec sudo /usr/local/bin/nodemon /home/pi/bellboy/index.js
