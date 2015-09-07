@@ -2,7 +2,7 @@
   "BellFile": "./bells.json",
   "AppName": "Bellboy",
   "Version": "0.0.1",
-  "LogFile": "log.txt",
+  "LogFile": "bellboy.log",
   "Debug": true,
   "Beta": true,
   "Email": {
