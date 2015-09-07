@@ -1,5 +1,5 @@
 {
-  "BellFile": "./bells.json",
+  "BellFile": "/home/pi/bellboy/bells.json",
   "AppName": "Bellboy",
   "Version": "0.0.1",
   "LogFile": "bellboy.log",

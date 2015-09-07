@@ -265,11 +265,11 @@ function toggleBell(bell, state, callback) {
 }
 
 function saveSettings() {
-  fs.writeFile("./config.json", JSON.stringify(config, null, 2))
+  fs.writeFile("/home/pi/bellboy/config.json", JSON.stringify(config, null, 2))
 }
 
 function loadSettings() {
-  config = JSON.parse(fs.readFileSync("./config.json", 'utf8'));
+  config = JSON.parse(fs.readFileSync("/home/pi/bellboy/config.json", 'utf8'));
 }
 
 function loadBells() {
