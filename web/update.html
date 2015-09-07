@@ -1,0 +1,11 @@
+<% include includes/header.html %>
+<h2>Updating..</h2>
+<h3>Update command has run. Here's the results:</h3>
+<p><%= status %></p>
+<a href="/">Click here to go back or wait 2 seconds</a>
+<script language="javascript">
+  window.setTimeout(function() {
+    location.href = "/";
+  }, 2000);
+</script>
+<% include includes/footer.html %>
