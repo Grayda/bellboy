@@ -111,28 +111,33 @@ function startServer() {
   var server = http.createServer(function(request, response){
     dispatcher.dispatch(request, response);
   });
+  // Ask to update the
+  dispatcher.onGet("/update.html", function(req,res) {
+    var exec = require('child_process').exec
+    var strStdout, branch
 
-dispatcher.onGet("/update.html", function(req,res) {
-  var exec = require('child_process').exec
-  var strStdout
+    if(config.Beta == true) {
+      branch == "beta"
+    } else {
+      branch == "stable"
+    }
 
-  exec("git pull", function(error, stdout, stderr) {
-    strStdout = stdout
-  })
+    exec("git pull origin " + branch, function(error, stdout, stderr) {
+      strStdout = stdout
+      console.log(stdout || stderr)
 
-  // Grab the update.html file for updating
-  file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
-  // Options the template will have access to
-  var options = {
-    Date: moment().format(config.DateFormat),
-    status: strStdout,
-    filename: "./web/header.html"
-  }
 
-  // Render the template and write it to our waiting client.
-  res.end(ejs.render(file, options))
-
-})
+        // Grab the update.html file for updating
+        file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
+        // Options the template will have access to
+        var options = {
+          Date: moment().format(config.DateFormat),
+          status: stdout || stderr,
+          filename: "./web/header.html"
+        }
+        res.end(ejs.render(file, options))
+      })
+    })
 
   // When we're switching a bell on or off
   dispatcher.onGet("/toggle.html", function(req,res) {

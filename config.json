@@ -4,6 +4,7 @@
   "Version": "0.0.1",
   "LogFile": "log.txt",
   "Debug": true,
+  "Beta": true,
   "Email": {
     "From": "",
     "Server": "",
