@@ -15,11 +15,6 @@ echo "Installing nodemon globally.."
 sudo npm install -g nodemon
 echo "Installing other dependencies.."
 npm install
-echo "Copying startup script into /etc/init.d"
-sudo cp /home/pi/bellboy/bellboy.sh /etc/init.d/
-echo "Making the startup script executable"
-sudo chmod 755 /etc/init.d/bellboy.sh
-echo "Registering script"
-sudo update-rc.d bellboy.sh defaults
+echo "Adding script to startup.."
+sudo sed -i -e '$i \nodemon /home/pi/bellboy/index.js &\n' /etc/rc.local
 read -p "Press [Enter] key to reboot.."
-sudo reboot
