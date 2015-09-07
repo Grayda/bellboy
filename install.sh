@@ -1,5 +1,3 @@
-#! /bin/sh
-
 echo "Downloading Node PPA.."
 curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
 echo "Installing Node.."
