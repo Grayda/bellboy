@@ -9,7 +9,7 @@ sudo apt-get install libasound2-dev # For audio support
 echo "CDing into /home/pi.."
 cd /home/pi
 echo "Cloning Bellboy into /home/pi.."
-git clone -b stable http://github.com/Grayda/bellboy.git
+git clone -b beta http://github.com/Grayda/bellboy.git
 cd /home/pi/bellboy
 echo "Installing nodemon globally.."
 sudo npm install -g nodemon
