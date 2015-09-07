@@ -6,5 +6,8 @@
   "events": {
     "crash": "node ./crash.js"
   },
+  "execMap": {
+   "js": "/usr/local/bin/node {{filename}}"
+ },
   "ext": "json html css jpg png gif htm js"
 }
