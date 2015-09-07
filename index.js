@@ -1,3 +1,4 @@
+var Player = require('player'); // Plays MP3s
 var CronJob = require('cron').CronJob; // Handles the timing
 var ejs = require('ejs'); // Text template engine, used for emails
 var moment = require("moment"); // For formatting of dates
@@ -38,7 +39,6 @@ function playAudio(file) {
     return
   }
 
-  var Player = require('player'); // Plays MP3s
   console.log(rand) // TODO, possibly debug code, remove
   player = new Player("./" + file[rand])
   player.on('error', function(err) {
@@ -72,7 +72,7 @@ function sendRawEmail(from, to, subject, body, options) {
     head: ['Key', 'Value'],
     style: { head: ['green', 'bold']}
   });
-  
+
   table.push(
     ["Server", config.Email.Server],
     ["From", from],
