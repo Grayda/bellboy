@@ -19,13 +19,15 @@ Features
 Installation
 ============
 
- - Clone somewhere
- - Install `libasound2-dev` via apt-get (or whatever package manager) if building on Linux
- - Install Visual Studio if building on Windows (you need to customize the installer and ensure C++ is installed as a programming language, otherwise you'll get CL.exe errors)
- - Install `nodemon` with: `npm install -g nodemon`
- - Run `npm install`
- - Edit `bells.json` and `config.json` accordingly
- - Run `node index`
+This first version is designed to be installed on a Raspberry Pi v2. It'll work just fine on other Linux platforms where Node is available, but you'll need to do stuff manually.
+
+To install:
+
+ - Run `sudo wget -qO- https://raw.githubusercontent.com/Grayda/bellboy/beta/install.sh | bash`
+ - Run `sudo reboot`
+ - Go to http://[ip address of Pi]:8080 to confirm.
+
+If you're installing this behind a self-signed certificate, you'll need to run `git config --global http.sslverify false` to allow `git` through, then `sudo npm config ssl-strict false` to allow `npm` through. You might have to add `--no-check-certificate` to any wget call. If you have to authenticate against a portal (as is the case at my workplace), you can enable X11 forwarding in your SSH client (e.g. PuTTY) and then open the `epiphany` browser in order to authenticate via a web browser, then use `apt-get install lynx` to install a text-based browser
 
 Limitations
 ===========
@@ -38,14 +40,14 @@ To-Do / Wishlist
 Here's a list of things I'd like to eventually add. If you have any more ideas, please open an issue and argue your case :)
 
   - [ ] Add web UI to allow adjustment plus download / upload of times and settings
-  - [ ] Security! Security! Security! Security! Security! 
+  - [ ] Security! Security! Security! Security! Security!
   - [ ] Make bells.json loadable from URL / file
   - [ ] Record & include some sample audio files
-  - [ ] Add file arrays to allow random songs to be picked and played
-  - [ ] Add logging
+  - [x] Add file arrays to allow random songs to be picked and played
+  - [x] Add logging
   - [ ] Add feature to allow physical push buttons for quick / emergency ringing
-  - [ ] Allow disabling of entire bell system (for holidays, student free days etc.)
+  - [x] Allow disabling of entire bell system (for holidays, student free days etc.)
     - [ ] Allow scheduling of disable / enable times?
   - [ ] Allow complex bells (e.g. bells disable other bells)
   - [ ] Allow addons?
-  - [ ] Create a separate JS for the web stuff, or provide a simple set of PHP scripts?
+  - [ ] Create a separate JS for the web stuff, or provide a REST API so you can write your own front-end?
