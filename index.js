@@ -143,11 +143,11 @@ function startServer() {
 
   dispatcher.onGet("/logs.html", function(req, res) {
     console.log("Loading")
-    file = fs.readFileSync(config.LogFile).toString()
+    file = fs.readFileSync("./web/logs.html").toString()
 
     var options = {
       Date: moment().format(config.DateFormat),
-      logs: file,
+      logs: fs.readFileSync(config.LogFile).toString(),
       filename: "./web/header.html"
     }
     res.end(ejs.render(file, options))
