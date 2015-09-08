@@ -1,13 +1,17 @@
 #! /bin/sh
-
-echo "Downloading Node PPA.."
-curl -skL https://deb.nodesource.com/setup_0.12 | sudo bash -
-echo "Installing Node.."
-sudo apt-get install -y nodejs
+echo "Preparing to install.."
+cd /home/pi
+echo "Downloading latest Node deb.."
+wget --no-check-certificate http://node-arm.herokuapp.com/node_latest_armhf.deb
+echo "Installing latest Node deb.."
+sudo dpkg -i node_latest_armhf.deb
+echo "Node version is:"
+node -v
+echo "Cleaning up installer.."
+sudo rm /home/pi/node_latest_armhf.deb
 echo "Installing audio dependency for Bellboy.."
 sudo apt-get install libasound2-dev # For audio support
 echo "CDing into /home/pi.."
-cd /home/pi
 if [ -d "/home/pi/bellboy/" ];
   then
     echo "Bellboy already cloned. Updating.."
