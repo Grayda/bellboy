@@ -1,7 +1,7 @@
 #! /bin/sh
 
 echo "Downloading Node PPA.."
-curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
+curl -skL https://deb.nodesource.com/setup_0.12 | sudo bash -
 echo "Installing Node.."
 sudo apt-get install -y nodejs
 echo "Installing audio dependency for Bellboy.."
