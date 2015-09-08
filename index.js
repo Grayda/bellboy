@@ -117,11 +117,12 @@ function startServer() {
     var exec = require('child_process').exec
     var strStdout, branch
 
-    if (config.Beta == true) {
-      branch == "beta"
+    if (config.Beta === true) {
+      branch = "beta"
     } else {
-      branch == "stable"
+      branch = "stable"
     }
+    c("Pulling branch: " + branch)
 
     exec("git pull origin " + branch, function(error, stdout, stderr) {
       strStdout = stdout
