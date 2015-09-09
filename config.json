@@ -31,7 +31,7 @@
     "InactiveForeground": "black"
   },
   "Server": true,
-  "ServerPort": 9001,
+  "ServerPort": 8080,
   "DateFormat": "D MMMM YYYY, h:mm:ssa",
   "Location": "Australia/Melbourne",
   "CrashEmail": {

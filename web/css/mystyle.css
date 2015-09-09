@@ -38,6 +38,11 @@ a:visited {
   color: <%= theme.ActiveForeground %>;
 }
 
+.next {
+  background: blue !important;
+  color: white !important;
+}
+
 .inactive {
   background: <%= theme.InactiveBackground %>;
   color: <%= theme.InactiveForeground %>;

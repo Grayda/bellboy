@@ -6,6 +6,7 @@
   "dependencies": {
     "cli-table": "^0.3.1",
     "cron": "^1.0.9",
+    "cron-parser": "^0.7.1",
     "ejs": "^2.3.3",
     "emailjs": "^0.3.16",
     "flags": "^0.1.3",

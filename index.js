@@ -6,6 +6,7 @@ var fs = require('fs'); // For reading files
 var http = require('http'); // For our web server
 var url = require("url"); // For parsing URLs
 var dispatcher = require('httpdispatcher'); // For handling our web server requests
+var parser = require('cron-parser');
 
 var config, bells // Our two json config files
 var jobs = {} // This will hold our cron jobs
@@ -16,8 +17,6 @@ start()
 function start() {
   loadSettings()
   c()
-  c("Loading settings..")
-
   c("Loading bells..")
   c()
     // loadBells() also calls showTable()
@@ -217,6 +216,7 @@ function startServer() {
     var options = {
       items: bells.Bells,
       Date: moment().format(config.DateFormat),
+      nextjob: nextJob(),
       query: req,
       filename: "./web/header.html"
     }
@@ -343,6 +343,26 @@ function loadBells() {
   showTable()
 }
 
+function nextJob() {
+  var time
+  var smallest = -9999999999999999999999999999
+    Object.keys(bells.Bells).forEach(function(item) {
+      if (bells.Bells[item].Enabled == true) {
+
+
+    var interval = parser.parseExpression(bells.Bells[item].Time);
+    diff = moment().diff(interval.next())
+    if(diff > smallest) {
+      smallest = diff
+      time = bells.Bells[item].Time
+      console.log("Smallest is: " + bells.Bells[item].Time + " which will occur in " + smallest)
+    }
+    }
+  })
+
+  return time
+}
+
 function saveBells() {
   fs.writeFile(config.BellFile, JSON.stringify(bells, null, 2))
 }
@@ -388,8 +408,8 @@ function c(text) {
   if (text == null) {
     console.log("")
   } else {
-    console.log(text)
     text = moment().format(config.DateFormat) + " - " + text
+    console.log(text)
       // fs.appendFile(config.LogFile, text + "\r\n")
 
   }
