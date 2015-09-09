@@ -147,7 +147,7 @@ function startServer() {
 
     var options = {
       Date: moment().format(config.DateFormat),
-      logs: fs.readFileSync(config.LogFile).toString(),
+      logs: fs.readFileSync("bellboy.log").toString(),
       filename: "./web/header.html"
     }
     res.end(ejs.render(file, options))
@@ -387,7 +387,7 @@ function c(text) {
   } else {
     console.log(text)
     text = moment().format(config.DateFormat) + " - " + text
-    fs.appendFile(config.LogFile, text + "\r\n")
+    // fs.appendFile(config.LogFile, text + "\r\n")
 
   }
 

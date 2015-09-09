@@ -12,4 +12,4 @@
 ### END INIT INFO
 
 cd /home/pi/bellboy
-exec sudo /usr/local/bin/nodemon /home/pi/bellboy/index.js
+exec sudo /usr/local/bin/nodemon /home/pi/bellboy/index.js >> /home/pi/bellboy/bellboy.log 2>&1

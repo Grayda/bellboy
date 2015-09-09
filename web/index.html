@@ -17,7 +17,7 @@
           <th>Actions</th>
         </tr>
         <% Object.keys(items).forEach(function(item){ %>
-          <tr>
+          <% if (items[item].Enabled === false) { %><tr class="inactive"><% } else { %><tr class="active"><% } %>
             <td><%= item %></td>
             <td><%= items[item].Name %></td>
             <td><%= items[item].Description %></td>
@@ -35,8 +35,8 @@
       <h1>Tasks</h1>
       <a href="add.html">Add new bell</a><br />
       <a href="reload.html">Reload bells and config file</a><br />
-      <a href="update.html">Update app</a>
-      <a href="logs.html">View the logs</a>
+      <a href="update.html">Update app</a><br />
+      <a href="logs.html">View the logs</a><br />
     </td>
   </tr>
 </table>

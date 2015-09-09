@@ -2,8 +2,7 @@
   "BellFile": "bells.json",
   "AppName": "Bellboy",
   "Version": "0.0.1",
-  "LogFile": "bellboy.log",
-  "Debug": true,
+  "Debug": false,
   "Beta": true,
   "Email": {
     "From": "",
@@ -25,7 +24,11 @@
     "TableColour": "white",
     "Link": "#9f3357",
     "ActiveLink": "#9f3357",
-    "VisitedLink": "#9f3357"
+    "VisitedLink": "#9f3357",
+    "ActiveBackground": "#c3ff43",
+    "ActiveForeground": "black",
+    "InactiveBackground": "#ff9b93",
+    "InactiveForeground": "black"
   },
   "Server": true,
   "ServerPort": 8080,
