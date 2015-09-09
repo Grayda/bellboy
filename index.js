@@ -142,16 +142,19 @@ function startServer() {
   })
 
   dispatcher.onGet("/logs.html", function(req, res) {
-    console.log("Loading")
-    file = fs.readFileSync("./web/logs.html").toString()
+    try {
 
-    var options = {
-      Date: moment().format(config.DateFormat),
-      logs: fs.readFileSync("bellboy.log").replace("\r\n", "<br />").toString(),
-      filename: "./web/header.html"
+      file = fs.readFileSync("./web/logs.html").toString()
+
+      var options = {
+        Date: moment().format(config.DateFormat),
+        logs: fs.readFileSync("bellboy.log").replace("\r\n", "<br />").toString(),
+        filename: "./web/header.html"
+      }
+      res.end(ejs.render(file, options))
+    } catch (ex) {
+      console.log("Error parsing log: " + ex)
     }
-    res.end(ejs.render(file, options))
-
   })
 
   // When we're switching a bell on or off
@@ -387,7 +390,7 @@ function c(text) {
   } else {
     console.log(text)
     text = moment().format(config.DateFormat) + " - " + text
-    // fs.appendFile(config.LogFile, text + "\r\n")
+      // fs.appendFile(config.LogFile, text + "\r\n")
 
   }
 
