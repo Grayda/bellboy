@@ -16,9 +16,15 @@ case "$1" in
     echo "Starting Bellboy"
     cd /home/pi/bellboy
     exec sudo /usr/local/bin/nodemon /home/pi/bellboy/index.js >> /home/pi/bellboy/bellboy.log 2>&1 &
+    ;;
   stop)
     echo "Stopping Bellboy"
     sudo killall node
+    ;;
   *)
     echo "Usage: $0 [start|stop]"
     exit 1
+    ;;
+esac
+
+exit 0
