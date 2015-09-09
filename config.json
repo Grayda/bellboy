@@ -25,13 +25,13 @@
     "Link": "#9f3357",
     "ActiveLink": "#9f3357",
     "VisitedLink": "#9f3357",
-    "ActiveBackground": "#c3ff43",
+    "ActiveBackground": "#dcff92",
     "ActiveForeground": "black",
-    "InactiveBackground": "#ff9b93",
+    "InactiveBackground": "#ffac92",
     "InactiveForeground": "black"
   },
   "Server": true,
-  "ServerPort": 8080,
+  "ServerPort": 9001,
   "DateFormat": "D MMMM YYYY, h:mm:ssa",
   "Location": "Australia/Melbourne",
   "CrashEmail": {
