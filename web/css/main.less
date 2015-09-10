@@ -11,24 +11,24 @@ body {
   padding: 0;
   margin: 0;
   height: 100vh;
+  min-height: 100vh;
+
 }
 
 html {
   color: @text;
+  padding: 0;
+  margin: 0;
   height: 100vh;
 }
 
-.container {
-.grad(@base1, @base2);
-  min-height: 100vh;
-}
 
 #sidebar {
   .grad(darken(@accent1, 50%), darken(@accent1, 25%));
   .shadow(20px);
   color: contrast(@accent1);
   width: 150px;
-  min-height: 100vh;
+  height: 100vh;
   padding: 1% 1% 0 1%;
   text-align: center;
   float: left;
@@ -43,13 +43,26 @@ html {
   color: lighten(@accent1, 35%);
 }
 
+#header {
+
+  top:0;
+  width: 100%;
+  padding: 1px 1%;
+  .grad(darken(@accent1, 50%), darken(@accent1, 25%));
+  color: contrast(@accent1);
+
+}
+
 #content {
   padding-left: 250px;
   padding-top: 25px;
+  height: 100vh;
+  color: contrast(@base1);
+  .grad(@base1, @base2);
 }
 
 table {
-  .shadow(120px, 0.25);
+  .shadow(120px, 0.10);
 }
 
 th {

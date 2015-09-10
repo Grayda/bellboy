@@ -16,7 +16,7 @@
     "Base": ["#CCC", "#FFF"],
     "Text": "black",
     "Accent": ["#3a75ac", "orange", "#7ac676"],
-    "Font": "Verdana, Arial"
+    "Font": "Roboto, Verdana, Arial"
   },
   "WebTheme2": {
     "BackgroundGradStart": "#53585e",
