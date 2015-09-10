@@ -1,0 +1,94 @@
+@base1: <%= theme.Base[0] %>;
+@base2: <%= theme.Base[1] %>;
+@accent1: <%= theme.Accent[0] %>;
+@accent2: <%= theme.Accent[1] %>;
+@accent3: <%= theme.Accent[2] %>;
+@text: <%= theme.Text %>;
+
+body {
+  font-family: <%= theme.Font %>;
+  color: @text;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+}
+
+html {
+  color: @text;
+  height: 100vh;
+}
+
+.container {
+.grad(@base1, @base2);
+  min-height: 100vh;
+}
+
+#sidebar {
+  .grad(darken(@accent1, 50%), darken(@accent1, 25%));
+  .shadow(20px);
+  color: contrast(@accent1);
+  width: 150px;
+  min-height: 100vh;
+  padding: 1% 1% 0 1%;
+  text-align: center;
+  float: left;
+}
+
+.logo {
+  margin: 0 auto;
+  position: relative;
+}
+
+#sidebar a:link, #sidebar a:visited, #sidebar a:active {
+  color: lighten(@accent1, 35%);
+}
+
+#content {
+  padding-left: 250px;
+  padding-top: 25px;
+}
+
+table {
+  .shadow(120px, 0.25);
+}
+
+th {
+  background: @accent1;
+  color: contrast(@accent1);
+}
+
+.inactive {
+  background: lighten(@accent2, 25%);
+}
+
+.active {
+  background: lighten(@accent3, 25%);
+}
+
+.next {
+  background: @accent1;
+  color: contrast(@accent1);
+}
+
+
+
+.currentTime {
+  float: right;
+  padding: 1%;
+}
+
+.grad(@start, @end) {
+  background: @start; /* Old browsers */
+  background: -moz-linear-gradient(top left,  @start 1%, @end 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, top left, bottom right, color-stop(1%,@start), color-stop(100%,@end)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top left,  @start 1%,@end 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top left,  @start 1%,@end 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top left,  @start 1%,@end 100%); /* IE10+ */
+  background: linear-gradient(to bottom right,  @start 1%,@end 100%); /* W3C */
+}
+
+.shadow(@dist, @opacity: 0.5) {
+  -webkit-box-shadow: 0px 0px @dist 0px rgba(50, 50, 50, @opacity);
+  -moz-box-shadow:    0px 0px @dist 0px rgba(50, 50, 50, @opacity);
+  box-shadow:         0px 0px @dist 0px rgba(50, 50, 50, @opacity);
+}

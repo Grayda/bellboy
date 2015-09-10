@@ -27,7 +27,7 @@ To install:
  - Run `sudo reboot`
  - Go to http://[ip address of Pi]:8080 to confirm.
 
-If you're installing this behind a self-signed certificate, you'll need to run `git config --global http.sslverify false` to allow `git` through, then `sudo npm config ssl-strict false` to allow `npm` through. You might have to add `--no-check-certificate` to any wget call. If you have to authenticate against a portal (as is the case at my workplace), you can enable X11 forwarding in your SSH client (e.g. PuTTY) and then open the `epiphany` browser in order to authenticate via a web browser, then use `apt-get install lynx` to install a text-based browser
+If you're installing this behind a self-signed certificate, you'll need to run `git config http.sslverify false` to allow `git` through, then `sudo npm config ssl-strict false` to allow `npm` through. You might have to add `--no-check-certificate` to any wget call. If you have to authenticate against a portal (as is the case at my workplace), you can enable X11 forwarding in your SSH client (e.g. PuTTY) and then open the `epiphany` browser in order to authenticate via a web browser, then use `apt-get install lynx` to install a text-based browser
 
 Limitations
 ===========

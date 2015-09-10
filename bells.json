@@ -364,7 +364,7 @@
     },
     "dayend": {
       "Enabled": true,
-      "Name": "Period 4",
+      "Name": "End of the Day",
       "Description": "3:15pm, Mon-Fri: End of the day",
       "Locked": "false",
       "Time": "15 15 * * 1,2,3,4,5",

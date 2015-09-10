@@ -7,6 +7,7 @@ var http = require('http'); // For our web server
 var url = require("url"); // For parsing URLs
 var dispatcher = require('httpdispatcher'); // For handling our web server requests
 var parser = require('cron-parser');
+var less = require('less');
 
 var config, bells // Our two json config files
 var jobs = {} // This will hold our cron jobs
@@ -193,20 +194,24 @@ function startServer() {
   })
 
   // We've requested an image. Needs to be sent in binary
-  dispatcher.beforeFilter(/\.jpg|\.png|\.gif|\.bmp/g, function(req, res) {
+  dispatcher.beforeFilter(/\.jpg|\.png|\.gif|\.bmp\.ttf|\.woff/g, function(req, res) {
     file = fs.readFileSync("./web" + url.parse(req.url).pathname)
+    console.log("Binary")
     res.end(file, 'binary')
   })
 
   // We've requested a CSS file. Pass it the WebTheme from our config file
-  dispatcher.beforeFilter(/.css/g, function(req, res) {
+  dispatcher.beforeFilter(/\.css|\.less/g, function(req, res) {
     var options = {
       theme: config.WebTheme,
       filename: "./web/header.html"
     }
 
     file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
-    res.end(ejs.render(file, options))
+    less.render(ejs.render(file, options), function(e, output) {
+      if(e) { console.dir(e) }
+      res.end(output.css)
+    })
 
   })
 

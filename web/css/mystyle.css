@@ -7,9 +7,16 @@ body {
 
   padding: 0;
   margin: 0;
-  color: black;
+  color: <%= theme.Foreground %>;
   font-family: Roboto, Arial;
-  background: <%= theme.Background %>;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/<%= theme.GradStart %>+1,9f3357+100 */
+  background: <%= theme.BackgroundGradStart %>; /* Old browsers */
+  background: -moz-linear-gradient(left,  <%= theme.BackgroundGradStart %> 1%, <%= theme.BackgroundGradEnd %> 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(1%,<%= theme.BackgroundGradStart %>), color-stop(100%,<%= theme.BackgroundGradEnd %>)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  <%= theme.BackgroundGradStart %> 1%,<%= theme.BackgroundGradEnd %> 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left,  <%= theme.BackgroundGradStart %> 1%,<%= theme.BackgroundGradEnd %> 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  <%= theme.BackgroundGradStart %> 1%,<%= theme.BackgroundGradEnd %> 100%); /* IE10+ */
+  background: linear-gradient(to right,  <%= theme.BackgroundGradStart %> 1%,<%= theme.BackgroundGradEnd %> 100%); /* W3C */
 }
 
 table .list {
@@ -54,7 +61,7 @@ a:visited {
 }
 
 th {
-  color: white;
+  color: <%= theme.TableColour %>;
   background: <%= theme.TableBackground %>;
   border: none;
 }
@@ -76,8 +83,6 @@ th {
   background: -o-linear-gradient(left,  <%= theme.GradStart %> 1%,<%= theme.GradEnd %> 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(left,  <%= theme.GradStart %> 1%,<%= theme.GradEnd %> 100%); /* IE10+ */
   background: linear-gradient(to right,  <%= theme.GradStart %> 1%,<%= theme.GradEnd %> 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='<%= theme.GradStart %>', endColorstr='<%= theme.GradEnd %>',GradientType=1 ); /* IE6-9 */-webkit-box-shadow: 0px 10px 21px 4px rgba(0,0,0,0.27);
--moz-box-shadow: 0px 10px 21px 4px rgba(0,0,0,0.27);
-box-shadow: 0px 10px 21px 4px rgba(0,0,0,0.27);
-
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='<%= theme.GradStart %>', endColorstr='<%= theme.GradEnd %>',GradientType=1 );
+  
 }
