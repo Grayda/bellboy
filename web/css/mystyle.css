@@ -34,18 +34,18 @@ a:visited {
 }
 
 .active {
-  background: <%= theme.ActiveBackground %>;
-  color: <%= theme.ActiveForeground %>;
+  background: <%= theme.ActiveBackground %> !important;
+  color: <%= theme.ActiveForeground %> !important;
 }
 
 .next {
-  background: blue !important;
-  color: white !important;
+  background: <%= theme.NextBackground %>; !important;
+  color: <%= theme.NextForeground %> !important;
 }
 
 .inactive {
-  background: <%= theme.InactiveBackground %>;
-  color: <%= theme.InactiveForeground %>;
+  background: <%= theme.InactiveBackground %> !important;
+  color: <%= theme.InactiveForeground %> !important;
 }
 
 #content {

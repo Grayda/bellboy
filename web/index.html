@@ -7,28 +7,26 @@
       <table border=1 cellpadding=10 cellspacing=0 class="list">
         <tr cellpadding="5" class="colour">
           <th>&nbsp;</th>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Time</th>
-          <th>File</th>
-          <th>Email</th>
-          <th>Locked</th>
-          <th>Enabled</th>
+          <!-- <th><a title="The unique ID of this bell">ID</a></th> -->
+          <th><a title="Short name for this bell">Name</a></th>
+          <th><a title="A description of this bell">Description</a></th>
+          <th><a title="When this bell will next ring">Next Time</a></th>
+          <th><a title="The sound(s) to play when it rings">Sound</a></th>
+          <th><a title="Will this send an email when triggered?">Email</a></th>
+          <th><a title="Is this bell locked from the web UI (to prevent unauthorized changes)?">Locked</a></th>
           <th>Actions</th>
         </tr>
         <% Object.keys(items).forEach(function(item){ %>
           <% if (items[item].Enabled === false) { %><tr class="inactive"><% } else { %><tr class="active"><% } %>
-            <% if (nextjob == items[item].Time) { %><td class="next">NEXT</td><% } else { %><td>&nbsp;</td><% } %>
-            <td><%= item %></td>
+            <% if (nextJob["time"] == items[item].Time) { %><td class="next"><a title="This bell will play next">NEXT</a></td><% } else { %><td>&nbsp;</td><% } %>
+            <!-- <td><%= item %></td> -->
             <td><%= items[item].Name %></td>
             <td><%= items[item].Description %></td>
-            <td><a href="http://cronchecker.net/check?statement=<%= items[item].Time %> The Bell" title="Click here to read this in plain english" target="_blank"><%= items[item].Time %></a></td>
+            <td><a href="#" title="<%= items[item].Time %>"><%= cron(items[item].Time) %></a></td>
             <td><%= items[item].File %></td>
             <td><%= items[item].TriggerEmail.Enabled %></td>
             <td><%= items[item].Locked %></td>
-            <td><%= items[item].Enabled %></td>
-            <td><a href="toggle.html?id=<%= item %>&state=<% if (items[item].Enabled === false) { %>true<% } else { %>false<% } %>"><% if (items[item].Enabled === false) { %>Enable<% } else { %>Disable<% } %></a> | <a href="edit.html?id=<%= item.ID %>">Edit</a></td>
+            <td><a href="toggle.html?id=<%= item %>&state=<% if (items[item].Enabled === false) { %>true<% } else { %>false<% } %>"><% if (items[item].Enabled === false) { %>Enable<% } else { %>Disable<% } %></a></td>
           </tr>
         <% }); %>
       </table>

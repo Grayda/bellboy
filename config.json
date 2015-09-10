@@ -25,10 +25,12 @@
     "Link": "#9f3357",
     "ActiveLink": "#9f3357",
     "VisitedLink": "#9f3357",
-    "ActiveBackground": "#dcff92",
+    "ActiveBackground": "#ebffb6",
     "ActiveForeground": "black",
-    "InactiveBackground": "#ffac92",
-    "InactiveForeground": "black"
+    "InactiveBackground": "#ffd8bc",
+    "InactiveForeground": "black",
+    "NextBackground": "#7aa9d6",
+    "NextForeground": "white"
   },
   "Server": true,
   "ServerPort": 8080,

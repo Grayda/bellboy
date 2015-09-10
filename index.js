@@ -213,10 +213,12 @@ function startServer() {
   // Call to the root
   dispatcher.onGet("/", function(req, res) {
     file = fs.readFileSync("./web/index.html").toString()
+
     var options = {
       items: bells.Bells,
       Date: moment().format(config.DateFormat),
-      nextjob: nextJob(),
+      nextJob: nextJob(),
+      cron: function(cron) { return cronToDate(cron) },
       query: req,
       filename: "./web/header.html"
     }
@@ -343,24 +345,32 @@ function loadBells() {
   showTable()
 }
 
+
+function cronToDate(cron) {
+  return moment(parser.parseExpression(cron).next()).format("ddd hh:mma")
+}
+
 function nextJob() {
   var time
-  var smallest = -9999999999999999999999999999
-    Object.keys(bells.Bells).forEach(function(item) {
-      if (bells.Bells[item].Enabled == true) {
+  var results = []
+    // Because the diff is a negative number (smaller as it approaches "now") and we're lookiung for a number > the smallest, we set this insanely low
+  results["diff"] = -9999999999999999999999999999
+  Object.keys(bells.Bells).forEach(function(item) {
+    if (bells.Bells[item].Enabled == true) { // Only interested in enabled bells
+      var interval = parser.parseExpression(bells.Bells[item].Time);
+      diff = moment().diff(interval.next())
+      if (diff > results["diff"]) {
 
+        results["parsed"] = interval.next()
+        results["shortparsed"] = moment(results["parsed"]).format("ddd MMM Do HH:MM:SS")
+        results["diff"] = diff
+        results["time"] = bells.Bells[item].Time
 
-    var interval = parser.parseExpression(bells.Bells[item].Time);
-    diff = moment().diff(interval.next())
-    if(diff > smallest) {
-      smallest = diff
-      time = bells.Bells[item].Time
-      console.log("Smallest is: " + bells.Bells[item].Time + " which will occur in " + smallest)
-    }
+      }
     }
   })
 
-  return time
+  return results
 }
 
 function saveBells() {
