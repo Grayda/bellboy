@@ -201,7 +201,7 @@ function startServer() {
   })
 
   // We've requested a CSS file. Pass it the WebTheme from our config file
-  dispatcher.beforeFilter(/\.css|\.less/g, function(req, res) {
+  dispatcher.beforeFilter(/\.less/g, function(req, res) {
     var options = {
       theme: config.WebTheme,
       filename: "./web/header.html"
@@ -209,11 +209,23 @@ function startServer() {
 
     file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
     less.render(ejs.render(file, options), function(e, output) {
-      if(e) { console.dir(e) }
       res.end(output.css)
     })
 
   })
+
+  // We've requested a CSS file. Pass it the WebTheme from our config file
+  dispatcher.beforeFilter(/\.css/g, function(req, res) {
+    var options = {
+      theme: config.WebTheme,
+      filename: "./web/header.html"
+    }
+
+    file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
+    res.end(ejs.render(file, options))
+
+  })
+
 
   // Call to the root
   dispatcher.onGet("/", function(req, res) {
@@ -352,7 +364,7 @@ function loadBells() {
 
 
 function cronToDate(cron) {
-  return moment(parser.parseExpression(cron).next()).format("ddd hh:mma")
+  return moment(parser.parseExpression(cron).next()).calendar()
 }
 
 function nextJob() {

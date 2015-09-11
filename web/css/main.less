@@ -32,6 +32,7 @@ html {
   padding: 1% 1% 0 1%;
   text-align: center;
   float: left;
+  position: static;
 }
 
 .logo {
@@ -39,8 +40,18 @@ html {
   position: relative;
 }
 
+.right {
+  position: absolute;
+  top: 0;
+  right: 1%;
+}
+
 #sidebar a:link, #sidebar a:visited, #sidebar a:active {
   color: lighten(@accent1, 35%);
+}
+
+#sidebar table {
+  color: contrast(@accent1);
 }
 
 #header {
@@ -50,7 +61,7 @@ html {
   padding: 1px 1%;
   .grad(darken(@accent1, 50%), darken(@accent1, 25%));
   color: contrast(@accent1);
-
+  position: static;
 }
 
 #content {
@@ -59,6 +70,7 @@ html {
   height: 100vh;
   color: contrast(@base1);
   .grad(@base1, @base2);
+  background-attachment: fixed;
 }
 
 table {
@@ -66,12 +78,13 @@ table {
 }
 
 th {
-  background: @accent1;
+  .grad-vertical(@accent1, darken(@accent1, 25%));
   color: contrast(@accent1);
 }
 
 .inactive {
-  background: lighten(@accent2, 25%);
+.grad-vertical(lighten(@accent2, 35%), lighten(@accent2, 25%));
+color: contrast(@accent2);
 }
 
 .active {
@@ -90,15 +103,24 @@ th {
   padding: 1%;
 }
 
-.grad(@start, @end) {
+.grad(@start, @end, @startorientation: "top left", @endorientation: "bottom right") {
   background: @start; /* Old browsers */
-  background: -moz-linear-gradient(top left,  @start 1%, @end 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, top left, bottom right, color-stop(1%,@start), color-stop(100%,@end)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top left,  @start 1%,@end 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top left,  @start 1%,@end 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top left,  @start 1%,@end 100%); /* IE10+ */
-  background: linear-gradient(to bottom right,  @start 1%,@end 100%); /* W3C */
+  background: -moz-linear-gradient(@startorientation,  @start 1%, @end 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, @startorientation, @endorientation, color-stop(1%,@start), color-stop(100%,@end)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(@startorientation,  @start 1%,@end 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(@startorientation,  @start 1%,@end 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(@startorientation,  @start 1%,@end 100%); /* IE10+ */
+  background: linear-gradient(to @endorientation,  @start 1%,@end 100%); /* W3C */
 }
+
+.grad-vertical(@start, @end) {
+  .grad(@start, @end, top, bottom);
+}
+
+.grad-horizontal(@start, @end) {
+  .grad(@start, @end, left, right);
+}
+
 
 .shadow(@dist, @opacity: 0.5) {
   -webkit-box-shadow: 0px 0px @dist 0px rgba(50, 50, 50, @opacity);

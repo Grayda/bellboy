@@ -1,8 +1,26 @@
-<a href="/"><img class="logo" src="../images/logo.png"></a>
+<a href="/">
+  <img class="logo" src="../images/logo.png">
+</a>
 
-<h1>Tasks</h1>
-<i class="fa fa-plus fa-lg"></i> <a href="add.html">Add new bell</a><br /><br />
-<i class="fa fa-refresh fa-lg"></i> <a href="reload.html">Reload bells and config</a><br /><br />
-<i class="fa fa-wrench fa-lg"></i> <a href="update.html">Update app</a><br /><br />
-<i class="fa fa-book fa-lg"></i> <a href="logs.html">View Log</a><br /><br />
-<div class="currentTime"><%= Date %></div>
+<h2>Tasks</h2>
+<table>
+  <tr>
+      <td><i class="fa fa-plus fa-lg"></i></td>
+      <td><a href="add.html">Add new bell</a></td>
+  </tr>
+  <tr>
+      <td><i class="fa fa-refresh fa-lg"></i></td>
+      <td><a href="reload.html">Reload settings</a></td>
+    </tr>
+    <tr>
+      <td><i class="fa fa-wrench fa-lg"></i></td>
+      <td><a href="update.html">Update app</a></td>
+    </tr>
+    <tr>
+      <td><i class="fa fa-book fa-lg"></i></td>
+      <td><a href="logs.html">View Log</a></td>
+    <tr />
+</table>
+<div class="currentTime">
+  <%= Date %>
+</div>

@@ -2,17 +2,23 @@
 <head>
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="../css/main.less">
-<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
   <div id="header">
     <h2>Bellboy Timer System</h2>
+    <h4 class="right">Next bell: <%= cron(nextJob["time"]) %></h4>
   </div>
-<div class="container">
-
-  <div id="sidebar">
+<div class="container-full">
+  <div class="full-height">
+  <div class="row">
+    <div class="full-height">
+  <div id="sidebar" class="col-md-1">
+    <div class="full-height">
     <% include sidebar.html %>
   </div>
-  <div id="content">
+  </div>
+  <div id="content" class="col-md-11">
+    <div class="full-height">
