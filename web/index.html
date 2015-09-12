@@ -1,6 +1,7 @@
 <!-- Homepage. Shows a list of bells and gives us the option to enable or disable bells -->
 <% include includes/header.html %>
       <h1>Currently loaded bells</h1>
+      <% if(items["_all"].Enabled == true) { %>
       <table border=1 cellpadding=10 cellspacing=0 class="list">
         <tr cellpadding="5" class="colour">
           <th>&nbsp;</th>
@@ -14,12 +15,13 @@
           <th>Actions</th>
         </tr>
         <% Object.keys(items).forEach(function(item){ %>
+          <% if(item === "_all") { return } %>
           <% if (items[item].Enabled === false) { %><tr class="inactive"><% } else { %><tr class="active"><% } %>
             <% if (nextJob["time"] == items[item].Time) { %><td class="next"><i class="fa fa-chevron-right"></i> <a title="This bell will play next">NEXT</a></td><% } else { %><td>&nbsp;</td><% } %>
             <!-- <td><%= item %></td> -->
             <td><%= items[item].Name %></td>
             <td><%= items[item].Description %></td>
-            <td><a href="#" title="<%= items[item].Time %>"><%= cron(items[item].Time) %></a></td>
+            <td><a href="#" title="<%= items[item].Time %>"><%= cron(items[item].Time)["calendar"] %></a></td>
             <td><%= items[item].File %></td>
             <td><%= items[item].TriggerEmail.Enabled %></td>
             <td><%= items[item].Locked %></td>
@@ -27,4 +29,7 @@
           </tr>
         <% }); %>
       </table>
+      <% } else { %>
+        <h1>All bells are currently disabled. <a href="toggle.html?id=_all&state=true">Click here to enable them again</a></h1>
+      <% } %>
 <% include includes/footer.html %>

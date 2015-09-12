@@ -1,15 +1,18 @@
 {
-  "Enabled": true,
   "Bells": {
+    "_all": {
+      "Description": "A fake bell that controls the rest of the bells. DO NOT DELETE",
+      "Enabled": true,
+      "Locked": "false"
+    },
     "test": {
       "Enabled": false,
       "Name": "Test Bell - EVERY MINUTE",
-      "Description": "RUN FOR ALL OF THE TIMES!",
+      "Description": "RUN FOR ALL OF THE MINUTES!",
       "Locked": "false",
-      "Time": "* * * * 1,2,3,4,5",
+      "Time": "* * * * *",
       "File": [
-        "bell.mp3",
-        "bell2.mp3"
+        "bell.mp3"
       ],
       "TriggerEmail": {
         "Enabled": false,
@@ -29,7 +32,7 @@
     "homeroomwarning": {
       "Enabled": true,
       "Name": "Homeroom Bell - Warning",
-      "Description": "8:45am, Mon-Fri: Warning bell for homeroom",
+      "Description": "Warning bell for homeroom",
       "Locked": "false",
       "Time": "45 8 * * 1,2,3,4,5",
       "File": [
@@ -53,7 +56,7 @@
     "homeroomstart": {
       "Enabled": true,
       "Name": "Homeroom Bell",
-      "Description": "8:50am, Mon-Fri: Homeroom Bell",
+      "Description": "Start of homeroom",
       "Locked": "false",
       "Time": "50 8 * * 1,2,3,4,5",
       "File": [
@@ -77,7 +80,7 @@
     "gratitude": {
       "Enabled": true,
       "Name": "Gratitude Music",
-      "Description": "9:07am, Mon-Fri: Gratitude Music",
+      "Description": "Plays a minute of music",
       "Locked": "false",
       "Time": "7 9 * * 1,2,3,4,5",
       "File": [
@@ -101,7 +104,7 @@
     "homeroomend": {
       "Enabled": true,
       "Name": "The end of homerom",
-      "Description": "9:11am, Mon-Fri: Gratitude Music",
+      "Description": "Homeroom ended - 5 minutes until class starts",
       "Locked": "false",
       "Time": "11 9 * * 1,2,3,4,5",
       "File": [
@@ -124,8 +127,8 @@
     },
     "period1": {
       "Enabled": true,
-      "Name": "Start of period 1",
-      "Description": "9:16am, Mon-Fri: Period 1",
+      "Name": "Period 1",
+      "Description": "Start of period 1",
       "Locked": "false",
       "Time": "16 9 * * 1,2,3,4,5",
       "File": [
@@ -148,8 +151,8 @@
     },
     "recess": {
       "Enabled": true,
-      "Name": "Start of recess",
-      "Description": "10:26am, Mon-Fri: Recess",
+      "Name": "Recess",
+      "Description": "Start of recess",
       "Locked": "false",
       "Time": "26 10 * * 1,2,3,4,5",
       "File": [
@@ -173,7 +176,7 @@
     "recessend": {
       "Enabled": true,
       "Name": "End of recess",
-      "Description": "10:46am, Mon-Fri: End of Recess",
+      "Description": "End of Recess - 5 minutes until period 2",
       "Locked": "false",
       "Time": "46 10 * * 1,2,3,4,5",
       "File": [
@@ -197,7 +200,7 @@
     "period2": {
       "Enabled": true,
       "Name": "Period 2",
-      "Description": "10:51am, Mon-Fri: Period 2",
+      "Description": "Start of period 2",
       "Locked": "false",
       "Time": "51 10 * * 1,2,3,4,5",
       "File": [
@@ -221,7 +224,7 @@
     "period2end": {
       "Enabled": true,
       "Name": "End of Period 2",
-      "Description": "12:01pm, Mon-Fri: End of Period 2",
+      "Description": "End of period 2 - 5 minutes until start of period 3",
       "Locked": "false",
       "Time": "1 12 * * 1,2,3,4,5",
       "File": [
@@ -245,7 +248,7 @@
     "period3": {
       "Enabled": true,
       "Name": "Period 3",
-      "Description": "12:06am, Mon-Fri: Period 2",
+      "Description": "Start of period 3",
       "Locked": "false",
       "Time": "6 12 * * 1,2,3,4,5",
       "File": [
@@ -269,7 +272,7 @@
     "lunch": {
       "Enabled": true,
       "Name": "Lunch Time",
-      "Description": "1:16pm, Mon-Fri: Start of Lunch",
+      "Description": "Start of Lunch",
       "Locked": "false",
       "Time": "16 13 * * 1,2,3,4,5",
       "File": [
@@ -293,7 +296,7 @@
     "lunchhalftime": {
       "Enabled": true,
       "Name": "First Lunch Bell",
-      "Description": "1:41pm, Mon-Fri: End of the first half of lunch",
+      "Description": "End of the first half of lunch",
       "Locked": "false",
       "Time": "41 13 * * 1,2,3,4,5",
       "File": [
@@ -317,7 +320,7 @@
     "lunchend": {
       "Enabled": true,
       "Name": "End of lunch",
-      "Description": "2:02pm, Mon-Fri: End of lunch",
+      "Description": "End of lunch - 5 minutes until period 4",
       "Locked": "false",
       "Time": "2 14 * * 1,2,3,4,5",
       "File": [
@@ -341,7 +344,7 @@
     "period4": {
       "Enabled": true,
       "Name": "Period 4",
-      "Description": "2:05pm, Mon-Fri: Start of Period 4",
+      "Description": "Start of Period 4",
       "Locked": "false",
       "Time": "5 14 * * 1,2,3,4,5",
       "File": [
@@ -365,7 +368,7 @@
     "dayend": {
       "Enabled": true,
       "Name": "End of the Day",
-      "Description": "3:15pm, Mon-Fri: End of the day",
+      "Description": "End of the school day",
       "Locked": "false",
       "Time": "15 15 * * 1,2,3,4,5",
       "File": [

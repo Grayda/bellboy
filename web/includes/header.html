@@ -9,7 +9,7 @@
 <body>
   <div id="header">
     <h2>Bellboy Timer System</h2>
-    <h4 class="right">Next bell: <%= cron(nextJob["time"]) %></h4>
+    <h4 class="right">Next bell: <%= cron(nextJob["time"])["to"] %></h4>
   </div>
 <div class="container-full">
   <div class="full-height">

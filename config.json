@@ -18,27 +18,7 @@
     "Accent": ["#3a75ac", "orange", "#7ac676"],
     "Font": "Roboto, Verdana, Arial"
   },
-  "WebTheme2": {
-    "BackgroundGradStart": "#53585e",
-    "BackgroundGradEnd": "#554d4a",
-    "Foreground": "#b8b7b2",
-    "GradStart": "none",
-    "GradEnd": "none",
-    "GradLink": "white",
-    "GradActiveLink": "white",
-    "GradVisitedLink": "white",
-    "TableBackground": "#d8c4ac",
-    "TableColour": "black",
-    "Link": "#c3b39c",
-    "ActiveLink": "#c3b39c",
-    "VisitedLink": "#c3b39c",
-    "ActiveBackground": "rgba(255, 216, 188, 0.75)",
-    "ActiveForeground": "black",
-    "InactiveBackground": "rgba(216,196,172,0.75)",
-    "InactiveForeground": "black",
-    "NextBackground": "#7aa9d6",
-    "NextForeground": "white"
-  },
+
   "Server": true,
   "ServerPort": 8080,
   "DateFormat": "D MMMM YYYY, h:mm:ssa",
