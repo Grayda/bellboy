@@ -2,7 +2,7 @@
   "BellFile": "bells.json",
   "AppName": "Bellboy",
   "Version": "0.0.1",
-  "Debug": false,
+  "Debug": true,
   "Beta": true,
   "Mail": {
     "From": "bellmaster@example.com",

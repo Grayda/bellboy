@@ -25,7 +25,7 @@
       ],
       "Mail": {
         "Trigger": {
-          "Enabled": "true",
+          "Enabled": "false",
           "To": "you@example.com",
           "Subject": "Bell has been triggered",
           "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"

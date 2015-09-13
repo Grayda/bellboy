@@ -227,6 +227,36 @@ function startServer() {
   })
 
   // ===============================================================================================
+  // For displays such as the PiTFT
+
+  dispatcher.onGet("/monitor.html", function(req, res) {
+    var bellcount = 0
+    var enabledcount = 0
+  Object.keys(bells.Bells).forEach(function(item) {
+    bellcount++
+    if(bells.Bells[item].Enabled == true) {
+      enabledcount++
+    }
+  });
+  console.log(bellcount, enabledcount)
+    var options = {
+      items: bells.Bells,
+      Date: moment().format(config.DateFormat),
+      params: req.params,
+      filename: "./web/header.html",
+      nextJob: nextJob(),
+      bellcount: bellcount,
+      enabledcount: enabledcount,
+      cron: function(cron) {
+        return cronToDate(cron)
+      }
+    }
+
+    file = fs.readFileSync("./web/monitor.html").toString()
+    res.end(ejs.render(file, options))
+  });
+
+  // ===============================================================================================
   // Reload bells and settings
 
   dispatcher.onGet("/reload.html", function(req, res) {
@@ -278,54 +308,104 @@ function startServer() {
       // Render the template and write it to our waiting client.
       res.end(ejs.render(file, options))
     })
-
-
-
   })
-
 
   // ===============================================================================================
-  // Ask to update the app using git pull
-  // TO-DO: Make sure bells don't get overwritten by git pull!
-  dispatcher.onGet("/update.html", function(req, res) {
-    if (req.params.confirm) {
-      var exec = require('child_process').exec
-      var strStdout, branch
+  // When we're switching a bell on or off
+  dispatcher.onGet("/trigger.html", function(req, res) {
+    var item = req.params.id
 
-      if (config.Beta === true) {
-        branch = "beta"
-      } else {
-        branch = "stable"
-      }
-      c("Pulling branch: " + branch)
+    // If bells are DISABLED, just return. Don't process anything.
+    if (bells.Bells["_all"].Enabled === false) {
+      c("=======================================================================")
+      c("Bells are currently DISABLED. No bells will ring until they are enabled")
+      c("=======================================================================")
+      return;
+    }
+    // Let us know the job has been triggered
+    c("Triggering job: " + bells.Bells[item].Name + " at " + moment().format(config.DateFormat));
+    // If we've got emails enabled for this job
+    emailState = (bells.Bells[item].Mail.Trigger.Enabled === "true")
+    if (emailState == true) {
+      c("Emailing Now..")
+      sendEmail(bells.Bells[item])
+    }
 
-      exec("git pull origin " + branch, function(error, stdout, stderr) {
-          strStdout = stdout
-          console.log(stdout || stderr)
-        })
-        }
+    // Actually play the audio
+    playAudio(bells.Bells[item].File)
 
+    file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
+      // Options the template will have access to
+    var options = {
+      item: bells.Bells[req.params.id],
+      Date: moment().format(config.DateFormat),
+      nextJob: nextJob(),
+      cron: function(cron) {
+        return cronToDate(cron)
+      },
+      filename: "./web/header.html"
+    }
+
+    // Render the template and write it to our waiting client.
+    res.end(ejs.render(file, options))
+
+})
+
+
+// ===============================================================================================
+// Ask to update the app using git pull
+// TO-DO: Make sure bells don't get overwritten by git pull!
+dispatcher.onGet("/update.html", function(req, res) {
+  var strStdout, branch
+  if (req.params.confirm) {
+    var exec = require('child_process').exec
+
+
+    if (config.Beta === true) {
+      branch = "beta"
+    } else {
+      branch = "stable"
+    }
+    c("Pulling branch: " + branch)
+
+    exec("git pull origin " + branch, function(error, stdout, stderr) {
+      strStdout = stdout
+      console.log(stdout || stderr)
         // Grab the update.html file for updating
-        file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
+      file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
         // Options the template will have access to
-        var options = {
-          Date: moment().format(config.DateFormat),
-          status: stdout || stderr,
-          params: req.params,
-          nextJob: nextJob(),
-          cron: function(cron) {
-            return cronToDate(cron)
-          },
-          filename: "./web/header.html"
-        }
-        res.end(ejs.render(file, options))
-      
-  })
+      var options = {
+        Date: moment().format(config.DateFormat),
+        status: stdout || stderr,
+        params: req.params,
+        nextJob: nextJob(),
+        cron: function(cron) {
+          return cronToDate(cron)
+        },
+        filename: "./web/header.html"
+      }
+      res.end(ejs.render(file, options))
+    })
+  } else {
+    file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
+    var options = {
+      Date: moment().format(config.DateFormat),
+      params: req.params,
+      nextJob: nextJob(),
+      cron: function(cron) {
+        return cronToDate(cron)
+      },
+      filename: "./web/header.html"
+    }
+    res.end(ejs.render(file, options))
 
-  // After our setup, set our server to listen
-  server.listen(config.ServerPort, function() {
-    c("Server listening on: http://localhost:" + config.ServerPort);
-  });
+  }
+})
+
+// After our setup, set our server to listen
+server.listen(config.ServerPort, function() {
+  c("Server listening on: http://localhost:" + config.ServerPort);
+});
 
 }
 

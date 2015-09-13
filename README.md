@@ -37,9 +37,9 @@ Limitations
 To-Do / Wishlist
 ================
 
-Here's a list of things I'd like to eventually add. If you have any more ideas, please open an issue and argue your case :)
+Here's a list of things I'd like to eventually add, plus some ideas to consider. If you have any more ideas, please open an issue and argue your case :)
 
-  - [ ] Add web UI to allow adjustment plus download / upload of times and settings
+  - [x] Add web UI to allow adjustment plus download / upload of times and settings
   - [ ] Security! Security! Security! Security! Security!
   - [ ] Make bells.json loadable from URL / file
   - [ ] Record & include some sample audio files
@@ -51,3 +51,6 @@ Here's a list of things I'd like to eventually add. If you have any more ideas, 
   - [ ] Allow complex bells (e.g. bells disable other bells)
   - [ ] Allow addons?
   - [ ] Create a separate JS for the web stuff, or provide a REST API so you can write your own front-end?
+  - [ ] Convert the UI into a RESTful service so people can write their own front-end
+    - [ ] Perhaps investigate MQTT, as that would also allow subscriptions to bells by other systems
+    - [ ] Perhaps break this all down into various services (e.g. base just triggers / emits events, and an audio "module" plays the sound)

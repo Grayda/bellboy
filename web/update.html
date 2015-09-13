@@ -1,13 +1,18 @@
 <% include includes/header.html %>
-  <% if(params["confirm"] == true) { %>
+  <% if(params["confirm"] == "true") { %>
     <h2>Updating..</h2>
     <h3>Update command has run. Here's the results:</h3>
     <p>
       <%= status %>
     </p>
     <a href="/">Click here to go back</a>
-  <% } else { %>
-    <h2>Are you sure you want to update?</h2>
-    <h3><a href="update.html?confirm=true">Click here to confirm</a></h3>
-  <% } $>
-    <% include includes/footer.html %>
+    <% } else { %>
+      <h2>Are you sure you want to update?</h2>
+      <ul>
+        <li>Updating may cause your bells to stop working momentarily</li>
+        <li>Currently, any changes to bells.json or config.json may be overwritten</li>
+        <li>Any changes you make to the source code will be removed using the <pre>git stash</pre> command</li>
+      </ul>
+      <h3><a href="update.html?confirm=true">Click here to confirm and update</a></h3>
+      <% } %>
+        <% include includes/footer.html %>
