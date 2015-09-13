@@ -78,13 +78,12 @@ table {
 }
 
 th {
-  .grad-vertical(@accent1, darken(@accent1, 25%));
+  .grad-vertical(@accent1, darken(@accent1, 20%));
   color: contrast(@accent1);
 }
 
 .inactive {
-.grad-vertical(lighten(@accent2, 35%), lighten(@accent2, 25%));
-color: contrast(@accent2);
+  .grad-vertical(lighten(@accent2, 25%), @accent2);
 }
 
 .active {
@@ -95,7 +94,6 @@ color: contrast(@accent2);
   background: @accent1;
   color: contrast(@accent1);
 }
-
 
 
 .currentTime {

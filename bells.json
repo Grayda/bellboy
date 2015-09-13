@@ -1,9 +1,18 @@
 {
   "Bells": {
     "_all": {
-      "Description": "A fake bell that controls the rest of the bells. DO NOT DELETE",
+      "Name": "All Bells",
+      "Description": "A \"virtual\" bell that controls the rest of the bells. DO NOT DELETE",
       "Enabled": true,
-      "Locked": "false"
+      "Locked": "false",
+      "Mail": {
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "All Bells Toggled",
+          "Body": "All bells have been changed to <%= item.Enabled %>. They were changed at <%= Date %>"
+        }
+      }
     },
     "test": {
       "Enabled": false,
@@ -14,19 +23,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": false,
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "Bell: <%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "homeroomwarning": {
@@ -38,19 +47,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": false,
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "Bell: <%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "homeroomstart": {
@@ -62,19 +71,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "gratitude": {
@@ -86,19 +95,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "homeroomend": {
@@ -110,19 +119,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "period1": {
@@ -134,19 +143,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "recess": {
@@ -158,19 +167,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "recessend": {
@@ -182,19 +191,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "period2": {
@@ -206,19 +215,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "period2end": {
@@ -230,19 +239,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "period3": {
@@ -254,19 +263,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "lunch": {
@@ -278,19 +287,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "lunchhalftime": {
@@ -302,19 +311,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "lunchend": {
@@ -326,19 +335,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "period4": {
@@ -350,19 +359,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     },
     "dayend": {
@@ -374,19 +383,19 @@
       "File": [
         "bell.mp3"
       ],
-      "TriggerEmail": {
-        "Enabled": "false",
-        "From": "",
-        "To": "",
-        "Body": "",
-        "Subject": ""
-      },
-      "ChangeEmail": {
-        "Enabled": true,
-        "From": "",
-        "To": "",
-        "Body": "<%= item.Name %> has been changed to <%= item.Enabled %>",
-        "Subject": "It was changed on <%= Date %>. If this shouldn't happen, please enable it again"
+      "Mail": {
+        "Trigger": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        },
+        "Change": {
+          "Enabled": "true",
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        }
       }
     }
   }

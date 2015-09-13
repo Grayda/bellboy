@@ -4,8 +4,8 @@
   "Version": "0.0.1",
   "Debug": false,
   "Beta": true,
-  "Email": {
-    "From": "",
+  "Mail": {
+    "From": "bellmaster@example.com",
     "Server": "",
     "Username": "",
     "Password": "",

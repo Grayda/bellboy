@@ -48,20 +48,34 @@ function playAudio(file) {
 function sendEmail(item) {
   // variables that the template should have access to
   var options = {
-    mail: item.TriggerEmail,
+    mail: item.Mail.Trigger,
     item: item,
     Date: moment().format(config.DateFormat)
   }
 
   // Send the actual email.
-  sendRawEmail(item.TriggerEmail.From, item.TriggerEmail.To, item.TriggerEmail.Subject, item.TriggerEmail.Body, options)
+  sendRawEmail(config.Mail.From, item.Mail.Trigger.To, item.Mail.Trigger.Subject, item.Mail.Trigger.Body, options)
 }
 
-// Function that sends an email. SendEmail is used by it, as is the function for ChangeEmail
+function sendChangeEmail(item) {
+  console.log(item)
+  var options = {
+    mail: item.Mail.Change,
+    item: item,
+    Date: moment().format(config.DateFormat)
+  }
+
+  // Send the actual email.
+  sendRawEmail(config.Mail.From, item.Mail.Change.To, item.Mail.Change.Subject, item.Mail.Change.Body, options)
+
+
+}
+
+// Function that sends an email. SendEmail is used by it, as is the function for Mail.Changed
 function sendRawEmail(from, to, subject, body, options) {
   // Take our options and parse our template
   var tBody = ejs.render(body, options)
-  var tSubject = ejs.render(config.Email.SubjectPrefix + subject, options)
+  var tSubject = ejs.render(config.Mail.SubjectPrefix + subject, options)
 
   // Create a new table to show what email was sent.
   var table = new Table({
@@ -72,15 +86,15 @@ function sendRawEmail(from, to, subject, body, options) {
   });
 
   table.push(
-    ["Server", config.Email.Server], ["From", from], ["To", to], ["Subject", tSubject], ["Body", tBody], ["Time", moment().format(config.DateFormat)]
+    ["Server", config.Mail.Server], ["From", from], ["To", to], ["Subject", tSubject], ["Body", tBody], ["Time", moment().format(config.DateFormat)]
   );
 
   var email = require("emailjs");
   var server = email.server.connect({
-    user: config.Email.Username,
-    password: config.Email.Password,
-    host: config.Email.Server,
-    ssl: config.Email.SSL
+    user: config.Mail.Username,
+    password: config.Mail.Password,
+    host: config.Mail.Server,
+    ssl: config.Mail.SSL
   });
 
   // send the message and get a callback with an error or details of the message that was sent
@@ -90,7 +104,9 @@ function sendRawEmail(from, to, subject, body, options) {
     to: to,
     subject: tSubject
   }, function(err, message) {
-    if(err) { c(err) }
+    if (err) {
+      c(err)
+    }
   });
 
   c(table.toString())
@@ -113,6 +129,7 @@ function startServer() {
     var options = {
       items: bells.Bells,
       bellsenabled: bells.Bells.Enabled,
+      params: req.params,
       Date: moment().format(config.DateFormat),
       nextJob: nextJob(),
       cron: function(cron) {
@@ -128,8 +145,8 @@ function startServer() {
   // We've requested an image. Needs to be sent in binary
   dispatcher.beforeFilter(/\.jpg|\.png|\.gif|\.bmp\.ttf|\.woff/g, function(req, res) {
     file = fs.readFileSync("./web" + url.parse(req.url).pathname)
-    console.log("Binary")
-    res.end(file, 'binary')
+    params: req.params,
+      res.end(file, 'binary')
   })
 
   // ===============================================================================================
@@ -137,11 +154,13 @@ function startServer() {
   dispatcher.beforeFilter(/\.less/g, function(req, res) {
     var options = {
       theme: config.WebTheme,
+      params: req.params,
       filename: "./web/header.html"
     }
 
     file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
     less.render(ejs.render(file, options), function(e, output) {
+      c(e)
       res.end(output.css)
     })
 
@@ -152,6 +171,7 @@ function startServer() {
   dispatcher.beforeFilter(/\.css/g, function(req, res) {
     var options = {
       theme: config.WebTheme,
+      params: req.params,
       filename: "./web/header.html",
       nextJob: nextJob(),
       cron: function(cron) {
@@ -171,6 +191,7 @@ function startServer() {
     var options = {
       items: bells.Bells,
       Date: moment().format(config.DateFormat),
+      params: req.params,
       query: req,
       filename: "./web/header.html",
       nextJob: nextJob(),
@@ -192,6 +213,7 @@ function startServer() {
       var options = {
         Date: moment().format(config.DateFormat),
         logs: fs.readFileSync("bellboy.log").toString().replace("\n", "<br />"),
+        params: req.params,
         nextJob: nextJob(),
         cron: function(cron) {
           return cronToDate(cron)
@@ -213,6 +235,7 @@ function startServer() {
 
     var options = {
       Date: moment().format(config.DateFormat),
+      params: req.params,
       filename: "./web/header.html",
       nextJob: nextJob(),
       cron: function(cron) {
@@ -228,32 +251,33 @@ function startServer() {
   // When we're switching a bell on or off
   dispatcher.onGet("/toggle.html", function(req, res) {
 
-      var state = (req.params.state === "true")
-      toggleBell(req.params.id, state, function(success) {
-        if (success == false) {
-          c("State NOT updated, as the job is locked")
-        } else {
-          showTable()
-          saveBells()
-        }
+    var state = (req.params.state === "true")
+    toggleBell(req.params.id, state, function(success) {
+      if (success == false) {
+        c("State NOT updated, as the job is locked")
+      } else {
+        sendChangeEmail(bells.Bells[req.params.id])
+        showTable()
+        saveBells()
+      }
 
-        // Grab the toggle.html file for updating
-        file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
-          // Options the template will have access to
-        var options = {
-          item: bells.Bells[req.params.id],
-          Date: moment().format(config.DateFormat),
-          nextJob: nextJob(),
-          cron: function(cron) {
-            return cronToDate(cron)
-          },
-          state: state,
-          filename: "./web/header.html"
-        }
+      // Grab the toggle.html file for updating
+      file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
+        // Options the template will have access to
+      var options = {
+        item: bells.Bells[req.params.id],
+        Date: moment().format(config.DateFormat),
+        nextJob: nextJob(),
+        cron: function(cron) {
+          return cronToDate(cron)
+        },
+        state: state,
+        filename: "./web/header.html"
+      }
 
-        // Render the template and write it to our waiting client.
-        res.end(ejs.render(file, options))
-      })
+      // Render the template and write it to our waiting client.
+      res.end(ejs.render(file, options))
+    })
 
 
 
@@ -264,35 +288,38 @@ function startServer() {
   // Ask to update the app using git pull
   // TO-DO: Make sure bells don't get overwritten by git pull!
   dispatcher.onGet("/update.html", function(req, res) {
-    var exec = require('child_process').exec
-    var strStdout, branch
+    if (req.params.confirm) {
+      var exec = require('child_process').exec
+      var strStdout, branch
 
-    if (config.Beta === true) {
-      branch = "beta"
-    } else {
-      branch = "stable"
-    }
-    c("Pulling branch: " + branch)
-
-    exec("git pull origin " + branch, function(error, stdout, stderr) {
-      strStdout = stdout
-      console.log(stdout || stderr)
-
-
-      // Grab the update.html file for updating
-      file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
-        // Options the template will have access to
-      var options = {
-        Date: moment().format(config.DateFormat),
-        status: stdout || stderr,
-        nextJob: nextJob(),
-        cron: function(cron) {
-          return cronToDate(cron)
-        },
-        filename: "./web/header.html"
+      if (config.Beta === true) {
+        branch = "beta"
+      } else {
+        branch = "stable"
       }
-      res.end(ejs.render(file, options))
-    })
+      c("Pulling branch: " + branch)
+
+      exec("git pull origin " + branch, function(error, stdout, stderr) {
+          strStdout = stdout
+          console.log(stdout || stderr)
+        })
+        }
+
+        // Grab the update.html file for updating
+        file = fs.readFileSync("./web" + url.parse(req.url).pathname).toString()
+        // Options the template will have access to
+        var options = {
+          Date: moment().format(config.DateFormat),
+          status: stdout || stderr,
+          params: req.params,
+          nextJob: nextJob(),
+          cron: function(cron) {
+            return cronToDate(cron)
+          },
+          filename: "./web/header.html"
+        }
+        res.end(ejs.render(file, options))
+      
   })
 
   // After our setup, set our server to listen
@@ -357,7 +384,9 @@ function loadBells() {
   // Loop through all the bells we have
   // Because bells.Bells uses a string based key, we have to do it this way.
   Object.keys(bells.Bells).forEach(function(item) {
-    if(item === "_all") { return }
+    if (item === "_all") {
+      return
+    }
     try {
 
 
@@ -377,7 +406,7 @@ function loadBells() {
       // Let us know the job has been triggered
       c("Triggering job: " + bells.Bells[item].Name + " at " + moment().format(config.DateFormat));
       // If we've got emails enabled for this job
-      emailState = (bells.Bells[item].TriggerEmail.Enabled === "true")
+      emailState = (bells.Bells[item].Mail.Trigger.Enabled === "true")
       if (emailState == true) {
         c("Emailing Now..")
         sendEmail(bells.Bells[item])
@@ -458,10 +487,12 @@ function showTable() {
   });
 
   Object.keys(bells.Bells).forEach(function(item) {
-    if(item === "_all") { return }
+    if (item === "_all") {
+      return
+    }
     // Add details to the table
     table.push(
-      [item, bells.Bells[item].Name, bells.Bells[item].Description, bells.Bells[item].Time, bells.Bells[item].File, bells.Bells[item].TriggerEmail.Enabled, bells.Bells[item].Enabled]
+      [item, bells.Bells[item].Name, bells.Bells[item].Description, bells.Bells[item].Time, bells.Bells[item].File, bells.Bells[item].Mail.Trigger.Enabled, bells.Bells[item].Enabled]
     );
   })
   console.log(table.toString())

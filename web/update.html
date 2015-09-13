@@ -1,7 +1,13 @@
 <% include includes/header.html %>
-<h2>Updating..</h2>
-<h3>Update command has run. Here's the results:</h3>
-<p><%= status %></p>
-<a href="/">Click here to go back</a>
-
-<% include includes/footer.html %>
+  <% if(params["confirm"] == true) { %>
+    <h2>Updating..</h2>
+    <h3>Update command has run. Here's the results:</h3>
+    <p>
+      <%= status %>
+    </p>
+    <a href="/">Click here to go back</a>
+  <% } else { %>
+    <h2>Are you sure you want to update?</h2>
+    <h3><a href="update.html?confirm=true">Click here to confirm</a></h3>
+  <% } $>
+    <% include includes/footer.html %>
