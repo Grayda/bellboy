@@ -1,0 +1,32 @@
+{
+  "BellFile": "../config/bells.json",
+  "AppName": "Bellboy Timer System",
+  "Version": "0.0.1",
+  "Debug": true,
+  "Beta": true,
+  "Mail": {
+    "From": "bellmaster@example.com",
+    "Server": "",
+    "Username": "",
+    "Password": "",
+    "SubjectPrefix": "[School bells] - ",
+    "SSL": false
+  },
+  "WebTheme": {
+    "Base": ["#CCC", "#FFF"],
+    "Text": "black",
+    "Accent": ["#3a75ac", "orange", "#7ac676"],
+    "Font": "Roboto, Verdana, Arial",
+    "StatusButton": ["#3a75ac", "orange", "#7ac676", "red"]
+  },
+
+  "Server": true,
+  "ServerPort": 8080,
+  "DateFormat": "D MMMM YYYY, h:mm:ssa",
+  "Timezone": "Australia/Melbourne",
+  "CrashEmail": {
+    "To": "",
+    "Subject": "App has crashed",
+    "Body": "App has crashed. FIX IT!"
+  }
+}

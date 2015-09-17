@@ -1,0 +1,27 @@
+<a href="/">
+  <img class="logo" src="../images/logo.png">
+</a>
+<ul class="sidebar-nav">
+  <li>
+    <a href="/"><i class="glyphicon glyphicon-search"></i> View all bells</a>
+  </li>
+  <li>
+    <a href="add.html"><i class="glyphicon glyphicon-plus"></i> Add new bell</a>
+  </li>
+  <li>
+    <a href="reload.html"><i class="glyphicon glyphicon-refresh"></i> Reload settings</a>
+  </li>
+  <li>
+    <a href="update.html"><i class="glyphicon glyphicon-cloud-download"></i> Update</a>
+  </li>
+  <li>
+    <a href="logs.html"><i class="glyphicon glyphicon-book"></i> View Logs</a>
+  </li>
+  <li>
+    <% if(bellboy.bells["_all"].Enabled == true) { %>
+      <a href="toggle.html?id=_all&state=false"><i class="glyphicon glyphicon-remove"></i> Disable Bells</a>
+    <% } else { %>
+      <a href="toggle.html?id=_all&state=true"><i class="glyphicon glyphicon-ok"></i> Enable Bells</a>
+    <% } %>
+  </li>
+</ul>

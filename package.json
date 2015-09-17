@@ -1,39 +1,40 @@
 {
   "name": "bellboy",
-  "version": "0.0.1",
-  "description": "A schedule-based school bell",
+  "version": "0.1.0",
+  "description": "Extendable bell system for schools",
   "main": "index.js",
-  "dependencies": {
-    "cli-table": "^0.3.1",
-    "cron": "^1.0.9",
-    "ejs": "^2.3.3",
-    "emailjs": "^0.3.16",
-    "flags": "^0.1.3",
-    "httpdispatcher": "^0.4.0",
-    "moment": "^2.10.6",
-    "player": "^0.5.0"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/Grayda/bellboy"
+    "url": "git+ssh://git@github.com/Grayda/bellboy.git"
   },
   "keywords": [
     "bell",
-    "school",
-    "ring",
     "cron",
-    "schedule",
-    "audio",
-    "mp3"
+    "timer",
+    "audio"
   ],
   "author": "David \"Grayda\" Gray",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Grayda/bellboy/issues"
   },
-  "homepage": "https://github.com/Grayda/bellboy"
+  "homepage": "https://github.com/Grayda/bellboy#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "cron": "^1.0.9",
+    "cron-parser": "^0.7.1",
+    "ejs": "^2.3.3",
+    "emailjs": "^0.3.16",
+    "flags": "^0.1.3",
+    "httpdispatcher": "^0.4.0",
+    "json-query": "^1.5.0",
+    "less": "^2.5.1",
+    "lodash.where": "^3.1.0",
+    "moment": "^2.10.6",
+    "player": "^0.5.0",
+    "rpi-gpio": "^0.6.0"
+  }
 }
