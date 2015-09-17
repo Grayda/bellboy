@@ -1,55 +1,78 @@
 <html>
 
 <head>
-  <title><%= bellboy.config.AppName %></title>
+  <title>
+    <%= bellboy.config.AppName %>
+  </title>
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../css/main.less">
   <script src="../js/moment.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- For doing client-server interactions -->
   <script type="text/javascript">
-    setInterval(function() {
-      document.getElementById("time").innerHTML = "<i class='glyphicon glyphicon-time'></i> Current time: " + moment().format("<%= bellboy.config.DateFormat %>")
-    }, 1000)
+    var socket = io.connect();
+    socket.on('currenttime', function(data) {
+      document.getElementById("time").innerHTML = "<i class='glyphicon glyphicon-time'></i> " + data.date;
+    });
+
+    socket.on('nextbell', function(data) {
+      document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> " + data.date;
+    });
+    /* setInterval(function() {
+      document.getElementById("time").innerHTML = "<i class='glyphicon glyphicon-time'></i> " + moment().format("<%= bellboy.config.DateFormat %>")
+    }, 1000) */
   </script>
 
 </head>
 
 <body>
 
-     <table class="table table-condensed">
-       <tr>
-         <th><%= bellboy.config.AppName %></th><th id="time"></th>
-       </tr>
-       <% if(bellboy.bells["_all"].Enabled == false) { %>
-         <tr>
-           <td class="danger"><i class="glyphicon glyphicon-remove-sign"></i> All bells are disabled. They were disabled on <%= Date %></td>
-         </tr>
-         <tr>
-           <td><a href="toggle.html?id=_all&state=true">Click here to enable them again</a></td>
-         </tr>
-         <% } else { %>
-           <tr>
-             <td>Bells Loaded: <%= Object.keys(where(bellboy.bells, {"Enabled": true})).length %> / <%= Object.keys(bellboy.bells).length %></td>
-           </tr>
-           <tr>
-             <td>To manage these bells, please visit http://<%= hostname %>:8080 on your computer</td>
-           </tr>
-           <tr>
-             <td><a href="toggle.html?id=_all&state=true">Click here to enable them again</a></td>
-           </tr>
+  <table class="table table-condensed">
+    <tr>
+      <th>
+        <%= bellboy.config.AppName %>
+      </th>
+      <th id="nextbell"></th>
+      <th id="time"></th>
+    </tr>
+    <% if(bellboy.bells["_all"].Enabled == false) { %>
+      <tr>
+        <td class="danger"><i class="glyphicon glyphicon-remove-sign"></i> All bells are disabled. They were disabled on
+          <%= Date %>
+        </td>
+      </tr>
+      <tr>
+        <td><a href="toggle.html?id=_all&state=true">Click here to enable them again</a></td>
+      </tr>
+      <% } else { %>
+        <tr>
+          <td>Bells Loaded:
+            <%= Object.keys(where(bellboy.bells, {"Enabled": true})).length %> /
+              <%= Object.keys(bellboy.bells).length %>
+          </td>
+        </tr>
+        <tr>
+          <td>To manage these bells, please visit <a href="/">http://<%= hostname %>:8080</a> on your computer</td>
+        </tr>
         <% } %>
-     </table>
-   </div>
+  </table>
+  </div>
 
-   <div class="footer navbar-fixed-bottom">
-     <table class="table">
-       <tr>
-         <td class="button button1"><a href="toggle.html?id=_all&state=false">Disable ALL Bells</a></td>
-         <td class="button button2">Yellow</td>
-         <td class="button button3">Magenta</td>
-         <td class="button button4">Key</td>
-       </tr>
-     </table>
-   </div>
+  <div class="footer navbar-fixed-bottom">
+    <table class="table">
+      <tr>
+        <td class="button button1"><a href="status.html?button=1">Ring bell now</a></td>
+        <td class="button button2">Disabled</td>
+        <td class="button button3">Disabled</td>
+        <td class="button button4">
+          <% if(bellboy.bells["_all"].Enabled == false) { %><a href="toggle.html?id=_all&state=true">Enable ALL Bells</a>
+            <% } else { %><a href="toggle.html?id=_all&state=false">Disable ALL Bells</a>
+              <% } %>
+        </td>
+      </tr>
+    </table>
+  </div>
 </body>
+
 </html>

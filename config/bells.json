@@ -5,11 +5,17 @@
     "Enabled": true,
     "Locked": "false",
     "Mail": {
+      "Trigger": {
+        "Enabled": "false",
+        "To": "you@example.com",
+        "Subject": "Bell has been triggered",
+        "Template": "trigger.ejs"
+      },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
-        "Subject": "All Bells Toggled",
-        "Body": "All bells have been changed to <%= item.Enabled %>. They were changed at <%= Date %>"
+        "Subject": "Bell has been changed",
+        "Template": "all_change.ejs"
       }
     }
   },
@@ -27,13 +33,13 @@
         "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -48,16 +54,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -72,16 +78,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -96,16 +102,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -120,16 +126,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -144,16 +150,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -168,16 +174,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -192,16 +198,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -216,16 +222,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -240,16 +246,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -264,16 +270,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -288,16 +294,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -312,16 +318,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -336,16 +342,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -360,16 +366,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   },
@@ -384,16 +390,16 @@
     ],
     "Mail": {
       "Trigger": {
-        "Enabled": "true",
+        "Enabled": "false",
         "To": "you@example.com",
         "Subject": "Bell has been triggered",
-        "Body": "The bell <%= item.Name %> has been triggered at <%= Date %>"
+        "Template": "trigger.ejs"
       },
       "Change": {
         "Enabled": "true",
         "To": "you@example.com",
         "Subject": "Bell has been changed",
-        "Body": "The bell <%= item.Name %> has been changed (disabled, edited or deleted). It was changed at <%= Date %>"
+        "Template": "change.ejs"
       }
     }
   }

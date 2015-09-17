@@ -19,6 +19,7 @@ var ejs = require('ejs'); // Text template engine, used for web parsing
 var fs = require('fs'); // For reading files
 var where = require("lodash.where"); // For quick and easy counting of enabled bells
 
+
 var bellboy = {}
 var server
 
@@ -29,34 +30,38 @@ function BellWeb(bellboyInstance) {
 }
 
 BellWeb.prototype.Prepare = function(root, port, callback) {
+  // The root path to our files (e.g. /pages)
   BellWeb.Path = root
+
+
+
   server = http.createServer(function(request, response) {
     dispatcher.dispatch(request, response);
   });
 
   // Forward slash only
   dispatcher.beforeFilter(/^\/$/gm, function(req, res) {
-    res.writeHead(302, { 'Location': '/index.html' } );
+    res.writeHead(302, {
+      'Location': '/index.html'
+    });
     res.end();
   }.bind(this));
 
   // Our index page
   dispatcher.beforeFilter(/\.html$|\.js$/gm, function(req, res) {
-    //try {
+    try {
       file = this.LoadFile(req)
       res.setHeader('content-type', 'text/html');
       res.end(file)
       this.emit("pageloaded", req, res)
-    // } catch(ex) {
-    //   res.writeHead(404);
-    //   console.log(ex)
-    //   req.url = "/404.html"
-    //
-    //   file = this.LoadFile(req)
-    //
-    //   res.end(file);
-    //   this.emit("pageloadederror", req)
-    // }
+    } catch (ex) {
+      res.writeHead(404);
+      console.log(ex)
+      req.url = "/404.html"
+      file = this.LoadFile(req)
+      res.end(file);
+      this.emit("pageloadederror", req)
+    }
 
   }.bind(this));
 
@@ -73,8 +78,12 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
 
     file = this.LoadFile(req)
     res.setHeader('content-type', 'text/css');
-    less.render(file,{ paths: [BellWeb.Path]}, function(err, output) {
-      if(err) { console.log(err) }
+    less.render(file, {
+      paths: [BellWeb.Path]
+    }, function(err, output) {
+      if (err) {
+        console.log(err)
+      }
       res.end(output.css)
 
     })
@@ -84,7 +93,7 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
   // Loads image files
   dispatcher.beforeFilter(/\.jpg|\.png|\.gif|\.bmp\.ttf|\.woff/g, function(req, res) {
     file = this.LoadFile(req, true)
-    // No header set because LOL I'm lazy!
+      // No header set because LOL I'm lazy!
     res.end(file, "binary")
     this.emit("imageloaded", req, res)
   }.bind(this));
@@ -97,7 +106,20 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
       callback(details);
     }
   }.bind(this));
+  var io = require('socket.io').listen(server); // For browser-server communication
 
+  io.sockets.on('connection', function(socket) {
+    setInterval(function() {
+      socket.emit("currenttime", {
+        "date": moment().format(bellboy.config.DateFormat)
+      });
+
+      socket.emit("nextbell", {
+        "date": bellboy.modules["bellparser"].GetNextJob()["calendar"]
+      })
+    }.bind(this), 1000)
+
+  }.bind(this));
 }
 
 BellWeb.prototype.LoadFile = function(req, binary) {
