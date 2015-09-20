@@ -118,6 +118,15 @@ bellboy.on("jobsloaded", function(jobs) {
         }
       }.bind(this))
 
+      bellboy.modules["bellweb"].socket.on("setvolume", function(volume) {
+        console.log("Volume set to " + volume)
+        bellboy.modules["bellpi"].SetVolume(volume.percentage)
+        bellboy.modules["bellweb"].SocketEmit("confirmation", {
+          "message": "Volume set successfully!",
+          "delay": 2000
+        })
+      })
+
       // Every second, update the clock and the next bell.
       // We do it this way so we can get the time from the Pi and not the client
       // so you can check to ensure your time is set correctly.

@@ -11,6 +11,7 @@ var EventEmitter = require("events").EventEmitter;
 util.inherits(BellPi, EventEmitter);
 
 var os = require("os"); // Need to work out if we're on Windows or not
+var exec = require('child_process').exec // For running command line apps
 var gpio
 
 var bellboy = {}
@@ -33,6 +34,18 @@ BellPi.prototype.Backlight = function(brightness) {
   }
 }
 
+// Sets the volume on the RPi to a percentage.
+BellPi.prototype.SetVolume = function(volume) {
+  if(volume > 100 || volume < 0) { return false } // Hey, no invalid percentages, please!
+  if (os.platform() != "win32") {
+    runCommand("amixer sset PCM,0 " + volume + "%")
+  }
+}
+
+// Sets the audio output method. 0 = Auto, 1 = 3.5mm jack, 2 = HDMI
+BellPi.prototype.SetAudioOutput = function(mode) {
+  runCommand("amixer cset numid=3 " + mode)
+}
 
 // Gets our module ready and listens on various pins for changes.
 BellPi.prototype.Prepare = function(callback) {
@@ -68,13 +81,35 @@ BellPi.prototype.Prepare = function(callback) {
 
     }.bind(this))
 
+    this.emit("ready")
+    if (typeof callback === "function") {
+      callback(details);
+    }
   }
 
-  this.emit("ready")
-  if (typeof callback === "function") {
-    callback(details);
-  }
+
   return true
+}
+
+BellPi.prototype.GetVolume() {
+  if (os.platform() != "win32") {
+    var vol
+    exec("amixer get PCM|grep -o [0-9]*%", function(error, stdout, stderr) {
+      vol = stdout.split("%")[0]
+    })
+
+    return vol
+  }
+}
+
+function runCommand(command) {
+  exec(command, function(error, stdout, stderr) {
+    if(error || stderr) {
+      return false
+    } else {
+      return true
+    }
+  })
 }
 
 module.exports = BellPi;
