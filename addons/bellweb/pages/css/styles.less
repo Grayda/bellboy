@@ -27,6 +27,12 @@
   color: contrast(lighten(@accent2, 25%)) !important;
 }
 
+.sidebar-bottom {
+  color: contrast(@accent1) !important;
+  bottom: 0px;
+  position: absolute;
+}
+
 .activebell:hover  {
   background: lighten(@accent3, 15%) !important;
 }
@@ -38,6 +44,7 @@
 .nextbell, .nextbell abbr {
   .grad-vertical(@accent1, lighten(@accent1, 10%)) !important;
   color: contrast(@accent1) !important;
+  text-align: center;
 }
 
 table {

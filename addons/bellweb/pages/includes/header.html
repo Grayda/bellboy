@@ -5,7 +5,7 @@
 
   <link rel="stylesheet" type="text/css" href="../css/main.less">
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-  <script src="../js/moment.js"></script>
+  <script src="../js/jquery-2.1.4.min.js"></script>
   <script src="/socket.io/socket.io.js"></script> <!-- For doing client-server interactions -->
   <script type="text/javascript">
 
@@ -16,6 +16,10 @@
 
     socket.on('nextbell', function(data){
       document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> " + data.date;
+    });
+
+    socket.on('reloadtable', function(data){
+      document.getElementById("main_table").innerHTML = data.data;
     });
     /* setInterval(function() {
       document.getElementById("time").innerHTML = "<i class='glyphicon glyphicon-time'></i> " + moment().format("<%= bellboy.config.DateFormat %>")

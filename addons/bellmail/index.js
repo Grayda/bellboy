@@ -33,6 +33,10 @@ BellMail.prototype.Prepare = function(callback) {
   return true
 }
 
+BellMail.prototype.ViewFiles = function() {
+  return fs.readdirSync(__dirname + "/templates")
+}
+
 BellMail.prototype.LoadTemplate = function(template, bell, subject, callback) {
   file = fs.readFileSync(__dirname + "/templates/" + template).toString()
   var options = {

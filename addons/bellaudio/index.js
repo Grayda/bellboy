@@ -7,6 +7,7 @@
 
 var exec = require("child_process").exec
 var os = require("os");
+var fs = require("fs"); // For peeking inside our audio directory
 
 var util = require("util"); // For inheriting the EventEmitter stuff so we can use it via this.emit();
 var EventEmitter = require("events").EventEmitter;
@@ -27,6 +28,10 @@ BellAudio.prototype.Prepare = function(callback) {
     callback(details);
   }
   return true
+}
+
+BellAudio.prototype.ViewFiles = function() {
+  return fs.readdirSync(__dirname + "/audio")
 }
 
 // Play the audio file

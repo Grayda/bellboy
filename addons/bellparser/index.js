@@ -4,6 +4,7 @@
 // Emits: ready
 
 // This module provides some cron-based utilities, such as converting cron to date, and determining the next job, given a Bellboy bell
+// TO-DO: Need to clean this up, make it a little more standardized
 
 var util = require("util"); // For inheriting the EventEmitter stuff so we can use it via this.emit();
 var EventEmitter = require("events").EventEmitter;
@@ -46,6 +47,7 @@ BellParser.prototype.CronToDate = function(bell, callback) {
 
   return details
 }
+
 
 // GetNextJob follows a similar pattern to CronToDate. It loops through all bells and find the one that is closest to the current date.
 // Then it returns a bunch of useful information for display.

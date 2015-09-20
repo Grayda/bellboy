@@ -4,6 +4,8 @@ var util = require("util"); // For inheriting the EventEmitter stuff so we can u
 var EventEmitter = require("events").EventEmitter;
 util.inherits(Bellboy, EventEmitter);
 var CronJob = require('cron').CronJob; // Handles the timing
+var moment = require("moment"); // For formatting of dates
+var parser = require('cron-parser'); // For parsing and comparing of cron jobs
 
 // The configuration, bells and cron jobs for this system
 var config, bells
@@ -49,6 +51,25 @@ Bellboy.prototype.SaveBells = function(file) {
 	this.emit("bellssaved", __dirname + "\\" + file)
 }
 
+Bellboy.prototype.AddBell = function(id, bell) {
+  this.bells[id] = bell
+  this.emit("belladded", id)
+}
+
+Bellboy.prototype.UpdateBell = function(id, bell) {
+  this.bells[id] = bell
+  this.emit("bellupdated", id)
+}
+
+
+Bellboy.prototype.DeleteBell = function(bell) {
+  if(this.bells[bell].Locked == true) { return }
+  delete this.bells[bell]
+  this.emit("belldeleted", bell)
+}
+
+
+
 
 
 Bellboy.prototype.Start = function(file) {
@@ -62,8 +83,12 @@ Bellboy.prototype.Start = function(file) {
       // New cronjob. Takes a function on trigger, a function on completion (the "null" below),
       // true / false on startup status (if false, you need to call job[item].start() manually), plus a timezone
       jobs[item] = new CronJob(bells[item].Time, function() {
-        this.emit("trigger", item)
-      }.bind(this), null, bells[item].Enabled, config.Timezone)
+        // "cron" has a bug where jobs can prematurely fire minutes before they should,
+        // so we check to make sure the job only starts when it should
+        if(this.CompareTimes(item) == true) { this.emit("trigger", item) }
+      }.bind(this), function() {
+        if(this.CompareTimes(item) == true) { this.emit("triggerdone", item) }
+      }.bind(this), bells[item].Enabled, config.Timezone)
 
       this.emit("jobadded", item)
     }.bind(this))
@@ -92,10 +117,31 @@ Bellboy.prototype.EnableBell = function(bell) {
 }
 
 Bellboy.prototype.ToggleBell = function(bell, state) {
-	console.dir(bell)
-	this.bells[bell].Enabled = state
+
+  if(this.bells[bell].Locked == true) {
+    return false
+  }
+
+  if(state == true) {
+	  this.bells[bell].Enabled = true
+    this.jobs[bell].start()
+  } else if(state == false) {
+    this.bells[bell].Enabled = false
+    this.jobs[bell].stop()
+  }
 
   return true
+}
+
+Bellboy.prototype.CompareTimes = function(bell) {
+  var interval = moment().diff(parser.parseExpression(this.bells[bell].Time).next());
+
+  console.log("Diff is: " + interval)
+  if(interval > -1 && interval < 1) {
+    return true
+  } else {
+    return false
+  }
 }
 
 Bellboy.prototype.config = config;
