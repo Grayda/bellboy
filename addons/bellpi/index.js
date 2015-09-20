@@ -95,6 +95,7 @@ BellPi.prototype.GetVolume = function() {
   if (os.platform() != "win32") {
     var vol
     exec("amixer get PCM|grep -o [0-9]*%", function(error, stdout, stderr) {
+      console.log(error || stdout || stderr)
       vol = stdout.split("%")[0]
     })
 
