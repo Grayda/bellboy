@@ -8,7 +8,7 @@ bellboy.on("ready", function() {
   // Show a heading
   showWelcome()
   // Load the settings and the bells
-  bellboy.LoadSettings("../config/config.json")
+  bellboy.LoadSettings("/config/config.json")
 })
 
 // Settings loaded. Load the bells now

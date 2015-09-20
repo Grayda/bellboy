@@ -1,5 +1,5 @@
 {
-  "BellFile": "../config/bells.json",
+  "BellFile": "/config/bells.json",
   "AppName": "Bellboy Timer System",
   "Version": "0.0.1",
   "Debug": true,
