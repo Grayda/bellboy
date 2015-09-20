@@ -51,7 +51,7 @@ BellPi.prototype.SetAudioOutput = function(mode) {
 BellPi.prototype.Prepare = function(callback) {
   if (os.platform() != "win32") {
     gpio = require("rpi-gpio");
-    gpio.setup(18, gpio.DIR_OUT, readInput); // For the backlight
+    gpio.setup(18, gpio.DIR_OUT); // For the backlight
 
     gpio.setup(17, gpio.DIR_IN); // Button 1
     gpio.setup(22, gpio.DIR_IN); // Button 2
