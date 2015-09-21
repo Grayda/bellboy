@@ -38,16 +38,16 @@ Bellboy.prototype.LoadSettings = function(file) {
 Bellboy.prototype.LoadBells = function(file) {
   bells = JSON.parse(fs.readFileSync(__dirname + "/" + file, 'utf8'));
   Bellboy.prototype.bells = bells;
-  this.emit("bellsloaded", __dirname + "\\" + file)
+  this.emit("bellsloaded", __dirname + "/" + file)
 }
 
 Bellboy.prototype.SaveSettings = function(file) {
-  fs.writeFile(__dirname + "\\" + file, JSON.stringify(this.bells, null, 2))
+  fs.writeFile(__dirname + "/" + file, JSON.stringify(this.bells, null, 2))
 	this.emit("settingssaved", __dirname + "/" + file)
 }
 
 Bellboy.prototype.SaveBells = function(file) {
-  fs.writeFile(__dirname + "\\" + file, JSON.stringify(this.bells, null, 2))
+  fs.writeFile(__dirname + "/" + file, JSON.stringify(this.bells, null, 2))
 	this.emit("bellssaved", __dirname + "/" + file)
 }
 
