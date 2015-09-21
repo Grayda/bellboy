@@ -57,7 +57,8 @@ BellParser.prototype.GetNextJob = function(callback) {
   // Because the diff is a negative number (smaller as it approaches "now") and we're lookiung for a number > the smallest, we set this insanely low
   results["diff"] = -999999999999999999999
   Object.keys(bellboy.bells).forEach(function(item) {
-    if (item == "_all") {
+    // We want to ignore bells that start with _, as they're special cases
+    if (item.substring(0,1) == "_") {
       return
     }
     if (bellboy.bells[item].Enabled == true) { // Only interested in enabled bells

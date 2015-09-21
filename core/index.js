@@ -75,10 +75,11 @@ Bellboy.prototype.DeleteBell = function(bell) {
 Bellboy.prototype.Start = function(file) {
   // Loop through all bells
   Object.keys(bells).forEach(function(item) {
-      // "_all" is a "fake" bell. If this is disabled, all bells are disabled
-      if (item === "_all") {
-        return
-      }
+    // We want to ignore bells that start with _, as they're special cases
+    if (item.substring(0,1) == "_") {
+      return
+    }
+
 
       // New cronjob. Takes a function on trigger, a function on completion (the "null" below),
       // true / false on startup status (if false, you need to call job[item].start() manually), plus a timezone

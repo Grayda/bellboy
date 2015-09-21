@@ -27,7 +27,7 @@
     <!-- Loop through each bell -->
     <% Object.keys(bellboy.bells).forEach(function(item){ %>
       <!-- If the bell is the fake "all" bell, skip it -->
-      <% if(item === "_all") { return } %>
+      <% if(item.substring(0,1) == "_") { return } %>
 
         <% if (bellboy.bells[item].Enabled === false) { %>
           <tr class="inactivebell">

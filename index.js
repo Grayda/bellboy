@@ -64,7 +64,22 @@ bellboy.on("jobsloaded", function(jobs) {
   // When someone presses button1 on the 2.2" TFT screen, do this.
   // We also have button2, button3 and button4 to work with
   bellboy.modules["bellpi"].on("button1", function() {
-    bellboy.Trigger("test")
+    bellboy.Trigger("_default")
+  })
+
+  // Any button is pressed
+  bellboy.modules["bellpi"].on("button", function(index) {
+    switch(index) {
+      case 1:
+        bellboy.Trigger("_default")
+        break;
+    }
+    // Turn on the backlight
+    bellboy.modules["bellpi"].SetBacklight(true)
+    // Then after 10 seconds, turn the light off
+    setTimeout(function() {
+      bellboy.modules["bellpi"].SetBacklight(false)
+    }, 10000)
   })
 
   // =============================================================================
@@ -138,7 +153,7 @@ bellboy.on("jobsloaded", function(jobs) {
           "date": bellboy.modules["bellparser"].GetNextJob()["calendar"]
         })
 
-        bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
+        // bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
       }.bind(this), 10000)
 
       bellboy.modules["bellweb"].socket.on("error", function(err) {
@@ -230,6 +245,7 @@ bellboy.on("trigger", function(item) {
   // TO-DO: Expand on this
   mail = bellboy.modules["bellmail"].LoadTemplate("trigger.ejs", item, bellboy.bells[item].Mail.Subject)
   bellboy.modules["bellmail"].SendMail(bellboy.bells[item].Mail, mail)
+  bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
 })
 
 bellboy.on("triggerdone", function() {

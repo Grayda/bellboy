@@ -1,7 +1,7 @@
 // BellPi module
 // ==============
 // Depends On: Bellboy
-// Emits: ready, button1, button2, button3, button4, soundset
+// Emits: ready, button[index], outputchanged[index], volumeset[percentage], getvolume[percentage] backlightchanged[percentage]
 
 // This module provides backlight control and button press features for the Adafruit 2.2" TFT screen (that has 4 push buttons)
 // It's purpose is to let another module react to button presses, meaning you can press buttons under the screen to manually ring bells or do other stuff.
@@ -22,15 +22,28 @@ function BellPi(bellboyInstance) {
 
 }
 
-// Sets the backlight. Give it a value between 0 and 1023 for precise brightness, or true / false for 100% / 0% brightness
-BellPi.prototype.Backlight = function(brightness) {
+// Sets the backlight. Give it a value between 0 and 100 for precise brightness, or true / false for 100% / 0% brightness
+BellPi.prototype.SetBacklight = function(percentage, timeout, revertedbrightness) {
   if (os.platform() != "win32") {
-    if (brightness === true) {
-      brightness = 1023
-    } else if (brightness === false) {
-      brightness = 0
+
+    if (percentage === true) {
+      percentage = 100
+    } else if (percentage === false) {
+      percentage = 0
     }
+
+    // Convert our brightness into a value out of 1023
+    brightness = percentage*1023/100
     gpio.write(18, brightness)
+
+    // If we've set a timeout
+    if(typeof timeout !== "undefined") {
+      setTimeout(function() {
+          // Revert back to revertedbrightness after <timeout> seconds
+          this.SetBacklight(revertedbrightness)
+      }, timeout)
+    }
+    this.emit("backlightchanged", percentage)
   }
 }
 
@@ -39,12 +52,14 @@ BellPi.prototype.SetVolume = function(volume) {
   if(volume > 100 || volume < 0) { return false } // Hey, no invalid percentages, please!
   if (os.platform() != "win32") {
     runCommand("amixer sset PCM,0 " + volume + "%")
+    this.emit("volumeset", volume)
   }
 }
 
 // Sets the audio output method. 0 = Auto, 1 = 3.5mm jack, 2 = HDMI
 BellPi.prototype.SetAudioOutput = function(mode) {
   runCommand("amixer cset numid=3 " + mode)
+  this.emit("outputchanged", mode)
 }
 
 // Gets our module ready and listens on various pins for changes.
@@ -62,22 +77,27 @@ BellPi.prototype.Prepare = function(callback) {
       switch (channel) {
         case 17:
           if (value == 1) {
-            this.emit("button1")
+            this.emit("button", channel) //
           }
+          break;
         case 22:
           if (value == 1) {
-            this.emit("button2")
+            this.emit("button", channel)
           }
+          break;
         case 23:
           if (value == 1) {
-            this.emit("button3")
+            this.emit("button", channel)
           }
+          break;
         case 27:
           if (value == 1) {
-            this.emit("button4")
+            this.emit("button", channel)
           }
+          break;
+        case 18:
+          this.emit("backlightchanged", value/1023*100)
       }
-
 
     }.bind(this))
 

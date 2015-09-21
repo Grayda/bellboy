@@ -19,6 +19,29 @@
       }
     }
   },
+  "_default": {
+    "Enabled": false,
+    "Name": "Virtual bell - Default",
+    "Description": "A virtual bell that is fired when \"button1\" is pressed",
+    "Locked": "true",
+    "File": [
+      "bell.mp3"
+    ],
+    "Mail": {
+      "Trigger": {
+        "Enabled": "false",
+        "To": "you@example.com",
+        "Subject": "Bell has been triggered",
+        "Template": "trigger.ejs"
+      },
+      "Change": {
+        "Enabled": "true",
+        "To": "you@example.com",
+        "Subject": "Bell has been changed",
+        "Template": "change.ejs"
+      }
+    }
+  },
   "test": {
     "Enabled": false,
     "Name": "Test Bell - EVERY MINUTE",
