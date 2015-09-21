@@ -108,9 +108,7 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
     }
   }.bind(this));
 
-  io = require('socket.io').listen(server, {
-    forceNew: true
-  }); // For browser-server communication
+  io = require('socket.io').listen(server); // For browser-server communication
   io.sockets.on('connection', function(socket) {
     BellWeb.prototype.socket = socket
       this.emit("socketready")
@@ -125,8 +123,11 @@ BellWeb.prototype.LoadFile = function(req, binary) {
     file = fs.readFileSync(BellWeb.Path + url.parse(req.url).pathname).toString()
     var options = {
       req: req,
-      Date: moment().format(bellboy.config.DateFormat),
-      moment: moment,
+      Date: {
+        "parsed": moment().format(bellboy.config.DateFormat),
+        "unix": moment().unix(),
+        "moment": moment
+      },
       bellboy: bellboy,
       where: where,
       hostname: this.GetHostName(),

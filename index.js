@@ -130,18 +130,14 @@ bellboy.on("jobsloaded", function(jobs) {
       // Every second, update the clock and the next bell.
       // We do it this way so we can get the time from the Pi and not the client
       // so you can check to ensure your time is set correctly.
+
+      // This runs every 10 seconds and reloads the table
       setInterval(function() {
-        bellboy.modules["bellweb"].SocketEmit("currenttime", {
-          "date": moment().format(bellboy.config.DateFormat)
-        });
 
         bellboy.modules["bellweb"].SocketEmit("nextbell", {
           "date": bellboy.modules["bellparser"].GetNextJob()["calendar"]
         })
-      }.bind(this), 1000)
 
-      // This runs every 10 seconds and reloads the table
-      setInterval(function() {
         bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
       }.bind(this), 10000)
 
