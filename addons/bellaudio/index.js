@@ -36,14 +36,14 @@ BellAudio.prototype.ViewFiles = function() {
 
 // Play the audio file
 BellAudio.prototype.Play = function(file) {
-  console.log("Trying to play:" + __dirname + "\\cmdmp3.exe " + __dirname + file)
+  console.log("Trying to play:" + __dirname + "/cmdmp3.exe " + __dirname + file)
   if (os.platform() == "win32") {
     exec("\"" + __dirname + "/cmdmp3.exe\" \"" + __dirname + file + "\"", function(error, stdout, stderr) {
         console.log(stdout || stderr)
     });
 } else {
   var Player = require('player'); // Plays MP3s. We put this here because the script freezes up on Windows on this line
-  player = new Player("./" + file)
+  player = new Player(__dirname + "/audio" + file)
   player.on('error', function(err) {
     console.log(err)
   })

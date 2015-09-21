@@ -1,24 +1,25 @@
 <% include includes/header.html %>
   <script type="text/javascript">
     $(document).ready(function() {
+      $("#triggermailgroup").hide();
+      $("#changemailgroup").hide();
 
-      $("#hello").on("change", "#triggermailenabled", function() {
-        alert("A" + $(this).find("option:selected").val())
-        if ($(this).find("option:selected").val() == "false") {
-          $("#triggermailgroup").hide();
-        } else {
-          $("#triggermailgroup").show();
-        }
+      $("select").on("change", function() {
+        var tmg = ($("#triggermailenabled").find("option:selected").val() === "true");
+        var cmg = ($("#changemailenabled").find("option:selected").val() === "true");
+
+        $("#triggermailgroup").toggle(tmg);
+        $("#changemailgroup").toggle(cmg);
       });
     });
   </script>
 
   <h1>Add New Bell</h1>
-  <form action="get" class="form-horizontal">
+  <form method="post" class="form-horizontal">
     <div class="form-group form-group-sm">
       <label for="id" class="col-sm-1 control-label">ID for bell</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="id" placeholder="period1">
+        <input type="text" class="form-control" name="id" placeholder="period1">
         <p class="help-block">Lowercase, alphanumeric only</p>
       </div>
     </div>
@@ -26,14 +27,14 @@
     <div class="form-group form-group-sm">
       <label for="name" class="col-sm-1 control-label">Name</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="name" placeholder="Bell for first period">
+        <input type="text" class="form-control" name="name" placeholder="Bell for first period">
       </div>
     </div>
 
     <div class="form-group form-group-sm">
       <label for="description" class="col-sm-1 control-label">Description</label>
       <div class="col-sm-10">
-        <textarea id="description" class="form-control" placeholder="This bell rings at the start of period 1"></textarea <p class="help-block">The description should be 1-2 sentences maximum</p>
+        <textarea name="description" class="form-control" placeholder="This bell rings at the start of period 1"></textarea <p class="help-block">The description should be 1-2 sentences maximum</p>
       </div>
     </div>
     <!-- <div class="form-group form-group-sm">
@@ -46,15 +47,15 @@
     <div class="form-group form-group-sm">
       <label for="time" class="col-sm-1 control-label">Time</label>
       <div class="col-sm-10">
-        <input type="text" id="time" class="form-control" placeholder="15 9 * * *">
+        <input type="text" name="time" class="form-control" placeholder="15 9 * * *">
         <p class="help-block">The time to run, in <a href="https://en.wikipedia.org/wiki/Cron#Configuration_file">cron format</a>. You can generate cron expressions <a href="http://www.cronmaker.com/">here</a></p>
       </div>
     </div>
 
     <div class="form-group form-group-sm">
-      <label for="time" class="col-sm-1 control-label">File(s)</label>
+      <label for="files" class="col-sm-1 control-label">File(s)</label>
       <div class="col-sm-10">
-        <select id="file" class="form-control" multiple>
+        <select name="files" class="form-control" multiple>
           <% bellboy.modules["bellaudio"].ViewFiles().forEach(function(item){ %>
             <option>
               <%= item %>
@@ -67,35 +68,36 @@
 
     <!-- Now, on to the email stuff! -->
 
-    <div class="form-group form-group-sm" id="hello">
+    <div class="form-group form-group-sm" id="triggergroup">
       <label for="triggermailenabled" class="col-sm-1 control-label">Email on trigger</label>
       <div class="col-sm-10">
-        <select id="triggermailenabled" class="form-control">
+        <select id="triggermailenabled" name="triggermailenabled" class="form-control">
           <option value="false">Disabled</option>
           <option value="true">Enabled</option>
         </select>
         <p class="help-block">If enabled, an email will be sent every time this bell is triggered</p>
       </div>
     </div>
-    <div id="triggermailgroup">
+
+    <div id="triggermailgroup" class="well">
       <div class="form-group form-group-sm">
         <label for="triggermailto" class="col-sm-1 control-label">Name</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="triggermailto" placeholder="you@example.com">
+          <input type="text" class="form-control" name="triggermailto" placeholder="you@example.com">
         </div>
       </div>
 
       <div class="form-group form-group-sm">
         <label for="triggermailsubject" class="col-sm-1 control-label">Subject</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="triggermailsubject" placeholder="Bell triggered!">
+          <input type="text" class="form-control" name="triggermailsubject" placeholder="Bell triggered!">
         </div>
       </div>
 
       <div class="form-group form-group-sm">
-        <label for="time" class="col-sm-1 control-label">File(s)</label>
+        <label for="triggermailtemplate" class="col-sm-1 control-label">File(s)</label>
         <div class="col-sm-10">
-          <select id="file" class="form-control">
+          <select name="triggermailtemplate" class="form-control">
             <% bellboy.modules["bellmail"].ViewFiles().forEach(function(item){ %>
               <option>
                 <%= item %>
@@ -107,10 +109,10 @@
       </div>
     </div>
 
-    <div class="form-group form-group-sm">
+    <div class="form-group form-group-sm" id="changegroup">
       <label for="changemailenabled" class="col-sm-1 control-label">Email on change</label>
       <div class="col-sm-10">
-        <select id="changemailenabled" class="form-control">
+        <select id="changemailenabled" name="changemailenabled" class="form-control">
           <option value="false">Disabled</option>
           <option value="true">Enabled</option>
         </select>
@@ -118,24 +120,25 @@
       </div>
     </div>
 
+    <div id="changemailgroup" class="well">
     <div class="form-group form-group-sm">
       <label for="changemailto" class="col-sm-1 control-label">Name</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="changemailto" placeholder="you@example.com">
+        <input type="text" class="form-control" name="changemailto" placeholder="you@example.com">
       </div>
     </div>
 
     <div class="form-group form-group-sm">
       <label for="changemailsubject" class="col-sm-1 control-label">Subject</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="changemailsubject" placeholder="Bell changeed!">
+        <input type="text" class="form-control" name="changemailsubject" placeholder="Bell changeed!">
       </div>
     </div>
 
     <div class="form-group form-group-sm">
-      <label for="time" class="col-sm-1 control-label">File(s)</label>
+      <label for="changemailtemplate" class="col-sm-1 control-label">File(s)</label>
       <div class="col-sm-10">
-        <select id="file" class="form-control">
+        <select name="changemailtemplate" class="form-control">
           <% bellboy.modules["bellmail"].ViewFiles().forEach(function(item){ %>
             <option>
               <%= item %>
@@ -145,8 +148,9 @@
         <p class="help-block">To add more templates files, upload them to /addons/bellmail/templates</p>
       </div>
     </div>
-
-    <button type="submit" class="btn btn-default">Submit</button>
+  </div>
+    <p>Email settings coming soon. If you wish to set up email, please edit bells.json manually</p>
+    <button type="submit" name="submit" class="btn btn-default">Submit</button>
 
   </form>
   <% include includes/footer.html %>

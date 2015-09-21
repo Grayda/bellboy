@@ -175,7 +175,29 @@ bellboy.on("jobsloaded", function(jobs) {
         }
         break;
       case "/add.html":
-        if(req.params.bell) {
+      console.dir(req.params)
+        if(req.params.submit) {
+          bellboy.AddBell(req.params.id, {
+            "Name": req.params.name,
+            "Description": req.params.description,
+            "Locked": "false",
+            "Time": req.params.time,
+            "File": req.params.files,
+            "Mail": {
+              "Trigger": {
+                "Enabled": req.params.triggermailenabled,
+                "To": req.params.triggermailto,
+                "Subject": req.params.triggermailsubject,
+                "Template": req.params.triggermailtemplate,
+              },
+              "Change": {
+                "Enabled": req.params.changemailenabled,
+                "To": req.params.changemailto,
+                "Subject": req.params.changemailsubject,
+                "Template": req.params.changemailtemplate,
+              }
+            }
+          })
           bellboy.AddBell("temp", req.params.bell)
         } else {
           console.log("Not adding bell. No params")
