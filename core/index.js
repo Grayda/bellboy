@@ -28,27 +28,27 @@ Bellboy.prototype.Prepare = function() {
 
 Bellboy.prototype.LoadSettings = function(file) {
   // Load and parse the JSON
-  config = JSON.parse(fs.readFileSync(__dirname + "/" + file, 'utf8'));
+  config = JSON.parse(fs.readFileSync(__dirname + file, 'utf8'));
   // So other files can use the config
   Bellboy.prototype.config = config;
   // Let everyone know we're ready, and what file we loaded
-  this.emit("settingsloaded", __dirname + "/" + file)
+  this.emit("settingsloaded", __dirname + file)
 }
 
 Bellboy.prototype.LoadBells = function(file) {
-  bells = JSON.parse(fs.readFileSync(__dirname + "/" + file, 'utf8'));
+  bells = JSON.parse(fs.readFileSync(__dirname + file, 'utf8'));
   Bellboy.prototype.bells = bells;
-  this.emit("bellsloaded", __dirname + "/" + file)
+  this.emit("bellsloaded", __dirname + file)
 }
 
 Bellboy.prototype.SaveSettings = function(file) {
-  fs.writeFile(__dirname + "/" + file, JSON.stringify(this.bells, null, 2))
-	this.emit("settingssaved", __dirname + "/" + file)
+  fs.writeFile(__dirname + file, JSON.stringify(this.bells, null, 2))
+	this.emit("settingssaved", __dirname + file)
 }
 
 Bellboy.prototype.SaveBells = function(file) {
-  fs.writeFile(__dirname + "/" + file, JSON.stringify(this.bells, null, 2))
-	this.emit("bellssaved", __dirname + "/" + file)
+  fs.writeFile(__dirname + file, JSON.stringify(this.bells, null, 2))
+	this.emit("bellssaved", __dirname + file)
 }
 
 Bellboy.prototype.AddBell = function(id, bell) {

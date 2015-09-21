@@ -258,6 +258,9 @@ bellboy.on("belldeleted", function(id) {
   bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
 })
 
+bellboy.on("bellssaved", function(file) {
+  console.log("Bells have been saved to " + file)
+})
 
 function showWelcome() {
   console.log()
