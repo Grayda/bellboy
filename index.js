@@ -175,7 +175,6 @@ bellboy.on("jobsloaded", function(jobs) {
         }
         break;
       case "/add.html":
-      console.dir(req.params)
         if(req.params.submit) {
           bellboy.AddBell(req.params.id, {
             "Name": req.params.name,
@@ -198,7 +197,7 @@ bellboy.on("jobsloaded", function(jobs) {
               }
             }
           })
-          bellboy.AddBell("temp", req.params.bell)
+          bellboy.AddBell(req.params.id, req.params.bell)
         } else {
           console.log("Not adding bell. No params")
         }

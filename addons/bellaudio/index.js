@@ -43,7 +43,7 @@ BellAudio.prototype.Play = function(file) {
     });
 } else {
   var Player = require('player'); // Plays MP3s. We put this here because the script freezes up on Windows on this line
-  player = new Player(__dirname + "/audio" + file)
+  player = new Player(__dirname + file)
   player.on('error', function(err) {
     console.log(err)
   })
