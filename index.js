@@ -186,7 +186,9 @@ bellboy.on("jobsloaded", function(jobs) {
         }
         break;
       case "/add.html":
-        if(req.params.submit) {
+        console.dir(req.params)
+        if(typeof req.params.submit !== "undefined") {
+          console.log("Saving bell")
           bellboy.AddBell(req.params.id, {
             "Name": req.params.name,
             "Description": req.params.description,
@@ -195,20 +197,20 @@ bellboy.on("jobsloaded", function(jobs) {
             "File": req.params.files,
             "Mail": {
               "Trigger": {
-                "Enabled": req.params.triggermailenabled,
-                "To": req.params.triggermailto,
-                "Subject": req.params.triggermailsubject,
+                "Enabled": req.params.triggermailenabled || false,
+                "To": req.params.triggermailto || "",
+                "Subject": req.params.triggermailsubject || "",
                 "Template": req.params.triggermailtemplate,
               },
               "Change": {
-                "Enabled": req.params.changemailenabled,
-                "To": req.params.changemailto,
-                "Subject": req.params.changemailsubject,
+                "Enabled": req.params.changemailenabled || false,
+                "To": req.params.changemailto || "",
+                "Subject": req.params.changemailsubject || "",
                 "Template": req.params.changemailtemplate,
               }
             }
           })
-          bellboy.AddBell(req.params.id, req.params.bell)
+
         } else {
           console.log("Not adding bell. No params")
         }

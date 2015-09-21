@@ -112,15 +112,16 @@ BellPi.prototype.Prepare = function(callback) {
 }
 
 BellPi.prototype.GetVolume = function() {
+  var vol
   if (os.platform() != "win32") {
-    var vol
     exec("amixer get PCM|grep -o [0-9]*%", function(error, stdout, stderr) {
       vol = stdout.split("%")[0]
       this.emit("getvolume", vol)
     }.bind(this))
-
-    return vol
+  } else {
+    vol = 100 // Until we work out a reliable way to get and set volume on Windows
   }
+  return vol
 }
 
 function runCommand(command) {
