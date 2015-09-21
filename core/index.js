@@ -42,12 +42,12 @@ Bellboy.prototype.LoadBells = function(file) {
 }
 
 Bellboy.prototype.SaveSettings = function(file) {
-  fs.writeFile(__dirname + file, JSON.stringify(this.bells, null, 2))
+  fs.writeFileSync(__dirname + file, JSON.stringify(this.bells, null, 2))
 	this.emit("settingssaved", __dirname + file)
 }
 
 Bellboy.prototype.SaveBells = function(file) {
-  fs.writeFile(__dirname + file, JSON.stringify(this.bells, null, 2))
+  fs.writeFileSync(__dirname + file, JSON.stringify(this.bells, null, 2))
 	this.emit("bellssaved", __dirname + file)
 }
 
