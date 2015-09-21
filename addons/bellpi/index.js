@@ -11,7 +11,7 @@ var EventEmitter = require("events").EventEmitter;
 util.inherits(BellPi, EventEmitter);
 
 var os = require("os"); // Need to work out if we're on Windows or not
-var exec = require('child_process').exec // For running command line apps
+var fs = require('fs') // For running command line apps
 var gpio
 
 var bellboy = {}
@@ -45,21 +45,6 @@ BellPi.prototype.SetBacklight = function(percentage, timeout, revertedbrightness
     }
     this.emit("backlightchanged", percentage)
   }
-}
-
-// Sets the volume on the RPi to a percentage.
-BellPi.prototype.SetVolume = function(volume) {
-  if(volume > 100 || volume < 0) { return false } // Hey, no invalid percentages, please!
-  if (os.platform() != "win32") {
-    runCommand("amixer sset PCM,0 " + volume + "%")
-    this.emit("volumeset", volume)
-  }
-}
-
-// Sets the audio output method. 0 = Auto, 1 = 3.5mm jack, 2 = HDMI
-BellPi.prototype.SetAudioOutput = function(mode) {
-  runCommand("amixer cset numid=3 " + mode)
-  this.emit("outputchanged", mode)
 }
 
 // Gets our module ready and listens on various pins for changes.
@@ -111,27 +96,20 @@ BellPi.prototype.Prepare = function(callback) {
   return true
 }
 
-BellPi.prototype.GetVolume = function() {
-  var vol
-  if (os.platform() != "win32") {
-    exec("amixer get PCM|grep -o [0-9]*%", function(error, stdout, stderr) {
-      vol = stdout.split("%")[0]
-      this.emit("getvolume", vol)
-    }.bind(this))
-  } else {
-    vol = 100 // Until we work out a reliable way to get and set volume on Windows
-  }
-  return vol
-}
-
-function runCommand(command) {
-  exec(command, function(error, stdout, stderr) {
-    if(error || stderr) {
-      return false
-    } else {
+// Are we running on a RPi? Useful for select-loading modules or something.
+BellPi.prototype.IsPi = function() {
+  try {
+    hardware = fs.readFileSync("/proc/cpuinfo")
+    if(hardware.indexOf("BCM2708") > -1) {
       return true
+    } else {
+      return false
     }
-  })
+  } catch (ex) {
+    return false
+  }
+
+
 }
 
 module.exports = BellPi;
