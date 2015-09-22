@@ -5,7 +5,7 @@
 
 // This module provides a Windows and Linux compatible way of playing MP3s
 
-var exec = require("child_process").exec
+var cp = require("child_process")
 var os = require("os");
 var fs = require("fs"); // For peeking inside our audio directory
 
@@ -38,9 +38,11 @@ BellAudio.prototype.ViewFiles = function() {
 BellAudio.prototype.Play = function(file) {
   console.log("Trying to play:" + __dirname + "/cmdmp3.exe " + __dirname + file)
   if (os.platform() == "win32") {
-    exec("\"" + __dirname + "/cmdmp3.exe\" \"" + __dirname + file + "\"", function(error, stdout, stderr) {
+
+    cp.exec("\"" + __dirname + "/cmdmp3.exe\" \"" + __dirname + file + "\"", function(error, stdout, stderr) {
       console.log(stdout || stderr)
-    });
+    }.bind(this));
+
   } else {
     var Player = require('player'); // Plays MP3s. We put this here because the script freezes up on Windows on this line
     player = new Player(__dirname + file)
@@ -53,22 +55,16 @@ BellAudio.prototype.Play = function(file) {
 
 BellAudio.prototype.SetVolume = function(percent) {
     if (os.platform() !== "win32") {
-      var loudness = require("loudness")
-      loudness.setVolume(45, function (err) {
-        this.emit("volumechanged", percent)
-      }.bind(this));
+      cp.exec("amixer sset PCM,0 " + percent + "%", function(error, stdout, stderr) {
+        console.log(stdout)
+      })
     }
 }
 
 BellAudio.prototype.GetVolume = function(percent) {
     if (os.platform() !== "win32") {
-      var vol
-      var loudness = require("loudness")
-      loudness.getVolume(function (err, volume) {
-        this.emit("volumechanged", percent)
-        vol = volume
-      }.bind(this));
-      return vol
+      // Run the command to get our percentage. Timeout after 1 second if nothing returned.
+      return cp.execSync("amixer get PCM|grep -o [0-9]*%", {"timeout": 1000}).toString().split("%")[0]
     } else {
       return 100
     }
@@ -77,11 +73,10 @@ BellAudio.prototype.GetVolume = function(percent) {
 // Sets the audio output method. 0 = Auto, 1 = 3.5mm jack, 2 = HDMI
 BellAudio.prototype.SetAudioOutput = function(mode) {
   if(os.platform() !== "win32") {
-    exec("amixer cset numid=3 " + mode)
+    fs.exec("amixer cset numid=3 " + mode)
     this.emit("outputchanged", mode)
     return true
   }
 }
-
 
 module.exports = BellAudio;
