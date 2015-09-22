@@ -40,8 +40,13 @@ BellMail.prototype.ViewFiles = function() {
 BellMail.prototype.LoadTemplate = function(template, bell, subject, callback) {
   file = fs.readFileSync(__dirname + "/templates/" + template).toString()
   var options = {
-    Date: moment().format(bellboy.config.DateFormat),
+    Date: {
+      "parsed": moment().format(bellboy.config.DateFormat),
+      "unix": moment().unix(),
+      "moment": moment
+    },
     bellboy: bellboy,
+    hostname: bellboy.modules["bellweb"].GetHostName(),
     bell: bell,
     where: where,
     cron: bellboy.modules["bellparser"],
@@ -56,6 +61,9 @@ BellMail.prototype.LoadTemplate = function(template, bell, subject, callback) {
 }
 
 BellMail.prototype.SendMail = function(mail, body, callback) {
+  if(mail.Enabled == false) {
+    return
+  }
 
   var server = email.server.connect({
     user: bellboy.config.Mail.Username,
@@ -69,7 +77,10 @@ BellMail.prototype.SendMail = function(mail, body, callback) {
     text: body,
     from: bellboy.config.Mail.From,
     to: mail.To,
-    subject: mail.Subject
+    subject: mail.Subject,
+    attachment: [
+     {data:body, alternative:true}
+    ]
   }, function(err, message) {
     if (err) {
       console.log(err)

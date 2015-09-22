@@ -55,12 +55,12 @@
                 <%= bellboy.bells[item].File %>
               </td>
               <td>
-                <% if(bellboy.bells[item].Mail.Trigger.Enabled == "true") { %>
+                <% if(bellboy.bells[item].Mail.Trigger.Enabled == true) { %>
                   <abbr title="An email will send when this bell rings">Trigger</abbr>
                 <% } else { %>
                   <abbr title="NO email will be sent when this bell rings">-</abbr>
                 <% } %> /
-                <% if(bellboy.bells[item].Mail.Change.Enabled == "true") { %>
+                <% if(bellboy.bells[item].Mail.Change.Enabled == true) { %>
                   <abbr title="An email will send when this bell is changed">Change</abbr>
                 <% } else { %>
                   <abbr title="NO email will be sent when this bell is edited">-</abbr>
@@ -70,12 +70,12 @@
                 <%= bellboy.bells[item].Locked %>
               </td>
               <td>
-                <a href="toggle.html?id=<%= item %>&state=<% if (bellboy.bells[item].Enabled === false) { %>true<% } else { %>false<% } %>">
+                <a href="javascript:toggleBell('<%= item %>', <% if (bellboy.bells[item].Enabled === false) { %>true<% } else { %>false<% } %>)">
                   <% if (bellboy.bells[item].Enabled === false) { %>Enable
                     <% } else { %>Disable
                       <% } %>
                 </a> |
-                <a href="trigger.html?id=<%= item %>">Trigger</a>
+                <a href="javascript:trigger('<%= item %>')">Trigger</a>
               </td>
     </tr>
     <% }); %>
@@ -92,5 +92,5 @@
     </tr>
   </table>
   <% } else { %>
-    <h2>All bells are currently disabled. <a href="toggle.html?id=_all&state=true">Click here to enable them again</a></h2>
+    <h2>All bells are currently disabled. <a href="javascript:toggleBell('_all', true)">Click here to enable them again</a></h2>
     <% } %>

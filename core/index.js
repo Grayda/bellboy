@@ -125,10 +125,10 @@ Bellboy.prototype.ToggleBell = function(bell, state) {
 
   if(state == true) {
 	  this.bells[bell].Enabled = true
-    this.jobs[bell].start()
+    if(bell.substring(0,1) !== "_") { this.jobs[bell].start() }
   } else if(state == false) {
     this.bells[bell].Enabled = false
-    this.jobs[bell].stop()
+    if(bell.substring(0,1) !== "_") { this.jobs[bell].stop() }
   }
 
   return true
@@ -138,7 +138,7 @@ Bellboy.prototype.CompareTimes = function(bell) {
   var interval = moment().diff(parser.parseExpression(this.bells[bell].Time).next());
 
   console.log("Diff is: " + interval)
-  if(interval > -1 && interval < 1) {
+  if(interval >= -1 && interval <= 1) {
     return true
   } else {
     return false

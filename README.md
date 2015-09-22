@@ -26,44 +26,31 @@ Installation
 Limitations
 ===========
 
- - BellTFT hasn't been tested yet
+ - BellPi hasn't been tested yet
  - The web stuff needs a lot more polish
-
-What's new in this version?
-===========================
-
-Last updated 20/09/2015
-
- - socket.io stuff more reliable
-   - The table on index.html now reloads automatically, either every 10 seconds or when a bell is triggered or updated
-   - status.html page now rings bells without having to leave the page
-   - Time and next bell continue to update, even if a new client connects to socket.io
- - New functions in core/index.js and some cleanup in /index.js
-   - New functions mostly deal with adding and deleting bells
- - BellTFT renamed to BellPi, as it will now deal with other RPi stuff, like adjusting volume
- - Fixed a bug with node-cron where the bell would ring twice if job created at a certain time. See [this issue][1] for more info
-
 
 To-Do / Wishlist
 ================
 
 Here's a list of things I'd like to eventually add. If you have any more ideas, please open an issue and argue your case :)
 
-- [ ] Better error handling
-- [ ] More security! Need logins and such!
-- [x] Dynamic reloading of the list of bells on the web UI
-- [ ] Allow burst-bells (e.g. bell sound that loops once, but can loop for 5 seconds)
-  - [ ] Allow tone-generated bells (e.g. play for x many seconds at y kHz)?
-- [ ] Logging support
-- [ ] Write an installer again
-- [ ] Add the missing features on the sidebar
-- [ ] Code tidy up. Get rid of some callback hell in the main index
-- [ ] Allow multiple bell schedules
-  - [ ] Allow trigger-based switching. This could allow stuff like switching from schedule 1 to schedule 2 when the "Last Friday of the month" bell goes off
-- [ ] Perhaps some MQTT so it'll play nice with other systems?
-- [ ] Allow setting of buttons on status page for RPi TFT screen (so button1 can be trigger, disable etc.)
+ - [ ] Better error handling
+ - [ ] More security! Need logins and such!
+ - [x] Dynamic reloading of the list of bells on the web UI
+ - [ ] Allow burst-bells (e.g. bell sound that loops once, but can loop for 5 seconds)
+   - [ ] Allow tone-generated bells (e.g. play for x many seconds at y kHz)?
+ - [ ] Logging support
+ - [x] Write an installer again
+ - [ ] Add the missing features on the sidebar
+ - [ ] Code tidy up. Get rid of some callback hell in the main index
+ - [ ] Allow multiple bell schedules
+   - [ ] Allow trigger-based switching. This could allow stuff like switching from schedule 1 to schedule 2 when the "Last Friday of the month" bell goes off
+ - [ ] Perhaps some MQTT so it'll play nice with other systems?
+ - [ ] Allow setting of buttons on status page for RPi TFT screen (so button1 can be trigger, disable etc.)
   - [ ] Config page to pick a task and a bell to assign to?
-- [ ] More virtual bells, for example, "\_alarm", "\_switch" (for changing schedules) and "\_default" to allow default bells?
-- [ ] Add a page for "virtual" bells (like the "\_all" bell)
+ - [ ] More virtual bells, for example, "\_alarm", "\_switch" (for changing schedules) and "\_default" to allow default bells?
+ - [ ] Add a page for "virtual" bells (like the "\_all" bell)
+ - [ ] Include default bell & config, overwritable by another file (so I can .gitignore personal settings and still push changes to bells.json and config.json)
+ - [ ] Include better update mechanism. nodemon is too eager to restart when a single file changes
 
 [1]: https://github.com/ncb000gt/node-cron/issues/180

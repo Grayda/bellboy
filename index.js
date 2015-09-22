@@ -136,17 +136,40 @@ bellboy.on("jobsloaded", function(jobs) {
       bellboy.modules["bellweb"].socket.on("setvolume", function(volume) {
         console.log("Volume set to " + volume)
         bellboy.modules["bellaudio"].SetVolume(volume)
-        bellboy.modules["bellweb"].SocketEmit("confirmation", {
-          "message": "Volume set successfully!",
-          "delay": 2000
+        bellboy.modules["bellweb"].SocketEmit("notification", {
+          "title": "Volume changed",
+          "message": "Volume set to " + volume + "!",
+          "timeout": 2000
         })
       })
 
-      // Every second, update the clock and the next bell.
-      // We do it this way so we can get the time from the Pi and not the client
-      // so you can check to ensure your time is set correctly.
+      bellboy.modules["bellweb"].socket.on("trigger", function(bell) {
+        bellboy.Trigger(bell.bell)
+        bellboy.modules["bellweb"].SocketEmit("notification", {
+          "title": "Bell triggered",
+          "message": bellboy.bells[bell.bell].Name + " has been triggered!",
+          "timeout": 2000
+        })
+      })
 
-      // This runs every 10 seconds and reloads the table
+      bellboy.modules["bellweb"].socket.on("togglebell", function(data) {
+        if(data.state == true) {
+          bellboy.EnableBell(data.bell)
+        } else if(data.state == false) {
+          bellboy.DisableBell(data.bell)
+        } else {
+          return
+        }
+        bellboy.modules["bellweb"].SocketEmit("notification", {
+          "title": "Bell toggled",
+          "message": bellboy.bells[data.bell].Name + " has been set to " + data.state + "!",
+          "timeout": 2000
+        })
+
+      })
+
+      // This runs every 10 seconds and provides our webpage with the next bell time
+      // Almost every other update is provided on an as-needed basis (e.g. reload currently enabled bells only when someone toggles a bell)
       setInterval(function() {
 
         bellboy.modules["bellweb"].SocketEmit("nextbell", {
@@ -245,8 +268,8 @@ bellboy.on("trigger", function(item) {
 
   // Load and send an email
   // TO-DO: Expand on this
-  mail = bellboy.modules["bellmail"].LoadTemplate("trigger.ejs", item, bellboy.bells[item].Mail.Subject)
-  bellboy.modules["bellmail"].SendMail(bellboy.bells[item].Mail, mail)
+  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[item].Mail.Trigger.Template, item, bellboy.bells[item].Mail.Trigger.Subject)
+  bellboy.modules["bellmail"].SendMail(bellboy.bells[item].Mail.Trigger, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
 })
 
@@ -257,12 +280,16 @@ bellboy.on("triggerdone", function() {
 // Someone has enabled a bell
 bellboy.on("bellenabled", function(bell) {
   console.log(bellboy.bells[bell].Name + " was enabled")
+  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bell].Mail.Change.Template, bell, bellboy.bells[bell].Mail.Change.Subject)
+  bellboy.modules["bellmail"].SendMail(bellboy.bells[bell].Mail.Change, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
 })
 
 // Someone has disabled a bell
 bellboy.on("belldisabled", function(bell) {
   console.log(bellboy.bells[bell].Name + " was disabled")
+  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bell].Mail.Change.Template, bell, bellboy.bells[bell].Mail.Change.Subject)
+  bellboy.modules["bellmail"].SendMail(bellboy.bells[bell].Mail.Change, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
 })
 

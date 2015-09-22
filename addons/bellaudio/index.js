@@ -56,8 +56,10 @@ BellAudio.prototype.Play = function(file) {
 BellAudio.prototype.SetVolume = function(percent) {
     if (os.platform() !== "win32") {
       cp.exec("amixer sset PCM,0 " + percent + "%", function(error, stdout, stderr) {
-        console.log(stdout || stderr)
-      })
+        this.emit("setvolume", percent)
+      }.bind(this))
+    } else {
+      this.emit("setvolume", percent)
     }
 }
 

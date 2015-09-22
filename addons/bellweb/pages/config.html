@@ -1,7 +1,7 @@
 <% include includes/header.html %>
+<% include includes/layout.html %>
 <script type="text/javascript">
   function setVolume(volume) {
-    alert(volume)
     socket.emit("setvolume", volume)
   }
 </script>

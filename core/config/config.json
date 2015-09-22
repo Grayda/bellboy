@@ -2,8 +2,6 @@
   "BellFile": "/config/bells.json",
   "AppName": "Bellboy Timer System",
   "Version": "0.0.1",
-  "Debug": true,
-  "Beta": true,
   "Mail": {
     "From": "bellmaster@example.com",
     "Server": "",
@@ -13,10 +11,9 @@
   },
   "WebTheme": {
     "Base": ["#CCC", "#FFF"],
-    "Text": "black",
     "Accent": ["#3a75ac", "orange", "#7ac676"],
-    "Font": "Roboto, Verdana, Arial",
-    "StatusButton": ["#3a75ac", "orange", "#7ac676", "red"]
+    "StatusButton": ["#3a75ac", "orange", "#7ac676", "red"],
+    "Font": "Roboto, Verdana, Arial"
   },
 
   "Server": true,
