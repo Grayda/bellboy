@@ -135,7 +135,7 @@ bellboy.on("jobsloaded", function(jobs) {
 
       bellboy.modules["bellweb"].socket.on("setvolume", function(volume) {
         console.log("Volume set to " + volume)
-        bellboy.modules["bellaudio"].SetVolume(volume.percentage)
+        bellboy.modules["bellaudio"].SetVolume(volume)
         bellboy.modules["bellweb"].SocketEmit("confirmation", {
           "message": "Volume set successfully!",
           "delay": 2000

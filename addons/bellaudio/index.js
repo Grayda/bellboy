@@ -56,7 +56,7 @@ BellAudio.prototype.Play = function(file) {
 BellAudio.prototype.SetVolume = function(percent) {
     if (os.platform() !== "win32") {
       cp.exec("amixer sset PCM,0 " + percent + "%", function(error, stdout, stderr) {
-        console.log(stdout)
+        console.log(stdout || stderr)
       })
     }
 }
@@ -64,7 +64,7 @@ BellAudio.prototype.SetVolume = function(percent) {
 BellAudio.prototype.GetVolume = function(percent) {
     if (os.platform() !== "win32") {
       // Run the command to get our percentage. Timeout after 1 second if nothing returned.
-      return cp.execSync("amixer get PCM|grep -o [0-9]*%", {"timeout": 1000}).toString().split("%")[0]
+      return cp.execSync("amixer sget PCM|grep -o [0-9]*%", {"timeout": 1000}).toString().split("%")[0]
     } else {
       return 100
     }
