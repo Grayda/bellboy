@@ -1,28 +1,20 @@
-// BellWeb module
-// ==============
-// Depends On: Bellboy, BellParser
-// Emits: ready, pageloaded(request, response), cssloaded(request, response), lessloaded(request, response), imageloaded(request, response)
-
-// This module provides a web front-end for managing the bells.
-
 var util = require("util"); // For inheriting the EventEmitter stuff so we can use it via this.emit();
 var EventEmitter = require("events").EventEmitter;
 util.inherits(BellWeb, EventEmitter);
 
-var dispatcher = require('httpdispatcher'); // For handling our web server requests
-var parser = require('cron-parser');
-var less = require('less');
-var http = require('http'); // For our web server
-var url = require("url"); // For parsing URLs
-var moment = require("moment"); // For formatting of dates
-var ejs = require('ejs'); // Text template engine, used for web parsing
-var fs = require('fs'); // For reading files
-var where = require("lodash.where"); // For quick and easy counting of enabled bells
-
-
 var bellboy = {}
-var server, io
 
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var http = require('http');
+
+var routes = require('./routes/index');
+
+var app = express();
 
 function BellWeb(bellboyInstance) {
   bellboy = bellboyInstance
@@ -30,112 +22,64 @@ function BellWeb(bellboyInstance) {
 }
 
 BellWeb.prototype.Prepare = function(root, port, callback) {
-  // The root path to our files (e.g. /pages)
-  BellWeb.Path = root
+  app.set('port', 8080);
 
-  server = http.createServer(function(request, response) {
+  // view engine setup
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'ejs');
 
-    dispatcher.dispatch(request, response);
+  app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+  app.use(logger('dev'));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(cookieParser());
+
+  app.locals.bellboy = bellboy
+
+debugger;
+  app.use(require('less-middleware')("public", {  dest: path.join(__dirname, 'public', 'stylesheets') }));
+  app.use(express.static(path.join(__dirname, 'public')));
+
+
+  app.use('/', routes);
+
+  // catch 404 and forward to error handler
+  app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
   });
 
+  // error handlers
 
-
-  // Forward slash only
-  dispatcher.beforeFilter(/^\/$/gm, function(req, res) {
-    res.writeHead(302, {
-      'Location': '/index.html'
+  // development error handler
+  // will print stacktrace
+  if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+      res.status(err.status || 500);
+      res.render('error', {
+        message: err.message,
+        error: err
+      });
     });
-    res.end();
-  }.bind(this));
-
-  // Our index page
-  dispatcher.beforeFilter(/\.html$|\.js$/gm, function(req, res) {
-    // try {
-      file = this.LoadFile(req)
-      res.setHeader('content-type', 'text/html');
-      res.end(file)
-      this.emit("pageloaded", req, res)
-    // } catch (ex) {
-    //   res.writeHead(404);
-    //   console.log(ex)
-    //   req.url = "/404.html"
-    //   file = this.LoadFile(req)
-    //   res.end(file);
-    //   this.emit("pageloadederror", req)
-    // }
-
-  }.bind(this));
-
-  // Loads CSS
-  dispatcher.beforeFilter(/\.css/g, function(req, res) {
-    file = this.LoadFile(req)
-    res.setHeader('content-type', 'text/css');
-    res.end(file)
-    this.emit("cssloaded", req, res)
-  }.bind(this));
-
-  // Loads .less files
-  dispatcher.beforeFilter(/\.less/g, function(req, res) {
-
-    file = this.LoadFile(req)
-    res.setHeader('content-type', 'text/css');
-    less.render(file, {
-      paths: [BellWeb.Path]
-    }, function(err, output) {
-      if (err) {
-        console.log(err)
-      }
-      res.end(output.css)
-
-    })
-    this.emit("lessloaded", req, res)
-  }.bind(this));
-
-  // Loads image files
-  dispatcher.beforeFilter(/\.jpg|\.png|\.gif|\.bmp\.ttf|\.woff/g, function(req, res) {
-    file = this.LoadFile(req, true)
-      // No header set because LOL I'm lazy!
-    res.end(file, "binary")
-    this.emit("imageloaded", req, res)
-  }.bind(this));
-
-  // After our setup, set our server to listen
-  server.listen(port, function() {
-    //console.log("Server listening on: http://localhost:" + bellboy.config.ServerPort);
-    this.emit("ready")
-    if (typeof callback === "function") {
-      callback(details);
-    }
-  }.bind(this));
-
-  io = require('socket.io').listen(server); // For browser-server communication
-  io.sockets.on('connection', function(socket) {
-    BellWeb.prototype.socket = socket
-      this.emit("socketready")
-  }.bind(this));
-}
-
-BellWeb.prototype.LoadFile = function(req, binary) {
-  var file
-  if (binary == true) {
-    return fs.readFileSync(BellWeb.Path + url.parse(req.url).pathname)
-  } else {
-    file = fs.readFileSync(BellWeb.Path + url.parse(req.url).pathname).toString()
-    var options = {
-      req: req,
-      Date: {
-        "parsed": moment().format(bellboy.config.DateFormat),
-        "unix": moment().unix(),
-        "moment": moment
-      },
-      bellboy: bellboy,
-      where: where,
-      hostname: this.GetHostName(),
-      cron: bellboy.modules["bellparser"],
-      filename: BellWeb.Path + url.parse(req.url).pathname
-    }
-    return ejs.render(file, options)
   }
+
+  // production error handler
+  // no stacktraces leaked to user
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: {}
+    });
+  });
+
+  server.listen(port);
+
+  server.on("listening", function() {
+    this.emit("ready")
+  }.bind(this))
+
 
 }
 
@@ -147,5 +91,13 @@ BellWeb.prototype.SocketEmit = function(event, data) {
   io.sockets.emit(event, data)
 }
 
-BellWeb.prototype.server = server
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+
+
 module.exports = BellWeb;
