@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/main.less' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <img src="/images/logo.png">
-    <p>Welcome to <%= locals.bellboy.config.WebTheme.Base[0] %></p>
-  </body>
-</html>
+<% include includes/header.ejs %>
+<% include includes/layout.ejs %>
+
+<div id="main_table"><% include includes/main.ejs %></div>
+<% include includes/footer.ejs %>

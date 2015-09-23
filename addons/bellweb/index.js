@@ -11,6 +11,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
+var moment = require("moment")
+var io
 
 var routes = require('./routes/index');
 
@@ -35,9 +37,11 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
   app.use(cookieParser());
 
   app.locals.bellboy = bellboy
-
-debugger;
-  app.use(require('less-middleware')("public", {  dest: path.join(__dirname, 'public', 'stylesheets') }));
+  app.locals.Date = {
+    "parsed": moment().format(bellboy.config.DateFormat),
+    "unix": moment().unix(),
+    "moment": moment
+  },
   app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -80,6 +84,11 @@ debugger;
     this.emit("ready")
   }.bind(this))
 
+  io = require('socket.io').listen(server); // For browser-server communication
+  io.sockets.on('connection', function(socket) {
+    BellWeb.prototype.socket = socket
+      this.emit("socketready")
+  }.bind(this));
 
 }
 

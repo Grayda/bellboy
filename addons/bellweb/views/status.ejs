@@ -1,0 +1,50 @@
+<% include includes/header.ejs %>
+
+  <table class="table table-condensed">
+    <tr>
+      <th>
+        <%= locals.bellboy.config.AppName %>
+      </th>
+      <th id="nextbell"></th>
+      <th id="time"></th>
+    </tr>
+    <% if(locals.bellboy.bells["_all"].Enabled == false) { %>
+      <tr>
+        <td class="danger"><i class="glyphicon glyphicon-remove-sign"></i> All bells are disabled. They were disabled on
+          <%= Date %>
+        </td>
+      </tr>
+      <tr>
+        <td><a href="toggle.html?id=_all&state=true">Click here to enable them again</a></td>
+      </tr>
+      <% } else { %>
+        <tr>
+          <td>Bells Loaded:
+            <%= Object.keys(where(locals.bellboy.bells, {"Enabled": true})).length %> /
+              <%= Object.keys(locals.bellboy.bells).length %>
+          </td>
+        </tr>
+        <tr>
+          <td>To manage these bells, please visit <a href="/">http://<%= bellboy.modules["bellweb"].GetHostName() %>:8080</a> on your computer</td>
+        </tr>
+        <% } %>
+  </table>
+  </div>
+
+  <div class="footer navbar-fixed-bottom">
+    <table class="table">
+      <tr>
+        <td class="button button1"><a href="javascript:pressButton(1)">Ring bell now</a></td>
+        <td class="button button2">Disabled</td>
+        <td class="button button3">Disabled</td>
+        <td class="button button4">
+          <% if(locals.bellboy.bells["_all"].Enabled == false) { %><a href="toggle.html?id=_all&state=true">Enable ALL Bells</a>
+            <% } else { %><a href="toggle.html?id=_all&state=false">Disable ALL Bells</a>
+              <% } %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

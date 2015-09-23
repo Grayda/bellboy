@@ -1,0 +1,71 @@
+<html>
+
+<head>
+  <title>
+    <%= locals.bellboy.config.AppName %>
+  </title>
+
+  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+  <script src="/javascripts/moment.js"></script>
+  <script src="/javascripts/jquery-2.1.4.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- For doing client-server interactions -->
+</head>
+
+<body>
+  <!-- For displaying notifications -->
+  <% include modal.ejs %>
+
+
+    <script type="text/javascript">
+      var socket = io.connect();
+
+      function pressButton(number) {
+        socket.emit("button", {
+          number: number
+        })
+      }
+
+      function trigger(bell) {
+        socket.emit("trigger", {
+          bell: bell
+        })
+      }
+
+      function toggleBell(bell, state) {
+        socket.emit("togglebell", {
+          bell: bell,
+          state: state
+        })
+
+      }
+
+      $(document).on("ready", function() {
+        var offset = moment("<%= Date.moment() %>").diff(moment());
+        document.getElementById("time").innerHTML = "<i class='glyphicon glyphicon-time'></i> " + moment().add(offset, 'milliseconds').format("<%= locals.bellboy.config.DateFormat %>");
+        document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> <%= locals.bellboy.modules['bellparser'].GetNextJob()['calendar'] %>";
+
+        setInterval(function() {
+          document.getElementById("time").innerHTML = "<i class='glyphicon glyphicon-time'></i> " + moment().add(offset, 'milliseconds').format("<%= locals.bellboy.config.DateFormat %>");
+        }, 100)
+
+        socket.on('nextbell', function(data) {
+          document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> " + data.date;
+        });
+
+        socket.on('reloadtable', function(data) {
+          document.getElementById("main_table").innerHTML = data.data;
+        });
+
+        socket.on('notification', function(data) {
+          $("#notificationTitle").html(data.title)
+          $("#notificationBody").html(data.message)
+          $('#notification').modal('show')
+          setTimeout(function() {
+            $('#notification').modal('hide');
+          }, data.timeout);
+        })
+
+      })
+    </script>

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var url = require("url");
 
 // req: req,
 // Date: {
@@ -15,7 +16,13 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index');
 });
+
+router.get(/\.html$|\.ejs$/gm, function(req, res, next) {
+
+  res.render(url.parse(req.url).pathname.substring(1));
+});
+
 
 module.exports = router;
