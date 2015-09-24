@@ -25,53 +25,53 @@
       <th>Actions</th>
     </tr>
     <!-- Loop through each bell -->
-    <% Object.keys(locals.bellboy.bells).forEach(function(item){ %>
+    <% Object.keys(locals.bellboy.bells[bellboy.config.Schedule]).forEach(function(item){ %>
       <!-- If the bell is the fake "all" bell, skip it -->
       <% if(item.substring(0,1) == "_") { return } %>
 
-        <% if (locals.bellboy.bells[item].Enabled === false) { %>
+        <% if (locals.bellboy.bells[bellboy.config.Schedule][item].Enabled === false) { %>
           <tr class="inactivebell">
         <% } else { %>
           <tr class="activebell">
         <% } %>
-        <% if (locals.bellboy.modules["bellparser"].GetNextJob()["time"] == locals.bellboy.bells[item].Time) { %>
+        <% if (locals.bellboy.modules["bellparser"].GetNextJob()["time"] == locals.bellboy.bells[bellboy.config.Schedule][item].Time) { %>
           <td class="nextbell"><i class="glyphicon glyphicon-chevron-right"></i> <abbr title="This bell will play next">NEXT</abbr></td>
           <% } else { %>
             <td>&nbsp;</td>
             <% } %>
               <!-- <td><%= item %></td> -->
               <td>
-                <%= locals.bellboy.bells[item].Name %>
+                <%= locals.bellboy.bells[bellboy.config.Schedule][item].Name %>
               </td>
               <td>
-                <%= locals.bellboy.bells[item].Description %>
+                <%= locals.bellboy.bells[bellboy.config.Schedule][item].Description %>
               </td>
               <td>
-                <a href="#" title="<%= locals.bellboy.bells[item].Time %>">
+                <a href="#" title="<%= locals.bellboy.bells[bellboy.config.Schedule][item].Time %>">
                   <%= locals.bellboy.modules["bellparser"].CronToDate(item)["calendar"] %>
                 </a>
               </td>
               <td>
-                <%= locals.bellboy.bells[item].File %>
+                <%= locals.bellboy.bells[bellboy.config.Schedule][item].File %>
               </td>
               <td>
-                <% if(locals.bellboy.bells[item].Mail.Trigger.Enabled == true) { %>
+                <% if(locals.bellboy.bells[bellboy.config.Schedule][item].Mail.Trigger.Enabled == true) { %>
                   <abbr title="An email will send when this bell rings">Trigger</abbr>
                 <% } else { %>
                   <abbr title="NO email will be sent when this bell rings">-</abbr>
                 <% } %> /
-                <% if(locals.bellboy.bells[item].Mail.Change.Enabled == true) { %>
+                <% if(locals.bellboy.bells[bellboy.config.Schedule][item].Mail.Change.Enabled == true) { %>
                   <abbr title="An email will send when this bell is changed">Change</abbr>
                 <% } else { %>
                   <abbr title="NO email will be sent when this bell is edited">-</abbr>
                 <% } %>
               </td>
               <td>
-                <%= locals.bellboy.bells[item].Locked %>
+                <%= locals.bellboy.bells[bellboy.config.Schedule][item].Locked %>
               </td>
               <td>
-                <a href="javascript:toggleBell('<%= item %>', <% if (locals.bellboy.bells[item].Enabled === false) { %>true<% } else { %>false<% } %>)">
-                  <% if (locals.bellboy.bells[item].Enabled === false) { %>Enable
+                <a href="javascript:toggleBell('<%= item %>', <% if (locals.bellboy.bells[bellboy.config.Schedule][item].Enabled === false) { %>true<% } else { %>false<% } %>)">
+                  <% if (locals.bellboy.bells[bellboy.config.Schedule][item].Enabled === false) { %>Enable
                     <% } else { %>Disable
                       <% } %>
                 </a> |

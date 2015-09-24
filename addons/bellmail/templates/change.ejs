@@ -7,8 +7,8 @@
     </style>
   </head>
   <body>
-    <h1><%= bellboy.bells[bell].Name %> has been changed</h1>
-    <p><%= bellboy.bells[bell].Name %> has been changed (disabled, enabled or deleted). It was changed on <%= Date.parsed %></p>
+    <h1><%= bellboy.bells[bellboy.config.Schedule][bell].Name %> has been changed</h1>
+    <p><%= bellboy.bells[bellboy.config.Schedule][bell].Name %> has been changed (disabled, enabled or deleted). It was changed on <%= Date.parsed %></p>
     <p>To check this bell, please visit <a href="http://<%= hostname %>:8080">the web UI</a></p>
     <p><small>This was an automated email sent by <%= bellboy.config.AppName %>. Please contact your system administrator for more information</small></p>
   </body>

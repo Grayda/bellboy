@@ -42,7 +42,7 @@ Bellboy.prototype.LoadBells = function(file) {
 }
 
 Bellboy.prototype.SaveSettings = function(file) {
-  fs.writeFileSync(__dirname + file, JSON.stringify(this.bells, null, 2))
+  fs.writeFileSync(__dirname + file, JSON.stringify(this.config, null, 2))
 	this.emit("settingssaved", __dirname + file)
 }
 
@@ -52,44 +52,40 @@ Bellboy.prototype.SaveBells = function(file) {
 }
 
 Bellboy.prototype.AddBell = function(id, bell) {
-  this.bells[id] = bell
+  this.bells[bellboy.config.Schedule][id] = bell
   this.emit("belladded", id)
 }
 
 Bellboy.prototype.UpdateBell = function(id, bell) {
-  this.bells[id] = bell
+  this.bells[bellboy.config.Schedule][id] = bell
   this.emit("bellupdated", id)
 }
 
 
 Bellboy.prototype.DeleteBell = function(bell) {
-  if(this.bells[bell].Locked == true) { return }
+  if(this.bells[bellboy.config.Schedule][bell].Locked == true) { return }
   delete this.bells[bell]
   this.emit("belldeleted", bell)
 }
 
-
-
-
-
 Bellboy.prototype.Start = function(file) {
   // Loop through all bells
-  Object.keys(bells).forEach(function(item) {
+  console.dir(this.bells)
+  console.log(this.config.Schedule)
+  Object.keys(this.bells[this.config.Schedule]).forEach(function(item) {
     // We want to ignore bells that start with _, as they're special cases
     if (item.substring(0,1) == "_") {
       return
     }
-
-
       // New cronjob. Takes a function on trigger, a function on completion (the "null" below),
       // true / false on startup status (if false, you need to call job[item].start() manually), plus a timezone
-      jobs[item] = new CronJob(bells[item].Time, function() {
+      jobs[item] = new CronJob(bells[this.config.Schedule][item].Time, function() {
         // "cron" has a bug where jobs can prematurely fire minutes before they should,
         // so we check to make sure the job only starts when it should
         if(this.CompareTimes(item) == true) { this.emit("trigger", item) }
       }.bind(this), function() {
         if(this.CompareTimes(item) == true) { this.emit("triggerdone", item) }
-      }.bind(this), bells[item].Enabled, config.Timezone)
+      }.bind(this), this.bells[this.config.Schedule][item].Enabled, config.Timezone)
 
       this.emit("jobadded", item)
     }.bind(this))
@@ -119,15 +115,20 @@ Bellboy.prototype.EnableBell = function(bell) {
 
 Bellboy.prototype.ToggleBell = function(bell, state) {
 
-  if(this.bells[bell].Locked == true) {
+  if(bell.indexOf("_") > -1) {
+    theBell = this.bells[bell]
+  } else {
+    theBell = this.bells[this.config.Schedule][bell]
+  }
+  if(theBell.Locked == true) {
     return false
   }
 
   if(state == true) {
-	  this.bells[bell].Enabled = true
+	  theBell.Enabled = true
     if(bell.substring(0,1) !== "_") { this.jobs[bell].start() }
   } else if(state == false) {
-    this.bells[bell].Enabled = false
+    theBell.Enabled = false
     if(bell.substring(0,1) !== "_") { this.jobs[bell].stop() }
   }
 
@@ -135,7 +136,7 @@ Bellboy.prototype.ToggleBell = function(bell, state) {
 }
 
 Bellboy.prototype.CompareTimes = function(bell) {
-  var interval = moment().diff(parser.parseExpression(this.bells[bell].Time).next());
+  var interval = moment().diff(parser.parseExpression(this.bells[this.config.Schedule][bell].Time).next());
 
   console.log("Diff is: " + interval)
   if(interval >= -1 && interval <= 1) {

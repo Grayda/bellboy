@@ -160,7 +160,7 @@ bellboy.on("jobsloaded", function(jobs) {
         bellboy.Trigger(bell.bell)
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Bell triggered",
-          "message": bellboy.bells[bell.bell].Name + " has been triggered!",
+          "message": bellboy.bells[bellboy.config.Schedule][bell.bell].Name + " has been triggered!",
           "timeout": 2000
         })
       })
@@ -175,7 +175,7 @@ bellboy.on("jobsloaded", function(jobs) {
         }
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Bell toggled",
-          "message": bellboy.bells[data.bell].Name + " has been set to " + data.state + "!",
+          "message": bellboy.bells[bellboy.config.Schedule][data.bell].Name + " has been set to " + data.state + "!",
           "timeout": 2000
         })
 
@@ -276,16 +276,20 @@ bellboy.on("jobsloaded", function(jobs) {
 // The bell has triggered, either manually or automatically
 bellboy.on("trigger", function(item) {
   console.log(item)
-  console.log(bellboy.bells[item].Name + " triggered!")
+  console.log(bellboy.bells[bellboy.config.Schedule][item].Name + " triggered!")
   // Play some audio
   // TO-DO: Pick a random file and play it
-  bellboy.modules["bellaudio"].Play("/audio/" + bellboy.bells[item].File)
+  bellboy.modules["bellaudio"].Play("/audio/" + bellboy.bells[bellboy.config.Schedule][item].File)
 
   // Load and send an email
   // TO-DO: Expand on this
-  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[item].Mail.Trigger.Template, item, bellboy.bells[item].Mail.Trigger.Subject)
-  bellboy.modules["bellmail"].SendMail(bellboy.bells[item].Mail.Trigger, mail)
+  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bellboy.config.Schedule][item].Mail.Trigger.Template, item, bellboy.bells[bellboy.config.Schedule][item].Mail.Trigger.Subject)
+  bellboy.modules["bellmail"].SendMail(bellboy.bells[bellboy.config.Schedule][item].Mail.Trigger, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
+  if(typeof bellboy.bells[bellboy.config.Schedule][item].SwitchSchedule !== "undefined") {
+    bellboy.config.Schedule = bellboy.bells[bellboy.config.Schedule][item].SwitchSchedule
+    bellboy.SaveSettings("/config/config.json")
+  }
 })
 
 bellboy.on("triggerdone", function() {
@@ -294,19 +298,19 @@ bellboy.on("triggerdone", function() {
 
 // Someone has enabled a bell
 bellboy.on("bellenabled", function(bell) {
-  console.log(bellboy.bells[bell].Name + " was enabled")
+  console.log(bellboy.bells[bellboy.config.Schedule][bell].Name + " was enabled")
   bellboy.SaveBells(bellboy.config.BellFile)
-  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bell].Mail.Change.Template, bell, bellboy.bells[bell].Mail.Change.Subject)
-  bellboy.modules["bellmail"].SendMail(bellboy.bells[bell].Mail.Change, mail)
+  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bellboy.config.Schedule][bell].Mail.Change.Template, bell, bellboy.bells[bellboy.config.Schedule][bell].Mail.Change.Subject)
+  bellboy.modules["bellmail"].SendMail(bellboy.bells[bellboy.config.Schedule][bell].Mail.Change, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
 })
 
 // Someone has disabled a bell
 bellboy.on("belldisabled", function(bell) {
-  console.log(bellboy.bells[bell].Name + " was disabled")
+  console.log(bellboy.bells[bellboy.config.Schedule][bell].Name + " was disabled")
   bellboy.SaveBells(bellboy.config.BellFile)
-  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bell].Mail.Change.Template, bell, bellboy.bells[bell].Mail.Change.Subject)
-  bellboy.modules["bellmail"].SendMail(bellboy.bells[bell].Mail.Change, mail)
+  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bellboy.config.Schedule][bell].Mail.Change.Template, bell, bellboy.bells[bellboy.config.Schedule][bell].Mail.Change.Subject)
+  bellboy.modules["bellmail"].SendMail(bellboy.bells[bellboy.config.Schedule][bell].Mail.Change, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
 })
 

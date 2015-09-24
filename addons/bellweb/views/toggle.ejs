@@ -1,7 +1,7 @@
 <% include includes/header.ejs %>
 <% include includes/layout.ejs %>
 <h1>Bell changed</h1>
-<p>The bell "<%= bellboy.bells[req.params.id].Name %>" has been changed to <%= !bellboy.bells[req.params.id].Enabled %></p>
+<p>The bell "<%= bellboy.bells[bellboy.config.Schedule][req.params.id].Name %>" has been changed to <%= !bellboy.bells[bellboy.config.Schedule][req.params.id].Enabled %></p>
 <a href="/">Click here to go back or wait 2 seconds</a>
 <script language="javascript">
   window.setTimeout(function() {

@@ -1,9 +1,10 @@
 // BellLog module
 // ==============
 // Depends On: Bellboy
-// Emits: ready
+// Emits: ready, log[logfile], logdeleted
 
 // This module reads logs and such.
+
 var fs = require("fs");
 var stripANSI = require("strip-ansi");
 

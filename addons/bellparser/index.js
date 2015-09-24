@@ -34,9 +34,9 @@ BellParser.prototype.Prepare = function(callback) {
 BellParser.prototype.CronToDate = function(bell, callback) {
 
   var details = {}
-  var interval = parser.parseExpression(bellboy.bells[bell].Time).next();
-  details["name"] = bellboy.bells[bell].Name
-  details["time"] = bellboy.bells[bell].Time
+  var interval = parser.parseExpression(bellboy.bells[bellboy.config.Schedule][bell].Time).next();
+  details["name"] = bellboy.bells[bellboy.config.Schedule][bell].Name
+  details["time"] = bellboy.bells[bellboy.config.Schedule][bell].Time
   details["calendar"] = moment(interval).calendar()
   details["parsed"] = moment().to(interval)
   details["shortparsed"] = moment(interval).format("ddd MMM Do HH:MM:SS")
@@ -56,21 +56,21 @@ BellParser.prototype.GetNextJob = function(callback) {
   var results = []
   // Because the diff is a negative number (smaller as it approaches "now") and we're lookiung for a number > the smallest, we set this insanely low
   results["diff"] = -999999999999999999999
-  Object.keys(bellboy.bells).forEach(function(item) {
+  Object.keys(bellboy.bells[bellboy.config.Schedule]).forEach(function(item) {
     // We want to ignore bells that start with _, as they're special cases
     if (item.substring(0,1) == "_") {
       return
     }
-    if (bellboy.bells[item].Enabled == true) { // Only interested in enabled bells
-      var interval = parser.parseExpression(bellboy.bells[item].Time).next();
+    if (bellboy.bells[bellboy.config.Schedule][item].Enabled == true) { // Only interested in enabled bells
+      var interval = parser.parseExpression(bellboy.bells[bellboy.config.Schedule][item].Time).next();
       diff = moment().diff(interval)
       if (diff > results["diff"]) {
 
-        results["name"] = bellboy.bells[item].Name
+        results["name"] = bellboy.bells[bellboy.config.Schedule][item].Name
         results["parsed"] = interval
         results["shortparsed"] = moment(results["parsed"]).format("ddd MMM Do HH:MM:SS")
         results["diff"] = diff
-        results["time"] = bellboy.bells[item].Time
+        results["time"] = bellboy.bells[bellboy.config.Schedule][item].Time
         results["calendar"] = moment(interval).calendar()
 
       }

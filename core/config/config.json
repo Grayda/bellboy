@@ -2,6 +2,7 @@
   "BellFile": "/config/bells.json",
   "AppName": "Bellboy Timer System",
   "Version": "0.0.1",
+  "Schedule": "test",
   "Mail": {
     "From": "bellmaster@example.com",
     "Server": "",
@@ -10,15 +11,30 @@
     "SSL": false
   },
   "WebTheme": {
-    "Base": ["#CCC", "#FFF"],
-    "Accent": ["#3a75ac", "orange", "#7ac676"],
-    "StatusButton": ["#3a75ac", "orange", "#7ac676", "red"],
+    "Base": [
+      "#CCC",
+      "#FFF"
+    ],
+    "Accent": [
+      "#3a75ac",
+      "orange",
+      "#7ac676"
+    ],
+    "StatusButton": [
+      "#3a75ac",
+      "orange",
+      "#7ac676",
+      "red"
+    ],
     "Font": "Roboto, Verdana, Arial"
   },
   "WebServer": {
     "Enabled": true,
     "Port": 8080,
-    "NoAuth": ["help.ejs", "login"]
+    "NoAuth": [
+      "help.ejs",
+      "login"
+    ]
   },
   "DateFormat": "D MMMM YYYY, h:mm:ssa",
   "Timezone": "Australia/Melbourne",

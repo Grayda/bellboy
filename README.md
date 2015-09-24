@@ -35,11 +35,11 @@ To-Do / Wishlist
 Here's a list of things I'd like to eventually add. If you have any more ideas, please open an issue and argue your case :)
 
  - [ ] Better error handling
- - [ ] More security! Need logins and such!
+ - [x] More security! Need logins and such!
  - [x] Dynamic reloading of the list of bells on the web UI
  - [ ] Allow burst-bells (e.g. bell sound that loops once, but can loop for 5 seconds)
    - [ ] Allow tone-generated bells (e.g. play for x many seconds at y kHz)?
- - [ ] Logging support
+ - [x] Logging support
  - [x] Write an installer again
  - [ ] Add the missing features on the sidebar
  - [ ] Code tidy up. Get rid of some callback hell in the main index
@@ -52,5 +52,6 @@ Here's a list of things I'd like to eventually add. If you have any more ideas, 
  - [ ] Add a page for "virtual" bells (like the "\_all" bell)
  - [ ] Include default bell & config, overwritable by another file (so I can .gitignore personal settings and still push changes to bells.json and config.json)
  - [ ] Include better update mechanism. nodemon is too eager to restart when a single file changes
+ - [ ] Allow user to set when "\_all" is enabled again? (e.g. disable permanently, disabled for 1 day, 1 week etc.)
 
 [1]: https://github.com/ncb000gt/node-cron/issues/180
