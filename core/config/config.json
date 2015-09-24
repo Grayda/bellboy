@@ -15,9 +15,11 @@
     "StatusButton": ["#3a75ac", "orange", "#7ac676", "red"],
     "Font": "Roboto, Verdana, Arial"
   },
-
-  "Server": true,
-  "ServerPort": 8080,
+  "WebServer": {
+    "Enabled": true,
+    "Port": 8080,
+    "NoAuth": ["help.ejs", "login"]
+  },
   "DateFormat": "D MMMM YYYY, h:mm:ssa",
   "Timezone": "Australia/Melbourne",
   "CrashEmail": {

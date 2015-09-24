@@ -1,39 +1,59 @@
 var express = require('express');
 var router = express.Router();
-var url = require("url");
 
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
+var isAuthenticated = function(req, res, next) {
+  // if user is authenticated in the session, call the next() to call the next request handler
+  // Passport adds this method to request object. A middleware is allowed to add properties to
+  // request and response objects
   if (req.isAuthenticated()) {
-    console.log("AUthenticated!!")
-    res.render('index');
-    next();
+    return next();
   } else {
-    console.log("NO AUTH> LOGING!!!")
+    // if the user is not authenticated then redirect him to the login page
     res.redirect('/login');
   }
+}
 
-});
+module.exports = function(passport, bellboy) {
 
-// Loads
-router.get("/:file", function(req, res, next) {
-  if (req.params.file == "login") {
-      console.log("NO AUTH> LOGING!!!")
-    res.render(req.params.file)
-  } else {
-    if (req.isAuthenticated()) {
-      res.render(req.params.file);
+  /* GET login page. */
+  router.get('/', function(req, res) {
+    if(req.isAuthenticated()) {
+      // Display the Login page with any flash message, if any
+      bellboy.modules["bellweb"].emit("pageloaded", req)
+      res.render('index', { isAuthenticated: req.isAuthenticated() });
     } else {
-      res.redirect('/login');
+      res.redirect("/login")
     }
-  }
-});
-/* GET home page. */
-router.get('/includes/:file', function(req, res, next) {
-  res.render("includes/" + req.params.file);
-});
+  });
+
+  router.get('/includes/:file', function(req, res) {
+      res.render(req.params.file, { isAuthenticated: req.isAuthenticated() });
+      bellboy.modules["bellweb"].emit("pageloaded", req.params.file)
+  });
 
 
+  /* Handle Login POST */
+  router.post('/login', passport.authenticate('login', {
+    failureRedirect: '/login',
+    successRedirect: '/',
+    failureFlash: true
+  }));
 
-module.exports = router;
+  /* Handle Logout */
+  router.get('/logout', function(req, res) {
+    bellboy.modules["bellweb"].emit("loggedout")
+    req.logout();
+    res.redirect('/');
+  });
+
+  router.get("/:file", function(req, res, next) {
+    if(req.isAuthenticated() || bellboy.config.WebServer.NoAuth.indexOf(req.params.file) > -1) {
+        bellboy.modules["bellweb"].emit("pageloaded", req)
+        res.render(req.params.file, { isAuthenticated: req.isAuthenticated() });
+    } else {
+      res.redirect("/login")
+    }
+
+  })
+  return router;
+}

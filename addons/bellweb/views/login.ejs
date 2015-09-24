@@ -1,18 +1,18 @@
 <% include includes/header.ejs %>
 <% include includes/layout.ejs %>
 
+<h1>Log In</h1>
+<p>You must log in to access <%= locals.bellboy.config.AppName %>. Please see your system administrator for information</p>
 <form action="/login" method="post">
-    <div>
-        <label>Username:</label>
-        <input type="text" name="username"/>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
-    <div>
-        <input type="submit" value="Log In"/>
-    </div>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
 </form>
 
 <% include includes/footer.ejs %>

@@ -16,7 +16,7 @@ util.inherits(BellAudio, EventEmitter);
 var bellboy = {}
 
 function BellAudio(bellboyInstance) {
-  bellaudio = bellboyInstance
+  bellboy = bellboyInstance
   EventEmitter.call(this); // Needed so we can emit() from this module
 }
 
@@ -58,6 +58,7 @@ BellAudio.prototype.SetVolume = function(percent) {
       cp.exec("amixer sset PCM,0 " + percent + "%", function(error, stdout, stderr) {
         this.emit("setvolume", percent)
       }.bind(this))
+      cp.exec("alsactl store")
     } else {
       this.emit("setvolume", percent)
     }

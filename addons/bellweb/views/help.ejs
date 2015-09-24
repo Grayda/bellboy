@@ -1,0 +1,16 @@
+<% include includes/header.ejs %>
+<% include includes/layout.ejs %>
+
+<h1><%= locals.bellboy.config.AppName %> Help</h1>
+<p><%= locals.bellboy.config.AppName %> is a system that plays audio files on a schedule. It's primarily intended to replace aging bell systems in schools, providing a modern interface to set up, manage and ring bells</p>
+
+<h3>Logging in</h3>
+<p>In order to log in, you need an account. Please see your system administrator for these details. If you believe your password has been discovered, please ask to have it changed right away.</p>
+
+<h3>Managing bells</h3>
+<p>Once you've logged in, you can manage bells using the "VIew All Bells" page. Currently, bells can be enabled / disabled or manually triggered</p>
+<p>Adding bells is currently in beta. Bell times are expressed in cron format. Please see the section below on writing cron expressions</p>
+
+<h3>Emails</h3>
+<p><%= locals.bellboy.config.AppName %> can be set up to email when a bell is triggered or changed (e.g. deleted, edited or enabled / disabled). To determine if a bell will email on trigger or change, visit the "View All Bells" page and look at the "Email" column. If there two dashes, no email will be sent, otherwise "trigger" or "change" will indicate the email being sent.</p>
+<% include includes/footer.ejs %>

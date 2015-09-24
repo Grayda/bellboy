@@ -1,7 +1,10 @@
 <a href="/">
   <img class="logo" src="../images/logo.png">
 </a>
+<!-- Keep away from prying eyes -->
+
 <ul class="sidebar-nav">
+<% if(locals.isAuthenticated == true) { %>
   <li>
     <a href="/"><i class="glyphicon glyphicon-search"></i> View All Bells</a>
   </li>
@@ -27,5 +30,8 @@
       <a href="javascript:toggleBell('_all', true)"><i class="glyphicon glyphicon-ok"></i> Enable All Bells</a>
     <% } %>
   </li>
+  <% } %>
+  <li><a href="help.ejs"><i class="glyphicon glyphicon-question-sign"></i> Help</a></li>
 </ul>
+
 <div class="sidebar-bottom">Bellboy, written by <a href="http://davidgray.photography">David "Grayda" Gray</a>. Check out the project on <img src="../images/GitHub_Logo.png" /></div>

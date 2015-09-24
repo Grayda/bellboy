@@ -1,0 +1,6 @@
+<% include includes/header.ejs %>
+<% include includes/layout.ejs %>
+<h1><%= locals.bellboy.config.AppName %> Logs</h1>
+<textarea class="form-control logbox" style="height: 75vh;" readonly="readonly"><%= locals.bellboy.modules["belllog"].GetLog() %></textarea>
+<a href="javascript:socket.emit('deletelog')">Delete this log</a>
+<% include includes/footer.ejs %>

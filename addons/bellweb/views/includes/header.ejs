@@ -55,12 +55,16 @@
         });
 
         socket.on("reloadtable", function() {
-          $.get("includes/main.ejs", function(data) {
+          $.get("main.ejs", function(data) {
             $("#main_table").html(data);
           });
         })
 
         socket.on('notification', function(data) {
+          if(typeof data.timeout === "undefined") {
+            data.timeout = 2000
+          }
+          
           $("#notificationTitle").html(data.title)
           $("#notificationBody").html(data.message)
           $('#notification').modal('show')

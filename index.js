@@ -33,6 +33,7 @@ bellboy.on("jobadded", function(item) {
 
 // All the jobs are loaded. Time to load some modules!
 bellboy.on("jobsloaded", function(jobs) {
+  var BellLog = require("./addons/belllog/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
   var BellParser = require("./addons/bellparser/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
   var BellWeb = require("./addons/bellweb/index.js") // Gives us a front-end to work with. Depends on BellParser, so watch out for that
   var BellAudio = require("./addons/bellaudio/index.js") // A module that plays audio. Now supports Windows and Linux!
@@ -42,6 +43,7 @@ bellboy.on("jobsloaded", function(jobs) {
   // We store these in bellboy.modules so other modules can use the features.
   // Some modules depend on others (e.g. BellWeb uses BellParser) so check
   // the index.js for that addon
+  bellboy.modules["belllog"] = new BellLog(bellboy)
   bellboy.modules["bellparser"] = new BellParser(bellboy)
   bellboy.modules["bellmail"] = new BellMail(bellboy)
   bellboy.modules["bellaudio"] = new BellAudio(bellboy)
@@ -111,10 +113,21 @@ bellboy.on("jobsloaded", function(jobs) {
     console.log("BellWeb loaded")
     console.log("Access the web UI at: http://" + bellboy.modules["bellweb"].GetHostName() + ":8080")
 
+    bellboy.modules["bellweb"].on("loggedin", function(username) {
+      console.log(username + " has logged in")
+    })
     // socketready lets us know that socket.io is ready to go.
     // Typically, this won't fire until a client connects
     bellboy.modules["bellweb"].on("socketready", function() {
       console.log("Socket ready")
+
+      bellboy.modules["bellweb"].socket.on("deletelog", function() {
+        bellboy.modules["belllog"].DeleteLog()
+        bellboy.modules["bellweb"].SocketEmit("notification", {
+          "title": "Log Deleted",
+          "message": "bellboy.log has been deleted!"
+        })
+      })
       // The client has sent a message to us, telling us the webpage has requested a **VIRTUAL** button press
       bellboy.modules["bellweb"].socket.on("button", function(button) {
         switch(button.number) {
@@ -203,6 +216,7 @@ bellboy.on("jobsloaded", function(jobs) {
             // Disable, theb save the bells
             bellboy.DisableBell(req.params.id)
             bellboy.SaveBells(bellboy.config.BellFile)
+            break;
           default:
             // Not actually  a state? Don't allow it!
             console.log("Incorrect state! Received: " + req.params.state)
@@ -250,6 +264,7 @@ bellboy.on("jobsloaded", function(jobs) {
   })
 
   // Stuff we want to look out for is done, time to ask the various modules to prepare
+  bellboy.modules["belllog"].Prepare()
   bellboy.modules["bellpi"].Prepare()
   bellboy.modules["bellparser"].Prepare()
   bellboy.modules["bellweb"].Prepare("./addons/bellweb/pages/", bellboy.config.ServerPort)
@@ -280,6 +295,7 @@ bellboy.on("triggerdone", function() {
 // Someone has enabled a bell
 bellboy.on("bellenabled", function(bell) {
   console.log(bellboy.bells[bell].Name + " was enabled")
+  bellboy.SaveBells(bellboy.config.BellFile)
   mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bell].Mail.Change.Template, bell, bellboy.bells[bell].Mail.Change.Subject)
   bellboy.modules["bellmail"].SendMail(bellboy.bells[bell].Mail.Change, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
@@ -288,6 +304,7 @@ bellboy.on("bellenabled", function(bell) {
 // Someone has disabled a bell
 bellboy.on("belldisabled", function(bell) {
   console.log(bellboy.bells[bell].Name + " was disabled")
+  bellboy.SaveBells(bellboy.config.BellFile)
   mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bell].Mail.Change.Template, bell, bellboy.bells[bell].Mail.Change.Subject)
   bellboy.modules["bellmail"].SendMail(bellboy.bells[bell].Mail.Change, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
@@ -295,11 +312,13 @@ bellboy.on("belldisabled", function(bell) {
 
 bellboy.on("belladded", function(id, bell) {
   console.log("Bell added! New ID is " + id)
+  bellboy.SaveBells(bellboy.config.BellFile)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
 })
 
 bellboy.on("belldeleted", function(id) {
   console.log("Bell " + id + " deleted")
+  bellboy.SaveBells(bellboy.config.BellFile)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
 })
 
