@@ -12,7 +12,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
 var moment = require("moment")
-var io
+var where = require("lodash.where")
+var session = require('express-session');
+var FileStore = require('session-file-store')(session);
+var io // For socket.io
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 var routes = require('./routes/index');
 
@@ -30,22 +36,81 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'ejs');
 
+
+  // Middleware
   app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
   app.use(logger('dev'));
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.urlencoded({
+    extended: false
+  }));
   app.use(cookieParser());
 
+  // Authentication with Passport-Local
+  app.use(passport.initialize());
+  app.use(passport.session()); // persistent login sessions
+  setupPassport()
+
+  app.use(session({
+    store: new FileStore,
+    secret: 'keyboard cat'
+  }));
+
+  passport.use('local-login', new LocalStrategy({
+      passReqToCallback: true // allows us to pass back the entire request to the callback
+    },
+    function(req, username, password, done) { // callback with email and password from our form
+
+      // find a user whose email is the same as the forms email
+      // we are checking to see if the user trying to login already exists
+      if (username == "demo" && password == "demo") {
+        console.log("logged in!")
+        return done(null, username);
+      } else {
+        console.log("Barruck!")
+        return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+      }
+    }));
+
+    passport.serializeUser(function(user, done) {
+      done(null, user);
+    });
+
+    passport.deserializeUser(function(user, done) {
+      done(null, user);
+    });
+
+
+  // Sets app.locals so that our templates can use it. If it's in here, the template can use it,
+  // TO-DO: Make this more secure, as someone could dump sensitive info from config.json
   app.locals.bellboy = bellboy
-  app.locals.Date = {
+  app.locals.date = {
     "parsed": moment().format(bellboy.config.DateFormat),
     "unix": moment().unix(),
     "moment": moment
-  },
+  }
+  app.locals.where = where
+
+  // Routes. Pretty straightforward
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use('/includes', routes);
+
+  app.post('/login',
+    passport.authenticate('local-login', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: true
+    })
+  );
+
+  app.get('/logout', function(req, res) {
+        req.logout();
+        res.redirect('/');
+    });
 
 
   app.use('/', routes);
+
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
@@ -87,7 +152,7 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
   io = require('socket.io').listen(server); // For browser-server communication
   io.sockets.on('connection', function(socket) {
     BellWeb.prototype.socket = socket
-      this.emit("socketready")
+    this.emit("socketready")
   }.bind(this));
 
 }
@@ -100,13 +165,13 @@ BellWeb.prototype.SocketEmit = function(event, data) {
   io.sockets.emit(event, data)
 }
 
+function setupPassport() {
+
+
+}
+
+
 
 var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-
 
 module.exports = BellWeb;

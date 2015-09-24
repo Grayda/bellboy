@@ -176,7 +176,7 @@ bellboy.on("jobsloaded", function(jobs) {
           "date": bellboy.modules["bellparser"].GetNextJob()["calendar"]
         })
 
-        // bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
+        // bellboy.modules["bellweb"].SocketEmit("reloadtable")
       }.bind(this), 10000)
 
       bellboy.modules["bellweb"].socket.on("error", function(err) {
@@ -270,7 +270,7 @@ bellboy.on("trigger", function(item) {
   // TO-DO: Expand on this
   mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[item].Mail.Trigger.Template, item, bellboy.bells[item].Mail.Trigger.Subject)
   bellboy.modules["bellmail"].SendMail(bellboy.bells[item].Mail.Trigger, mail)
-  bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
+  bellboy.modules["bellweb"].SocketEmit("reloadtable")
 })
 
 bellboy.on("triggerdone", function() {
@@ -282,7 +282,7 @@ bellboy.on("bellenabled", function(bell) {
   console.log(bellboy.bells[bell].Name + " was enabled")
   mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bell].Mail.Change.Template, bell, bellboy.bells[bell].Mail.Change.Subject)
   bellboy.modules["bellmail"].SendMail(bellboy.bells[bell].Mail.Change, mail)
-  bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
+  bellboy.modules["bellweb"].SocketEmit("reloadtable")
 })
 
 // Someone has disabled a bell
@@ -290,17 +290,17 @@ bellboy.on("belldisabled", function(bell) {
   console.log(bellboy.bells[bell].Name + " was disabled")
   mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bell].Mail.Change.Template, bell, bellboy.bells[bell].Mail.Change.Subject)
   bellboy.modules["bellmail"].SendMail(bellboy.bells[bell].Mail.Change, mail)
-  bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
+  bellboy.modules["bellweb"].SocketEmit("reloadtable")
 })
 
 bellboy.on("belladded", function(id, bell) {
   console.log("Bell added! New ID is " + id)
-  bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
+  bellboy.modules["bellweb"].SocketEmit("reloadtable")
 })
 
 bellboy.on("belldeleted", function(id) {
   console.log("Bell " + id + " deleted")
-  bellboy.modules["bellweb"].SocketEmit("reloadtable", {"data": bellboy.modules["bellweb"].LoadFile({url: "/includes/main.html"})})
+  bellboy.modules["bellweb"].SocketEmit("reloadtable")
 })
 
 bellboy.on("bellssaved", function(file) {

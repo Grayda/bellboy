@@ -2,27 +2,38 @@ var express = require('express');
 var router = express.Router();
 var url = require("url");
 
-// req: req,
-// Date: {
-//   "parsed": moment().format(bellboy.config.DateFormat),
-//   "unix": moment().unix(),
-//   "moment": moment
-// },
-// bellboy: bellboy,
-// where: where,
-// hostname: this.GetHostName(),
-// cron: bellboy.modules["bellparser"],
-// filename: BellWeb.Path + url.parse(req.url).pathname
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  if (req.isAuthenticated()) {
+    console.log("AUthenticated!!")
+    res.render('index');
+    next();
+  } else {
+    console.log("NO AUTH> LOGING!!!")
+    res.redirect('/login');
+  }
+
 });
 
-router.get(/\.html$|\.ejs$/gm, function(req, res, next) {
-
-  res.render(url.parse(req.url).pathname.substring(1));
+// Loads
+router.get("/:file", function(req, res, next) {
+  if (req.params.file == "login") {
+      console.log("NO AUTH> LOGING!!!")
+    res.render(req.params.file)
+  } else {
+    if (req.isAuthenticated()) {
+      res.render(req.params.file);
+    } else {
+      res.redirect('/login');
+    }
+  }
 });
+/* GET home page. */
+router.get('/includes/:file', function(req, res, next) {
+  res.render("includes/" + req.params.file);
+});
+
 
 
 module.exports = router;

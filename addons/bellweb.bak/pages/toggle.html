@@ -1,5 +1,5 @@
 <% include includes/header.html %>
-<% include includes/layout.html %>
+<% include includes/layout.ejs %>
 <h1>Bell changed</h1>
 <p>The bell "<%= bellboy.bells[req.params.id].Name %>" has been changed to <%= !bellboy.bells[req.params.id].Enabled %></p>
 <a href="/">Click here to go back or wait 2 seconds</a>

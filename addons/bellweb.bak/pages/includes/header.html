@@ -54,7 +54,7 @@
           document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> " + data.date;
         });
 
-        socket.on('reloadtable', function(data) {
+        socket.on("<% include includes/layout.ejs %>", function(data) {
           document.getElementById("main_table").innerHTML = data.data;
         });
 

@@ -42,7 +42,7 @@
       }
 
       $(document).on("ready", function() {
-        var offset = moment("<%= Date.moment() %>").diff(moment());
+        var offset = moment("<%= date.moment() %>").diff(moment());
         document.getElementById("time").innerHTML = "<i class='glyphicon glyphicon-time'></i> " + moment().add(offset, 'milliseconds').format("<%= locals.bellboy.config.DateFormat %>");
         document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> <%= locals.bellboy.modules['bellparser'].GetNextJob()['calendar'] %>";
 
@@ -54,9 +54,11 @@
           document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> " + data.date;
         });
 
-        socket.on('reloadtable', function(data) {
-          document.getElementById("main_table").innerHTML = data.data;
-        });
+        socket.on("reloadtable", function() {
+          $.get("includes/main.ejs", function(data) {
+            $("#main_table").html(data);
+          });
+        })
 
         socket.on('notification', function(data) {
           $("#notificationTitle").html(data.title)
