@@ -70,8 +70,6 @@ Bellboy.prototype.DeleteBell = function(bell) {
 
 Bellboy.prototype.Start = function(file) {
   // Loop through all bells
-  console.dir(this.bells)
-  console.log(this.config.Schedule)
   Object.keys(this.bells[this.config.Schedule]).forEach(function(item) {
     // We want to ignore bells that start with _, as they're special cases
     if (item.substring(0,1) == "_") {

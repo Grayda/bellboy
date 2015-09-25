@@ -42,14 +42,12 @@
       }
     }
   },
-
   "testschedule": {
     "test": {
-      "Enabled": false,
+      "Enabled": true,
       "Name": "OH WOW!",
       "Description": "SWITCHIN'!",
       "Locked": "false",
-      "SwitchSchedule": "main",
       "Time": "* * * * *",
       "File": [
         "bell.mp3"
@@ -76,7 +74,6 @@
       "Name": "Test Bell - EVERY MINUTE",
       "Description": "RUN FOR ALL OF THE MINUTES!",
       "Locked": "false",
-      "SwitchSchedule": "testschedule",
       "Time": "* * * * *",
       "File": [
         "bell.mp3"

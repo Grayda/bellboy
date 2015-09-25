@@ -2,7 +2,7 @@
   "BellFile": "/config/bells.json",
   "AppName": "Bellboy Timer System",
   "Version": "0.0.1",
-  "Schedule": "test",
+  "Schedule": "main",
   "Mail": {
     "From": "bellmaster@example.com",
     "Server": "",
@@ -39,7 +39,8 @@
   "DateFormat": "D MMMM YYYY, h:mm:ssa",
   "Timezone": "Australia/Melbourne",
   "CrashEmail": {
-    "To": "",
+    "From": "bellmaster@example.com",
+    "To": "you@example.com",
     "Subject": "App has crashed",
     "Body": "App has crashed. FIX IT!"
   }
