@@ -78,6 +78,7 @@ Bellboy.prototype.Start = function(file) {
       // New cronjob. Takes a function on trigger, a function on completion (the "null" below),
       // true / false on startup status (if false, you need to call job[item].start() manually), plus a timezone
       jobs[item] = new CronJob(bells[this.config.Schedule][item].Time, function() {
+        console.log("Pre-trigger called for " + item)
         // "cron" has a bug where jobs can prematurely fire minutes before they should,
         // so we check to make sure the job only starts when it should
         if(this.CompareTimes(item) == true) { this.emit("trigger", item) }
@@ -93,6 +94,7 @@ Bellboy.prototype.Start = function(file) {
 
 // Manually triggers a bell
 Bellboy.prototype.Trigger = function(bell) {
+  this.emit("manualtrigger", bell)
   this.emit("trigger", bell)
 }
 
@@ -136,8 +138,8 @@ Bellboy.prototype.ToggleBell = function(bell, state) {
 Bellboy.prototype.CompareTimes = function(bell) {
   var interval = moment().diff(parser.parseExpression(this.bells[this.config.Schedule][bell].Time).next());
 
-  console.log("Diff is: " + interval)
-  if(interval >= -1 && interval <= 1) {
+  console.log("Comparing times for " + bell + ". Difference is " + interval)
+  if(interval >= -2 && interval <= 2) {
     return true
   } else {
     return false

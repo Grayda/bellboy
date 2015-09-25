@@ -15,7 +15,7 @@ node -v
 echo "Cleaning up installer.."
 sudo rm /home/pi/node_latest_armhf.deb
 echo "Installing audio dependency for Bellboy.."
-sudo apt-get install libasound2-dev # For audio support
+sudo apt-get install mpg123 # For audio support
 echo "CDing into /home/pi.."
 if [ -d "/home/pi/bellboy/" ];
   then
