@@ -180,7 +180,8 @@ bellboy.on("jobsloaded", function(jobs) {
         })
       })
 
-      bellboy.modules["bellweb"].socket.on("togglebell", function(data) {
+      bellboy.modules["bellweb"].socket.on("update", function(data) {
+        console.log("Updating..")
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Updating..",
           "message": "Updating now. This may take a minute or two. During this time, the system will become unresponsive",
