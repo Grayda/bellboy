@@ -7,5 +7,5 @@
   "events": {
     "crash": "node ./crash.js"
   },
-  "ext": "json html css jpg png gif htm js less ejs"
+  "ext": "html css jpg png gif htm js less ejs"
 }

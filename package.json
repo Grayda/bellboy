@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Grayda/bellboy#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.13.2",
     "cfonts": "0.0.13",
     "cli-table": "^0.3.1",
