@@ -20,7 +20,7 @@ function BellAuth(bellboyInstance) {
   EventEmitter.call(this); // Needed so we can emit() from this module
 }
 
-ellAuth.prototype.Prepare = function(callback) {
+BellAuth.prototype.Prepare = function(callback) {
   // Nothing to set up. Let's rock and roll!
   this.emit("ready")
   if (typeof callback === "function") {
@@ -76,7 +76,5 @@ BellAuth.prototype.CheckDetails = function(username, password, callback) {
   }
 
 }
-
-B
 
 module.exports = BellAuth;

@@ -1,6 +1,7 @@
 var url = require("url"); // For parsing URLs
 var Bellboy = require("./core/index.js"); // Our core Bellboy class
 var moment = require("moment"); // For date parsing
+var cp = require("child_process") // For calling updates
 var bellboy = new Bellboy(); // The main class that schedules and enables / disables our bells
 
 //If we're ready to go
@@ -35,6 +36,7 @@ bellboy.on("jobadded", function(item) {
 bellboy.on("jobsloaded", function(jobs) {
   var BellLog = require("./addons/belllog/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
   var BellParser = require("./addons/bellparser/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
+  var BellAuth = require("./addons/bellauth/index.js") // Gives us a front-end to work with. Depends on BellParser, so watch out for that
   var BellWeb = require("./addons/bellweb/index.js") // Gives us a front-end to work with. Depends on BellParser, so watch out for that
   var BellAudio = require("./addons/bellaudio/index.js") // A module that plays audio. Now supports Windows and Linux!
   var BellPi = require("./addons/bellpi/index.js") // An add-on that adds Raspberry Pi specific things, such as support for the Adafruit 2.2" TFT screen
@@ -47,6 +49,7 @@ bellboy.on("jobsloaded", function(jobs) {
   bellboy.modules["bellparser"] = new BellParser(bellboy)
   bellboy.modules["bellmail"] = new BellMail(bellboy)
   bellboy.modules["bellaudio"] = new BellAudio(bellboy)
+  bellboy.modules["bellauth"] = new BellAuth(bellboy)
   bellboy.modules["bellweb"] = new BellWeb(bellboy)
   bellboy.modules["bellpi"] = new BellPi(bellboy)
 
@@ -101,9 +104,15 @@ bellboy.on("jobsloaded", function(jobs) {
 
   // Email was sent successfully
   bellboy.modules["bellmail"].on("mailsent", function(mail, body) {
-
+    console.log("Mail sent:")
+    console.dir(mail)
+    console.log(body)
+    console.log(err)
   });
 
+  bellboy.modules["bellauth"].on("ready", function() {
+    bellboy.modules["bellauth"].LoadUsers("/users.json")
+  })
 
   // =============================================================================
   // Bellweb related stuff
@@ -146,6 +155,12 @@ bellboy.on("jobsloaded", function(jobs) {
         }
       }.bind(this))
 
+      bellboy.modules["bellweb"].socket.on("reload", function() {
+        console.log("Reloading settings..")
+        bellboy.LoadSettings("/config/config.json")
+        bellboy.LoadBells(bellboy.config.BellFile)
+      })
+
       bellboy.modules["bellweb"].socket.on("setvolume", function(volume) {
         console.log("Volume set to " + volume)
         bellboy.modules["bellaudio"].SetVolume(volume)
@@ -160,8 +175,22 @@ bellboy.on("jobsloaded", function(jobs) {
         bellboy.Trigger(bell.bell)
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Bell triggered",
-          "message": bellboy.bells[bellboy.config.Schedule][bell.bell].Name + " has been triggered!",
+          "message": bell.bell + " has been triggered!",
           "timeout": 2000
+        })
+      })
+
+      bellboy.modules["bellweb"].socket.on("togglebell", function(data) {
+        bellboy.modules["bellweb"].SocketEmit("notification", {
+          "title": "Updating..",
+          "message": "Updating now. This may take a minute or two. During this time, the system will become unresponsive",
+          "timeout": 3000
+        })
+        results = cp.execSync("git stash && git pull && npm install")
+        bellboy.modules["bellweb"].SocketEmit("notification", {
+          "title": "Bellboy Updated",
+          "message": "Bellboy has been updated. The results of the update were:<br />" + results,
+          "timeout": 60000
         })
       })
 
@@ -267,6 +296,7 @@ bellboy.on("jobsloaded", function(jobs) {
   bellboy.modules["belllog"].Prepare()
   bellboy.modules["bellpi"].Prepare()
   bellboy.modules["bellparser"].Prepare()
+  bellboy.modules["bellauth"].Prepare()
   bellboy.modules["bellweb"].Prepare("./addons/bellweb/pages/", bellboy.config.ServerPort)
   bellboy.modules["bellmail"].Prepare()
   bellboy.modules["bellaudio"].Prepare()
@@ -275,19 +305,25 @@ bellboy.on("jobsloaded", function(jobs) {
 
 // The bell has triggered, either manually or automatically
 bellboy.on("trigger", function(item) {
-  console.log(item)
-  console.log(bellboy.bells[bellboy.config.Schedule][item].Name + " triggered!")
+
+  if(item.substring(0,1) == "_") {
+    bell = bellboy.bells[item]
+  } else {
+    bell = bellboy.bells[bellboy.config.Schedule][item]
+  }
+
+  console.log(bell.Name + " triggered!")
   // Play some audio
   // TO-DO: Pick a random file and play it
-  bellboy.modules["bellaudio"].Play("/audio/" + bellboy.bells[bellboy.config.Schedule][item].File)
+  bellboy.modules["bellaudio"].Play("/audio/" + bell.File)
 
   // Load and send an email
   // TO-DO: Expand on this
-  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bellboy.config.Schedule][item].Mail.Trigger.Template, item, bellboy.bells[bellboy.config.Schedule][item].Mail.Trigger.Subject)
-  bellboy.modules["bellmail"].SendMail(bellboy.bells[bellboy.config.Schedule][item].Mail.Trigger, mail)
+  mail = bellboy.modules["bellmail"].LoadTemplate(bell.Mail.Trigger.Template, item, bell.Mail.Trigger.Subject)
+  bellboy.modules["bellmail"].SendMail(bell.Mail.Trigger, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
-  if(typeof bellboy.bells[bellboy.config.Schedule][item].SwitchSchedule !== "undefined") {
-    bellboy.config.Schedule = bellboy.bells[bellboy.config.Schedule][item].SwitchSchedule
+  if(typeof bell.SwitchSchedule !== "undefined") {
+    bellboy.config.Schedule = bell.SwitchSchedule
     bellboy.SaveSettings("/config/config.json")
   }
 })

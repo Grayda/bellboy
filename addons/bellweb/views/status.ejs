@@ -1,5 +1,4 @@
 <% include includes/header.ejs %>
-
   <table class="table table-condensed">
     <tr>
       <th>
@@ -15,7 +14,7 @@
         </td>
       </tr>
       <tr>
-        <td><a href="toggle.html?id=_all&state=true">Click here to enable them again</a></td>
+        <td><a href="javascript:toggleBell('_all', true)">Click here to enable them again</a></td>
       </tr>
       <% } else { %>
         <tr>
@@ -38,8 +37,8 @@
         <td class="button button2">Disabled</td>
         <td class="button button3">Disabled</td>
         <td class="button button4">
-          <% if(locals.bellboy.bells["_all"].Enabled == false) { %><a href="toggle.html?id=_all&state=true">Enable ALL Bells</a>
-            <% } else { %><a href="toggle.html?id=_all&state=false">Disable ALL Bells</a>
+          <% if(locals.bellboy.bells["_all"].Enabled == false) { %><a href="javascript:toggleBell('_all', true)">Enable ALL Bells</a>
+            <% } else { %><a href="javascript:toggleBell('_all', false)">Disable ALL Bells</a>
               <% } %>
         </td>
       </tr>

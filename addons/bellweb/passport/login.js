@@ -1,12 +1,11 @@
 var LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(passport, bellboy) {
-
   passport.use('login', new LocalStrategy({
       passReqToCallback: true
     },
     function(req, username, password, done) {
-      if (username == "demo" && password == "demo") {
+      if(bellboy.modules["bellauth"].CheckDetails(username, password)) {
         // bellboy.modules["bellweb"].emit("loggedin", username)
         return done(null, username);
       } else {

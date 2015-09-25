@@ -52,7 +52,7 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
   app.use(passport.session());
 
   var initPassport = require('./passport/init');
-  initPassport(passport);
+  initPassport(passport, bellboy);
 
   // Sets app.locals so that our templates can use it. If it's in here, the template can use it,
   // TO-DO: Make this more secure, as someone could dump sensitive info from config.json

@@ -10,7 +10,6 @@ module.exports = function(passport, bellboy){
     passport.deserializeUser(function(id, done) {
         done(null, id);
     });
-
     // Setting up Passport Strategies for Login and SignUp/Registration
     login(passport, bellboy);
 

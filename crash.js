@@ -12,12 +12,12 @@ var server = email.server.connect({
 
 // send the message and get a callback with an error or details of the message that was sent
 server.send({
-  text: config.CrashEmail.Body,
-  from: config.CrashEmail.From,
-  to: config.CrashEmail.To,
-  subject: config.CrashEmail.Subject,
+  text: config.Mail.CrashEmail.Body,
+  from: config.Mail.CrashEmail.From,
+  to: config.Mail.CrashEmail.To,
+  subject: config.Mail.CrashEmail.Subject,
   attachment: [
-   {data:config.CrashEmail.Body, alternative:true}
+   {data:config.Mail.CrashEmail.Body, alternative:true}
   ]
 }, function(err, message) {
   if (err) {

@@ -1,21 +1,42 @@
 <% include includes/header.ejs %>
-<% include includes/layout.ejs %>
-<script type="text/javascript">
-  function setVolume(volume) {
-    socket.emit("setvolume", volume)
-  }
-</script>
+  <% include includes/layout.ejs %>
+    <script type="text/javascript">
+      function setVolume(volume) {
+        socket.emit("setvolume", volume)
+      }
+      $(document).on("ready", function() {
+        $("#volume").on("change", function() {
+          $("#currentvolume").html($("#volume").val() + "%")
+        })
 
-<h1>Configuration</h1>
-<p>Current volume is: <%= bellboy.modules["bellaudio"].GetVolume() %>%</p>
-<div class="form-group form-group-sm">
-  <label for="volume" class="col-sm-1 control-label">Volume</label>
-  <div class="col-sm-2">
-    <input id="volume" type="range" max="100" min="0" value="<%= bellboy.modules['bellaudio'].GetVolume() %>" />
-    <p class="help-block">0-100%</p>
+        $("#reload").on("click", function() {
+          socket.emit("reload")
+        })
+
+      })
+    </script>
+
+    <h1>Configuration</h1>
+    <div class="row">
+      <div class="form-group form-group-sm">
+        <label for="volume" class="col-sm-1 control-label">Volume</label>
+        <div class="col-sm-2">
+          <input id="volume" type="range" max="100" min="0" value="<%= bellboy.modules['bellaudio'].GetVolume() %>" />
+          <p id="currentvolume">
+            <%= bellboy.modules["bellaudio"].GetVolume() %>%</p>
+        </div>
+        <div class="col-sm-2">
+          <a href="javascript:setVolume($('#volume').val())">Save</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+    <div class="form-group form-group-sm">
+      <label for="reload" class="col-sm-1 control-label">Reload Settings</label>
+      <div class="col-sm-2">
+        <button id="reload" class="btn btn-default">Reload</button>
+        <p class="help-text">Reloads bells and settings</p>
+      </div>
+    </div>
   </div>
-  <div class="col-sm-2">
-    <a href="javascript:setVolume($('#volume').val())">Save</a>
-  </div>
-</div>
-<% include includes/footer.ejs %>
+    <% include includes/footer.ejs %>

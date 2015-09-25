@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <script src="/javascripts/moment.js"></script>
   <script src="/javascripts/jquery-2.1.4.min.js"></script>
+  <script src="/javascripts/jquery.fittext.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <!-- For doing client-server interactions -->
 </head>
@@ -20,6 +21,7 @@
 
     <script type="text/javascript">
       var socket = io.connect();
+
 
       function pressButton(number) {
         socket.emit("button", {
@@ -61,10 +63,10 @@
         })
 
         socket.on('notification', function(data) {
-          if(typeof data.timeout === "undefined") {
+          if (typeof data.timeout === "undefined") {
             data.timeout = 2000
           }
-          
+
           $("#notificationTitle").html(data.title)
           $("#notificationBody").html(data.message)
           $('#notification').modal('show')
