@@ -181,13 +181,18 @@ bellboy.on("jobsloaded", function(jobs) {
       })
 
       bellboy.modules["bellweb"].socket.on("update", function(data) {
-        console.log("Updating..")
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Updating..",
-          "message": "Updating now. This may take a minute or two. During this time, the system will become unresponsive",
-          "timeout": 3000
+          "message": "Bellboy will be updated shortly. This may take some time. ",
+          "timeout": 2000
         })
-        results = cp.execSync("git stash && git pull && npm install")
+
+        console.log("Updating..")
+        setTimeout(function() {
+          results = cp.execSync("git stash && git pull && npm install")
+        }, 2500)
+
+
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Bellboy Updated",
           "message": "Bellboy has been updated. The results of the update were:<br />" + results,
