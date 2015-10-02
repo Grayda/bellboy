@@ -12,7 +12,8 @@ util.inherits(BellPi, EventEmitter);
 
 var os = require("os"); // Need to work out if we're on Windows or not
 var fs = require('fs') // For running command line apps
-var gpio
+var cp = require("child_process") // For setting the date manually when network time isn't available.
+var gpio // GPIO pins on the RPi, as exposed by the rpi-gpio package
 
 var bellboy = {}
 
@@ -33,57 +34,56 @@ BellPi.prototype.SetBacklight = function(percentage, timeout, revertedbrightness
     }
 
     // Convert our brightness into a value out of 1023
-    brightness = percentage*1023/100
-    gpio.write(18, brightness)
+    brightness = percentage * 1023 / 100
+    this.Write(18, brightness)
 
     // If we've set a timeout
-    if(typeof timeout !== "undefined") {
-      setTimeout(function() {
-          // Revert back to revertedbrightness after <timeout> seconds
-          this.SetBacklight(revertedbrightness)
-      }, timeout)
+    if (typeof timeout !== "undefined") {
+      this.TogglePin(18, brightness, revertedbrightness, timeout)
     }
+
     this.emit("backlightchanged", percentage)
   }
 }
+
 
 // Gets our module ready and listens on various pins for changes.
 BellPi.prototype.Prepare = function(callback) {
   if (os.platform() != "win32") {
     gpio = require("rpi-gpio");
-    gpio.setup(18, gpio.DIR_OUT); // For the backlight
+    this.Setup(18, 0) // For the backlight
 
-    gpio.setup(17, gpio.DIR_IN); // Button 1
-    gpio.setup(22, gpio.DIR_IN); // Button 2
-    gpio.setup(23, gpio.DIR_IN); // Button 3
-    gpio.setup(27, gpio.DIR_IN); // Button 4
+    this.Setup(17, 1); // Button 1
+    this.Setup(22, 1); // Button 2
+    this.Setup(23, 1); // Button 1
+    this.Setup(27, 1); // Button 1
 
-    gpio.on('change', function(channel, value) {
-      switch (channel) {
+    gpio.on('change', function(pin, value) {
+      switch (pin) {
         case 17:
           if (value == 1) {
-            this.emit("button", channel) //
+            this.emit("button", 1)
           }
           break;
         case 22:
           if (value == 1) {
-            this.emit("button", channel)
+            this.emit("button", 2)
           }
           break;
         case 23:
           if (value == 1) {
-            this.emit("button", channel)
+            this.emit("button", 3)
           }
           break;
         case 27:
           if (value == 1) {
-            this.emit("button", channel)
+            this.emit("button", 4)
           }
           break;
         case 18:
-          this.emit("backlightchanged", value/1023*100)
+          this.emit("backlightchanged", value / 1023 * 100)
       }
-
+      this.emit("pinchange", pin, value)
     }.bind(this))
 
     this.emit("ready")
@@ -96,11 +96,46 @@ BellPi.prototype.Prepare = function(callback) {
   return true
 }
 
+BellPi.prototype.Write = function(pin, value) {
+  gpio.write(pin, value)
+  this.emit("pinwrite", pin, value)
+}
+
+// Turns a pin on (or off) and holds it like so for <timeout>
+BellPi.prototype.TogglePin = function(pin, onvalue, offvalue, timeout) {
+  if (os.platform() != "win32") {
+    this.Write(pin, onvalue)
+    setTimeout(function() {
+      this.Write(pin, offvalue)
+    }.bind(this), timeout)
+  }
+}
+
+// Sets up pins on the RPi. Direction = 0 for Output, 1 for Input
+BellPi.prototype.Setup = function(pin, direction) {
+  if (os.platform() != "win32") {
+    var dir
+    if (direction == 0) {
+      dir = gpio.DIR_OUT
+    } else {
+      dir = gpio.DIR_IN
+    }
+
+    gpio.setup(pin, dir);
+    this.emit("pinsetup", pin, direction)
+  }
+}
+
+BellPi.prototype.SetDate = function(date) {
+    cp.spawnSync("date -s \"" + date + "\"")
+    this.emit("datechanged", date)
+}
+
 // Are we running on a RPi? Useful for select-loading modules or something.
 BellPi.prototype.IsPi = function() {
   try {
     hardware = fs.readFileSync("/proc/cpuinfo")
-    if(hardware.indexOf("BCM2708") > -1) {
+    if (hardware.indexOf("BCM2708") > -1) {
       return true
     } else {
       return false

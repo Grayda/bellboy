@@ -1,0 +1,16 @@
+<% include ../includes/header.ejs %>
+<% include ../includes/layout.ejs %>
+<div class="pull-right"><% include toc.ejs %></div>
+<h1>Setting up <%= bellboy.config.AppName %></h1>
+<p>As this product is still in beta, the best way to set up bells is to manually edit the <code><%= bellboy.config.BellFile %></code> file located in your <%= bellboy.config.AppName %> directory (<code><%= locals.bellboy.__dirname %></code>). Once you've set up your bells, you need to either restart the app (you can use <code>sudo service bellboy restart</code> if you're on a Raspberry Pi) or use the Reload button in the configuration page</p>
+
+<h2>About Addons</h2>
+<p><%= bellboy.config.AppName %> has a variety of "addons" that perform specific functions. For example, <code>bellpi</code> adds functionality for use with a Raspberry Pi, while <code>bellweb</code> powers this webpage you're reading. Please contact your system administrator if you require a new module</p>
+
+<h2>Playing audio files</h2>
+<p><%= bellboy.config.AppName %>'s usefulness stems from it's ability to play audio via whatever audio output method your system offers (usually 3.5mm). Audio files are stored in the same spot as the <code>bellaudio</code> addon, located in the <code>addons</code> directory in your <%= bellboy.config.AppName %> folder. Simply drop any mp3 file into there and update your <code><%= bellboy.config.BellFile %></code> file accordingly. Playback of audio is done through <code>mpg123</code> which doesn't support WAV files at this time.</p>
+
+<h2>Setting up <%= bellboy.config.AppName %> to work with external systems</h2>
+<p>You may have an external system you wish to use <%= bellboy.config.AppName %> with, such as a tone generator or relay that rings a bell. If this is the case, you can hook <%= bellboy.config.AppName %> up to an input. Extra hardware may be required, and at this time <%= bellboy.config.AppName %> doesn't support multi-wire inputs</p>
+<p>If your <%= bellboy.config.AppName %> doesn't have a wire sticking out from the case, you'll need to add one yourself. Simply pry the two halves of the case apart and solder a single wire to one of the contact points on the TFT screen (if fitted) or to one of the pins sticking up from the board. Hook the other end up to your system (for example, some tone generators have a "remote control" port on the back where you can screw in a wire). In your <code>config.json</code> file, set <code>ExternalPin</code> to match the pin you just wired in, then restart <%= bellboy.config.AppName %>.</p>
+<% include ../includes/footer.ejs %>

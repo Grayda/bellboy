@@ -1,7 +1,8 @@
 .button {
-  font-size: x-large;
   text-align: center;
-  width: 25% !important;
+  max-width: 25%;
+  width: 25%;
+  min-width: 25%;
 }
 .button1 {
   background: #3a75ac !important;
@@ -99,6 +100,7 @@
 .sidebar-nav li {
   text-indent: 20px;
   line-height: 40px;
+  color: white;
 }
 .sidebar-nav li a {
   display: block;
@@ -152,6 +154,9 @@
 * {
   font-family: "Open Sans", Arial;
 }
+body {
+  height: 100%;
+}
 /* Header and sidebar stuff */
 .logo {
   padding-left: 25%;
@@ -188,6 +193,18 @@
   color: #ffffff !important;
   bottom: 3em;
   position: absolute;
+}
+.statusscreen {
+  overflow: hidden;
+  width: 100%;
+  max-height: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+.smallscreen {
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
 }
 .activebell:hover {
   background: #aedcac !important;
@@ -232,8 +249,16 @@ table {
   -moz-box-shadow: 0px 0px 120px 0px rgba(50, 50, 50, 0.1);
   box-shadow: 0px 0px 120px 0px rgba(50, 50, 50, 0.1);
 }
+.statusTable,
+.statusTable td {
+  margin-bottom: 0px !important;
+  line-height: auto !important;
+}
 .table-bordered td {
   border: 1px solid black !important;
+}
+.logbox {
+  height: 85vh;
 }
 th {
   background: #3a75ac;

@@ -1,0 +1,2 @@
+This folder should contain your own bells.json and config.json files. If they are not found, or for some reason they can't be opened or correctly parsed, they're loaded from core/config/bells_default.json and core/config/config_default.json instead.
+

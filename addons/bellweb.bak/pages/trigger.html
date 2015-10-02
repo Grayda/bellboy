@@ -1,7 +1,7 @@
 <% include includes/header.html %>
 <% include includes/layout.ejs %>
 <h1>Bell triggered</h1>
-<p>The bell "<%= bellboy.bells[bellboy.config.Schedule][req.params.id].Name %>" has been triggered manually</p>
+<p>The bell "<%= bellboy.bells[req.params.id].Name %>" has been triggered manually</p>
 <a href="/">Click here to go back or wait 2 seconds</a>
 <script language="javascript">
   window.setTimeout(function() {

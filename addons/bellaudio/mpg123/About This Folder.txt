@@ -1,0 +1,4 @@
+This folder should contain the Windows version of mpg123, downloadable from http://www.mpg123.de/download/ . Windows builds are in the win32 / win64 folder. Extract everything to this folder.
+
+Due to the Windows port not having loop support, Bellboy won't have loop support either
+

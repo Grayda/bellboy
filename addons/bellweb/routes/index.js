@@ -31,7 +31,6 @@ module.exports = function(passport, bellboy) {
       bellboy.modules["bellweb"].emit("pageloaded", req.params.file)
   });
 
-
   /* Handle Login POST */
   router.post('/login', passport.authenticate('login', {
     failureRedirect: '/login',
@@ -55,5 +54,7 @@ module.exports = function(passport, bellboy) {
     }
 
   })
+
+
   return router;
 }

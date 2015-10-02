@@ -6,24 +6,30 @@ var bellboy = new Bellboy(); // The main class that schedules and enables / disa
 
 //If we're ready to go
 bellboy.on("ready", function() {
+  // So we can determine the root folder
+  bellboy.__dirname = __dirname
   // Show a heading
   showWelcome()
-  // Load the settings and the bells
-  bellboy.LoadSettings("/config/config.json")
+    // Load the settings and the bells
+  bellboy.LoadSettings(__dirname + "/config/config.json")
 })
 
 // Settings loaded. Load the bells now
-bellboy.on("settingsloaded", function() {
-  console.log("Settings loaded!")
-  bellboy.LoadBells(bellboy.config.BellFile)
+bellboy.on("settingsloaded", function(file) {
+  console.log("Settings loaded from file: " + file)
+  bellboy.LoadBells(__dirname + "/" + bellboy.config.BellFile)
 });
 
 // Now the bells have loaded. We can now start
-bellboy.on("bellsloaded", function() {
-  console.log("Bells loaded!")
-  // This creates new CronJobs for each bell in our bells.json file
+bellboy.on("bellsloaded", function(file) {
+  console.log("Bells loaded from file: " + file)
+    // This creates new CronJobs for each bell in our bells.json file
   bellboy.Start()
 });
+
+// ========================================================
+// Job events
+// ========================================================
 
 // Emitted when a job is added. Useful for emailing when someone adds a new job,
 // though it also gets called when the bells are reloaded.
@@ -34,6 +40,7 @@ bellboy.on("jobadded", function(item) {
 
 // All the jobs are loaded. Time to load some modules!
 bellboy.on("jobsloaded", function(jobs) {
+  var BellValidate = require("./addons/bellvalidate/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
   var BellLog = require("./addons/belllog/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
   var BellParser = require("./addons/bellparser/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
   var BellAuth = require("./addons/bellauth/index.js") // Gives us a front-end to work with. Depends on BellParser, so watch out for that
@@ -43,8 +50,9 @@ bellboy.on("jobsloaded", function(jobs) {
   var BellMail = require("./addons/bellmail/index.js") // An add-on for emailing people.
 
   // We store these in bellboy.modules so other modules can use the features.
-  // Some modules depend on others (e.g. BellWeb uses BellParser) so check
-  // the index.js for that addon
+  // Some modules depend on others (e.g. BellWeb uses BellParser) so be
+  // careful of load order, and check the index.js of that addon for more info
+  bellboy.modules["bellvalidate"] = new BellValidate(bellboy)
   bellboy.modules["belllog"] = new BellLog(bellboy)
   bellboy.modules["bellparser"] = new BellParser(bellboy)
   bellboy.modules["bellmail"] = new BellMail(bellboy)
@@ -58,37 +66,31 @@ bellboy.on("jobsloaded", function(jobs) {
     console.log("BellParser loaded")
   })
 
-  // =============================================================================
+  // ========================================================
   // BellPi related stuff
+  // ========================================================
 
   // BellPi is laoded. If necessary, we can do stuff here
   bellboy.modules["bellpi"].on("ready", function() {
     console.log("BellPi loaded")
   })
 
-  // When someone presses button1 on the 2.2" TFT screen, do this.
-  // We also have button2, button3 and button4 to work with
-  bellboy.modules["bellpi"].on("button1", function() {
-    bellboy.Trigger("_default")
-  })
-
-  // Any button is pressed
+  // A button was pressed on the 2.2" TFT screen
   bellboy.modules["bellpi"].on("button", function(index) {
-    switch(index) {
+    switch (index) {
       case 1:
         bellboy.Trigger("_default")
         break;
     }
-    // Turn on the backlight
-    bellboy.modules["bellpi"].SetBacklight(true)
-    // Then after 10 seconds, turn the light off
-    setTimeout(function() {
-      bellboy.modules["bellpi"].SetBacklight(false)
-    }, 10000)
+
+    // Turn on the backlight for 10 seconds, then turn it off
+    bellboy.modules["bellpi"].SetBacklight(true, 10000, false)
+
   })
 
-  // =============================================================================
-  // BellMail related stuff
+  // ========================================================
+  // Bellmail related stuff
+  // ========================================================
 
   bellboy.modules["bellmail"].on("ready", function() {
     console.log("BellMail loaded")
@@ -110,60 +112,68 @@ bellboy.on("jobsloaded", function(jobs) {
     console.log(err)
   });
 
+  // ========================================================
+  // BellAuth related stuff
+  // ========================================================
+
   bellboy.modules["bellauth"].on("ready", function() {
     bellboy.modules["bellauth"].LoadUsers("/users.json")
   })
 
-  // =============================================================================
-  // Bellweb related stuff
+  // ========================================================
+  // BellWeb related events
+  // ========================================================
 
-  // BellWeb is ready (the server has started, dispatcher is ready, we're good to start accepting connections)
+  // BellWeb is ready (the server has started, express is ready, we're good to start accepting connections)
   bellboy.modules["bellweb"].on("ready", function() {
     console.log("BellWeb loaded")
     console.log("Access the web UI at: http://" + bellboy.modules["bellweb"].GetHostName() + ":8080")
 
     bellboy.modules["bellweb"].on("loggedin", function(username) {
-      console.log(username + " has logged in")
-    })
-    // socketready lets us know that socket.io is ready to go.
-    // Typically, this won't fire until a client connects
+        console.log(username + " has logged in")
+      })
+
+      // socketready lets us know that socket.io is ready to go.
+      // Typically, this won't fire until a client connects
     bellboy.modules["bellweb"].on("socketready", function() {
       console.log("Socket ready")
 
+      // Someone has asked that we delete the Log
+      // TO-DO: Expose isAuthenticated so people can't craft their own JS to run commands here
       bellboy.modules["bellweb"].socket.on("deletelog", function() {
-        bellboy.modules["belllog"].DeleteLog()
-        bellboy.modules["bellweb"].SocketEmit("notification", {
-          "title": "Log Deleted",
-          "message": "bellboy.log has been deleted!"
+          bellboy.modules["belllog"].DeleteLog()
+          bellboy.modules["bellweb"].SocketEmit("notification", {
+            "title": "Log Deleted",
+            "message": "bellboy.log has been deleted!"
+          })
         })
-      })
-      // The client has sent a message to us, telling us the webpage has requested a **VIRTUAL** button press
+
+      // The client has sent a message to us, telling us the webpage has asked that we simulate a PiTFT button press
       bellboy.modules["bellweb"].socket.on("button", function(button) {
-        switch(button.number) {
-          case 1:
-            bellboy.modules["bellpi"].emit("button1")
-            break;
-            case 2:
-              bellboy.modules["bellpi"].emit("button2")
-              break;
-            case 3:
-              bellboy.modules["bellpi"].emit("button3")
-              break;
-            case 4:
-              bellboy.modules["bellpi"].emit("button4")
-              break;
-        }
+        bellboy.modules["bellpi"].emit("button", button.number)
       }.bind(this))
 
+      // The client has asked that we reload the bells and settings
       bellboy.modules["bellweb"].socket.on("reload", function() {
         console.log("Reloading settings..")
+
         bellboy.LoadSettings("/config/config.json")
         bellboy.LoadBells(bellboy.config.BellFile)
+
+        // Sends a notification back to the client
+        bellboy.modules["bellweb"].SocketEmit("notification", {
+          "title": "Bells and settings reloaded",
+          "message": "Bells and settings have been reloaded. You may need to refresh the page to see the changes",
+          "timeout": 4000
+        })
+
       })
 
+      // The client has set the volume
       bellboy.modules["bellweb"].socket.on("setvolume", function(volume) {
         console.log("Volume set to " + volume)
         bellboy.modules["bellaudio"].SetVolume(volume)
+        //
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Volume changed",
           "message": "Volume set to " + volume + "!",
@@ -171,6 +181,7 @@ bellboy.on("jobsloaded", function(jobs) {
         })
       })
 
+      // The client has manually triggered a bell
       bellboy.modules["bellweb"].socket.on("trigger", function(bell) {
         bellboy.Trigger(bell.bell)
         bellboy.modules["bellweb"].SocketEmit("notification", {
@@ -180,37 +191,44 @@ bellboy.on("jobsloaded", function(jobs) {
         })
       })
 
+      // The client wishes to update Bellboy.
+      // TO-DO: Make this ultra secure, as updates can wipe out data!
       bellboy.modules["bellweb"].socket.on("update", function(data) {
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Updating..",
-          "message": "Bellboy will be updated shortly. This may take some time. ",
+          "message": bellboy.config.AppName + " will be updated shortly. This may take some time. ",
           "timeout": 2000
         })
 
         console.log("Updating..")
+        // Wait 2.5 seconds so we can display our notification to the user,
+        // otherwise nodemon resets the app upon update
         setTimeout(function() {
           results = cp.execSync("git stash && git pull && npm install")
         }, 2500)
 
-
         bellboy.modules["bellweb"].SocketEmit("notification", {
-          "title": "Bellboy Updated",
-          "message": "Bellboy has been updated. The results of the update were:<br />" + results,
+          "title": bellboy.config.AppName + " Updated",
+          "message": bellboy.config.AppName + " has been updated. The results of the update were:<br />" + results,
           "timeout": 60000
         })
       })
 
+      bellboy.modules["bellweb"].socket.on("setdate", function(date) {
+        bellboy.modules["bellpi"].SetDate(date.date)
+      })
+      // Client wants to toggle a bell.
       bellboy.modules["bellweb"].socket.on("togglebell", function(data) {
-        if(data.state == true) {
+        if (data.state == true) {
           bellboy.EnableBell(data.bell)
-        } else if(data.state == false) {
+        } else if (data.state == false) {
           bellboy.DisableBell(data.bell)
         } else {
           return
         }
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Bell toggled",
-          "message": bellboy.bells[bellboy.config.Schedule][data.bell].Name + " has been set to " + data.state + "!",
+          "message": bellboy.bells[data.bell].Name + " has been set to " + data.state + "!",
           "timeout": 2000
         })
 
@@ -227,6 +245,7 @@ bellboy.on("jobsloaded", function(jobs) {
         // bellboy.modules["bellweb"].SocketEmit("reloadtable")
       }.bind(this), 10000)
 
+      // And finally, an error event
       bellboy.modules["bellweb"].socket.on("error", function(err) {
         console.log(err)
       })
@@ -235,6 +254,7 @@ bellboy.on("jobsloaded", function(jobs) {
 
   // The meat of our BellWeb module. Someone has loaded a page, now
   // we need to work out what to do with it.
+  // TO-DO: Clean this up, as half of these aren't active (yet / anymore)
   bellboy.modules["bellweb"].on("pageloaded", function(req) {
 
     switch (url.parse(req.url).pathname) {
@@ -259,7 +279,7 @@ bellboy.on("jobsloaded", function(jobs) {
         break;
       case "/add.html":
         console.dir(req.params)
-        if(typeof req.params.submit !== "undefined") {
+        if (typeof req.params.submit !== "undefined") {
           console.log("Saving bell")
           bellboy.AddBell(req.params.id, {
             "Name": req.params.name,
@@ -288,7 +308,7 @@ bellboy.on("jobsloaded", function(jobs) {
         }
 
         break;
-      // Manually trigger a bell
+        // Manually trigger a bell
       case "/trigger.html":
         bellboy.Trigger(req.params.id)
         break;
@@ -299,6 +319,7 @@ bellboy.on("jobsloaded", function(jobs) {
   })
 
   // Stuff we want to look out for is done, time to ask the various modules to prepare
+  bellboy.modules["bellvalidate"].Prepare()
   bellboy.modules["belllog"].Prepare()
   bellboy.modules["bellpi"].Prepare()
   bellboy.modules["bellparser"].Prepare()
@@ -309,63 +330,94 @@ bellboy.on("jobsloaded", function(jobs) {
 
 })
 
-// The bell has triggered, either manually or automatically
+// The bell has triggered. If you'd like to know if a bell has been triggered manually, look for manualtrigger
 bellboy.on("trigger", function(item) {
-
-  if(item.substring(0,1) == "_") {
+  // If it's a "virtual" bell we're triggering
+  if (item.substring(0, 1) == "_") {
+    // We don't want the schedule stuff
     bell = bellboy.bells[item]
   } else {
-    bell = bellboy.bells[bellboy.config.Schedule][item]
+    // Otherwise, we need to work out what schedle we're on and run the bell.
+    bell = bellboy.bells[item]
   }
 
   console.log(bell.Name + " triggered!")
-  // Play some audio
-  // TO-DO: Pick a random file and play it
-  bellboy.modules["bellaudio"].Play("/audio/" + bell.File)
+
+  // If we've set up an audio action
+  if (typeof bell.Actions.Audio !== "undefined") {
+    // Play the audio file
+    bellboy.modules["bellaudio"].Play("/audio/" + bell.Actions.Audio.File, bell.Actions.Audio.Loop)
+  }
+
+  // If we've set up an "external" action (e.g. set Pin X to high to use with legacy tone generators)
+  if (typeof bell.Actions.External !== "undefined") {
+    bellboy.modules["bellpi"].TogglePin(bellboy.config.ExternalPin, 1, 0, bell.Actions.External.Duration)
+  }
 
   // Load and send an email
-  // TO-DO: Expand on this
-  mail = bellboy.modules["bellmail"].LoadTemplate(bell.Mail.Trigger.Template, item, bell.Mail.Trigger.Subject)
-  bellboy.modules["bellmail"].SendMail(bell.Mail.Trigger, mail)
-  bellboy.modules["bellweb"].SocketEmit("reloadtable")
-  if(typeof bell.SwitchSchedule !== "undefined") {
-    bellboy.config.Schedule = bell.SwitchSchedule
+    mail = bellboy.modules["bellmail"].LoadTemplate(bell.Actions.Mail.Trigger.Template, item, bell.Actions.Mail.Trigger.Subject)
+  bellboy.modules["bellmail"].SendMail(bell.Actions.Mail.Trigger, mail)
+
+  // The bell wants to switch schedules, so we write the changes into our config file
+  if (typeof bell.Actions.Schedule !== "undefined") {
+    this.emit("schedulechange", bellboy.config.BellFile, bell.Actions.Schedule.File)
+    bellboy.config.BellFile = bell.Actions.Schedule.File
     bellboy.SaveSettings("/config/config.json")
+    bellboy.LoadSettings("/config/config.json")
   }
+  bellboy.modules["bellweb"].SocketEmit("reloadtable")
+  bellboy.modules["bellweb"].SocketEmit("reloadstatus")
 })
 
+// The job has finished running. This includes any processes spawned (e.g. cmdmp3 or mpg123)
 bellboy.on("triggerdone", function() {
   console.log("Job finished!")
 })
 
 // Someone has enabled a bell
-bellboy.on("bellenabled", function(bell) {
-  console.log(bellboy.bells[bellboy.config.Schedule][bell].Name + " was enabled")
+bellboy.on("bellenabled", function(item) {
+  var bell
+  if (item.substring(0, 1) == "_") {
+    bell = bellboy.bells[item]
+  } else {
+    bell = bellboy.bells[item]
+  }
+  console.log(bell.Name + " was enabled")
   bellboy.SaveBells(bellboy.config.BellFile)
-  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bellboy.config.Schedule][bell].Mail.Change.Template, bell, bellboy.bells[bellboy.config.Schedule][bell].Mail.Change.Subject)
-  bellboy.modules["bellmail"].SendMail(bellboy.bells[bellboy.config.Schedule][bell].Mail.Change, mail)
+  mail = bellboy.modules["bellmail"].LoadTemplate(bell.Actions.Mail.Change.Template, item, bell.Actions.Mail.Change.Subject)
+  bellboy.modules["bellmail"].SendMail(bell.Actions.Mail.Change, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
+  bellboy.modules["bellweb"].SocketEmit("reloadstatus")
 })
 
 // Someone has disabled a bell
-bellboy.on("belldisabled", function(bell) {
-  console.log(bellboy.bells[bellboy.config.Schedule][bell].Name + " was disabled")
+bellboy.on("belldisabled", function(item) {
+  var bell
+  if (item.substring(0, 1) == "_") {
+    bell = bellboy.bells[item]
+  } else {
+    bell = bellboy.bells[item]
+  }
+  console.log(bell.Name + " was enabled")
   bellboy.SaveBells(bellboy.config.BellFile)
-  mail = bellboy.modules["bellmail"].LoadTemplate(bellboy.bells[bellboy.config.Schedule][bell].Mail.Change.Template, bell, bellboy.bells[bellboy.config.Schedule][bell].Mail.Change.Subject)
-  bellboy.modules["bellmail"].SendMail(bellboy.bells[bellboy.config.Schedule][bell].Mail.Change, mail)
+  mail = bellboy.modules["bellmail"].LoadTemplate(bell.Actions.Mail.Change.Template, item, bell.Actions.Mail.Change.Subject)
+  bellboy.modules["bellmail"].SendMail(bell.Actions.Mail.Change, mail)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
+  bellboy.modules["bellweb"].SocketEmit("reloadstatus")
 })
 
 bellboy.on("belladded", function(id, bell) {
   console.log("Bell added! New ID is " + id)
   bellboy.SaveBells(bellboy.config.BellFile)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
+  bellboy.modules["bellweb"].SocketEmit("reloadstatus")
 })
 
 bellboy.on("belldeleted", function(id) {
   console.log("Bell " + id + " deleted")
   bellboy.SaveBells(bellboy.config.BellFile)
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
+  bellboy.modules["bellweb"].SocketEmit("reloadstatus")
 })
 
 bellboy.on("bellssaved", function(file) {
@@ -379,13 +431,13 @@ function showWelcome() {
   var FONTS = require('cfonts');
 
   var fonts = new FONTS({
-      'text': "Bellboy", //text to be converted
-      'font': 'block', //define the font face
-      'colors': ["white", "black"], //define all colors
-      'background': 'black', //define the background color
+    'text': "Bellboy", //text to be converted
+    'font': 'block', //define the font face
+    'colors': ["white", "black"], //define all colors
+    'background': 'black', //define the background color
 
-      'space': false, //define if the output text should have empty lines on top and on the bottom
-      'maxLength': '10' //define how many character can be on one line
+    'space': false, //define if the output text should have empty lines on top and on the bottom
+    'maxLength': '10' //define how many character can be on one line
   });
   console.log("    The Bell Timer System")
   console.log()

@@ -12,7 +12,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
 var moment = require("moment")
-var where = require("lodash.where")
+var lodash = require("lodash")
 var io // For socket.io
 var passport = require('passport');
 var expressSession = require('express-session');
@@ -62,13 +62,19 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
     "unix": moment().unix(),
     "moment": moment
   }
-  app.locals.where = where
+  app.locals.lodash = lodash
+  app.locals.validator = bellboy.modules["bellvalidate"]
+  app.locals.__dirname = __dirname
 
   var routes = require('./routes/index')(passport, bellboy);
+  var helpRoute = require('./routes/help')(passport, bellboy);
+
   // Routes. Pretty straightforward
   app.use(express.static(path.join(__dirname, 'public')));
-  app.use('/includes', routes);
-  app.use('/', routes);
+  app.use('/', require('./routes/addedit')(passport, bellboy)); // If we're adding a new bell
+  app.use('/help', require('./routes/help')(passport, bellboy));
+  app.use('/includes', require('./routes/index')(passport, bellboy));
+  app.use('/', require('./routes/index')(passport, bellboy));
 
     // catch 404 and forward to error handler
   app.use(function(req, res, next) {
@@ -115,8 +121,12 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
 
 }
 
-BellWeb.prototype.GetHostName = function() {
-  return require('os').hostname().toLowerCase()
+BellWeb.prototype.GetHostName = function(ip) {
+  if(ip == true) {
+    return require("ip").address()
+  } else {
+    return require('os').hostname().toLowerCase()
+  }
 }
 
 BellWeb.prototype.SocketEmit = function(event, data) {

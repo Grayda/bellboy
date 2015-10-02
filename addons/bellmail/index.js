@@ -13,7 +13,7 @@ var moment = require("moment"); // For formatting of dates
 var parser = require('cron-parser');
 var ejs = require('ejs'); // Text template engine, used for web parsing
 var fs = require('fs'); // For reading files
-var where = require("lodash.where"); // For quick and easy counting of enabled bells
+var lodash = require("lodash"); // For quick and easy counting of enabled bells
 var email = require("emailjs");
 
 var bellboy = {}
@@ -46,10 +46,8 @@ BellMail.prototype.LoadTemplate = function(template, bell, subject, callback) {
       "moment": moment
     },
     bellboy: bellboy,
-    hostname: bellboy.modules["bellweb"].GetHostName(),
     bell: bell,
-    where: where,
-    cron: bellboy.modules["bellparser"],
+    lodash: lodash,
     filename: __dirname + "/templates/" + template
   }
   result = ejs.render(file, options)

@@ -1,0 +1,86 @@
+{
+  "_name": "Demo Schedule",
+  "_all": {
+    "Name": "All Bells",
+    "Description": "A \"virtual\" bell that controls the rest of the bells. DO NOT DELETE",
+    "Enabled": true,
+    "Locked": "false",
+    "Actions": {
+      "Mail": {
+        "Change": {
+          "Enabled": true,
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Template": "all_change.ejs"
+        }
+      }
+    }
+  },
+  "_default": {
+    "Enabled": true,
+    "Name": "Virtual bell - Default",
+    "Description": "A virtual bell that is fired when \"button1\" is pressed",
+    "Locked": "true",
+    "Action": {
+      "Audio": {
+        "File": [
+          "bell.mp3"
+        ],
+        "Loop": 1
+      },
+      "External": {
+        "OnValue": 1,
+        "OffValue": 0,
+        "Duration": 5000
+      },
+      "Mail": {
+        "Trigger": {
+          "Enabled": false,
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Template": "trigger.ejs"
+        },
+        "Change": {
+          "Enabled": true,
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Template": "change.ejs"
+        }
+      }
+    }
+  },
+  "test": {
+    "Enabled": false,
+    "Name": "Test Bell - Every minute",
+    "Description": "A test bell. Runs every minute",
+    "Locked": "false",
+    "Time": "* * * * *",
+    "Action": {
+      "Audio": {
+        "File": [
+          "bell.mp3"
+        ],
+        "Loop": 1
+      },
+      "External": {
+        "OnValue": 1,
+        "OffValue": 0,
+        "Duration": 5000
+      },
+      "Mail": {
+        "Trigger": {
+          "Enabled": false,
+          "To": "you@example.com",
+          "Subject": "Bell has been triggered",
+          "Template": "trigger.ejs"
+        },
+        "Change": {
+          "Enabled": true,
+          "To": "you@example.com",
+          "Subject": "Bell has been changed",
+          "Template": "change.ejs"
+        }
+      }
+    }
+  }
+}

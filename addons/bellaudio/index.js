@@ -35,17 +35,23 @@ BellAudio.prototype.ViewFiles = function() {
 }
 
 // Play the audio file
-BellAudio.prototype.Play = function(file) {
-  console.log("Trying to play:" + __dirname + "/cmdmp3.exe " + __dirname + file)
-  if (os.platform() == "win32") {
-    cp.exec("\"" + __dirname + "/cmdmp3.exe\" \"" + __dirname + file + "\"", function(error, stdout, stderr) {
-      console.log(stdout || stderr)
-    }.bind(this));
-
+BellAudio.prototype.Play = function(file, loop) {
+    if(typeof loop === "number") {
+      loop = "--loop " + loop
+    } else {
+      loop = ""
+    }
+    if (os.platform() !== "win32") {
+      console.log("Trying to play " + "\"mpg123 \" \"" + __dirname + file + "\" " + loop)
+      cp.exec("mpg123 \"" + __dirname + file + "\" " + loop, function(error, stdout, stderr) {
+        console.log(stdout || stderr || error)
+      })
   } else {
-    cp.exec("mpg123 \"" + __dirname + file + "\"", function(error, stdout, stderr) {
-      console.log(stdout || stderr)
+    console.log("Trying to play " + "\"" + __dirname + "/mpg123.exe\" \"" + __dirname + file + "\". Looping not supported on Windows")
+    cp.exec("\"" + __dirname + "/mpg123/mpg123.exe\" \"" + __dirname + file + "\" ", function(error, stdout, stderr) {
+      console.log(stdout || stderr || error)
     })
+
   }
 }
 

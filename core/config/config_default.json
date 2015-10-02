@@ -1,8 +1,8 @@
 {
-  "BellFile": "/config/bells.json",
+  "BellFile": "config/bells_default.json",
   "AppName": "Bellboy Timer System",
   "Version": "0.0.1",
-  "Schedule": "main",
+  "ExternalPin": "10",
   "Mail": {
     "From": "bellmaster@example.com",
     "Server": "",
@@ -40,7 +40,8 @@
     "NoAuth": [
       "help.ejs",
       "login",
-      "status.ejs"
+      "status.ejs",
+      "help"
     ]
   },
   "DateFormat": "D MMMM YYYY, h:mm:ssa",

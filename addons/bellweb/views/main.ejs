@@ -14,64 +14,50 @@
         <abbr title="When this bell will next ring">Next Run Time</abbr>
       </th>
       <th>
-        <abbr title="The sound(s) to play when it rings">Sound</abbr>
-      </th>
-      <th>
-        <abbr title="Will this send an email when triggered / changed?">Email</abbr>
-      </th>
-      <th>
-        <abbr title="Is this bell locked from the web UI (to prevent unauthorized changes)?">Locked</a>
+        <abbr title="Other properties. Mouse over the icon for more information">Status</a>
       </th>
       <th>Actions</th>
     </tr>
     <!-- Loop through each bell -->
-    <% Object.keys(locals.bellboy.bells[bellboy.config.Schedule]).forEach(function(item){ %>
+    <% Object.keys(locals.bellboy.bells).forEach(function(item){ %>
+      <% var bell = locals.bellboy.bells[item] %>
       <!-- If the bell is the fake "all" bell, skip it -->
       <% if(item.substring(0,1) == "_") { return } %>
 
-        <% if (locals.bellboy.bells[bellboy.config.Schedule][item].Enabled === false) { %>
+        <% if (bell.Enabled === false) { %>
           <tr class="inactivebell">
         <% } else { %>
           <tr class="activebell">
         <% } %>
-        <% if (locals.bellboy.modules["bellparser"].GetNextJob()["time"] == locals.bellboy.bells[bellboy.config.Schedule][item].Time) { %>
+        <% if (locals.bellboy.modules["bellparser"].GetNextJob()["name"] == bell.Name) { %>
           <td class="nextbell"><i class="glyphicon glyphicon-chevron-right"></i> <abbr title="This bell will play next">NEXT</abbr></td>
           <% } else { %>
             <td>&nbsp;</td>
             <% } %>
               <!-- <td><%= item %></td> -->
               <td>
-                <%= locals.bellboy.bells[bellboy.config.Schedule][item].Name %>
+                <%= bell.Name %>
               </td>
               <td>
-                <%= locals.bellboy.bells[bellboy.config.Schedule][item].Description %>
+                <%= bell.Description %>
               </td>
               <td>
-                <a href="#" title="<%= locals.bellboy.bells[bellboy.config.Schedule][item].Time %>">
+                <a href="#" title="<%= bell.Time %>">
                   <%= locals.bellboy.modules["bellparser"].CronToDate(item)["calendar"] %>
                 </a>
               </td>
+
               <td>
-                <%= locals.bellboy.bells[bellboy.config.Schedule][item].File %>
+                <% if(locals.validator.GetValue(bell.Locked) == true) { %><i class="glyphicon glyphicon-lock" data-toggle="tooltip" data-placement="top" title="This bell is locked and cannot be changed from here"></i><% } %>
+                <% if(locals.validator.GetValue(bell.Actions.Mail.Change.Enabled) == true) { %><i class="glyphicon glyphicon-edit" data-toggle="tooltip" data-placement="top" title="An email wil be sent when this bell is changed"></i><% } %>
+                <% if(locals.validator.GetValue(bell.Actions.Mail.Trigger.Enabled) == true) { %><i class="glyphicon glyphicon-envelope" data-toggle="tooltip" data-placement="top" title="An email wil be sent when this bell is triggered"></i><% } %>
+                <% if(locals.validator.GetValue(bell.Actions.External) !== "undefined") { %><i class="glyphicon glyphicon-flash" data-toggle="tooltip" data-placement="top" title="This bell will activate an external ringer"></i><% } %>
+                <% if(locals.validator.GetValue(bell.Actions.Audio) !== "undefined") { %><i class="glyphicon glyphicon-music" data-toggle="tooltip" data-placement="top" title="This bell will play audio: <%= bell.Actions.Audio.File %>"></i><% } %>
+                <% if(locals.validator.GetValue(bell.Actions.Schedule) !== "undefined") { %><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" data-placement="top" title="This bell will switch to a different schedule: <%= bell.Actions.Schedule.File %>"></i><% } %>
               </td>
               <td>
-                <% if(locals.bellboy.bells[bellboy.config.Schedule][item].Mail.Trigger.Enabled == true) { %>
-                  <abbr title="An email will send when this bell rings">Trigger</abbr>
-                <% } else { %>
-                  <abbr title="NO email will be sent when this bell rings">-</abbr>
-                <% } %> /
-                <% if(locals.bellboy.bells[bellboy.config.Schedule][item].Mail.Change.Enabled == true) { %>
-                  <abbr title="An email will send when this bell is changed">Change</abbr>
-                <% } else { %>
-                  <abbr title="NO email will be sent when this bell is edited">-</abbr>
-                <% } %>
-              </td>
-              <td>
-                <%= locals.bellboy.bells[bellboy.config.Schedule][item].Locked %>
-              </td>
-              <td>
-                <a href="javascript:toggleBell('<%= item %>', <% if (locals.bellboy.bells[bellboy.config.Schedule][item].Enabled === false) { %>true<% } else { %>false<% } %>)">
-                  <% if (locals.bellboy.bells[bellboy.config.Schedule][item].Enabled === false) { %>Enable
+                <a href="javascript:toggleBell('<%= item %>', <% if (bell.Enabled === false) { %>true<% } else { %>false<% } %>)">
+                  <% if (bell.Enabled === false) { %>Enable
                     <% } else { %>Disable
                       <% } %>
                 </a> |
@@ -80,17 +66,40 @@
     </tr>
     <% }); %>
   </table>
-
-  <table border="1" cellpadding="10" cellspacing="0"  class="list table table-condensed">
-    <tr>
-      <th colspan="3">Legend</th>
-    </tr>
-    <tr>
-      <td class="activebell">Bell is enabled</td>
-      <td class="inactivebell">Bell is disabled</td>
-      <td class="nextbell"><i class='glyphicon glyphicon-chevron-right'></i> This bell will ring next</td>
-    </tr>
-  </table>
+  <div class="col-sm-10">
+    <table border="1" cellpadding="10" cellspacing="0"  class="list table table-condensed">
+      <tr>
+        <th colspan="2">&nbsp;</th>
+      </tr>
+      <tr>
+        <td><i class="glyphicon glyphicon-lock"></i> Bell is locked from editing</td>
+        <td><i class="glyphicon glyphicon-flash"></i> Bell will trigger an external ringer</td>
+      <tr>
+        <td><i class="glyphicon glyphicon-edit"></i> Email will be sent when bell changed</td>
+        <td><i class="glyphicon glyphicon-envelope"></i> Email will be sent on trigger</td>
+      </tr>
+      <tr>
+        <td><i class="glyphicon glyphicon-music"></i> Bell will play audio</td>
+        <td><i class="glyphicon glyphicon-refresh"></i> Bell will switch schedules</td>
+      </td>
+    </table>
+  </div>
+  <div class="col-sm-2">
+    <table border="1" cellpadding="10" cellspacing="0"  class="list table table-condensed">
+      <tr>
+        <th colspan="3">Legend</th>
+      </tr>
+      <tr>
+        <td class="activebell">Bell is enabled</td>
+      </tr>
+      <tr>
+        <td class="inactivebell">Bell is disabled</td>
+      </tr>
+      <tr>
+        <td class="nextbell"><i class='glyphicon glyphicon-chevron-right'></i> This bell will ring next</td>
+      </tr>
+    </table>
+  </div>
   <% } else { %>
     <h2>All bells are currently disabled. <a href="javascript:toggleBell('_all', true)">Click here to enable them again</a></h2>
     <% } %>
