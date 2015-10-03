@@ -242,6 +242,10 @@ bellboy.on("jobsloaded", function(jobs) {
           "date": bellboy.modules["bellparser"].GetNextJob()["calendar"]
         })
 
+        bellboy.modules["bellweb"].SocketEmit("time", {
+          "time": moment()
+        })
+
         // bellboy.modules["bellweb"].SocketEmit("reloadtable")
       }.bind(this), 10000)
 

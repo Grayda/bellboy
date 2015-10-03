@@ -59,6 +59,11 @@
           document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> <%= locals.bellboy.modules['bellparser'].GetNextJob()['name'] %> - <%= locals.bellboy.modules['bellparser'].GetNextJob()['calendar'] %>";
         });
 
+        // Syncs our time with the server so we don't need to reload as often. 
+        socket.on("time", function(data) {
+          offset = data.time
+        })
+
         socket.on("reloadtable", function() {
           $.get("main.ejs", function(data) {
             $("#main_table").html(data);
