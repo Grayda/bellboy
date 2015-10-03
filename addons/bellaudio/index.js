@@ -31,7 +31,7 @@ BellAudio.prototype.Prepare = function(callback) {
 }
 
 BellAudio.prototype.ViewFiles = function() {
-  return fs.readdirSync(__dirname + "/audio")
+  return fs.readdirSync(bellboy.__dirname + "/audio")
 }
 
 // Play the audio file
@@ -42,13 +42,13 @@ BellAudio.prototype.Play = function(file, loop) {
       loop = ""
     }
     if (os.platform() !== "win32") {
-      console.log("Trying to play " + "\"mpg123 \" \"" + __dirname + file + "\" " + loop)
+      console.log("Trying to play " + "\"mpg123 \" \"" + bellboy.__dirname + file + "\" " + loop)
       cp.exec("mpg123 \"" + __dirname + file + "\" " + loop, function(error, stdout, stderr) {
         console.log(stdout || stderr || error)
       })
   } else {
-    console.log("Trying to play " + "\"" + __dirname + "/mpg123.exe\" \"" + __dirname + file + "\". Looping not supported on Windows")
-    cp.exec("\"" + __dirname + "/mpg123/mpg123.exe\" \"" + __dirname + file + "\" ", function(error, stdout, stderr) {
+    console.log("Trying to play " + "\"" + __dirname + "/mpg123.exe\" \"" + bellboy.__dirname + file + "\". Looping not supported on Windows")
+    cp.exec("\"" + __dirname + "/mpg123/mpg123.exe\" \"" + bellboy.__dirname + file + "\" ", function(error, stdout, stderr) {
       console.log(stdout || stderr || error)
     })
 
