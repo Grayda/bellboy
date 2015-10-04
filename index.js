@@ -366,7 +366,7 @@ bellboy.on("trigger", function(item) {
   // If we've set up an audio action
   if (typeof bell.Actions.Audio !== "undefined") {
     // Play the audio file
-    bellboy.modules["bellaudio"].Play("/audio/" + bell.Actions.Audio.File, bell.Actions.Audio.Loop)
+    bellboy.modules["bellaudio"].Play("/audio/", bell.Actions.Audio.Files, bell.Actions.Audio.Loop)
   }
 
   // If we've set up an "external" action (e.g. set Pin X to high to use with legacy tone generators)

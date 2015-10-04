@@ -8,6 +8,7 @@
 var cp = require("child_process")
 var os = require("os");
 var fs = require("fs"); // For peeking inside our audio directory
+var lodash = require("lodash");
 
 var util = require("util"); // For inheriting the EventEmitter stuff so we can use it via this.emit();
 var EventEmitter = require("events").EventEmitter;
@@ -35,7 +36,9 @@ BellAudio.prototype.ViewFiles = function() {
 }
 
 // Play the audio file
-BellAudio.prototype.Play = function(file, loop) {
+BellAudio.prototype.Play = function(directory, files, loop) {
+    file = lodash.shuffle(files)[0]
+
     if(typeof loop === "number") {
       loop = "--loop " + loop
     } else {
@@ -43,12 +46,12 @@ BellAudio.prototype.Play = function(file, loop) {
     }
     if (os.platform() !== "win32") {
       console.log("Trying to play " + "\"mpg123 \" \"" + bellboy.__dirname + file + "\" " + loop)
-      cp.exec("mpg123 \"" + __dirname + file + "\" " + loop, function(error, stdout, stderr) {
+      cp.exec("mpg123 \"" + bellboy.__dirname + directory + file + "\" " + loop, function(error, stdout, stderr) {
         console.log(stdout || stderr || error)
       })
   } else {
-    console.log("Trying to play " + "\"" + __dirname + "/mpg123.exe\" \"" + bellboy.__dirname + file + "\". Looping not supported on Windows")
-    cp.exec("\"" + __dirname + "/mpg123/mpg123.exe\" \"" + bellboy.__dirname + file + "\" ", function(error, stdout, stderr) {
+    console.log("Trying to play " + "\"" + __dirname + "/mpg123.exe\" \"" + bellboy.__dirname + directory + file + "\". Looping not supported on Windows")
+    cp.exec("\"" + __dirname + "/mpg123/mpg123.exe\" \"" + bellboy.__dirname + directory + file + "\" ", function(error, stdout, stderr) {
       console.log(stdout || stderr || error)
     })
 
