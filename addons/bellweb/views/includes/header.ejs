@@ -48,18 +48,22 @@
 
 
         var offset = moment("<%= date.moment() %>").diff(moment());
-        document.getElementById("time").innerHTML = "<i class='glyphicon glyphicon-time'></i> " + moment().add(offset, 'milliseconds').format("<%= locals.bellboy.config.DateFormat %>");
-        document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> <%= locals.bellboy.modules['bellparser'].GetNextJob()['name'] %> - <%= locals.bellboy.modules['bellparser'].GetNextJob()['calendar'] %>";
+        try {
+          document.getElementById("time").innerHTML = "<i class='glyphicon glyphicon-time'></i> " + moment().add(offset, 'milliseconds').format("<%= locals.bellboy.config.DateFormat %>");
+          document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> <%= locals.bellboy.modules['bellparser'].GetNextJob()['name'] %> - <%= locals.bellboy.modules['bellparser'].GetNextJob()['calendar'] %>";
+        } catch (ex) {
 
+        }
         setInterval(function() {
           document.getElementById("time").innerHTML = "<i class='glyphicon glyphicon-time'></i> " + moment().add(offset, 'milliseconds').format("<%= locals.bellboy.config.DateFormat %>");
         }, 1)
 
         socket.on('nextbell', function(data) {
-          document.getElementById("nextbell").innerHTML = "<i class='glyphicon glyphicon-chevron-right'></i> <%= locals.bellboy.modules['bellparser'].GetNextJob()['name'] %> - <%= locals.bellboy.modules['bellparser'].GetNextJob()['calendar'] %>";
+          document.getElementById("nextbell").innerHTML =
+            "<i class='glyphicon glyphicon-chevron-right'></i> <%= locals.bellboy.modules['bellparser'].GetNextJob()['name'] %> - <%= locals.bellboy.modules['bellparser'].GetNextJob()['calendar'] %>";
         });
 
-        // Syncs our time with the server so we don't need to reload as often. 
+        // Syncs our time with the server so we don't need to reload as often.
         socket.on("time", function(data) {
           offset = data.time
         })
@@ -71,20 +75,20 @@
         })
 
         socket.on('notification', function(data) {
-          if (typeof data.timeout === "undefined") {
-            data.timeout = 2000
-          }
+            if (typeof data.timeout === "undefined") {
+              data.timeout = 2000
+            }
 
-          $("#notificationTitle").html(data.title)
-          $("#notificationBody").html(data.message)
-          $('#notification').modal('show')
-          setTimeout(function() {
-            $('#notification').modal('hide');
-          }, data.timeout);
-        })
-        // TOOLTIPS: ACTIVATE!
+            $("#notificationTitle").html(data.title)
+            $("#notificationBody").html(data.message)
+            $('#notification').modal('show')
+            setTimeout(function() {
+              $('#notification').modal('hide');
+            }, data.timeout);
+          })
+          // TOOLTIPS: ACTIVATE!
 
-          $('[data-toggle="tooltip"]').tooltip()
-          $(".smallscreen").fitText(2.5)
+        $('[data-toggle="tooltip"]').tooltip()
+        $(".smallscreen").fitText(2.5)
       })
     </script>

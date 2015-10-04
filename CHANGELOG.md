@@ -1,7 +1,13 @@
 04.10.2015
- - Added JSON schema for ensuring loaded bell and config files match what's expected
+ - Added JSON schemas for ensuring loaded bell and config files match what's expected
  - BellWeb now supports "time" event for socket.io. Every 10 seconds the server passes the latest time to the client (e.g. status page), ensuring time shown on TFT display doesn't slip
+   - The four buttons at the bottom of the status page are now loaded from bells.json (\_button1, \_button2, \_button3 and \_button4) so they're more dynamic
  - Moved audio folder to the root to make it easier to add new files
+ - Added "ToggleBells" action to bells.json. Pass it an array of "Bells" and it'll invert their state (e.g. false becomes true)
+ - BellAudio now plays random files from a given array.
+ - Added (untested) "buttonrelease" event to BellPi to allow "held button" events
+ -
+
 03.10.2015
  - **NOTE: This version modifies bells.json and config.json. It's recommended that you view the new format and migrate your changes over, otherwise your app will crash**
  - BellMail and BellWeb now use lodash, instead of lodash.where

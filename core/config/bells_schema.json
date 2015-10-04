@@ -1,6 +1,29 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {
+    "toggleBell": {
+      "title": "Toggle other bells",
+      "type": "object",
+      "properties": {
+        "Bells": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "Bell": {
+                "type": "string"
+              },
+              "Enabled": {
+                "type": "boolean"
+              }
+            },
+            "required": ["Bell"]
+          }
+        }
+      },
+      "required": ["Bells"]
+    },
     "external": {
       "title": "External Action",
       "type": "object",
@@ -78,6 +101,10 @@
           "title": "Bell Description",
           "type": "string"
         },
+        "Icon": {
+          "title": "Icon shown in BellWeb",
+          "type": "string"
+        },
         "Locked": {
           "title": "Bell Locked Status",
           "type": "boolean"
@@ -89,6 +116,10 @@
             "Audio": {
               "type": "object",
               "$ref": "#/definitions/audio"
+            },
+            "ToggleBells": {
+              "type": "object",
+              "$ref": "#/definitions/toggleBell"
             },
             "Mail": {
               "additionalProperties": false,
@@ -125,6 +156,12 @@
       "$ref": "#/definitions/bell"
     },
     "_default": {
+      "$ref": "#/definitions/bell"
+    }
+  },
+  "patternProperties": {
+    "^_button[0-9]$": {
+      "minProperties": 1,
       "$ref": "#/definitions/bell"
     }
   },

@@ -1,9 +1,9 @@
 <% include includes/header.ejs %>
-<script type="text/javascript">
-  socket.on("reloadstatus", function() {
-    location.reload()
-  })
-</script>
+  <script type="text/javascript">
+    socket.on("reloadstatus", function() {
+      location.reload()
+    })
+  </script>
   <% include includes/modal.ejs %>
     <div class="statusscreen smallscreen">
       <table class="table table-condensed smallscreen" style="max-height: 100vh">
@@ -12,13 +12,13 @@
             <%= locals.bellboy.config.AppName %>
           </th>
         </tr>
-          <tr>
-            <td colspan="4" id="time"></td>
-          </tr>
+        <tr>
+          <td colspan="4" id="time"></td>
+        </tr>
         <% if(locals.bellboy.bells["_all"].Enabled == false) { %>
           <tr>
             <td colspan="4" class="alert alert-danger"><i class="glyphicon glyphicon-remove-sign"></i> All bells are disabled. They were disabled on
-              <%= Date %>
+              <%= date["parsed"] %>
             </td>
           </tr>
           <tr>
@@ -29,23 +29,31 @@
               <td colspan="4" id="nextbell"></td>
             </tr>
             <tr>
-              <td colspan="4"><i class="glyphicon glyphicon-calendar"></i> Schedule: <%= bellboy.bells["_name"] %></td>
+              <td colspan="4"><i class="glyphicon glyphicon-calendar"></i> Schedule:
+                <%= locals.bellboy.bells["_name"] %>
+              </td>
             </tr>
             <tr>
-              <td colspan="4"><i class="glyphicon glyphicon-globe"></i> Manage these bells: <a href="/">http://<%= bellboy.modules["bellweb"].GetHostName(true) %>:8080</a></td>
+              <td colspan="4"><i class="glyphicon glyphicon-globe"></i> Manage these bells: <a href="/">http://<%= locals.bellboy.modules["bellweb"].GetHostName(true) %>:8080</a></td>
             </tr>
             <% } %>
-        <tr>
-          <td class="button button1 "><a href="javascript:pressButton(1)"><i class="glyphicon glyphicon-bell"></i><br />Ring now</a></td>
-          <td class="button button2 "><i class="glyphicon glyphicon-ban-circle"></i><br />Disabled</td>
-          <td class="button button3 "><i class="glyphicon glyphicon-ban-circle"></i><br />Disabled</td>
-          <td class="button button4 ">
-            <% if(locals.bellboy.bells["_all"].Enabled == false) { %><a href="javascript:toggleBell('_all', true)"><i class="glyphicon glyphicon-off"></i><br />Enable ALL</a>
-              <% } else { %><a href="javascript:toggleBell('_all', false)"><i class="glyphicon glyphicon-off"></i><br />Disable ALL</a>
-                <% } %>
-          </td>
-        </tr>
+              <tr>
+                <% for (i = 1; i <= 4; i++) { %>
+                  <% bell = locals.bellboy.bells["_button" + i] %>
+                    <% if(locals.validator.IfExists(bell)) { %>
+                      <td class="button button<%= i %>">
+                        <a href="javascript:pressButton(<%= i %>)">
+                          <% if(locals.validator.IfExists(bell.Icon)) { %><i class="glyphicon glyphicon-<%= locals.bellboy.bells['_button' + i].Icon %>"></i> <% } %>
+                            <br />
+                            <%= bell.Name %>
+                        </a>
+                      </td>
+                      <% } else { %>
+                        <td class="button button<%= i %>"><i class="glyphicon glyphicon-remove-circle"></i><br />Disabled</td>
+                        <% } %>
+                        <% } %>
+              </tr>
       </table>
     </div>
 
-<% include includes/footer %>
+    <% include includes/footer %>

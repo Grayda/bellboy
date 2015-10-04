@@ -94,15 +94,15 @@ bellboy.on("jobsloaded", function(jobs) {
 
   // A button was pressed on the 2.2" TFT screen
   bellboy.modules["bellpi"].on("button", function(index) {
-    switch (index) {
-      case 1:
-        bellboy.Trigger("_default")
-        break;
-    }
-
-    // Turn on the backlight for 10 seconds, then turn it off
+    // Triggers a button (e.g. _button1, _button2 etc.)
+    bellboy.Trigger("_button" + index)
+      // Turn on the backlight for 10 seconds, then turn it off
     bellboy.modules["bellpi"].SetBacklight(true, 10000, false)
 
+  })
+
+  bellboy.modules["bellpi"].on("buttonrelease", function(index) {
+    console.log("Button released: " + index)
   })
 
   // ========================================================
@@ -369,14 +369,32 @@ bellboy.on("trigger", function(item) {
     bellboy.modules["bellaudio"].Play("/audio/", bell.Actions.Audio.Files, bell.Actions.Audio.Loop)
   }
 
+  if (typeof bell.Actions.ToggleBells !== "undefined") {
+    bell.Actions.ToggleBells.Bells.forEach(function(item) {
+      var state
+      if(typeof item.Enabled === "undefined") {
+        console.log("No state set. Setting to: " + !bellboy.bells[item.Bell].Enabled)
+        state = !bellboy.bells[item.Bell].Enabled
+      } else {
+        console.log("State set to: " + item.Enabled)
+        state = item.Enabled
+      }
+      bellboy.ToggleBell(item.Bell, state)
+    })
+  }
+
   // If we've set up an "external" action (e.g. set Pin X to high to use with legacy tone generators)
   if (typeof bell.Actions.External !== "undefined") {
     bellboy.modules["bellpi"].TogglePin(bellboy.config.ExternalPin, 1, 0, bell.Actions.External.Duration)
   }
 
   // Load and send an email
-  mail = bellboy.modules["bellmail"].LoadTemplate(bell.Actions.Mail.Trigger.Template, item, bell.Actions.Mail.Trigger.Subject)
-  bellboy.modules["bellmail"].SendMail(bell.Actions.Mail.Trigger, mail)
+  if (typeof bell.Actions.Mail !== "undefined") {
+    if (typeof bell.Actions.Mail.Trigger !== "undefined") {
+      mail = bellboy.modules["bellmail"].LoadTemplate(bell.Actions.Mail.Trigger.Template, item, bell.Actions.Mail.Trigger.Subject)
+      bellboy.modules["bellmail"].SendMail(bell.Actions.Mail.Trigger, mail)
+    }
+  }
 
   // The bell wants to switch schedules, so we write the changes into our config file
   if (typeof bell.Actions.Schedule !== "undefined") {
@@ -387,6 +405,7 @@ bellboy.on("trigger", function(item) {
   }
   bellboy.modules["bellweb"].SocketEmit("reloadtable")
   bellboy.modules["bellweb"].SocketEmit("reloadstatus")
+  bellboy.SaveBells(bellboy.config.BellFile)
 })
 
 // The job has finished running. This includes any processes spawned (e.g. cmdmp3 or mpg123)

@@ -9,7 +9,7 @@
   <body>
     <h1><%= bell.Name %> has been triggered</h1>
     <p><%= bell.Name %> has been triggered. It was triggered on <%= Date.parsed %></p>
-    <p>To view the bells, please visit <a href="http://<%= bellboy.modules['bellweb'].GetHostName() %>:8080">the web UI</a></p>
+    <p>To view the bells, please visit <a href="http://<%= bellboy.modules['bellweb'].GetHostName(true) %>:8080">the web UI</a></p>
     <p><small>This was an automated email sent by <%= bellboy.config.AppName %>. Please contact your system administrator for more information</small></p>
   </body>
 </html>

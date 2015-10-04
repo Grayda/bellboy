@@ -48,9 +48,9 @@ Here's a list of things I'm thinking over, or I'd like to add, or that need to b
  - [x] Allow multiple bell schedules
    - [x] Allow trigger-based switching. This could allow stuff like switching from schedule 1 to schedule 2 when the "Last Friday of the month" bell goes off
  - [ ] Perhaps some MQTT so it'll play nice with other systems?
- - [ ] Allow setting of buttons on status page for RPi TFT screen (so button1 can be trigger, disable etc.)
+ - [x] Allow setting of buttons on status page for RPi TFT screen (so button1 can be trigger, disable etc.)
   - [ ] Config page to pick a task and a bell to assign to?
- - [ ] More virtual bells, for example, "\_alarm", "\_switch" (for changing schedules) and "\_default" to allow default bells?
+ - ~~[ ] More virtual bells, for example, "\_alarm", "\_switch" (for changing schedules) and "\_default" to allow default bells?~~
   - [ ] Add a page for "virtual" bells (like the "\_all" bell)
  - [x] Include default bell & config, overwritable by another file (so I can .gitignore personal settings and still push changes to bells.json and config.json)
  - [x] Include better update mechanism. nodemon is too eager to restart when a single file changes
@@ -58,6 +58,7 @@ Here's a list of things I'm thinking over, or I'd like to add, or that need to b
  - [ ] Possibly investigate multi-zone ringing using multiple RPis?
    - [ ] Use UDP and good security to allow separate instances of Bellboy to talk
    - [ ] Good for smaller sites (e.g. secondary or tertiary sites that are used for special events and as such, don't require a screen
+   - [ ] Determine use case for this
  - [ ] Documentation. Simple help, but also detailed building / setup / best practices guide.
  - [ ] Investigate loading of bells from non-cron sources (e.g. a public calendar in Google Calendar / Outlook)
    - [ ] Separate json loading from the core.

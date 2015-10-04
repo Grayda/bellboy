@@ -49,6 +49,38 @@
       }
     }
   },
+  "_button1": {
+    "Enabled": true,
+    "Name": "Ring Now",
+    "Description": "Button #1 on the PiTFT",
+    "Icon": "bell",
+    "Locked": true,
+    "Actions": {
+      "Audio": {
+        "Files": [
+          "bell.mp3"
+        ],
+        "Loop": 1
+      },
+      "External": {
+        "OnValue": 1,
+        "OffValue": 0,
+        "Duration": 5000
+      }
+    }
+  },
+  "_button4": {
+    "Enabled": true,
+    "Name": "Enable / Disable All",
+    "Description": "Button #4 on the PiTFT",
+    "Icon": "remove",
+    "Locked": true,
+    "Actions": {
+      "ToggleBells": {
+        "Bells": [{"Bell": "_all"}]
+      }
+    }
+  },
   "test": {
     "Enabled": false,
     "Name": "Test Bell - Every minute",

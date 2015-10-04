@@ -63,22 +63,33 @@ BellPi.prototype.Prepare = function(callback) {
         case 17:
           if (value == 1) {
             this.emit("button", 1)
+          } else {
+            this.emit("buttonreleased", 1)
           }
           break;
         case 22:
           if (value == 1) {
             this.emit("button", 2)
+          } else {
+            this.emit("buttonreleased", 2)
           }
+
           break;
         case 23:
           if (value == 1) {
             this.emit("button", 3)
+          } else {
+            this.emit("buttonreleased", 3)
           }
+
           break;
         case 27:
           if (value == 1) {
             this.emit("button", 4)
+          } else {
+            this.emit("buttonreleased", 4)
           }
+
           break;
         case 18:
           this.emit("backlightchanged", value / 1023 * 100)

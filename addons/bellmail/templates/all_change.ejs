@@ -9,7 +9,7 @@
   <body>
     <h1>All bells disabled!</h1>
     <p>All bells have been disabled. They were disabled on <%= Date.parsed %></p>
-    <p><b>Please remember to enable the bells again. You can do this by visiting <a href="http://<%= hostname %>:8080">the web UI</a> and clicking "Enable All Bells" on the left</b></p>
+    <p><b>Please remember to enable the bells again. You can do this by visiting <a href="http://<%= bellboy.modules['bellweb'].GetHostName(true) %>:8080">the web UI</a> and clicking "Enable All Bells" on the left</b></p>
     <p><small>This was an automated email sent by <%= bellboy.config.AppName %>. Please contact your system administrator for more information</small></p>
   </body>
 </html>
