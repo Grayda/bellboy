@@ -6,6 +6,8 @@
 // This module checks data and such, ensuring it's correct.
 
 var CronJob = require('cron').CronJob;
+var jjv = require("jjv")()
+var fs = require("fs");
 
 var util = require("util"); // For inheriting the EventEmitter stuff so we can use it via this.emit();
 var EventEmitter = require("events").EventEmitter;
@@ -65,6 +67,20 @@ BellValidate.prototype.IsCron = function(cron) {
       return false
     }
   }
+}
+
+BellValidate.prototype.ValidateJSON = function(json, schema) {
+  json = fs.readFileSync(json)
+  schema = fs.readFileSync(schema)
+  jjv.addSchema("bells", schema.toString())
+  results = jjv.validate("bells", json.toString())
+
+  if(results == null) {
+    return true
+  } else {
+    return results
+  }
+
 }
 
 

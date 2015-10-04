@@ -38,6 +38,7 @@
     "express-session": "^1.11.3",
     "httpdispatcher": "^0.4.0",
     "ip": "^1.0.1",
+    "jjv": "^1.0.2",
     "later": "^1.1.10",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",

@@ -2,15 +2,14 @@
   "BellFile": "config/bells_default.json",
   "AppName": "Bellboy Timer System",
   "Version": "0.0.1",
-  "ExternalPin": "10",
+  "ExternalPin": 10,
   "Mail": {
     "From": "bellmaster@example.com",
-    "Server": "",
+    "Server": "mail.example.com",
     "Username": "",
     "Password": "",
     "SSL": false,
     "CrashEmail": {
-      "From": "bellmaster@example.com",
       "To": "you@example.com",
       "Subject": "App has crashed",
       "Body": "App has crashed. FIX IT!"

@@ -1,3 +1,7 @@
+04.10.2015
+ - Added JSON schema for ensuring loaded bell and config files match what's expected
+ - BellWeb now supports "time" event for socket.io. Every 10 seconds the server passes the latest time to the client (e.g. status page), ensuring time shown on TFT display doesn't slip
+ - Moved audio folder to the root to make it easier to add new files
 03.10.2015
  - **NOTE: This version modifies bells.json and config.json. It's recommended that you view the new format and migrate your changes over, otherwise your app will crash**
  - BellMail and BellWeb now use lodash, instead of lodash.where
@@ -19,6 +23,7 @@
  - Bellboy now uses [later.js][2] for scheduling, which eliminates a misfiring bug present in previous versions
  - `button1`, `button2`, `button3` and `button4` events removed, replaced with a single `buttons` event with the index as the first parameter
  - Default bell and config files included in `core/config/`. You can override these by placing `bells.json` and / or `config.json` in the root config/ folder
+   - If your custom `bells.json` or `config.json` files won't load for whatever reason (unclosed brace, missing comma, missing required property etc.), defaults will load instead
  - Moved "File" property of bells to the "Actions.Audio", allowing for multiple actions to take place
  - Added (untested) support for tone generators
    - Set ExternalPin in config.json to a pin on your Raspberry Pi, then hook a wire up from that pin to the remote control port on your tone generator

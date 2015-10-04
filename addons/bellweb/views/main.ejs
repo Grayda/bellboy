@@ -52,7 +52,7 @@
                 <% if(locals.validator.GetValue(bell.Actions.Mail.Change.Enabled) == true) { %><i class="glyphicon glyphicon-edit" data-toggle="tooltip" data-placement="top" title="An email wil be sent when this bell is changed"></i><% } %>
                 <% if(locals.validator.GetValue(bell.Actions.Mail.Trigger.Enabled) == true) { %><i class="glyphicon glyphicon-envelope" data-toggle="tooltip" data-placement="top" title="An email wil be sent when this bell is triggered"></i><% } %>
                 <% if(locals.validator.GetValue(bell.Actions.External) !== "undefined") { %><i class="glyphicon glyphicon-flash" data-toggle="tooltip" data-placement="top" title="This bell will activate an external ringer"></i><% } %>
-                <% if(locals.validator.GetValue(bell.Actions.Audio) !== "undefined") { %><i class="glyphicon glyphicon-music" data-toggle="tooltip" data-placement="top" title="This bell will play audio: <%= bell.Actions.Audio.File %>"></i><% } %>
+                <% if(locals.validator.GetValue(bell.Actions.Audio) !== "undefined") { %><i class="glyphicon glyphicon-music" data-toggle="tooltip" data-placement="top" title="This bell will play audio: <%= bell.Actions.Audio.Files %>"></i><% } %>
                 <% if(locals.validator.GetValue(bell.Actions.Schedule) !== "undefined") { %><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" data-placement="top" title="This bell will switch to a different schedule: <%= bell.Actions.Schedule.File %>"></i><% } %>
               </td>
               <td>

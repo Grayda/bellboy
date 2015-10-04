@@ -4,7 +4,7 @@
     "Name": "All Bells",
     "Description": "A \"virtual\" bell that controls the rest of the bells. DO NOT DELETE",
     "Enabled": true,
-    "Locked": "false",
+    "Locked": false,
     "Actions": {
       "Mail": {
         "Change": {
@@ -20,10 +20,10 @@
     "Enabled": true,
     "Name": "Virtual bell - Default",
     "Description": "A virtual bell that is fired when \"button1\" is pressed",
-    "Locked": "true",
-    "Action": {
+    "Locked": true,
+    "Actions": {
       "Audio": {
-        "File": [
+        "Files": [
           "bell.mp3"
         ],
         "Loop": 1
@@ -53,11 +53,11 @@
     "Enabled": false,
     "Name": "Test Bell - Every minute",
     "Description": "A test bell. Runs every minute",
-    "Locked": "false",
+    "Locked": false,
     "Time": "* * * * *",
-    "Action": {
+    "Actions": {
       "Audio": {
-        "File": [
+        "Files": [
           "bell.mp3"
         ],
         "Loop": 1

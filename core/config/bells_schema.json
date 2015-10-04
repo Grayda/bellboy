@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "external": {
+      "title": "External Action",
+      "type": "object",
+      "properties": {
+        "OnValue": {
+          "type": "integer"
+        },
+        "OffValue": {
+          "type": "integer"
+        },
+        "Duration": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": ["OnValue", "OffValue", "Duration"]
+    },
+    "audio": {
+      "title": "Audio Action",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "Loop": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": ["Files"]
+    },
+    "mail": {
+      "title": "Mail Action",
+      "type": "object",
+      "properties": {
+        "Enabled": {
+          "title": "Mail Enabled",
+          "type": "boolean"
+        },
+        "To": {
+          "title": "Email To",
+          "type": "string",
+          "format": "email"
+        },
+        "Subject": {
+          "title": "Email Subject",
+          "type": "string"
+        },
+        "Template": {
+          "title": "Email Template",
+          "type": "string"
+        }
+
+      },
+      "required": ["Enabled", "To", "Subject", "Template"]
+    },
+
+    "bell": {
+      "title": "A single bell in the schedule",
+      "properties": {
+        "Enabled": {
+          "title": "Bell Enabled",
+          "type": "boolean"
+        },
+        "Name": {
+          "title": "Bell Name",
+          "type": "string"
+        },
+        "Description": {
+          "title": "Bell Description",
+          "type": "string"
+        },
+        "Locked": {
+          "title": "Bell Locked Status",
+          "type": "boolean"
+        },
+        "Actions": {
+          "title": "Actions to take",
+          "additionalProperties": false,
+          "properties": {
+            "Audio": {
+              "type": "object",
+              "$ref": "#/definitions/audio"
+            },
+            "Mail": {
+              "additionalProperties": false,
+              "properties": {
+                "Trigger": {
+                  "optional": true,
+                  "$ref": "#/definitions/mail"
+                },
+                "Change": {
+                  "optional": true,
+                  "$ref": "#/definitions/mail"
+                }
+              }
+            },
+            "External": {
+              "additionalProperties": false,
+              "$ref": "#/definitions/external"
+            }
+          }
+        }
+      },
+      "required": ["Name", "Description", "Enabled", "Locked", "Actions"]
+    }
+  },
+  "title": "Bell Schedule",
+  "type": "object",
+
+  "properties": {
+    "_name": {
+      "title": "Name of the schedule",
+      "type": "string"
+    },
+    "_all": {
+      "$ref": "#/definitions/bell"
+    },
+    "_default": {
+      "$ref": "#/definitions/bell"
+    }
+  },
+  "additionalProperties": {
+    "$ref": "#/definitions/bell"
+  },
+  "required": ["_name", "_all", "_default"]
+
+}

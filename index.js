@@ -6,18 +6,36 @@ var bellboy = new Bellboy(); // The main class that schedules and enables / disa
 
 //If we're ready to go
 bellboy.on("ready", function() {
-  // So we can determine the root folder
+  var BellValidate = require("./addons/bellvalidate/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
+  bellboy.modules["bellvalidate"] = new BellValidate(bellboy)
+  bellboy.modules["bellvalidate"].Prepare()
+    // So we can determine the root folder
   bellboy.__dirname = __dirname
-  // Show a heading
+    // Show a heading
   showWelcome()
     // Load the settings and the bells
-  bellboy.LoadSettings(__dirname + "/config/config.json")
+  validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/config/config.json", __dirname + "/core/config/config_schema.json")
+  if (validate !== true) {
+    console.log("Bellboy cannot load because config file does not match schema!")
+    console.dir(JSON.stringify(validate))
+  } else {
+    console.log("Config file matches schema. Loading..")
+    bellboy.LoadSettings(__dirname + "/config/config.json")
+  }
 })
 
 // Settings loaded. Load the bells now
 bellboy.on("settingsloaded", function(file) {
-  console.log("Settings loaded from file: " + file)
-  bellboy.LoadBells(__dirname + "/" + bellboy.config.BellFile)
+  validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/" + bellboy.config.BellFile, __dirname + "/core/config/bells_schema.json")
+  if (validate !== true) {
+    console.log("Bellboy cannot load because bell file does not match schema!")
+    console.dir(JSON.stringify(validate))
+  } else {
+    console.log("Bell file matches schema. Loading..")
+    bellboy.LoadBells(__dirname + "/" + bellboy.config.BellFile)
+    console.log("Settings loaded from file: " + file)
+
+  }
 });
 
 // Now the bells have loaded. We can now start
@@ -40,7 +58,7 @@ bellboy.on("jobadded", function(item) {
 
 // All the jobs are loaded. Time to load some modules!
 bellboy.on("jobsloaded", function(jobs) {
-  var BellValidate = require("./addons/bellvalidate/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
+
   var BellLog = require("./addons/belllog/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
   var BellParser = require("./addons/bellparser/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
   var BellAuth = require("./addons/bellauth/index.js") // Gives us a front-end to work with. Depends on BellParser, so watch out for that
@@ -52,7 +70,6 @@ bellboy.on("jobsloaded", function(jobs) {
   // We store these in bellboy.modules so other modules can use the features.
   // Some modules depend on others (e.g. BellWeb uses BellParser) so be
   // careful of load order, and check the index.js of that addon for more info
-  bellboy.modules["bellvalidate"] = new BellValidate(bellboy)
   bellboy.modules["belllog"] = new BellLog(bellboy)
   bellboy.modules["bellparser"] = new BellParser(bellboy)
   bellboy.modules["bellmail"] = new BellMail(bellboy)
@@ -130,23 +147,23 @@ bellboy.on("jobsloaded", function(jobs) {
     console.log("Access the web UI at: http://" + bellboy.modules["bellweb"].GetHostName() + ":8080")
 
     bellboy.modules["bellweb"].on("loggedin", function(username) {
-        console.log(username + " has logged in")
-      })
+      console.log(username + " has logged in")
+    })
 
-      // socketready lets us know that socket.io is ready to go.
-      // Typically, this won't fire until a client connects
+    // socketready lets us know that socket.io is ready to go.
+    // Typically, this won't fire until a client connects
     bellboy.modules["bellweb"].on("socketready", function() {
       console.log("Socket ready")
 
       // Someone has asked that we delete the Log
       // TO-DO: Expose isAuthenticated so people can't craft their own JS to run commands here
       bellboy.modules["bellweb"].socket.on("deletelog", function() {
-          bellboy.modules["belllog"].DeleteLog()
-          bellboy.modules["bellweb"].SocketEmit("notification", {
-            "title": "Log Deleted",
-            "message": "bellboy.log has been deleted!"
-          })
+        bellboy.modules["belllog"].DeleteLog()
+        bellboy.modules["bellweb"].SocketEmit("notification", {
+          "title": "Log Deleted",
+          "message": "bellboy.log has been deleted!"
         })
+      })
 
       // The client has sent a message to us, telling us the webpage has asked that we simulate a PiTFT button press
       bellboy.modules["bellweb"].socket.on("button", function(button) {
@@ -173,7 +190,7 @@ bellboy.on("jobsloaded", function(jobs) {
       bellboy.modules["bellweb"].socket.on("setvolume", function(volume) {
         console.log("Volume set to " + volume)
         bellboy.modules["bellaudio"].SetVolume(volume)
-        //
+          //
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Volume changed",
           "message": "Volume set to " + volume + "!",
@@ -201,8 +218,8 @@ bellboy.on("jobsloaded", function(jobs) {
         })
 
         console.log("Updating..")
-        // Wait 2.5 seconds so we can display our notification to the user,
-        // otherwise nodemon resets the app upon update
+          // Wait 2.5 seconds so we can display our notification to the user,
+          // otherwise nodemon resets the app upon update
         setTimeout(function() {
           results = cp.execSync("git stash && git pull && npm install")
         }, 2500)
@@ -215,9 +232,9 @@ bellboy.on("jobsloaded", function(jobs) {
       })
 
       bellboy.modules["bellweb"].socket.on("setdate", function(date) {
-        bellboy.modules["bellpi"].SetDate(date.date)
-      })
-      // Client wants to toggle a bell.
+          bellboy.modules["bellpi"].SetDate(date.date)
+        })
+        // Client wants to toggle a bell.
       bellboy.modules["bellweb"].socket.on("togglebell", function(data) {
         if (data.state == true) {
           bellboy.EnableBell(data.bell)
@@ -323,7 +340,6 @@ bellboy.on("jobsloaded", function(jobs) {
   })
 
   // Stuff we want to look out for is done, time to ask the various modules to prepare
-  bellboy.modules["bellvalidate"].Prepare()
   bellboy.modules["belllog"].Prepare()
   bellboy.modules["bellpi"].Prepare()
   bellboy.modules["bellparser"].Prepare()
@@ -359,7 +375,7 @@ bellboy.on("trigger", function(item) {
   }
 
   // Load and send an email
-    mail = bellboy.modules["bellmail"].LoadTemplate(bell.Actions.Mail.Trigger.Template, item, bell.Actions.Mail.Trigger.Subject)
+  mail = bellboy.modules["bellmail"].LoadTemplate(bell.Actions.Mail.Trigger.Template, item, bell.Actions.Mail.Trigger.Subject)
   bellboy.modules["bellmail"].SendMail(bell.Actions.Mail.Trigger, mail)
 
   // The bell wants to switch schedules, so we write the changes into our config file
