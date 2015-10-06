@@ -81,6 +81,7 @@ BellAudio.prototype.GetVolume = function(percent) {
 // Sets the audio output method. 0 = Auto, 1 = 3.5mm jack, 2 = HDMI
 BellAudio.prototype.SetAudioOutput = function(mode) {
   if(os.platform() !== "win32") {
+    if(mode !== 1 || mode !== 2 || mode !== 3) { return false }
     fs.exec("amixer cset numid=3 " + mode)
     this.emit("outputchanged", mode)
     return true

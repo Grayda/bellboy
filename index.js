@@ -14,7 +14,12 @@ bellboy.on("ready", function() {
     // Show a heading
   showWelcome()
     // Load the settings and the bells
-  validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/config/config.json", __dirname + "/core/config/config_schema.json")
+    try {
+      validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/config/config.json", __dirname + "/core/config/config_schema.json")
+    } catch(ex) {
+      validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/core/config/config_default.json", __dirname + "/core/config/config_schema.json")
+    }
+
   if (validate !== true) {
     console.log("Bellboy cannot load because config file does not match schema!")
     console.dir(JSON.stringify(validate))
@@ -26,7 +31,12 @@ bellboy.on("ready", function() {
 
 // Settings loaded. Load the bells now
 bellboy.on("settingsloaded", function(file) {
+  try {
   validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/" + bellboy.config.BellFile, __dirname + "/core/config/bells_schema.json")
+} catch(ex) {
+  validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/core/config/bells_default.json", __dirname + "/core/config/bells_schema.json")
+}
+
   if (validate !== true) {
     console.log("Bellboy cannot load because bell file does not match schema!")
     console.dir(JSON.stringify(validate))
