@@ -40,7 +40,7 @@ echo
 echo -e "To learn more, please visit http://github.com/Grayda/bellboy\033[0m"
 echo
 echo
-read -n1 -p "Press any key to continue or Ctrl+C to quit" < /dev/tty
+read -p "Press [Enter] to continue or Ctrl+C to quit" < /dev/tty
 echo
 askInsecure
 
@@ -49,7 +49,7 @@ sudo apt-get dist-upgrade
 greenEcho "Preparing to install.."
 cd /home/pi
 greenEcho "Downloading latest version of Node.."
-wget --no-check-certificate http://node-arm.herokuapp.com/node_latest_armhf.deb
+wget --no-check-certificate http://nodearm-nathanjohnson320.rhcloud.com/node_latest_armhf.deb
 greenEcho "Installing latest Node deb.."
 sudo dpkg -i node_latest_armhf.deb
 greenEcho "Node version is:"
@@ -88,11 +88,11 @@ echo "> Timezone (under Internationalisation Options)"
 echo -e "> User Password (\033[0;31m!IMPORTANT!\033[0m)"
 echo "> Hostname (under Advanced Options) (optional, but recommended)"
 echo "There is no need to enable Boot to Desktop. This will be done after you exit raspi-config"
-
+echo
 read -p "Press [Enter] to continue" < /dev/tty
 sudo raspi-config
 
-echo "Bellboy installation is complete. Next, we'll try and install the support for files for the Adafruit PiTFT 2.2\" screen"
+greenEcho "Bellboy installation is complete. Next, we'll try and install the support for files for the Adafruit PiTFT 2.2\" screen"
 redEcho "When prompted, say no to setting the pin to power off and no to booting to console"
 echo
 echo -e "\033[0;31m This could take 20 minutes or more \033[0m"
