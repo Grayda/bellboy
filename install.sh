@@ -1,46 +1,87 @@
 #! /bin/sh
+function askInsecure {
+  read -n1 -p "This installer can use an insecure method of instalation for organisations with self-signed certificates. Do you wish to install insecurely? If unsure, type N. If you have issues with this script, run again, with Y instead [Y/n]" insecure < /dev/tty
+  echo
+  case $insecure in
+    y|Y)
+      echo "Setting npm to not use strict-ssl"
+      npm config set strict-ssl false
+      return
+      ;;
+    n|N) return ;;
+    *)
+      echo "Invalid response. Please type Y or N"
+      askInsecure
+      ;;
+  esac
+}
+
+function greenEcho {
+  echo -e "\033[92m$1\033[0m"
+}
+
+function redEcho {
+  echo -e "\033[91m$1\033[0m"
+}
+
+echo
+greenEcho "       ########  ######## ##       ##       ########   #######  ##    ## "
+greenEcho "       ##     ## ##       ##       ##       ##     ## ##     ##  ##  ##  "
+greenEcho "       ##     ## ##       ##       ##       ##     ## ##     ##   ####   "
+greenEcho "       ########  ######   ##       ##       ########  ##     ##    ##    "
+greenEcho "       ##     ## ##       ##       ##       ##     ## ##     ##    ##    "
+greenEcho "       ##     ## ##       ##       ##       ##     ## ##     ##    ##    "
+greenEcho "       ########  ######## ######## ######## ########   #######     ##    "
+echo
+
 echo -e "\033[1mThis script will install everything necessary to run Bellboy on a Raspberry Pi"
 echo "Please only use this on a fresh install of Raspbpian provided by the Raspberry Pi Foundation, as it will install additional kernels, set passwords, startx on boot etc."
 echo
 echo -e "To learn more, please visit http://github.com/Grayda/bellboy\033[0m"
-read -p "Press any key to continue or Ctrl+C to quit" < /dev/tty
-echo "Updating system"
+echo
+echo
+read -n1 -p "Press any key to continue or Ctrl+C to quit" < /dev/tty
+echo
+askInsecure
+
+greenEcho "Updating system if necessary.."
 sudo apt-get dist-upgrade
-echo "Preparing to install.."
+greenEcho "Preparing to install.."
 cd /home/pi
-echo "Downloading latest Node deb.."
+greenEcho "Downloading latest version of Node.."
 wget --no-check-certificate http://node-arm.herokuapp.com/node_latest_armhf.deb
-echo "Installing latest Node deb.."
+greenEcho "Installing latest Node deb.."
 sudo dpkg -i node_latest_armhf.deb
-echo "Node version is:"
+greenEcho "Node version is:"
 node -v
-echo "Cleaning up installer.."
+greenEcho "Cleaning up installer.."
 sudo rm /home/pi/node_latest_armhf.deb
-echo "Installing audio dependency for Bellboy.."
+greenEcho "Installing audio dependency for Bellboy.."
 sudo apt-get install mpg123 # For audio support
-echo "CDing into /home/pi.."
+greenEcho "CDing into /home/pi.."
 if [ -d "/home/pi/bellboy/" ];
   then
-    echo "Bellboy already cloned. Updating.."
+    redEcho "Bellboy already cloned. Updating.."
     cd /home/pi/bellboy
     git stash
     git pull
   else
-    echo "Cloning Bellboy into /home/pi.."
+    greenEcho "Cloning Bellboy into /home/pi.."
     git clone http://github.com/Grayda/bellboy.git
     cd /home/pi/bellboy
   fi
 
-echo "Installing nodemon globally.."
+greenEcho "Installing nodemon globally.."
 sudo npm install -g nodemon
-echo "Installing other dependencies.."
+greenEcho "Installing other dependencies.."
 npm install
-echo "Copying startup script to /etc/init.d.."
+greenEcho "Copying startup script to /etc/init.d.."
 sudo cp bellboy /etc/init.d/
-echo "Making the script executable"
+greenEcho "Making the script executable"
 sudo chmod 755 /etc/init.d/bellboy
-echo "Registering changes.."
+greenEcho "Registering changes.."
 sudo update-rc.d bellboy defaults
+echo
 echo "Starting raspi-config. Please set the following options:"
 echo "--------------------------------------------------------"
 echo "> Timezone (under Internationalisation Options)"
@@ -52,7 +93,8 @@ read -p "Press [Enter] to continue" < /dev/tty
 sudo raspi-config
 
 echo "Bellboy installation is complete. Next, we'll try and install the support for files for the Adafruit PiTFT 2.2\" screen"
-echo "When prompted, say no to setting the pin to power off"
+redEcho "When prompted, say no to setting the pin to power off and no to booting to console"
+echo
 echo -e "\033[0;31m This could take 20 minutes or more \033[0m"
 read -p "If you do not have the PiTFT or else don't wish to install the files, press Ctrl+C now, otherwise, press any key to continue" < /dev/tty
 curl -SLs https://apt.adafruit.com/add-pin | sudo bash
