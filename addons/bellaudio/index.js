@@ -45,13 +45,13 @@ BellAudio.prototype.Play = function(directory, files, loop) {
       loop = ""
     }
     if (os.platform() !== "win32") {
-      console.log("Trying to play " + "\"mpg123 \" \"" + bellboy.__dirname + file + "\" " + loop)
-      cp.exec("mpg123 \"" + bellboy.__dirname + directory + file + "\" " + loop, function(error, stdout, stderr) {
+      console.log("Trying to play " + "mpg123 \"" + bellboy.__dirname + directory + file + "\" " + loop)
+      cp.exec("mpg123 " + loop + " \"" +bellboy.__dirname + directory + file + "\"", function(error, stdout, stderr) {
         console.log(stdout || stderr || error)
       })
   } else {
-    console.log("Trying to play " + "\"" + __dirname + "/mpg123.exe\" \"" + bellboy.__dirname + directory + file + "\". Looping not supported on Windows")
-    cp.exec("\"" + __dirname + "/mpg123/mpg123.exe\" \"" + bellboy.__dirname + directory + file + "\" ", function(error, stdout, stderr) {
+    console.log("Trying to play " + "\"" + __dirname + "/mpg123.exe\" " + loop + " \"" + bellboy.__dirname + directory + file + "\"")
+    cp.exec("\"" + __dirname + "/mpg123/mpg123.exe\" " + loop + " \"" + bellboy.__dirname + directory + file + "\" ", function(error, stdout, stderr) {
       console.log(stdout || stderr || error)
     })
 

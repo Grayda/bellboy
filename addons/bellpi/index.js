@@ -14,6 +14,7 @@ var os = require("os"); // Need to work out if we're on Windows or not
 var fs = require('fs') // For running command line apps
 var cp = require("child_process") // For setting the date manually when network time isn't available.
 var gpio // GPIO pins on the RPi, as exposed by the rpi-gpio package
+var isPi // Are we running on a Raspberry Pi?
 
 var bellboy = {}
 
@@ -25,7 +26,7 @@ function BellPi(bellboyInstance) {
 
 // Sets the backlight. Give it a value between 0 and 100 for precise brightness, or true / false for 100% / 0% brightness
 BellPi.prototype.SetBacklight = function(percentage, timeout, revertedbrightness) {
-  if (os.platform() != "win32") {
+  if (isPi) {
 
     if (percentage === true) {
       percentage = 100
@@ -49,7 +50,8 @@ BellPi.prototype.SetBacklight = function(percentage, timeout, revertedbrightness
 
 // Gets our module ready and listens on various pins for changes.
 BellPi.prototype.Prepare = function(callback) {
-  if (os.platform() != "win32") {
+  isPi = this.IsPi()
+  if (isPi) {
     gpio = require("rpi-gpio");
     this.Setup(18, 0) // For the backlight
 
@@ -114,17 +116,18 @@ BellPi.prototype.Write = function(pin, value) {
 
 // Turns a pin on (or off) and holds it like so for <timeout>
 BellPi.prototype.TogglePin = function(pin, onvalue, offvalue, timeout) {
-  if (os.platform() != "win32") {
-    this.Write(pin, onvalue)
-    setTimeout(function() {
-      this.Write(pin, offvalue)
-    }.bind(this), timeout)
+  if (isPi) {
+    this.Write(pin, onvalue, function() {
+      setTimeout(function() {
+        this.Write(pin, offvalue)
+      }.bind(this), timeout)
+    }.bind(this))
   }
 }
 
 // Sets up pins on the RPi. Direction = 0 for Output, 1 for Input
 BellPi.prototype.Setup = function(pin, direction) {
-  if (os.platform() != "win32") {
+  if (isPi) {
     var dir
     if (direction == 0) {
       dir = gpio.DIR_OUT
