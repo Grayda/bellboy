@@ -79,19 +79,19 @@
             </div>
             <div class="checkbox">
               <label for="external_toggle">
-                <input type="checkbox" class="" id="external_toggle" name="external">External Ringer</label>
+                <input type="checkbox" class="" id="external_toggle" name="external" <%- locals.data( 'External', true) %>>External Ringer</label>
             </div>
             <div class="checkbox">
               <label for="mail_toggle">
-                <input type="checkbox" class="" id="mail_toggle" name="mail">Send Email(s)</label>
+                <input type="checkbox" class="" id="mail_toggle" name="mail" <%- locals.data( 'Mail', true) %>>Send Email(s)</label>
             </div>
             <div class="checkbox">
               <label for="schedule_toggle">
-                <input type="checkbox" class="" id="schedule_toggle" name="schedule">Switch Schedule</label>
+                <input type="checkbox" class="" id="schedule_toggle" name="schedule" <%- locals.data( 'Schedule', true) %>>Switch Schedule</label>
             </div>
             <div class="checkbox">
               <label for="toggle_toggle">
-                <input type="checkbox" class="" id="toggle_toggle" name="toggle">Toggle Bell(s)</label>
+                <input type="checkbox" class="" id="toggle_toggle" name="toggle" <%- locals.data( 'ToggleBells', true) %>>Toggle Bell(s)</label>
             </div>
             <p class="help-block">Actions to perform when this bell is triggered</p>
           </div>

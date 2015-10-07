@@ -62,7 +62,8 @@
                     <% } else { %>Disable
                       <% } %>
                 </a> |
-                <a href="javascript:trigger('<%= item %>')">Trigger</a>
+                <a href="javascript:trigger('<%= item %>')">Trigger</a> | 
+                <a href="/add?bell=<%= item %>">Edit</a>
               </td>
     </tr>
     <% }); %>
