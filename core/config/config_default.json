@@ -1,5 +1,5 @@
 {
-  "BellFile": "config/bells_default.json",
+  "BellFile": "config/schedules/bells_default.json",
   "AppName": "Bellboy Timer System",
   "Version": "0.0.1",
   "ExternalPin": 10,

@@ -1,0 +1,39 @@
+<div id="external_toggle_group" class="well well-lg">
+  <h4>Trigger an External Device</h4>
+  <p><b>NOTE:</b> This feature is for advanced users only! Don't enable it if you're not sure what you're doing!</p>
+  <p>This action sets a specified pin on the hardware, allowing you to trigger external tone generators, turn LEDs on etc.. Extra hardware may be required</p>
+
+  <div class="form-group form-group-sm">
+    <label for="external_pin" class="col-sm-1 control-label">Loop</label>
+    <div class="col-sm-10">
+      <input type="number" max="40" min="1" id="external_pin" name="external_pin" class="form-control" value="10">
+      <p class="help-block">Which pin to toggle. <b>NOTE:</b> not all pins will be available. Please check before setting!</p>
+    </div>
+  </div>
+
+  <div class="form-group form-group-sm">
+    <label for="external_on_value" class="col-sm-1 control-label">'On' Value</label>
+    <div class="col-sm-10">
+      <input type="number" max="65535" min="0" id="external_on_value" name="external_on_value" class="form-control" value="1">
+      <p class="help-block">What should the value be set to when the external device is triggered</p>
+    </div>
+  </div>
+
+  <div class="form-group form-group-sm">
+    <label for="external_off_value" class="col-sm-1 control-label">'On' Value</label>
+    <div class="col-sm-10">
+      <input type="number" max="65535" min="0" id="external_off_value" name="external_off_value" class="form-control" value="0">
+      <p class="help-block">What should the value be set to when the external device has finished being triggered?</p>
+    </div>
+  </div>
+
+  <div class="form-group form-group-sm">
+    <label for="external_duration" class="col-sm-1 control-label">Duration</label>
+    <div class="col-sm-10">
+      <input type="number" min="1" id="external_duration" name="external_duration" class="form-control" value="1000">
+      <p class="help-block">How long should it be triggered for (in milliseconds)</p>
+    </div>
+  </div>
+
+
+</div>

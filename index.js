@@ -1,24 +1,29 @@
 var url = require("url"); // For parsing URLs
 var Bellboy = require("./core/index.js"); // Our core Bellboy class
 var moment = require("moment"); // For date parsing
-var cp = require("child_process") // For calling updates
+var cp = require("child_process") // For calling updates (at least until we create a module for handling clean updates)
+var lodash = require("lodash") // For throttling certain socket.io events
 var bellboy = new Bellboy(); // The main class that schedules and enables / disables our bells
 
 //If we're ready to go
 bellboy.on("ready", function() {
-  var BellValidate = require("./addons/bellvalidate/index.js") // An add-on that lets us parse and display cron jobs in a human-readable way
+  var BellValidate = require("./addons/bellvalidate/index.js") // An add-on that lets match our bell and config files against a schema
   bellboy.modules["bellvalidate"] = new BellValidate(bellboy)
   bellboy.modules["bellvalidate"].Prepare()
-    // So we can determine the root folder
+
+  // So we can determine where this folder is (useful for loading files based on the root folder)
   bellboy.__dirname = __dirname
-    // Show a heading
+
+  // Show a heading
   showWelcome()
-    // Load the settings and the bells
-    try {
-      validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/config/config.json", __dirname + "/core/config/config_schema.json")
-    } catch(ex) {
-      validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/core/config/config_default.json", __dirname + "/core/config/config_schema.json")
-    }
+
+  // Load the settings and the bells
+  // First we try and load user settings. If not found (or an error occurs), then we fall back to loading default bells and configs
+  try {
+    validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/config/config.json", __dirname + "/core/config/config_schema.json")
+  } catch (ex) {
+    validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/core/config/config_default.json", __dirname + "/core/config/config_schema.json")
+  }
 
   if (validate !== true) {
     console.log("Bellboy cannot load because config file does not match schema!")
@@ -31,11 +36,12 @@ bellboy.on("ready", function() {
 
 // Settings loaded. Load the bells now
 bellboy.on("settingsloaded", function(file) {
+  // Same as above. If bell file passes schema check, load. Otherwise fall back to a sample set of bells.
   try {
-  validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/" + bellboy.config.BellFile, __dirname + "/core/config/bells_schema.json")
-} catch(ex) {
-  validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/core/config/bells_default.json", __dirname + "/core/config/bells_schema.json")
-}
+    validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/" + bellboy.config.BellFile, __dirname + "/core/config/bells_schema.json")
+  } catch (ex) {
+    validate = bellboy.modules["bellvalidate"].ValidateJSON(__dirname + "/core/config/schedules/bells_default.json", __dirname + "/core/config/bells_schema.json")
+  }
 
   if (validate !== true) {
     console.log("Bellboy cannot load because bell file does not match schema!")
@@ -97,20 +103,21 @@ bellboy.on("jobsloaded", function(jobs) {
   // BellPi related stuff
   // ========================================================
 
-  // BellPi is laoded. If necessary, we can do stuff here
+  // BellPi is loaded. If necessary, we can do stuff here
   bellboy.modules["bellpi"].on("ready", function() {
     console.log("BellPi loaded")
   })
 
   // A button was pressed on the 2.2" TFT screen
   bellboy.modules["bellpi"].on("button", function(index) {
-    // Triggers a button (e.g. _button1, _button2 etc.)
+    // Triggers a "virtual" bell (e.g. a bell called _button1, _button2 etc.)
     bellboy.Trigger("_button" + index)
       // Turn on the backlight for 10 seconds, then turn it off
     bellboy.modules["bellpi"].SetBacklight(true, 10000, false)
 
   })
 
+  // Untested: When we've released the button
   bellboy.modules["bellpi"].on("buttonrelease", function(index) {
     console.log("Button released: " + index)
   })
@@ -136,13 +143,13 @@ bellboy.on("jobsloaded", function(jobs) {
     console.log("Mail sent:")
     console.dir(mail)
     console.log(body)
-    console.log(err)
   });
 
   // ========================================================
   // BellAuth related stuff
   // ========================================================
 
+  // Loads our users file for authentication with BellWeb
   bellboy.modules["bellauth"].on("ready", function() {
     bellboy.modules["bellauth"].LoadUsers("/users.json")
   })
@@ -165,23 +172,23 @@ bellboy.on("jobsloaded", function(jobs) {
     bellboy.modules["bellweb"].on("socketready", function() {
       console.log("Socket ready")
 
-      // Someone has asked that we delete the Log
+      // Someone has asked that we delete the Log. We use lodash.throttle here to ensure we can't run this any faster than once every 3 seconds
       // TO-DO: Expose isAuthenticated so people can't craft their own JS to run commands here
-      bellboy.modules["bellweb"].socket.on("deletelog", function() {
+      bellboy.modules["bellweb"].socket.on("deletelog", lodash.throttle(function() {
         bellboy.modules["belllog"].DeleteLog()
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Log Deleted",
           "message": "bellboy.log has been deleted!"
         })
-      })
+      }, 3000))
 
       // The client has sent a message to us, telling us the webpage has asked that we simulate a PiTFT button press
       bellboy.modules["bellweb"].socket.on("button", function(button) {
         bellboy.modules["bellpi"].emit("button", button.number)
       }.bind(this))
 
-      // The client has asked that we reload the bells and settings
-      bellboy.modules["bellweb"].socket.on("reload", function() {
+      // The client has asked that we reload the bells and settings. lodash.throttle only allows this once every 3 seconds
+      bellboy.modules["bellweb"].socket.on("reload", lodash.throttle(function() {
         console.log("Reloading settings..")
 
         bellboy.LoadSettings("/config/config.json")
@@ -194,7 +201,7 @@ bellboy.on("jobsloaded", function(jobs) {
           "timeout": 4000
         })
 
-      })
+      }, 3000))
 
       // The client has set the volume
       bellboy.modules["bellweb"].socket.on("setvolume", function(volume) {
@@ -218,9 +225,9 @@ bellboy.on("jobsloaded", function(jobs) {
         })
       })
 
-      // The client wishes to update Bellboy.
+      // The client wishes to update Bellboy. lodash only allows once per 10 seconds
       // TO-DO: Make this ultra secure, as updates can wipe out data!
-      bellboy.modules["bellweb"].socket.on("update", function(data) {
+      bellboy.modules["bellweb"].socket.on("update", lodash.throttle(function(data) {
         bellboy.modules["bellweb"].SocketEmit("notification", {
           "title": "Updating..",
           "message": bellboy.config.AppName + " will be updated shortly. This may take some time. ",
@@ -239,7 +246,7 @@ bellboy.on("jobsloaded", function(jobs) {
           "message": bellboy.config.AppName + " has been updated. The results of the update were:<br />" + results,
           "timeout": 60000
         })
-      })
+      }, 10000))
 
       bellboy.modules["bellweb"].socket.on("setdate", function(date) {
           bellboy.modules["bellpi"].SetDate(date.date)
@@ -269,6 +276,9 @@ bellboy.on("jobsloaded", function(jobs) {
           "date": bellboy.modules["bellparser"].GetNextJob()["calendar"]
         })
 
+        // The time that is displayed on status.ejs and layout.ejs is worked out client-side to cut down on workload
+        // However after a long time, the time drifts unless the page is refreshed and the correct server time obtained
+        // So to combat this, every 10 seconds we send the right time to the client who recalculates the offset. Happy time, happy wife.. or something.
         bellboy.modules["bellweb"].SocketEmit("time", {
           "time": moment()
         })
@@ -276,7 +286,7 @@ bellboy.on("jobsloaded", function(jobs) {
         // bellboy.modules["bellweb"].SocketEmit("reloadtable")
       }.bind(this), 10000)
 
-      // And finally, an error event
+      // And finally, an error event. We must have this, or socket.io goes nuts
       bellboy.modules["bellweb"].socket.on("error", function(err) {
         console.log(err)
       })
@@ -288,65 +298,65 @@ bellboy.on("jobsloaded", function(jobs) {
   // TO-DO: Clean this up, as half of these aren't active (yet / anymore)
   bellboy.modules["bellweb"].on("pageloaded", function(req) {
 
-    switch (url.parse(req.url).pathname) {
-      // We've called toggle.html
-      case "/toggle.html":
-        // Find out if we want to turn a bell on or off
-        switch (req.params.state) {
-          case "true" || true:
-            // Enable, then save the bells
-            bellboy.EnableBell(req.params.id)
-            bellboy.SaveBells(bellboy.config.BellFile)
-            break;
-          case "false" || false:
-            // Disable, theb save the bells
-            bellboy.DisableBell(req.params.id)
-            bellboy.SaveBells(bellboy.config.BellFile)
-            break;
-          default:
-            // Not actually  a state? Don't allow it!
-            console.log("Incorrect state! Received: " + req.params.state)
-        }
-        break;
-      case "/add.html":
-        console.dir(req.params)
-        if (typeof req.params.submit !== "undefined") {
-          console.log("Saving bell")
-          bellboy.AddBell(req.params.id, {
-            "Name": req.params.name,
-            "Description": req.params.description,
-            "Locked": "false",
-            "Time": req.params.time,
-            "File": req.params.files,
-            "Mail": {
-              "Trigger": {
-                "Enabled": req.params.triggermailenabled || false,
-                "To": req.params.triggermailto || "",
-                "Subject": req.params.triggermailsubject || "",
-                "Template": req.params.triggermailtemplate,
-              },
-              "Change": {
-                "Enabled": req.params.changemailenabled || false,
-                "To": req.params.changemailto || "",
-                "Subject": req.params.changemailsubject || "",
-                "Template": req.params.changemailtemplate,
-              }
-            }
-          })
-
-        } else {
-          console.log("Not adding bell. No params")
-        }
-
-        break;
-        // Manually trigger a bell
-      case "/trigger.html":
-        bellboy.Trigger(req.params.id)
-        break;
-      case "/delete.html":
-        bellboy.DeleteBell("temp")
-        break;
-    }
+    // switch (url.parse(req.url).pathname) {
+    //   // We've called toggle.html
+    //   case "/toggle.html":
+    //     // Find out if we want to turn a bell on or off
+    //     switch (req.params.state) {
+    //       case "true" || true:
+    //         // Enable, then save the bells
+    //         bellboy.EnableBell(req.params.id)
+    //         bellboy.SaveBells(bellboy.config.BellFile)
+    //         break;
+    //       case "false" || false:
+    //         // Disable, theb save the bells
+    //         bellboy.DisableBell(req.params.id)
+    //         bellboy.SaveBells(bellboy.config.BellFile)
+    //         break;
+    //       default:
+    //         // Not actually  a state? Don't allow it!
+    //         console.log("Incorrect state! Received: " + req.params.state)
+    //     }
+    //     break;
+    //   case "/add.html":
+    //     console.dir(req.params)
+    //     if (typeof req.params.submit !== "undefined") {
+    //       console.log("Saving bell")
+    //       bellboy.AddBell(req.params.id, {
+    //         "Name": req.params.name,
+    //         "Description": req.params.description,
+    //         "Locked": "false",
+    //         "Time": req.params.time,
+    //         "File": req.params.files,
+    //         "Mail": {
+    //           "Trigger": {
+    //             "Enabled": req.params.triggermailenabled || false,
+    //             "To": req.params.triggermailto || "",
+    //             "Subject": req.params.triggermailsubject || "",
+    //             "Template": req.params.triggermailtemplate,
+    //           },
+    //           "Change": {
+    //             "Enabled": req.params.changemailenabled || false,
+    //             "To": req.params.changemailto || "",
+    //             "Subject": req.params.changemailsubject || "",
+    //             "Template": req.params.changemailtemplate,
+    //           }
+    //         }
+    //       })
+    //
+    //     } else {
+    //       console.log("Not adding bell. No params")
+    //     }
+    //
+    //     break;
+    //     // Manually trigger a bell
+    //   case "/trigger.html":
+    //     bellboy.Trigger(req.params.id)
+    //     break;
+    //   case "/delete.html":
+    //     bellboy.DeleteBell("temp")
+    //     break;
+    // }
   })
 
   // Stuff we want to look out for is done, time to ask the various modules to prepare
@@ -363,13 +373,8 @@ bellboy.on("jobsloaded", function(jobs) {
 // The bell has triggered. If you'd like to know if a bell has been triggered manually, look for manualtrigger
 bellboy.on("trigger", function(item) {
   // If it's a "virtual" bell we're triggering
-  if (item.substring(0, 1) == "_") {
-    // We don't want the schedule stuff
     bell = bellboy.bells[item]
-  } else {
-    // Otherwise, we need to work out what schedle we're on and run the bell.
-    bell = bellboy.bells[item]
-  }
+
 
   console.log(bell.Name + " triggered!")
 
@@ -379,12 +384,16 @@ bellboy.on("trigger", function(item) {
     bellboy.modules["bellaudio"].Play("/audio/", bell.Actions.Audio.Files, bell.Actions.Audio.Loop)
   }
 
+  // If we've set up an action to toggle bells
   if (typeof bell.Actions.ToggleBells !== "undefined") {
+    // Loop through the bells to toggle
     bell.Actions.ToggleBells.Bells.forEach(function(item) {
       var state
-      if(typeof item.Enabled === "undefined") {
+      // No state? Set true to false and false to true
+      if (typeof item.Enabled === "undefined") {
         console.log("No state set. Setting to: " + !bellboy.bells[item.Bell].Enabled)
         state = !bellboy.bells[item.Bell].Enabled
+      // Otherwise, use the state we've been given
       } else {
         console.log("State set to: " + item.Enabled)
         state = item.Enabled
@@ -395,7 +404,7 @@ bellboy.on("trigger", function(item) {
 
   // If we've set up an "external" action (e.g. set Pin X to high to use with legacy tone generators)
   if (typeof bell.Actions.External !== "undefined") {
-    bellboy.modules["bellpi"].TogglePin(bellboy.config.ExternalPin, 1, 0, bell.Actions.External.Duration)
+    bellboy.modules["bellpi"].TogglePin(bell.Actions.External.Pin, bell.Actions.External.OnValue, bell.Actions.External.OffValue, bell.Actions.External.Duration)
   }
 
   // Load and send an email
@@ -425,12 +434,7 @@ bellboy.on("triggerdone", function() {
 
 // Someone has enabled a bell
 bellboy.on("bellenabled", function(item) {
-  var bell
-  if (item.substring(0, 1) == "_") {
-    bell = bellboy.bells[item]
-  } else {
-    bell = bellboy.bells[item]
-  }
+  var bell = bellboy.bells[item]
   console.log(bell.Name + " was enabled")
   bellboy.SaveBells(bellboy.config.BellFile)
   mail = bellboy.modules["bellmail"].LoadTemplate(bell.Actions.Mail.Change.Template, item, bell.Actions.Mail.Change.Subject)
@@ -441,12 +445,7 @@ bellboy.on("bellenabled", function(item) {
 
 // Someone has disabled a bell
 bellboy.on("belldisabled", function(item) {
-  var bell
-  if (item.substring(0, 1) == "_") {
-    bell = bellboy.bells[item]
-  } else {
-    bell = bellboy.bells[item]
-  }
+  var bell = bellboy.bells[item]
   console.log(bell.Name + " was enabled")
   bellboy.SaveBells(bellboy.config.BellFile)
   mail = bellboy.modules["bellmail"].LoadTemplate(bell.Actions.Mail.Change.Template, item, bell.Actions.Mail.Change.Subject)

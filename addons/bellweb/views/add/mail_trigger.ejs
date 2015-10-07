@@ -1,0 +1,69 @@
+<div id="mail_toggle_group" class="well well-lg">
+  <h4>Send an email</h4>
+  <div class="form-group form-group-sm">
+    <label class="col-sm-1 control-label">Mail Type</label>
+    <div class="col-sm-10">
+      <div class="checkbox">
+        <label for="mail_trigger_toggle">
+          <input type="checkbox" class="" id="mail_trigger_toggle" name="mail_trigger">Email when bell triggered</label>
+        </label>
+      </div>
+      <div class="checkbox">
+        <label for="mail_change_toggle">
+          <input type="checkbox" class="" id="mail_change_toggle" name="mail_change">Email when bell changed</label>
+        </label>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="mail_trigger_toggle_group" class="well well-lg">
+    <h4>Email on Trigger</h4>
+    <div class="form-group form-group-sm">
+      <label class="col-sm-1 control-label">Enabled</label>
+      <div class="col-sm-10">
+        <div class="radio">
+          <label for="mail_trigger_enabled">
+            <input type="radio" name="mail_trigger_enabled" id="mail_trigger_enabled" value="true" checked="checked"> True
+          </label>
+        </div>
+        <div class="radio">
+          <label for="mail_trigger_disabled">
+            <input type="radio" name="mail_trigger_enabled" id="mail_trigger_disabled" value="false" checked="checked"> False
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm">
+      <label for="mail_trigger_to" class="col-sm-1 control-label">To</label>
+      <div class="col-sm-10">
+        <input type="text" name="mail_trigger_to" class="form-control" value="test@example.com">
+        <p class="help-block">Who to send the email to</p>
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm">
+      <label for="mail_trigger_subject" class="col-sm-1 control-label">Subject</label>
+      <div class="col-sm-10">
+        <input type="text" id="mail_trigger_subject" name="mail_trigger_subject" class="form-control" value="Sample Email">
+        <p class="help-block">Subject of the email</p>
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm">
+      <label for="mail_trigger_template" class="col-sm-1 control-label">File(s)</label>
+      <div class="col-sm-10">
+        <select name="mail_trigger_template" id="mail_trigger_template" class="form-control">
+          <% bellboy.modules["bellmail"].ViewFiles().forEach(function(item){ %>
+            <option>
+              <%= item %>
+            </option>
+            <% }) %>
+        </select>
+        <p class="help-block">To add more templates files, upload them to /addons/bellmail/templates</p>
+      </div>
+    </div>
+
+
+  </div>

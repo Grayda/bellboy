@@ -4,6 +4,7 @@ var util = require("util"); // For inheriting the EventEmitter stuff so we can u
 var EventEmitter = require("events").EventEmitter;
 util.inherits(Bellboy, EventEmitter);
 var later = require('later'); // Handles the timing
+var lodash = require('lodash'); // For filtering of arrays and such
 var moment = require("moment"); // For formatting of dates
 var parser = require('cron-parser'); // For parsing and comparing of cron jobs
 
@@ -66,8 +67,30 @@ Bellboy.prototype.SaveSettings = function(file) {
     return false
   }
 
+
   fs.writeFileSync(file, JSON.stringify(this.config, null, 2))
   this.emit("settingssaved", file)
+}
+
+// Reads fils from a directory
+Bellboy.prototype.ViewFiles = function(folder, pattern) {
+  if (typeof pattern === "undefined") {
+    pattern = ".json"
+  }
+
+  if(typeof folder === "undefined") {
+    folder = this.__dirname + "/config/schedules"
+  }
+
+  files = fs.readdirSync(folder)
+  var list = []
+  files.forEach(function(item) {
+    if(item.indexOf(pattern) > -1) {
+      list.push(item)
+    }
+
+  })
+  return list
 }
 
 Bellboy.prototype.SaveBells = function(file) {

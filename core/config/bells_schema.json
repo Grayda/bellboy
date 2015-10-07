@@ -1,6 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {
+    "schedule": {
+      "title": "Switch schedules",
+      "type": "object",
+      "properties": {
+        "Schedule": {
+          "type": "string"
+        },
+        "required": ["Schedule"]
+      }
+    }
     "toggleBell": {
       "title": "Toggle other bells",
       "type": "object",
@@ -28,6 +38,9 @@
       "title": "External Action",
       "type": "object",
       "properties": {
+        "Pin": {
+          "type": "integer"
+        },
         "OnValue": {
           "type": "integer"
         },
@@ -39,7 +52,7 @@
           "minimum": 1
         }
       },
-      "required": ["OnValue", "OffValue", "Duration"]
+      "required": ["Pin", "OnValue", "OffValue", "Duration"]
     },
     "audio": {
       "title": "Audio Action",
@@ -113,6 +126,10 @@
           "title": "Actions to take",
           "additionalProperties": false,
           "properties": {
+            "Schedule": {
+              "type": "object",
+              "$ref": "#/definitions/schedule"
+            },
             "Audio": {
               "type": "object",
               "$ref": "#/definitions/audio"
