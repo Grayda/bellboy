@@ -6,9 +6,14 @@
       "type": "object",
       "properties": {
         "Schedule": {
-          "type": "string"
-        },
-        "required": ["Schedule"]
+          "type": "object",
+          "properties": {
+            "File": {
+              "type": "string"
+            }
+          },
+            "required": ["File"]
+        }
       }
     }
     "toggleBell": {
