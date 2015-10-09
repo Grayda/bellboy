@@ -6,7 +6,7 @@
     <div class="col-sm-10">
       <select name="audio_file" id="audio_file" class="form-control" multiple="multiple">
         <% bellboy.modules["bellaudio"].ViewFiles().forEach(function(item){ %>
-          <option <% if(locals.bellboy.bells[req.query.bell].Actions.Audio.Files.indexOf(item) > -1) { %>selected="selected"<% } %>>
+          <option <% if(locals.data(["Actions"]["Audio"]["Files"]).indexOf(item) > -1) { %>selected="selected"<% } %>>
             <%= item %>
           </option>
           <% }) %>

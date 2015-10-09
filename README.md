@@ -38,6 +38,7 @@ Here's a list of things I'm thinking over, or I'd like to add, or that need to b
 
  - [ ] Better error handling. Also stop dud data from crashing the unit (e.g. someone types in invalid cron syntax)
  - [x] More security! Need logins and such!
+   - [ ] Secure status.ejs and make bcrypt asynchronous
  - [x] Dynamic reloading of the list of bells on the web UI
  - [x] Allow burst-bells (e.g. bell sound that loops once, but can loop for 5 seconds)
    - [ ] Allow tone-generated bells (e.g. play for x many seconds at y kHz)?

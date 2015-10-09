@@ -8,7 +8,7 @@
         <option>All Bells</option>
         <% Object.keys(bellboy.bells).forEach(function(item){ %>
           <% if(item.indexOf("_") == 0) { return } %>
-          <option value="<%= item %>" <% if(bellboy.bells[req.query.bell].Actions.ToggleBells.Bells[item].Bell.indexOf(item) > -1) { %>selected="selected"<% } %>>
+          <option value="<%= item %>" <% if(locals.bellboy.bells[req.query.bell]["Actions"]["ToggleBells"]["Bells"][item]["Bell"].indexOf(item) > -1) { %>selected="selected"<% } %>>
             <%= bellboy.bells[item].Name %>
           </option>
           <% }) %>
