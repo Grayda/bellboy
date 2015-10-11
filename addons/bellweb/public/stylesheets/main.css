@@ -225,6 +225,12 @@ body {
   background: linear-gradient(to bottom, #ffd280 1%, #ffc04d 100%) !important;
   /* W3C */
 }
+.prevbell,
+.prevbell abbr {
+  background: #aedcac !important;
+  color: #000000 !important;
+  text-align: center;
+}
 .nextbell,
 .nextbell abbr {
   background: #3a75ac !important;
@@ -260,7 +266,10 @@ table {
 .logbox {
   height: 85vh;
 }
-th {
+th,
+th a:link,
+th a:active,
+th a:visited {
   background: #3a75ac;
   /* Old browsers */
   background: -moz-linear-gradient(top, #3a75ac 1%, #204160 100%);

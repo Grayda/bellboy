@@ -59,6 +59,12 @@ body {
   .grad-vertical(lighten(@accent2, 25%), lighten(@accent2, 15%)) !important;
 }
 
+.prevbell, .prevbell abbr {
+  background: lighten(@accent3, 15%) !important;
+  color: contrast(@accent3) !important;
+  text-align: center;
+}
+
 .nextbell, .nextbell abbr {
   .grad-vertical(@accent1, lighten(@accent1, 10%)) !important;
   color: contrast(@accent1) !important;
@@ -82,7 +88,7 @@ table {
   height: 85vh;
 }
 
-th {
+th, th a:link, th a:active, th a:visited {
   .grad-vertical(@accent1, darken(@accent1, 20%));
   color: contrast(@accent1);
 }

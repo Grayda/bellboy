@@ -8,6 +8,7 @@
 var CronJob = require('cron').CronJob;
 var jjv = require("jjv")()
 var fs = require("fs");
+var lodash = require("lodash")
 
 var util = require("util"); // For inheriting the EventEmitter stuff so we can use it via this.emit();
 var EventEmitter = require("events").EventEmitter;
@@ -30,22 +31,17 @@ BellValidate.prototype.Prepare = function(callback) {
   return true
 }
 
-BellValidate.prototype.IfExists = function(variable) {
-  if(typeof variable === "undefined") {
-    return false
-  } else {
-    return true
-  }
+BellValidate.prototype.IfExists = function(object, variable) {
+  return lodash.has(object, variable)
 }
 
 // Shorthand for testing if a var exists and returning it's value
-BellValidate.prototype.GetValue = function(variable) {
-
-  if(typeof variable === "undefined") {
-    return "undefined"
-  } else {
-    return variable
+BellValidate.prototype.GetValue = function(object, variable, defaultVal) {
+  if(typeof defaultVal === "undefined") {
+    defaultVal = "undefined"
   }
+
+  return lodash.get(object, variable, defaultVal)
 }
 
 

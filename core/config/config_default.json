@@ -38,8 +38,9 @@
     "Port": 8080,
     "NoAuth": [
       "help.ejs",
-      "login",
       "status.ejs",
+      "about.ejs",
+      "login",
       "help"
     ]
   },

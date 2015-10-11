@@ -1,5 +1,5 @@
 {
-  "_name": "Demo Schedule",
+  "_name": "Default Schedule",
   "_all": {
     "Name": "All Bells",
     "Description": "A \"virtual\" bell that controls the rest of the bells. DO NOT DELETE",

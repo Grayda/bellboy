@@ -40,10 +40,10 @@
               <tr>
                 <% for (i = 1; i <= 4; i++) { %>
                   <% bell = locals.bellboy.bells["_button" + i] %>
-                    <% if(locals.validator.IfExists(bell)) { %>
+                    <% if(locals.validator.IfExists(bell, "Name")) { %>
                       <td class="button button<%= i %>">
                         <a href="javascript:pressButton(<%= i %>)">
-                          <% if(locals.validator.IfExists(bell.Icon)) { %><i class="glyphicon glyphicon-<%= locals.bellboy.bells['_button' + i].Icon %>"></i> <% } %>
+                          <% if(locals.validator.IfExists(bell, "Icon")) { %><i class="glyphicon glyphicon-<%= locals.bellboy.bells['_button' + i].Icon %>"></i> <% } %>
                             <br />
                             <%= bell.Name %>
                         </a>

@@ -1,40 +1,21 @@
 <% include ../includes/header.ejs %>
   <% include ../includes/layout.ejs %>
-    <%
 
-    locals.getVals = function(arguments) {
+  <%
+  locals.checked = function(object, property) {
 
-      var v = [];
-      for(var i=0; i< arguments.length; i++) {
-        if(typeof arguments[i] == "undefined") {
-          console.log("Nothing")
-          return "";
-        } else {
-          v = v[arguments[i]];
-        }
-      }
-      return v;
+    if(locals.validator.GetValue(object, property) !== "undefined") {
+      return "checked='checked'"
+    } else {
+      return ""
     }
-
-    locals.checked = function(arguments) {
-
-      try {
-        if(typeof locals.getVals(arguments) !== "undefined") {
-          return "checked='checked'"
-        } else {
-          return ""
-        }
-      } catch(ex) {
-        return ""
-      }
-
-    }
-
-     %>
+  }
+  %>
       <script type="text/javascript">
         $(document).ready(function() {
           // Hide everything that ends with _group
           $("[id$='_group']").hide()
+
           $("[id$='_toggle']").each(function(key, item) {
               if (this.checked) {
                 $("[id$='" + this.id + "_group']").toggle(item.checked)
@@ -44,6 +25,7 @@
             // If the element we've changed ends with _toggle, then
             // Find an element that shares the same name, but with _group at the end,
             // then show it (e.g. changing bob_toggle will show / hide bob_toggle_group)
+
           $("[id$='_toggle']").on("change", function(item) {
             $("[id$='" + event.target.id + "_group']").toggle(item.checked)
           })
@@ -65,15 +47,14 @@
           <div class="form-group form-group-sm">
             <label for="name" class="col-sm-1 control-label">Name</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="name" placeholder="Bell for first period" value="<%= locals.getVals(['Name']) %>">
+              <input type="text" class="form-control" name="name" placeholder="Bell for first period" value="<%= locals.validator.GetValue(bellboy.bells[req.query.bell], ['Name'], "") %>">
             </div>
           </div>
 
           <div class="form-group form-group-sm">
             <label for="description" class="col-sm-1 control-label">Description</label>
             <div class="col-sm-10">
-              <textarea name="description" class="form-control" placeholder="This bell rings at the start of period 1">
-                <%= locals.getVals('Description') %>
+              <textarea name="description" class="form-control" placeholder="This bell rings at the start of period 1"><%= locals.validator.GetValue(bellboy.bells[req.query.bell],'Description', "") %>
               </textarea <p class="help-block">The description should be 1-2 sentences maximum</p>
             </div>
           </div>
@@ -81,7 +62,7 @@
           <div class="form-group form-group-sm">
             <label for="time" class="col-sm-1 control-label">Time</label>
             <div class="col-sm-10">
-              <input type="text" name="time" class="form-control" placeholder="15 9 * * *" value="<%= locals.getVals(['Time']) %>">
+              <input type="text" name="time" class="form-control" placeholder="15 9 * * *" value="<%= locals.validator.GetValue(bellboy.bells[req.query.bell],['Time'], "") %>">
               <p class="help-block">The time to run, in <a href="https://en.wikipedia.org/wiki/Cron#Configuration_file">cron format</a>. You can generate cron expressions <a href="http://www.cronmaker.com/">here</a></p>
             </div>
           </div>
@@ -93,23 +74,23 @@
             <div class="col-sm-10">
               <div class="checkbox">
                 <label for="audio_toggle">
-                  <input type="checkbox" class="" id="audio_toggle" name="audio" <%- locals.checked( [ 'Actions', 'Audio']) %>>Play Audio</label>
+                  <input type="checkbox" class="" id="audio_toggle" name="audio" <%- locals.checked(locals.bellboy.bells[req.query.bell], [ 'Actions', 'Audio']) %>>Play Audio</label>
               </div>
               <div class="checkbox">
                 <label for="external_toggle">
-                  <input type="checkbox" class="" id="external_toggle" name="external" <%- locals.checked([ 'Actions', 'External']) %>>External Ringer</label>
+                  <input type="checkbox" class="" id="external_toggle" name="external" <%- locals.checked(locals.bellboy.bells[req.query.bell], [ 'Actions', 'External']) %>>External Ringer</label>
               </div>
               <div class="checkbox">
                 <label for="mail_toggle">
-                  <input type="checkbox" class="" id="mail_toggle" name="mail" <%- locals.checked([ 'Actions', 'Mail']) %>>Send Email(s)</label>
+                  <input type="checkbox" class="" id="mail_toggle" name="mail" <%- locals.checked(locals.bellboy.bells[req.query.bell], [ 'Actions', 'Mail']) %>>Send Email(s)</label>
               </div>
               <div class="checkbox">
                 <label for="schedule_toggle">
-                  <input type="checkbox" class="" id="schedule_toggle" name="schedule" <%- locals.checked([ 'Actions', 'Schedule']) %>>Switch Schedule</label>
+                  <input type="checkbox" class="" id="schedule_toggle" name="schedule" <%- locals.checked(locals.bellboy.bells[req.query.bell], [ 'Actions', 'Schedule']) %>>Switch Schedule</label>
               </div>
               <div class="checkbox">
                 <label for="toggle_toggle">
-                  <input type="checkbox" class="" id="toggle_toggle" name="toggle" <%- locals.checked([ 'Actions', 'ToggleBells']) %>>Toggle Bell(s)</label>
+                  <input type="checkbox" class="" id="toggle_toggle" name="toggle" <%- locals.checked(locals.bellboy.bells[req.query.bell], 'Actions.ToggleBells') %>>Toggle Bell(s)</label>
               </div>
               <p class="help-block">Actions to perform when this bell is triggered</p>
             </div>
@@ -122,5 +103,6 @@
                   <% include schedule.ejs %>
                     <% include toggle.ejs %>
         </div>
+        <button type="submit" class="btn btn-primary">Save</button>
       </form>
       <% include ../includes/footer.ejs %>

@@ -6,7 +6,7 @@
     <div class="col-sm-10">
       <div class="radio">
         <label for="mail_change_enabled">
-          <input type="radio" name="mail_change_enabled" id="mail_change_enabled" value="true" <%- locals.checked(['Actions', 'Mail', 'Change']) %>> True
+          <input type="radio" name="mail_change_enabled" id="mail_change_enabled" value="true" <%- locals.checked(locals.bellboy.bells[req.query.bell], ['Actions', 'Mail', 'Change']) %>> True
         </label>
       </div>
       <div class="radio">
@@ -20,7 +20,7 @@
   <div class="form-group form-group-sm">
     <label for="mail_change_to" class="col-sm-1 control-label">To</label>
     <div class="col-sm-10">
-      <input type="text" name="mail_change_to" class="form-control" value="<%= locals.data(['Actions', 'Mail', 'Change', 'To']) %>">
+      <input type="text" name="mail_change_to" class="form-control" value="<%= locals.validator.GetValue(bellboy.bells[req.query.bell], ['Actions', 'Mail', 'Change', 'To']) %>">
       <p class="help-block">Who to send the email to</p>
     </div>
   </div>
@@ -28,7 +28,7 @@
   <div class="form-group form-group-sm">
     <label for="mail_change_subject" class="col-sm-1 control-label">Subject</label>
     <div class="col-sm-10">
-      <input type="text" id="mail_change_subject" name="mail_change_subject" class="form-control" value="<%= locals.data(['Actions', 'Mail', 'Change', 'Subject']) %>">
+      <input type="text" id="mail_change_subject" name="mail_change_subject" class="form-control" value="<%= locals.validator.GetValue(bellboy.bells[req.query.bell], ['Actions', 'Mail', 'Change', 'Subject']) %>">
       <p class="help-block">Subject of the email</p>
     </div>
   </div>
@@ -38,7 +38,7 @@
         <div class="col-sm-10">
           <select name="mail_change_template" id="mail_change_template" class="form-control">
             <% bellboy.modules["bellmail"].ViewFiles().forEach(function(item){ %>
-              <option <% if(locals.data(['Actions', 'Mail', 'Change', 'Template']) == item) { %>selected="selected"<% } %>>
+              <option value="<%= item %>" <% if(locals.validator.GetValue(bellboy.bells[req.query.bell], ['Actions', 'Mail', 'Change', 'Template']) == item) { %>selected="selected"<% } %>>
                 <%= item %>
               </option>
               <% }) %>

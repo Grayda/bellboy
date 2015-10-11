@@ -58,6 +58,9 @@ greenEcho "Cleaning up installer.."
 sudo rm /home/pi/node_latest_armhf.deb
 greenEcho "Installing audio dependency for Bellboy.."
 sudo apt-get install mpg123 # For audio support
+greenEcho "Setting up git.."
+git config --global user.email "bellboy@davidgray.photography"
+git config --global user.name "Bellboy"
 greenEcho "CDing into /home/pi.."
 if [ -d "/home/pi/bellboy/" ];
   then

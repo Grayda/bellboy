@@ -15,6 +15,7 @@ var moment = require("moment")
 var lodash = require("lodash")
 var io // For socket.io
 var passport = require('passport');
+var expressValidator = require('express-validator')
 var expressSession = require('express-session');
 var FileStore = require('session-file-store')(expressSession);
 
@@ -36,6 +37,13 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
   app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
   // app.use(logger('dev'));
   app.use(bodyParser.json());
+  app.use(expressValidator({
+    customValidators: {
+      isCron: function(value) {
+          return bellboy.modules["bellvalidate"].IsCron(value)
+      }
+    }
+  }));
   app.use(bodyParser.urlencoded({
     extended: false
   }));

@@ -36,6 +36,7 @@
     "emailjs": "^0.3.16",
     "express": "~4.13.1",
     "express-session": "^1.11.3",
+    "express-validator": "^2.17.1",
     "httpdispatcher": "^0.4.0",
     "ip": "^1.0.1",
     "jjv": "^1.0.2",

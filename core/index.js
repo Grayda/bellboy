@@ -55,7 +55,7 @@ Bellboy.prototype.LoadBells = function(file) {
   } catch (ex) {
     this.emit("bellsloaded_error", ex)
     console.log("Error loading bell file: " + file + ". Error was: " + ex + ". Loading default bells instead")
-    bells = JSON.parse(fs.readFileSync(__dirname + "/config/bells_default.json", 'utf8'));
+    bells = JSON.parse(fs.readFileSync(__dirname + "/config/schedules/bells_default.json", 'utf8'));
     Bellboy.prototype.bells = bells;
     this.emit("bellsloaded", file)
   }
@@ -67,25 +67,37 @@ Bellboy.prototype.SaveSettings = function(file) {
     return false
   }
 
-
   fs.writeFileSync(file, JSON.stringify(this.config, null, 2))
   this.emit("settingssaved", file)
 }
 
-// Reads fils from a directory
+Bellboy.prototype.GetScheduleName = function(file, folder) {
+  try {
+    if (typeof folder === "undefined") {
+      folder = this.__dirname + "/config/schedules"
+    }
+
+    file = JSON.parse(fs.readFileSync(folder + "/" + file, 'utf8'));
+    return file["_name"]
+  } catch (ex) {
+    return false
+  }
+}
+
+// Reads fils from a directory. In this case, everything in the schedules directory
 Bellboy.prototype.ViewFiles = function(folder, pattern) {
   if (typeof pattern === "undefined") {
     pattern = ".json"
   }
 
-  if(typeof folder === "undefined") {
+  if (typeof folder === "undefined") {
     folder = this.__dirname + "/config/schedules"
   }
 
   files = fs.readdirSync(folder)
   var list = []
   files.forEach(function(item) {
-    if(item.indexOf(pattern) > -1) {
+    if (item.indexOf(pattern) > -1) {
       list.push(item)
     }
 
@@ -136,12 +148,12 @@ Bellboy.prototype.Start = function(file) {
       // New cronjob. Takes a function on trigger, a function on completion (the "null" below),
       // true / false on startup status (if false, you need to call job[item].start() manually), plus a timezone
       if (typeof this.bells[item].Time !== "undefined") {
-        schedules[item] = later.parse.cron(this.bells[item].Time)
-        jobs[item] = later.setInterval(function() {
+        this.schedules[item] = later.parse.cron(this.bells[item].Time)
+        this.jobs[item] = later.setInterval(function() {
           if (this.bells[item].Enabled == true) {
             this.emit("trigger", item)
           }
-        }.bind(this), schedules[item])
+        }.bind(this), this.schedules[item])
       }
 
       this.emit("jobadded", item)
@@ -196,5 +208,6 @@ Bellboy.prototype.__dirname = ""
 Bellboy.prototype.bells = bells;
 Bellboy.prototype.jobs = jobs;
 Bellboy.prototype.modules = modules
+Bellboy.prototype.schedules = schedules
 
 module.exports = Bellboy; // And make every exported Bellboy function available to whatever file wishes to use it.

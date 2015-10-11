@@ -50,29 +50,55 @@ BellParser.prototype.CronToDate = function(bell, callback) {
   return details
 }
 
-BellParser.prototype.GetNextJob2 = function(callback) {
+BellParser.prototype.GetNextJob = function(callback) {
 
-  // Object.keys(bellboy.bells).forEach(function(item) {
-  //   if bellboy.bells[item].Enabled == true {
-  //     arr[item].push(parser.parseExpression(bellboy.bells[item].Time).next())
-  //   }
-  // })
-  //
-  // arr = arr.sort()
-  //
-  // results["calendar"] = moment(arr[0]).calendar()
-  // Object.keys(bellboy.schedules).forEach(function(item) {
-  //   arr.push(bellboy.schedules[item])
-  // })
-  // derp = later.schedule({"schedules": arr})
-  // console.dir(derp.next(2))
+  var results = []
 
+  results["parsed"] = moment().add(100, "years")
+  Object.keys(bellboy.schedules).forEach(function(item) {
+    if (item.substring(0,1) == "_" || bellboy.bells[item].Enabled == false) {
+      return
+    }
+    interval = later.schedule(bellboy.schedules[item]).next(1)
+    if (moment(interval).isBefore(results["parsed"]) == true) {
+      results["name"] = bellboy.bells[item].Name
+      results["parsed"] = interval
+      results["shortparsed"] = moment(results["parsed"]).format("ddd MMM Do HH:MM:SS")
+      results["diff"] = moment().diff(interval)
+      results["cron"] = bellboy.bells[item].Time
+      results["fromnow"] = moment(interval).fromNow(true)
+      results["calendar"] = moment(interval).calendar()
+}
+})
+return results
+}
 
+BellParser.prototype.GetPreviousJob = function(callback) {
+
+  var results = []
+
+  results["parsed"] = moment().subtract(100, "years")
+  Object.keys(bellboy.schedules).forEach(function(item) {
+    if (item.substring(0,1) == "_" || bellboy.bells[item].Enabled == false) {
+      return
+    }
+    interval = later.schedule(bellboy.schedules[item]).prev(1)
+    if (moment(interval).isAfter(results["parsed"]) == true) {
+      results["name"] = bellboy.bells[item].Name
+      results["parsed"] = interval
+      results["shortparsed"] = moment(results["parsed"]).format("ddd MMM Do HH:MM:SS")
+      results["diff"] = moment().diff(interval)
+      results["cron"] = bellboy.bells[item].Time
+      results["fromnow"] = moment(interval).fromNow(true)
+      results["calendar"] = moment(interval).calendar()
+}
+})
+return results
 }
 
 // GetNextJob follows a similar pattern to CronToDate. It loops through all bells and find the one that is closest to the current date.
 // Then it returns a bunch of useful information for display.
-BellParser.prototype.GetNextJob = function(callback) {
+BellParser.prototype.GetNextJob2 = function(callback) {
   var time
   var results = []
   // Because the diff is a negative number (smaller as it approaches "now") and we're lookiung for a number > the smallest, we set this insanely low

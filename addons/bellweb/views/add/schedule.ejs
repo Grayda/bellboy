@@ -6,8 +6,8 @@
     <div class="col-sm-10">
       <select name="schedule_file" id="schedule_file" class="form-control">
         <% bellboy.ViewFiles().forEach(function(item){ %>
-          <option <% if(locals.getVals(['Actions', 'Schedule', 'File']) == item) { %>selected="selected"<% } %> value="<% item %>">
-            <%= item %>
+          <option value="<% item %>" <% if(locals.validator.GetValue(bellboy.bells[req.query.bell], ['Actions', 'Schedule', 'File']) == item) { %>selected="selected"<% } %>>
+            <%= locals.bellboy.GetScheduleName(item) %>
           </option>
           <% }) %>
       </select>

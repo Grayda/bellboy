@@ -5,10 +5,9 @@
     <label for="toggle_bell" class="col-sm-1 control-label">File(s)</label>
     <div class="col-sm-10">
       <select name="toggle_bell" id="toggle_bell" class="form-control" multiple="multiple" size="10">
-        <option>All Bells</option>
         <% Object.keys(bellboy.bells).forEach(function(item){ %>
-          <% if(item.indexOf("_") == 0) { return } %>
-          <option value="<%= item %>" <% if(locals.bellboy.bells[req.query.bell]["Actions"]["ToggleBells"]["Bells"][item]["Bell"].indexOf(item) > -1) { %>selected="selected"<% } %>>
+          <% if(item.indexOf("_") == 0 && item !== "_all") { return } %>
+          <option value="<%= item %>" <% if(locals.validator.GetValue(bellboy.bells[req.query.bell], ["Actions","ToggleBells","Bells"]).indexOf(item) > -1) { %>selected="selected"<% } %>>
             <%= bellboy.bells[item].Name %>
           </option>
           <% }) %>
