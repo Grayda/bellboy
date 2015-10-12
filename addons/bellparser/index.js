@@ -40,8 +40,7 @@ BellParser.prototype.CronToDate = function(bell, callback) {
   details["time"] = bellboy.bells[bell].Time
   details["calendar"] = moment(interval).calendar()
   details["parsed"] = moment().to(interval)
-
-  details["shortparsed"] = moment(interval).format("ddd MMM Do HH:MM:SS")
+  details["shortparsed"] = moment(interval).format(bellboy.config.DateFormat)
 
   if (typeof callback === "function") {
     callback(details);
@@ -63,7 +62,7 @@ BellParser.prototype.GetNextJob = function(callback) {
     if (moment(interval).isBefore(results["parsed"]) == true) {
       results["name"] = bellboy.bells[item].Name
       results["parsed"] = interval
-      results["shortparsed"] = moment(results["parsed"]).format("ddd MMM Do HH:MM:SS")
+      results["shortparsed"] = moment(results["parsed"]).format(bellboy.config.DateFormat)
       results["diff"] = moment().diff(interval)
       results["cron"] = bellboy.bells[item].Time
       results["fromnow"] = moment(interval).fromNow(true)
@@ -86,7 +85,7 @@ BellParser.prototype.GetPreviousJob = function(callback) {
     if (moment(interval).isAfter(results["parsed"]) == true) {
       results["name"] = bellboy.bells[item].Name
       results["parsed"] = interval
-      results["shortparsed"] = moment(results["parsed"]).format("ddd MMM Do HH:MM:SS")
+      results["shortparsed"] = moment(results["parsed"]).format(bellboy.config.DateFormat)
       results["diff"] = moment().diff(interval)
       results["cron"] = bellboy.bells[item].Time
       results["fromnow"] = moment(interval).fromNow(true)
@@ -115,7 +114,7 @@ BellParser.prototype.GetNextJob2 = function(callback) {
 
         results["name"] = bellboy.bells[item].Name
         results["parsed"] = interval
-        results["shortparsed"] = moment(results["parsed"]).format("ddd MMM Do HH:MM:SS")
+        results["shortparsed"] = moment(results["parsed"]).format(bellboy.config.DateFormat)
         results["diff"] = moment().diff(interval)
         results["cron"] = bellboy.bells[item].Time
         results["fromnow"] = moment(interval).fromNow(true)

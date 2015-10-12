@@ -44,6 +44,6 @@
       "help"
     ]
   },
-  "DateFormat": "D MMMM YYYY, h:mm:ssa",
+  "DateFormat": "D MMMM YYYY, hh:mm:ssa",
   "Timezone": "Australia/Melbourne"
 }
