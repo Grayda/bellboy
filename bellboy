@@ -16,7 +16,7 @@ case "$1" in
     echo "Starting Bellboy"
     cd /home/pi/bellboy
     # Run nodemon index.js as root, then prepend the date to stdout lines, then append to our log file.
-    exec sudo /usr/local/bin/nodemon /home/pi/bellboy/index.js | awk '{ print strftime("%s: "), $0; fflush(); }' >> /home/pi/bellboy/bellboy.log 2>&1 &
+    exec sudo /usr/local/bin/nodemon /home/pi/bellboy/index.js | date >> /home/pi/bellboy/bellboy.log 2>&1 &
     ;;
   stop)
     echo "Stopping Bellboy"
@@ -28,7 +28,7 @@ case "$1" in
       echo "Starting Bellboy"
       cd /home/pi/bellboy
       # Run nodemon index.js as root, then prepend the date to stdout lines, then append to our log file.
-      exec sudo /usr/local/bin/nodemon /home/pi/bellboy/index.js | awk '{ print strftime("%s: "), $0; fflush(); }' >> /home/pi/bellboy/bellboy.log 2>&1 &
+      exec sudo /usr/local/bin/nodemon /home/pi/bellboy/index.js | date >> /home/pi/bellboy/bellboy.log 2>&1 &
       ;;
   *)
     echo "Usage: $0 [start|stop|restart]"
