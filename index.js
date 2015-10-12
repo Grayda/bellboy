@@ -370,10 +370,21 @@ bellboy.on("jobsloaded", function(jobs) {
 
 })
 
+// The job has triggered, but the bell is disabled
+bellboy.on("triggerwhiledisabled", function(item) {
+  // Give it two seconds, as the table might reload before correct calculation of next bell time has occurred
+  // To demonstrate this, comment out this setTimeout, then create a bell that runs every minute. The
+  // table in BellWeb/views/main.ejs will be a minute behind.
+  setTimeout(function() {
+    bellboy.modules["bellweb"].SocketEmit("reloadtable")
+    bellboy.modules["bellweb"].SocketEmit("reloadstatus")
+  }, 2000)
+})
+
 // The bell has triggered. If you'd like to know if a bell has been triggered manually, look for manualtrigger
 bellboy.on("trigger", function(item) {
   // If it's a "virtual" bell we're triggering
-    bell = bellboy.bells[item]
+  bell = bellboy.bells[item]
 
 
   console.log(bell.Name + " triggered!")
@@ -389,11 +400,11 @@ bellboy.on("trigger", function(item) {
     // Loop through the bells to toggle
     bell.Actions.ToggleBells.Bells.forEach(function(item) {
       var state
-      // No state? Set true to false and false to true
+        // No state? Set true to false and false to true
       if (typeof item.Enabled === "undefined") {
         console.log("No state set. Setting to: " + !bellboy.bells[item.Bell].Enabled)
         state = !bellboy.bells[item.Bell].Enabled
-      // Otherwise, use the state we've been given
+          // Otherwise, use the state we've been given
       } else {
         console.log("State set to: " + item.Enabled)
         state = item.Enabled

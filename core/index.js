@@ -13,6 +13,7 @@ var config, bells
 var modules = []
 var jobs = {}
 var schedules = {}
+var lastbell // The last bell that rang
 
 function Bellboy() {
   EventEmitter.call(this); // Needed so we can emit() from this module
@@ -150,8 +151,14 @@ Bellboy.prototype.Start = function(file) {
       if (typeof this.bells[item].Time !== "undefined") {
         this.schedules[item] = later.parse.cron(this.bells[item].Time)
         this.jobs[item] = later.setInterval(function() {
+
           if (this.bells[item].Enabled == true) {
+            // Trigger the job if it's enabled
             this.emit("trigger", item)
+          } else {
+            // The calling code might want to know if the bell would have triggered, were it enabled, so
+            // we can use 'triggerwhiledisabled' to let people know. Good for running additional calculations
+            this.emit("triggerwhiledisabled", item)
           }
         }.bind(this), this.schedules[item])
       }
