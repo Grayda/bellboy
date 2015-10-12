@@ -55,7 +55,7 @@ BellAuth.prototype.AddUser = function(username, password, callback) {
   if(typeof password === "undefined") {
     return false
   }
-  
+
   this.users[username].Username = username
   this.users[username].Password = bcrypt.hash(pasword)
 
@@ -79,8 +79,9 @@ BellAuth.prototype.DeleteUser = function(username, callback) {
 
 BellAuth.prototype.GetUsers = function() {
   var userVar = []
-  Object.keys(this.users).forEach(function(item) {
-    userVar.push(item)
+  Object.keys(users).forEach(function(item) {
+    console.dir(item)
+    userVar.push({"Username": item, "Name": users[item].Name})
   })
   return userVar
 }
