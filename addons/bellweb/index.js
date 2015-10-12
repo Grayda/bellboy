@@ -80,6 +80,7 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
   // Routes. Pretty straightforward
   app.use(express.static(path.join(__dirname, 'public')));
   app.use('/add', require('./routes/addedit')(passport, bellboy)); // If we're adding a new bell
+  app.use('/users', require('./routes/users')(passport, bellboy)); // If we're managing users
   app.use('/help', require('./routes/help')(passport, bellboy));
   app.use('/includes', require('./routes/index')(passport, bellboy));
   app.use('/', require('./routes/index')(passport, bellboy));

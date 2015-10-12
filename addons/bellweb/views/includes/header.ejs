@@ -71,6 +71,7 @@
         socket.on("reloadtable", function() {
           $.get("main.ejs", function(data) {
             $("#main_table").html(data);
+            $('[data-toggle="tooltip"]').tooltip()
           });
         })
 

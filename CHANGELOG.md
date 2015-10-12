@@ -1,4 +1,10 @@
-04.10.2015
+12.10.2015
+ - Added "triggerwhiledisabled" event. If a bell should have triggered, but it was disabled in bells.json, this event will fire. Useful for reminding users about a disabled bell
+ - Date formatting in BellParser now uses config file. This fixed up a bug where the time being shown by GetNextJob, GetPreviousJob and CrontToDate were using month instead of minute.
+ - When the table (main.ejs or status.ejs) was reloaded by socket.io, tooltips reverted back to their non-Bootstrap equivalent. This is fixed by calling tooltips() again on reload
+ - Moved users.json out of addons/bellauth and info config/
+
+11.10.2015
  - Added JSON schemas for ensuring loaded bell and config files match what's expected
  - BellWeb now supports "time" event for socket.io. Every 10 seconds the server passes the latest time to the client (e.g. status page), ensuring time shown on TFT display doesn't slip
    - The four buttons at the bottom of the status page are now loaded from bells.json (\_button1, \_button2, \_button3 and \_button4) so they're more dynamic
@@ -6,7 +12,6 @@
  - Added "ToggleBells" action to bells.json. Pass it an array of "Bells" and it'll invert their state (e.g. false becomes true)
  - BellAudio now plays random files from a given array.
  - Added (untested) "buttonrelease" event to BellPi to allow "held button" events
- -
 
 03.10.2015
  - **NOTE: This version modifies bells.json and config.json. It's recommended that you view the new format and migrate your changes over, otherwise your app will crash**

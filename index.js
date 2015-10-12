@@ -151,7 +151,7 @@ bellboy.on("jobsloaded", function(jobs) {
 
   // Loads our users file for authentication with BellWeb
   bellboy.modules["bellauth"].on("ready", function() {
-    bellboy.modules["bellauth"].LoadUsers("/users.json")
+    bellboy.modules["bellauth"].LoadUsers("users.json")
   })
 
   // ========================================================

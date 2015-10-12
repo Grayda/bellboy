@@ -32,17 +32,30 @@ BellAuth.prototype.Prepare = function(callback) {
 BellAuth.prototype.LoadUsers = function(file, callback) {
 
   // Load and parse the JSON
-  users = JSON.parse(fs.readFileSync(__dirname + file, 'utf8'));
+  users = JSON.parse(fs.readFileSync(bellboy.__dirname + "/config/" + file, 'utf8'));
   // So other files can use the config
   BellAuth.prototype.users = users;
   // Let everyone know we're ready, and what file we loaded
-  this.emit("usersloaded", __dirname + file)
+  this.emit("usersloaded", bellboy.__dirname + "/config/" + file)
+}
+
+BellAuth.prototype.SaveUsers = function(file, callback) {
+
+  // Load and parse the JSON
+  fs.writeFileSync(bellboy.__dirname + "/config/" + file, 'utf8');
+  // Let everyone know we're ready, and what file we loaded
+  this.emit("userssaved", bellboy.__dirname + "/config/" + file)
 }
 
 BellAuth.prototype.AddUser = function(username, password, callback) {
-  if (typeof this.users[username] === "undefined") {
+  if (typeof this.users[username] !== "undefined") {
     return false
   }
+
+  if(typeof password === "undefined") {
+    return false
+  }
+  
   this.users[username].Username = username
   this.users[username].Password = bcrypt.hash(pasword)
 
@@ -62,6 +75,14 @@ BellAuth.prototype.DeleteUser = function(username, callback) {
 
   delete this.users[username]
   this.emit("userdeleted", username)
+}
+
+BellAuth.prototype.GetUsers = function() {
+  var userVar = []
+  Object.keys(this.users).forEach(function(item) {
+    userVar.push(item)
+  })
+  return userVar
 }
 
 BellAuth.prototype.CheckDetails = function(username, password, callback) {
