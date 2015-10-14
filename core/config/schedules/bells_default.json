@@ -69,6 +69,46 @@
       }
     }
   },
+  "_button2": {
+    "Enabled": true,
+    "Name": "Ring Now",
+    "Description": "Button #2 on the PiTFT",
+    "Icon": "bell",
+    "Locked": true,
+    "Actions": {
+      "Audio": {
+        "Files": [
+          "bell.mp3"
+        ],
+        "Loop": 1
+      },
+      "External": {
+        "OnValue": 1,
+        "OffValue": 0,
+        "Duration": 5000
+      }
+    }
+  },
+  "_button3": {
+    "Enabled": true,
+    "Name": "Ring Now",
+    "Description": "Button #3 on the PiTFT",
+    "Icon": "bell",
+    "Locked": true,
+    "Actions": {
+      "Audio": {
+        "Files": [
+          "bell.mp3"
+        ],
+        "Loop": 1
+      },
+      "External": {
+        "OnValue": 1,
+        "OffValue": 0,
+        "Duration": 5000
+      }
+    }
+  },
   "_button4": {
     "Enabled": true,
     "Name": "Enable / Disable All",
