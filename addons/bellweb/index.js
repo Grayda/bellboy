@@ -18,6 +18,8 @@ var passport = require('passport');
 var expressValidator = require('express-validator')
 var expressSession = require('express-session');
 var FileStore = require('session-file-store')(expressSession);
+var mime = require("mime")
+var fs = require("fs")
 
 var app = express();
 
@@ -128,6 +130,14 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
     this.emit("socketready")
   }.bind(this));
 
+}
+
+// Takes an image from the public/images folder, finds out the file type,
+// turns it into a base64 string, then outputs the lot for inclusion in
+// stylesheets, image tags and so forth
+BellWeb.prototype.ImageToBase64 = function(image) {
+  file = fs.readFileSync(__dirname + "/public/images/" + image, { encoding: 'base64'})
+  return 'data:' + mime.lookup(image) + ';base64,' + file;
 }
 
 BellWeb.prototype.GetHostName = function(ip) {

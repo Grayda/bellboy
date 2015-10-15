@@ -15,6 +15,7 @@ var ejs = require('ejs'); // Text template engine, used for web parsing
 var fs = require('fs'); // For reading files
 var lodash = require("lodash"); // For quick and easy counting of enabled bells
 var email = require("emailjs");
+var mime = require('mime'); // For detecting mime type and embedding base64-encoded images into emails
 
 var bellboy = {}
 
