@@ -16,6 +16,7 @@
          <% if(locals.isAuthenticated == true) { %>
        <li><a href="#" id="nextbell"><i class='glyphicon glyphicon-chevron-right'></i> <%= bellboy.modules["bellparser"].GetNextJob()["calendar"] %></a></li>
        <li><a href="#" id="time"><i class='glyphicon glyphicon-time'></i> </a></li>
+       <li><a href="#">Logged in as: <%= locals.req.user %></a></li>
        <% } %>
        <li><a href="/logout" id="logout"><i class='glyphicon glyphicon-log-out'></i> Logout</a></li>
      </ul>

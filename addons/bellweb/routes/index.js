@@ -22,14 +22,14 @@ module.exports = function(passport, bellboy) {
     if(req.isAuthenticated()) {
       // Display the Login page with any flash message, if any
       bellboy.modules["bellweb"].emit("pageloaded", req)
-      res.render('index', { isAuthenticated: req.isAuthenticated() });
+      res.render('index', { isAuthenticated: req.isAuthenticated(), req: req });
     } else {
       res.redirect("/login")
     }
   });
 
   router.get('/includes/:file', function(req, res) {
-      res.render(req.params.file, { isAuthenticated: req.isAuthenticated() });
+      res.render(req.params.file, { isAuthenticated: req.isAuthenticated(), req: req });
       bellboy.modules["bellweb"].emit("pageloaded", req.params.file)
   });
 
@@ -73,7 +73,7 @@ module.exports = function(passport, bellboy) {
   router.get("/:file", function(req, res, next) {
     if(req.isAuthenticated() || bellboy.config.WebServer.NoAuth.indexOf(req.params.file) > -1) {
         bellboy.modules["bellweb"].emit("pageloaded", req)
-        res.render(req.params.file, { isAuthenticated: req.isAuthenticated() });
+        res.render(req.params.file, { isAuthenticated: req.isAuthenticated(), req: req });
     } else {
       res.redirect("/login")
     }
