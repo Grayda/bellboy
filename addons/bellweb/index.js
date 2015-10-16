@@ -136,8 +136,17 @@ BellWeb.prototype.Prepare = function(root, port, callback) {
 // turns it into a base64 string, then outputs the lot for inclusion in
 // stylesheets, image tags and so forth
 BellWeb.prototype.ImageToBase64 = function(image) {
-  file = fs.readFileSync(__dirname + "/public/images/" + image, { encoding: 'base64'})
+  file = fs.readFileSync(__dirname + "/images/" + image, { encoding: 'base64'})
   return 'data:' + mime.lookup(image) + ';base64,' + file;
+}
+
+BellWeb.prototype.ImageToLink = function(image) {
+  return this.GetServerURL() + "/images/" + image
+}
+
+// Helper utility that returns a link to the web UI.
+BellWeb.prototype.GetServerURL = function() {
+  return "http://" + this.GetHostName(true) + ":" + bellboy.config.WebServer.Port + "/"
 }
 
 BellWeb.prototype.GetHostName = function(ip) {
