@@ -1,4 +1,4 @@
-var config = require("./core/config/config.json")
+var config = require(__dirname + "/config/config.json")
 var email = require("emailjs")
 
 console.dir(config.CrashEmail)

@@ -36,6 +36,7 @@ BellParser.prototype.CronToDate = function(bell, callback) {
 
   var details = {}
   var interval = parser.parseExpression(bellboy.bells[bell].Time).next();
+  details["id"] = bell
   details["name"] = bellboy.bells[bell].Name
   details["time"] = bellboy.bells[bell].Time
   details["calendar"] = moment(interval).calendar()
@@ -60,6 +61,7 @@ BellParser.prototype.GetNextJob = function(callback) {
     }
     interval = later.schedule(bellboy.schedules[item]).next(1)
     if (moment(interval).isBefore(results["parsed"]) == true) {
+      results["id"] = item
       results["name"] = bellboy.bells[item].Name
       results["parsed"] = interval
       results["shortparsed"] = moment(results["parsed"]).format(bellboy.config.DateFormat)
@@ -83,6 +85,7 @@ BellParser.prototype.GetPreviousJob = function(callback) {
     }
     interval = later.schedule(bellboy.schedules[item]).prev(1)
     if (moment(interval).isAfter(results["parsed"]) == true) {
+      results["id"] = item
       results["name"] = bellboy.bells[item].Name
       results["parsed"] = interval
       results["shortparsed"] = moment(results["parsed"]).format(bellboy.config.DateFormat)
@@ -111,7 +114,7 @@ BellParser.prototype.GetNextJob2 = function(callback) {
       var interval = parser.parseExpression(bellboy.bells[item].Time).next();
 
       if (moment().diff(interval) > results["diff"]) {
-
+        results["id"] = item
         results["name"] = bellboy.bells[item].Name
         results["parsed"] = interval
         results["shortparsed"] = moment(results["parsed"]).format(bellboy.config.DateFormat)

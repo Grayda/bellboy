@@ -31,7 +31,7 @@
 
       function trigger(bell) {
         socket.emit("trigger", {
-          bell: bell
+          bell: bell,
         })
       }
 
@@ -44,8 +44,6 @@
       }
 
       $(document).on("ready", function() {
-
-
 
         var offset = moment("<%= date.moment() %>").diff(moment());
         try {

@@ -26,9 +26,9 @@
       <% if(item.substring(0,1) == "_") { return } %>
 
         <% if (bell.Enabled === false) { %>
-          <tr class="inactivebell">
+          <tr class="inactivebell" id="<%= item %>">
         <% } else { %>
-          <tr class="activebell">
+          <tr class="activebell" id="<%= item %>">
         <% } %>
         <% if (locals.bellboy.modules["bellparser"].GetPreviousJob()["name"] == bell.Name) { %>
           <td class="prevbell"><i class="glyphicon glyphicon-chevron-left"></i> <abbr title="Bell was last triggered at <%= locals.bellboy.modules["bellparser"].GetPreviousJob()["shortparsed"] %>">PREV</abbr></td>
