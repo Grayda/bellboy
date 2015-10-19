@@ -3,6 +3,7 @@
   max-width: 25%;
   width: 25%;
   min-width: 25%;
+  vertical-align: middle !important;
 }
 .button1 {
   background: #3a75ac !important;
@@ -205,6 +206,10 @@ body {
   height: 100%;
   min-height: 100%;
   max-height: 100%;
+}
+.smallscreen td,
+.smallscreen th {
+  vertical-align: middle !important;
 }
 .activebell:hover {
   background: #aedcac !important;

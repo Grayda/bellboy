@@ -34,7 +34,10 @@
               </td>
             </tr>
             <tr>
-              <td colspan="4"><i class="glyphicon glyphicon-globe"></i> Manage these bells: <a href="/">http://<%= locals.bellboy.modules["bellweb"].GetHostName(true) %>:8080</a></td>
+              <td colspan="4"><i class="glyphicon glyphicon-globe"></i> Manage these bells: <a href="/"><%= locals.bellboy.modules["bellweb"].GetServerURL() %></a></td>
+            </tr>
+            <tr>
+              <td colspan="4"><i class="glyphicon glyphicon-eye-close"></i> <%= lodash.filter(bellboy.bells, function(value) { return value.Enabled == true && Object.keys(value).indexOf("_") != 0 }).length %> / <%= lodash.filter(bellboy.bells, function(value) { return value }).length %> bells enabled</td>
             </tr>
             <% } %>
               <tr>
