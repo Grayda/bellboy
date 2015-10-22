@@ -18,6 +18,7 @@ var email = require("emailjs");
 var mime = require('mime'); // For detecting mime type and embedding base64-encoded images into emails
 
 var bellboy = {}
+var attachments = []
 
 function BellMail(bellboyInstance) {
   bellboy = bellboyInstance
@@ -38,6 +39,24 @@ BellMail.prototype.ViewFiles = function() {
   return fs.readdirSync(__dirname + "/templates")
 }
 
+BellMail.prototype.AttachFile = function(file) {
+  var obj = {}
+  try {
+    obj.headers = {}
+    obj.path = __dirname + "/includes/" + file
+    obj.type = mime.lookup(__dirname + "/includes/" + file)
+    obj.name = file
+    obj.headers["Content-ID"] = file
+
+    obj.alternative = false
+    attachments.push(obj)
+    console.log(attachments)
+    return "cid:" + file
+  } catch (ex) {
+    console.log(ex)
+  }
+}
+
 BellMail.prototype.LoadTemplate = function(template, bell, subject, callback) {
   file = fs.readFileSync(__dirname + "/templates/" + template).toString()
   var options = {
@@ -48,6 +67,7 @@ BellMail.prototype.LoadTemplate = function(template, bell, subject, callback) {
     },
     bellboy: bellboy,
     bell: bell,
+    AttachFile: this.AttachFile,
     lodash: lodash,
     filename: __dirname + "/templates/" + template
   }
@@ -60,7 +80,7 @@ BellMail.prototype.LoadTemplate = function(template, bell, subject, callback) {
 }
 
 BellMail.prototype.SendMail = function(mail, body, callback) {
-  if(mail.Enabled == false) {
+  if (mail.Enabled == false) {
     return
   }
 
@@ -72,22 +92,24 @@ BellMail.prototype.SendMail = function(mail, body, callback) {
   });
 
   // send the message and get a callback with an error or details of the message that was sent
+  attachments.push({data:body, alternative:true})
   server.send({
-    text: body,
-    from: bellboy.config.Mail.From,
-    to: mail.To,
-    subject: mail.Subject,
-    attachment: [
-     {data:body, alternative:true}
-    ]
-  }, function(err, message) {
-    if (err) {
-      console.log(err)
-      this.emit("mailsenterror", err, mail, body)
-    } else {
-      this.emit("mailsent", mail, body)
-    }
-  }.bind(this));
+      text: body,
+      from: bellboy.config.Mail.From,
+      to: mail.To,
+      subject: mail.Subject,
+      attachment: attachments
+    },
+    function(err, message) {
+      if (err) {
+        console.log(err)
+        this.emit("mailsenterror", err, mail, body)
+      } else {
+        this.emit("mailsent", mail, body)
+      }
+    }.bind(this));
+
+  attachments = []
 
   if (typeof callback === "function") {
     callback(result);
