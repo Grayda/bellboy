@@ -9,9 +9,6 @@
         <abbr title="Short name for this bell">Name</abbr>
       </th>
       <th>
-        <abbr title="A description of this bell">Description</abbr>
-      </th>
-      <th>
         <abbr title="When this bell will next ring">Next Run Time</abbr>
       </th>
       <th>
@@ -39,15 +36,11 @@
             <% } %>
               <!-- <td><%= item %></td> -->
               <td>
-                <%= bell.Name %>
+                <%= bell.Name %><br />
+                <small class="text-muted"><%= bell.Description %></small>
               </td>
               <td>
-                <%= bell.Description %>
-              </td>
-              <td>
-                <a href="#" title="<%= bell.Time %>">
                   <%= locals.bellboy.modules["bellparser"].CronToDate(item)["calendar"] %>
-                </a>
               </td>
 
               <td>

@@ -13,6 +13,19 @@ body {
 
 .navbar-inverse {
   background: darken(@accent1,50%) !important;
+  .shadow()
+}
+
+.list {
+  .shadow()
+}
+
+.list tr {
+  display: table-row;
+}
+
+.list tr:hover {
+  .shadow()
 }
 
 .navbar-right a:link {
@@ -99,6 +112,7 @@ th, th a:link, th a:active, th a:visited {
 
 td {
   background: none !important;
+  vertical-align: middle !important;
 }
 
 /* General style overrides */
