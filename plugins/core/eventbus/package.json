@@ -1,0 +1,22 @@
+{
+  "name": "eventbus",
+  "version": "0.0.1",
+  "description": "Event bus for Bellboy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy",
+    "event",
+    "emitter",
+    "bus"
+  ],
+  "author": "David Gray",
+  "license": "ISC",
+  "plugin": {
+      "provides": ["eventbus"],
+      "consumes": []
+  }
+
+}

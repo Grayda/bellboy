@@ -1,0 +1,20 @@
+{
+  "name": "audio",
+  "version": "0.0.1",
+  "description": "An audio plugin for Bellboy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy",
+    "audio",
+    "mp3"
+  ],
+  "author": "David Gray",
+  "license": "ISC",
+  "plugin": {
+      "provides": ["audio"],
+      "consumes": []
+  }
+}

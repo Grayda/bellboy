@@ -1,7 +1,0 @@
-<h1><%= enabledcount %> / <%= bellcount %> bells enabled</h1>
-<h2>Next bell <%= cron(nextJob["time"])["to"] %></h2>
-<% if(items["_all"].Enabled == true) { %>
-  <a href="toggle.html?id=_all&state=false">Disable bells</a>
-<% } else { %>
-  <a href="toggle.html?id=_all&state=true">Enable bells</a>
-<% } %>

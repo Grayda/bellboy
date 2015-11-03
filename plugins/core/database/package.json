@@ -1,0 +1,24 @@
+{
+  "name": "database",
+  "version": "0.0.1",
+  "description": "Database backend for Bellboy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy",
+    "database",
+    "mongodb"
+  ],
+  "author": "David Gray",
+  "license": "ISC",
+  "plugin": {
+    "provides": ["database"],
+    "consumes": ["eventbus"]
+  },
+  "dependencies": {
+    "assert": "^1.3.0",
+    "mongodb": "^2.0.47"
+  }
+}

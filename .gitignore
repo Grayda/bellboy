@@ -76,3 +76,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# MongoDB data files
+config/data

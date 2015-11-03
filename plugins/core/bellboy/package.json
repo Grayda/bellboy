@@ -1,0 +1,19 @@
+{
+  "name": "bellboy",
+  "version": "0.0.1",
+  "description": "Core plugin for Bellboy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy",
+    "core"
+  ],
+  "author": "David Gray",
+  "license": "ISC",
+  "plugin": {
+      "provides": ["bellboy"],
+      "consumes": []
+  }
+}
