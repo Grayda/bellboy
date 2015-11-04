@@ -7,4 +7,13 @@ architect.createApp(config, function (err, app) {
         console.error("Error while starting the app:" + err);
     }
 
+    app.services.database.db.collections(function(e, cols) {
+        cols.forEach(function(col) {
+            console.log(col.collectionName);
+        });
+    });
+
+    app.services.database.insert("blah", {a: "hello"})
+    console.log(app.services.database.find())
+
 });

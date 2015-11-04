@@ -17,12 +17,36 @@ module.exports = function setup(options, imports, register) {
     register(null, {
       // "auth" is a service this plugin provides
       database: {
-        db: db
-        read: function(),
-        write: emitter.on,
+        db: db,
+        url: url,
+        insert: function(collection, data) {
+          assert(collection, "Collection name is required!")
+          assert(data, "Data is required!")
+          db[collection].insert(data, function(err, data) {
+            return data
+          })
+        },
+        find: function(collection, criteria) {
+          assert(collection, "Collection name is required!")
+          assert(criteria, "Criteria for find is required!")
+          db[collection].find(criteria, function(err, data) {
+            return data
+          })
+        },
+        update: function(collection, criteria, data) {
+          assert(collection, "Collection name is required!")
+          assert(criteria, "Criteria for update is required!")
+          assert(data, "Data for update is required!")
+          db[collection].update(criteria, data, function(err, data) {
+            return data
+          })
+        },
+        import: function(file) {
+          return false // Not yet supported
+        }
       }
     });
-    immports.eventbus.emit("databaseconnected", url)
+    imports.eventbus.emit("databaseconnected", url)
   })
 
 };
