@@ -1,0 +1,18 @@
+{
+  "name": "config",
+  "version": "0.0.1",
+  "description": "Bell and config loader plugin for Bellboy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy"
+  ],
+  "author": "David Gray",
+  "license": "ISC",
+  "plugin": {
+      "provides": ["config"],
+      "consumes": ["eventbus"]
+  }
+}

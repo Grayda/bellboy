@@ -3,4 +3,5 @@
 # Except this file
 !.gitignore
 !schedules
+!plugins.js
 !About This Folder.txt
