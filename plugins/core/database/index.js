@@ -1,45 +1,43 @@
 
 module.exports = function setup(options, imports, register) {
   var assert = require("assert")
-  var MongoClient = require('mongodb').MongoClient
 
   assert(options.host, "'host' is required")
   assert(options.port, "'port' is required")
   assert(options.host, "'database' is required")
 
   var url = "mongodb://" + options.host + ":" + options.port + "/" + options.database
-
-  MongoClient.connect(url, function(err, db) {
-    if(err) {
-      throw err
-    }
+  var db = require('monk')(url)
 
     register(null, {
-      // "auth" is a service this plugin provides
       database: {
         db: db,
         url: url,
         insert: function(collection, data) {
           assert(collection, "Collection name is required!")
           assert(data, "Data is required!")
-          db[collection].insert(data, function(err, data) {
-            return data
-          })
+          var collection = db.get(collection)
+          return collection.insert(data)
         },
         find: function(collection, criteria) {
+          if(typeof criteria === "undefined") {
+            criteria = {}
+          }
+
           assert(collection, "Collection name is required!")
-          assert(criteria, "Criteria for find is required!")
-          db[collection].find(criteria, function(err, data) {
-            return data
-          })
+          var collection = db.get(collection)
+          var results
+          collection.find(criteria, function(err, docs) {
+            this.results = docs
+          }.bind(this))
+          return results
         },
         update: function(collection, criteria, data) {
           assert(collection, "Collection name is required!")
           assert(criteria, "Criteria for update is required!")
           assert(data, "Data for update is required!")
-          db[collection].update(criteria, data, function(err, data) {
-            return data
-          })
+          var collection = db.get(collection)
+          return collection.update(criteria, data)
         },
         import: function(file) {
           return false // Not yet supported
@@ -47,6 +45,6 @@ module.exports = function setup(options, imports, register) {
       }
     });
     imports.eventbus.emit("databaseconnected", url)
-  })
+
 
 };
