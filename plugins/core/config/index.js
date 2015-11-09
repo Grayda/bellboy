@@ -3,7 +3,7 @@ module.exports = function setup(options, imports, register) {
   var assert = require("assert")
 
   var bells, config
-  
+
   assert(options.bellFile, "bellFile is required!")
   assert(options.configFile, "configFile is required!")
 
@@ -17,7 +17,7 @@ module.exports = function setup(options, imports, register) {
           imports.eventbus.emit("bellsloaded")
           return true
         } catch (ex) {
-          throw "Could not load bell file. Error was: " + ex
+          console.log("Could not load bell file. Error was: " + ex)
         }
       },
       LoadConfig: function() {

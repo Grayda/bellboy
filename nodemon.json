@@ -5,7 +5,7 @@
     "sessions"
   ],
   "events": {
-    "crash": "node ./crash.js"
+    
   },
   "ext": "html css jpg png gif htm js less ejs"
 }

@@ -1,7 +1,6 @@
 var EventEmitter = require("events").EventEmitter
 
 module.exports = function setup(options, imports, register) {
-
     var emitter = new EventEmitter()
     register(null, {
       eventbus: {
@@ -9,5 +8,4 @@ module.exports = function setup(options, imports, register) {
         on: emitter.on
       }
     });
-
 };
