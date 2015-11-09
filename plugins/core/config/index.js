@@ -11,7 +11,7 @@ module.exports = function setup(options, imports, register) {
     config: {
       bells: bells,
       config: config,
-      LoadBells: function() {
+      loadBells: function() {
         try {
           this.bells = JSON.parse(fs.readFileSync(options.bellFile, 'utf8'));
           imports.eventbus.emit("bellsloaded")
@@ -20,7 +20,7 @@ module.exports = function setup(options, imports, register) {
           console.log("Could not load bell file. Error was: " + ex)
         }
       },
-      LoadConfig: function() {
+      loadConfig: function() {
         try {
           this.config = JSON.parse(fs.readFileSync(options.bellFile, 'utf8'));
           imports.eventbus.emit("configloaded")

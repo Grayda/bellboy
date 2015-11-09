@@ -1,0 +1,25 @@
+{
+  "name": "scheduler",
+  "version": "0.0.1",
+  "description": "Job scheduler for Bellboy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy",
+    "scheduler",
+    "later",
+    "cron"
+  ],
+  "author": "David Gray",
+  "license": "ISC",
+  "dependencies": {
+    "later": "^1.2.0"
+  },
+  "plugin": {
+    "provides": [
+      "scheduler"
+    ]
+  }
+}
