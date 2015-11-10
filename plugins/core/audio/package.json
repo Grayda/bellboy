@@ -15,7 +15,14 @@
   "author": "David Gray",
   "license": "ISC",
   "plugin": {
-      "provides": ["audio"],
-      "consumes": ["eventbus"]
+    "provides": [
+      "audio"
+    ],
+    "consumes": [
+      "eventbus"
+    ]
+  },
+  "dependencies": {
+    "validator": "^4.2.1"
   }
 }
