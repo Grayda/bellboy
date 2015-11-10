@@ -13,21 +13,31 @@ module.exports = function setup(options, imports, register) {
       config: config,
       loadBells: function() {
         try {
-          this.bells = JSON.parse(fs.readFileSync(options.bellFile, 'utf8'));
+          bellFile = JSON.parse(fs.readFileSync(options.bellFile, 'utf8'));
+          assert(bellFile, "Bell file is empty!")
+          this.bells = bellFile
           imports.eventbus.emit("bellsloaded")
           return true
         } catch (ex) {
-          console.log("Could not load bell file. Error was: " + ex)
+          imports.eventbus.error(ex)
         }
       },
       loadConfig: function() {
         try {
-          this.config = JSON.parse(fs.readFileSync(options.bellFile, 'utf8'));
+          confFile = JSON.parse(fs.readFileSync(options.bellFile, 'utf8'));
+          assert(confFile, "Configuration file is empty!")
+          this.config = confFile
           imports.eventbus.emit("configloaded")
           return true
         } catch (ex) {
-          throw "Could not load config file. Error was: " + ex
+          imports.eventbus.error(ex)
         }
+      },
+      saveBells: function() {
+
+      },
+      saveConfig: function() {
+
       }
     }
   });

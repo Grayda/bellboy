@@ -1,24 +1,21 @@
 {
-  "name": "scheduler",
+  "name": "audio",
   "version": "0.0.1",
-  "description": "Job scheduler for Bellboy",
+  "description": "MP3 player for Bellboy",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "bellboy",
-    "scheduler",
-    "later",
-    "cron"
+    "audio",
+    "mp3",
+    "player"
   ],
   "author": "David Gray",
   "license": "ISC",
-  "dependencies": {
-    "later": "^1.2.0"
-  },
   "plugin": {
-    "provides": ["scheduler"],
-    "consumes": ["eventbus"]
+      "provides": ["audio"],
+      "consumes": ["eventbus"]
   }
 }

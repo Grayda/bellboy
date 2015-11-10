@@ -5,7 +5,10 @@ module.exports = function setup(options, imports, register) {
     register(null, {
       eventbus: {
         emit: emitter.emit,
-        on: emitter.on
+        on: emitter.on,
+        error: function(err) {
+          this.emit("error", err)
+        }
       }
     });
 };

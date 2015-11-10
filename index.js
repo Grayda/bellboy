@@ -17,11 +17,14 @@ architect.createApp(plugins, function (err, app) {
 
     app.services.eventbus.on("bellsloaded", function() {
       console.log("Bells loaded!")
-      console.dir(app.services.config.bells)
     })
 
     app.services.eventbus.on("configloaded", function() {
       console.log("Configuration loaded!")
+    })
+
+    app.services.eventbus.on("error", function(err) {
+      throw err
     })
 
     app.services.config.loadConfig()
