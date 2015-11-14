@@ -4,11 +4,12 @@ module.exports = function setup(options, imports, register) {
 
   var bells, config
 
-  assert(options.bellFile, "bellFile is required!")
-  assert(options.configFile, "configFile is required!")
+  assert(options.bellFile, "Plugin option 'bellFile' is required!")
+  assert(options.configFile, "Plugin option 'configFile' is required!")
 
   register(null, {
     config: {
+      root: options.root,
       bells: bells,
       config: config,
       loadBells: function() {
@@ -16,7 +17,7 @@ module.exports = function setup(options, imports, register) {
           bellFile = JSON.parse(fs.readFileSync(options.bellFile, 'utf8'));
           assert(bellFile, "Bell file is empty!")
           this.bells = bellFile
-          imports.eventbus.emit("bellsloaded")
+          imports.eventbus.emit("config_bellsloaded")
           return true
         } catch (ex) {
           imports.eventbus.error(ex)
@@ -27,7 +28,7 @@ module.exports = function setup(options, imports, register) {
           confFile = JSON.parse(fs.readFileSync(options.bellFile, 'utf8'));
           assert(confFile, "Configuration file is empty!")
           this.config = confFile
-          imports.eventbus.emit("configloaded")
+          imports.eventbus.emit("config_configloaded")
           return true
         } catch (ex) {
           imports.eventbus.error(ex)

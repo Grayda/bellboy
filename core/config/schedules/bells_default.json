@@ -122,7 +122,7 @@
     }
   },
   "test": {
-    "Enabled": false,
+    "Enabled": true,
     "Name": "Test Bell - Every minute",
     "Description": "A test bell. Runs every minute",
     "Locked": false,

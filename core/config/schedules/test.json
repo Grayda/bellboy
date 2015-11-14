@@ -1,0 +1,15 @@
+{
+  "test": {
+    "Enabled": true,
+    "Name": "Test Bell - Every minute",
+    "Description": "A test bell. Runs every minute",
+    "Locked": false,
+    "Time": "* * * * *",
+    "Actions": {
+      "Audio": {
+        "Files": "bell.mp3",
+        "Loop": 1
+      }
+    }
+  }
+}

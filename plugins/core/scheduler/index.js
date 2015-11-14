@@ -1,7 +1,9 @@
 module.exports = function setup(options, imports, register) {
+    var later = require("later")
+
     var jobs = []
     var schedules = []
-    var later = require("later")
+
     register(null, {
         scheduler: {
           jobs: jobs,
@@ -9,7 +11,7 @@ module.exports = function setup(options, imports, register) {
           scheduleBells: function(bells) {
             Object.keys(bells).forEach(function(item) {
                 if(item.indexOf("_") > -1) { return }
-                console.dir(bells[item].Time)
+                imports.logger.log("Bell scheduled: " + item, 2)
                 schedules[item] = later.parse.cron(bells[item].Time)
                 jobs[item] = later.setInterval(function() {
                   if (bells[item].Enabled == true) {

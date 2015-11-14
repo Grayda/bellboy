@@ -1,18 +1,24 @@
 {
-  "name": "config",
+  "name": "logger",
   "version": "0.0.1",
-  "description": "Bell and config loader plugin for Bellboy",
+  "description": "Logger for Bellboy",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "bellboy"
+    "bellboy",
+    "log",
+    "debug"
   ],
   "author": "David Gray",
   "license": "ISC",
   "plugin": {
-      "provides": ["config"],
-      "consumes": ["eventbus", "logger"]
+    "provides": [
+      "logger"
+    ],
+    "consumes": [
+      "validate"
+    ]
   }
 }

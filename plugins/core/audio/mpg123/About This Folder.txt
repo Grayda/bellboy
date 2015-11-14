@@ -1,0 +1,2 @@
+This folder should contain the Windows version of mpg123, downloadable from http://www.mpg123.de/download/ . Windows builds are in the win32 / win64 folder. Open the zip, open the folder within, then extract everything to this folder.
+

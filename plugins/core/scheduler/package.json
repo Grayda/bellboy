@@ -19,6 +19,6 @@
   },
   "plugin": {
     "provides": ["scheduler"],
-    "consumes": ["eventbus"]
+    "consumes": ["eventbus", "logger"]
   }
 }
