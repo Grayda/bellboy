@@ -17,16 +17,18 @@ module.exports = function setup(options, imports, register) {
   var audio = {
     play: function(bell) {
 
-      // No audio-related bell info? Not interested!
-      if(imports.validate.isNull(bell.Actions.Audio) || imports.validate.isNull(bell.Actions.Audio.Files) || bell.Actions.Audio.Enabled == false) {
+      // If our bell object doesn't have Actions.Audio.Files, or the bell is disabled, just return. We don't need that kind of negativity in our lives!
+      if(!_.has(bell, "Actions.Audio.Files") || _.get(bell, "Actions.Audio.Enabled") == false) {
         return
       }
 
+      // If bell.Actions.Audio.Files is not an array, make it into one
       if(!Array.isArray(bell.Actions.Audio.Files)) {
         bell.Actions.Audio.Files = [bell.Actions.Audio.Files.toString()]
       }
 
       try {
+        var loop
         // Shuffle the array of music
         file = _.shuffle(bell.Actions.Audio.Files)[0]
         assert(imports.validate.isFilename(file), "Audio file contains invalid (non filename) characters!")
@@ -68,7 +70,7 @@ module.exports = function setup(options, imports, register) {
     }
   }
 
-  // Finally, register our plugin so Architect can do its magic. 
+  // Finally, register our plugin so Architect can do its magic.
   register(null, {
     audio: audio
   });

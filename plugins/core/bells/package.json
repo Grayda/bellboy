@@ -1,0 +1,30 @@
+{
+  "name": "bells",
+  "version": "0.0.1",
+  "description": "Loads, gets and sets the bells and associated properties",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy",
+    "bells",
+    "config"
+  ],
+  "author": "David Gray",
+  "license": "ISC",
+  "plugin": {
+    "provides": [
+      "bells"
+    ],
+    "consumes": [
+      "eventbus",
+      "validate",
+      "logger"
+    ]
+  },
+  "dependencies": {
+    "assert": "^1.3.0",
+    "lodash": "^3.10.1"
+  }
+}

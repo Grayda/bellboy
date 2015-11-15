@@ -9,7 +9,8 @@
       "Audio": {
         "Files": "bell.mp3",
         "Loop": 1
-      }
+      },
+      "ToggleBells": [{ "Name": "test", "Enabled": false }]
     }
   }
 }

@@ -1,5 +1,0 @@
-<% include ../includes/header.ejs %>
-    <h1><%= bellboy.bells[bell].Name %> has been triggered</h1>
-    <p><%= bellboy.bells[bell].Name %> has been triggered. It was triggered on <%= Date.parsed %></p>
-    <p>To view the bells, please visit <a href="http://<%= bellboy.modules['bellweb'].GetHostName(true) %>:8080">the web UI</a></p>
-<% include ../includes/footer.ejs %>
