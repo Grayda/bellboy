@@ -34,5 +34,5 @@ architect.createApp(plugins, function (err, app) {
     app.services.config.loadConfig()
     app.services.bells.loadBells()
     app.services.scheduler.scheduleBells(app.services.bells.bells)
-
+    app.services.scheduler.next(app.services.bells.bells["test"])
 });
