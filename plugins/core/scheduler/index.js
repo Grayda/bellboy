@@ -27,7 +27,7 @@ module.exports = function setup(options, imports, register) {
       })
     },
     next: function(bell) {
-      console.log(bell)
+      
     }
   }
   register(null, {
