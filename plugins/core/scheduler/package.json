@@ -15,10 +15,16 @@
   "author": "David Gray",
   "license": "ISC",
   "dependencies": {
+    "assert": "^1.3.0",
     "later": "^1.2.0"
   },
   "plugin": {
-    "provides": ["scheduler"],
-    "consumes": ["eventbus", "logger"]
+    "provides": [
+      "scheduler"
+    ],
+    "consumes": [
+      "eventbus",
+      "logger"
+    ]
   }
 }

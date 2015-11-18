@@ -15,7 +15,8 @@
   "dependencies": {
     "assert": "^1.3.0",
     "lodash": "^3.10.1",
-    "restify": "^4.0.3"
+    "restify": "^4.0.3",
+    "rss": "^1.2.1"
   },
   "plugin": {
     "provides": [
@@ -25,7 +26,8 @@
       "bells",
       "logger",
       "validate",
-      "eventbus"
+      "eventbus",
+      "scheduler"
     ]
   }
 }

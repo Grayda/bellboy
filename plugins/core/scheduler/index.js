@@ -1,5 +1,6 @@
 module.exports = function setup(options, imports, register) {
   var later = require("later")
+  var assert = require("assert")
 
   var jobs = []
   var schedules = []
@@ -13,6 +14,7 @@ module.exports = function setup(options, imports, register) {
           return
         }
         imports.logger.log("Bell scheduled: " + item, 2)
+        later.date.localTime();
         schedules[item] = later.parse.cron(bells[item].Time)
         jobs[item] = later.setInterval(function() {
           if (bells[item].Enabled == true) {
@@ -27,7 +29,8 @@ module.exports = function setup(options, imports, register) {
       })
     },
     next: function(bell) {
-      
+      assert(bell, "A bell name must be provided when calling 'scheduler.next()'!")
+      return later.schedule(schedules[bell]).next()
     }
   }
   register(null, {

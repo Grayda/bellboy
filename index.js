@@ -6,7 +6,8 @@ var plugins = [
   { packagePath: "./plugins/core/bells", root: __dirname, bellFile: __dirname + "/core/config/schedules/test.json" },
   // { packagePath: "./plugins/core/audio", audioPath: __dirname + "/audio/", playerPath: __dirname + "/plugins/core/audio/mpg123/mpg123.exe" },
   { packagePath: "./plugins/core/scheduler" },
-  { packagePath: "./plugins/core/rest", port: 9001 },
+  { packagePath: "./plugins/core/rest", port: 9001, useREST: true, useRSS: true },
+  // { packagePath: "./plugins/core/rssfeed", port: 9002 },
   { packagePath: "./plugins/core/logger" },
   { packagePath: "./plugins/core/eventbus"},
   { packagePath: "./plugins/core/validate" }
@@ -37,11 +38,13 @@ architectApp = architect.createApp(plugins, function (err, app) {
     app.services.config.loadConfig()
     app.services.bells.loadBells()
     app.services.scheduler.scheduleBells(app.services.bells.bells)
-    app.services.scheduler.next(app.services.bells.bells["test"])
-
 
 });
 
 architectApp.on("service", function(name, service) {
   console.log("Loaded plugin: %s", name)
+})
+
+architectApp.on("error", function(err) {
+  console.log(err)
 })
