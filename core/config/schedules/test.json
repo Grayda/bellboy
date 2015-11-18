@@ -1,10 +1,38 @@
 {
+  "test2": {
+    "Enabled": true,
+    "Name": "Next Test Bell",
+    "Description": "A test bell. Runs every five minutes",
+    "Locked": false,
+    "Time": "* * */10 * *",
+    "Actions": {
+      "Audio": {
+        "Files": "bell.mp3",
+        "Loop": 1
+      },
+      "ToggleBells": [{ "Name": "test2", "Enabled": false }]
+    }
+  },
   "test": {
     "Enabled": true,
     "Name": "Test Bell - Every minute",
     "Description": "A test bell. Runs every minute",
     "Locked": false,
     "Time": "* * * * *",
+    "Actions": {
+      "Audio": {
+        "Files": "bell.mp3",
+        "Loop": 1
+      },
+      "ToggleBells": [{ "Name": "test", "Enabled": false }]
+    }
+  },
+  "test3": {
+    "Enabled": true,
+    "Name": "Test Bell - Every minute",
+    "Description": "A test bell. Bruh, runs whenever",
+    "Locked": false,
+    "Time": "* * 1-31/2 6 1,2,3,4,5",
     "Actions": {
       "Audio": {
         "Files": "bell.mp3",
