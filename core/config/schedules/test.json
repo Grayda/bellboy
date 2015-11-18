@@ -24,7 +24,7 @@
         "Files": "bell.mp3",
         "Loop": 1
       },
-      "ToggleBells": [{ "Name": "test", "Enabled": false }]
+      "ToggleBells": [{ "Name": "99test", "Enabled": false }]
     }
   },
   "test3": {
@@ -38,7 +38,7 @@
         "Files": "bell.mp3",
         "Loop": 1
       },
-      "ToggleBells": [{ "Name": "test", "Enabled": false }]
+      "ToggleBells": [{ "Name": "99test", "Enabled": false }]
     }
   }
 }

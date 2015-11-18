@@ -26,7 +26,8 @@
     "consumes": [
       "eventbus",
       "logger",
-      "bells"
+      "bells",
+      "validate"
     ]
   }
 }

@@ -37,11 +37,16 @@ architectApp = architect.createApp(plugins, function (err, app) {
 
     app.services.eventbus.on("trigger", function(bell) {
       console.log("Last bell was: " + app.services.scheduler.lastJob.name)
+      console.dir(app.services.bells.bells)
     })
 
     app.services.config.loadConfig()
     app.services.bells.loadBells()
     app.services.scheduler.scheduleBells(app.services.bells.bells)
+
+    console.log(app.services.scheduler.next("test"))
+    console.log(app.services.scheduler.next())
+
 
 });
 

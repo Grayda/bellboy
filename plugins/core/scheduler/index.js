@@ -33,17 +33,23 @@ module.exports = function setup(options, imports, register) {
         }.bind(this), schedules[item])
       })
     },
+    // This function works out the next occurrence of bell. If no bell specified, searches all bells for the next time
     next: function(bell) {
-      assert(bell, "A bell name must be provided when calling 'scheduler.next()'!")
-      return later.schedule(schedules[bell]).next()
-    },
-    getNextJob: function() {
       var nextdates = []
-      Object.keys(imports.bells.bells).forEach(function(item) {
-        nextdates.push({ date: scheduler.next(item), name: item })
-      })
+      if (imports.validate.isNull(bell)) {
+        Object.keys(imports.bells.bells).forEach(function(item) {
+          nextdates.push({
+            date: scheduler.next(item),
+            name: item
+          })
+        })
 
-      return _.sortBy(nextdates, function(d) { return d.date; })
+        return _.sortBy(nextdates, function(d) {
+          return d.date;
+        })
+      } else {
+        return later.schedule(schedules[bell]).next()
+      }
     }
   }
 
