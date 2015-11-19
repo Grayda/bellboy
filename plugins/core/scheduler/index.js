@@ -5,7 +5,7 @@ module.exports = function setup(options, imports, register) {
 
   var jobs = []
   var schedules = []
-  var lastJob = {}
+  var lastJob = []
 
   var scheduler = {
     jobs: jobs,
@@ -22,8 +22,7 @@ module.exports = function setup(options, imports, register) {
         jobs[item] = later.setInterval(function() {
           if (bells[item].Enabled == true) {
             // Trigger the job if it's enabled
-            lastJob.name = item
-            lastJob.date = new Date()
+            lastJob.unshift({ name: item, date: new Date() })
             imports.eventbus.emit("trigger", bells[item])
           } else {
             // The calling code might want to know if the bell would have triggered, were it enabled, so
@@ -49,6 +48,23 @@ module.exports = function setup(options, imports, register) {
         })
       } else {
         return later.schedule(schedules[bell]).next()
+      }
+    },
+    previous: function(bell) {
+      var prevdates = []
+      if (imports.validate.isNull(bell)) {
+        Object.keys(imports.bells.bells).forEach(function(item) {
+          prevdates.push({
+            date: scheduler.previous(item),
+            name: item
+          })
+        })
+
+        return _.sortBy(prevdates, function(d) {
+          return -d.date;
+        })
+      } else {
+        return later.schedule(schedules[bell]).prev()
       }
     }
   }

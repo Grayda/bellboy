@@ -9,6 +9,7 @@ var plugins = [
   { packagePath: "./plugins/core/rest", port: 9001, useREST: true, useRSS: true },
   // { packagePath: "./plugins/core/rssfeed", port: 9002 },
   { packagePath: "./plugins/core/logger" },
+  { packagePath: "./plugins/core/web" },
   { packagePath: "./plugins/core/eventbus"},
   { packagePath: "./plugins/core/validate" }
 ]
@@ -36,17 +37,12 @@ architectApp = architect.createApp(plugins, function (err, app) {
     })
 
     app.services.eventbus.on("trigger", function(bell) {
-      console.log("Last bell was: " + app.services.scheduler.lastJob.name)
-      console.dir(app.services.bells.bells)
+      app.services.logger.log("Bell was triggered: " + bell.Name)
     })
 
     app.services.config.loadConfig()
     app.services.bells.loadBells()
     app.services.scheduler.scheduleBells(app.services.bells.bells)
-
-    console.log(app.services.scheduler.next("test"))
-    console.log(app.services.scheduler.next())
-
 
 });
 

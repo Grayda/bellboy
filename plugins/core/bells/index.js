@@ -38,14 +38,17 @@ module.exports = function setup(options, imports, register) {
     saveBells: function() {
 
     },
-    get: function(property) {
-      return _.get(bellObj.bells, property)
+    get: function(bell, property) {
+      return _.get(bellObj.bells[bell], property)
     },
-    set: function(property, value) {
-      return _.set(bellObj.bells, property, value)
+    set: function(bell, property, value) {
+      return _.set(bellObj.bells[bell], property, value)
     },
     delete: function(bell, property) {
-      return _.omit(bell, property)
+      // bellObj.bells = _.omit(bell, property)
+    },
+    toggle: function(bell, status) {
+      return bellObj.set(bell, "Enabled", status)
     }
   }
 

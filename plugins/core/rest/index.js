@@ -56,6 +56,8 @@ module.exports = function setup(options, imports, register) {
 
   server.listen(options.port, function() {
     imports.logger.log("REST plugin listening on port " + options.port, 1)
+    if(options.useRSS == true) { imports.logger.log("RSS feed now available via /rss", 1) }
+    if(options.useREST == true) { imports.logger.log("Bells now available via REST at /json/<bell>", 1) }
   });
 
   register(null, {

@@ -1,0 +1,30 @@
+{
+  "name": "web",
+  "description": "Resources for the web plugin for Bellboy",
+  "main": "index.js",
+  "authors": [
+    "David Gray"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "bellboy",
+    "bower",
+    "web",
+    "plugin"
+  ],
+  "homepage": "https://github.com/Grayda/bellboy",
+  "moduleType": [
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AngularJS": "angular-latest#~1.4.7"
+  }
+}
