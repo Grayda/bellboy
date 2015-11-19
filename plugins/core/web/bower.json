@@ -25,6 +25,8 @@
     "tests"
   ],
   "dependencies": {
-    "AngularJS": "angular-latest#~1.4.7"
+    "AngularJS": "angular-latest#~1.4.7",
+    "bootstrap": "~3.3.5",
+    "angular": "~1.4.7"
   }
 }
