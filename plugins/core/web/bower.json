@@ -27,6 +27,8 @@
   "dependencies": {
     "AngularJS": "angular-latest#~1.4.7",
     "bootstrap": "~3.3.5",
-    "angular": "~1.4.7"
+    "angular": "~1.4.7",
+    "moment": "~2.10.6",
+    "angular-route": "~1.4.8"
   }
 }

@@ -1,11 +1,17 @@
-var bellboyApp = angular.module('bellboyApp', []);
+var bellboyApp = angular.module('bellboyApp', ["ngRoute"]);
 
-bellboyApp.controller('listController', function ($scope, $http) {
- $http.get('/api/bells').success(function(data) {
-    $scope.bells = data
- }).error(function(err) {
-   console.log(err)
- })
-
-  $scope.orderby = 'time';
-})
+bellboyApp.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/bells', {
+        templateUrl: 'partials/list.html',
+        controller: 'listController'
+      }).
+      when('/bells/edit/:id', {
+        templateUrl: "partials/edit.html",
+        controller: 'editController'
+      }).
+      otherwise({
+        redirectTo: '/bells'
+      });
+  }]);

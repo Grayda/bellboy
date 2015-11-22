@@ -1,28 +1,7 @@
 <% include includes/header.ejs %>
-<script src="javascripts/app.js"></script>
-<div ng-controller="listController">
-  Search: <input ng-model="query">
-  <select ng-model="orderby">
-    <option value="time">Chronological</option>
-    <option value="name">Alphabetical</option>
-  </select>
-  <table border="1" cellpadding="10" cellspacing="0" class="list table table-bordered table-hover">
-   <tr cellpadding="5" class="colour">
-     <th>
-       <abbr title="Short name for this bell">Name</abbr>
-     </th>
-     <th>
-       <abbr title="When this bell will next ring">Next Run Time</abbr>
-     </th>
-     <th>
-       <abbr title="Other properties. Mouse over the icon for more information">Status</a>
-     </th>
-     <th>Actions</th>
-   </tr>
-<tr ng-repeat="bell in bells | filter:query | orderBy:orderProp">
-  <td>{{ bell.Name }}</td>
-  <td>{{ bell.Description }}</td>
-  <td>{{ bell.Time }}</td>
-</tr>
-</div>
+<% include includes/layout.ejs %>
+  <script type="text/javascript" src="javascripts/app.js"></script>
+  <script src="javascripts/list.js"></script>
+  <script src="javascripts/edit.js"></script>
+  <div ng-view></div>
 <% include includes/footer.ejs %>

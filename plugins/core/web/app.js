@@ -6,12 +6,22 @@ module.exports = function setup(options, imports, register) {
   var logger = require('morgan');
   var cookieParser = require('cookie-parser');
   var bodyParser = require('body-parser');
+  var assert = require("assert")
+  var socket = require("socket.io")
+
 
   var routes = require('./routes/index');
   var users = require('./routes/users');
-
   var bells = require('./routes/bells')(imports);
+
   var app = express();
+
+  assert(options.port, "'Port' option for web plugin is missing!")
+
+  imports.eventbus.on("trigger", function() {
+    web.io.sockets.emit("trigger")
+  })
+
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
@@ -28,7 +38,7 @@ module.exports = function setup(options, imports, register) {
   app.use(express.static(path.join(__dirname, 'bower_components')));
   app.use(express.static(path.join(__dirname, 'public')));
 
-  app.use('/', bells);
+  app.use('/api', bells);
   app.use('/', routes);
   app.use('/users', users);
 
@@ -78,13 +88,15 @@ module.exports = function setup(options, imports, register) {
    * Get port from environment and store in Express.
    */
 
-  var port = normalizePort(process.env.PORT || '3000');
+  var port = normalizePort(process.env.PORT || options.port);
   app.set('port', port);
-  
+
   /**
    * Create HTTP server.
    */
   var server = http.createServer(app);
+
+  var io = require('socket.io').listen(server)
 
   /**
    * Listen on provided port, on all network interfaces.
@@ -93,6 +105,7 @@ module.exports = function setup(options, imports, register) {
   server.listen(port);
   server.on('error', onError);
   server.on('listening', onListening);
+
 
   /**
    * Normalize a port into a number, string, or false.
@@ -155,8 +168,12 @@ module.exports = function setup(options, imports, register) {
   }
 
 
+  web = {
+    io: io
+  }
+
   register(null, {
-    web: {}
+    web: web
   });
 
   module.exports = app;

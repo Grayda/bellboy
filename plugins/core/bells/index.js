@@ -24,6 +24,15 @@ module.exports = function setup(options, imports, register) {
 
   var bellObj = {
     bells: [],
+    toArray: function() {
+      var res = []
+
+      Object.keys(bellObj.bells).forEach(function(item) {
+         res.push(bellObj.bells[item])
+      })
+
+      return res
+    },
     loadBells: function() {
       try {
         bellFile = JSON.parse(fs.readFileSync(options.bellFile, 'utf8'));
@@ -51,6 +60,7 @@ module.exports = function setup(options, imports, register) {
       return bellObj.set(bell, "Enabled", status)
     }
   }
+
 
 
   register(null, {

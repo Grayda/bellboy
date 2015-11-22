@@ -1,0 +1,43 @@
+<div ng-controller="listController">
+  <h1>Bells</h1>
+  <div class="form-horizontal">
+    <div class="form-group">
+      <label for="query" class="col-sm-1 control-label">Search:</label>
+      <div class="col-sm-3">
+        <input ng-model="query" class="form-control input-sm">
+      </div>
+      <label for="orderBy" class="col-sm-1 control-label">Order by:</label>
+      <div class="col-sm-3">
+        <select ng-model="orderBy" class="form-control input-sm">
+          <option value="!Time">Time (Descending)</option>
+          <option value="Time">Time (Ascending)</option>
+          <option value="Name">Alphabetical</option>
+          <option value="!Enabled">Enabled</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <a ng-click="loadData()" href="#">Reload</a>
+      </div>
+    </div>
+  </div>
+  <table border="1" cellpadding="10" cellspacing="0" class="list table table-bordered table-hover">
+    <tr cellpadding="5" class="colour">
+      <th>
+        Name
+      </th>
+      <th>
+        Description
+      </th>
+      <th>
+        Next Time
+      </th>
+      <th>Actions</th>
+    </tr>
+    <tr ng-repeat="bell in bells | filter:query | orderBy:orderBy">
+      <td class="ng-class: {'disabled': !bell.Enabled}" ng-bind="bell.Name"></td>
+      <td ng-bind="bell.Description"></td>
+      <td>{{ bell.CalculatedTime | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+      <td><a href="#/bells/edit/{{ bell.ID }}">Edit</a></td>
+    </tr>
+  </table>
+</div>

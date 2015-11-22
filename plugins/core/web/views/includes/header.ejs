@@ -1,10 +1,21 @@
 <!doctype html>
 <html lang="en" ng-app="bellboyApp">
+
 <head>
   <meta charset="utf-8">
   <title>My HTML File</title>
   <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="stylesheets/main.css">
   <script src="angular/angular.js"></script>
+  <script src="angular-route/angular-route.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script type="text/javascript">
+    var socket = io.connect();
+    socket.on("trigger", function() {
+      alert("bing bong!")
+    })
+  </script>
 </head>
+
 <body>

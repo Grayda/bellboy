@@ -2,6 +2,7 @@ module.exports = function setup(options, imports, register) {
   var later = require("later")
   var assert = require("assert")
   var _ = require("lodash")
+  var moment = require("moment")
 
   var jobs = []
   var schedules = []
@@ -66,6 +67,12 @@ module.exports = function setup(options, imports, register) {
       } else {
         return later.schedule(schedules[bell]).prev()
       }
+    },
+    toString: function(name) {
+      return moment(scheduler.next(name)).format("D MMMM YYYY, hh:mm:ssa")
+    },
+    toNow: function(name) {
+      return moment().to(scheduler.next(name))
     }
   }
 
