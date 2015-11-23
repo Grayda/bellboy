@@ -22,7 +22,7 @@
   </tr>
   <tr>
     <td>Bell Time (calculated)</td>
-    <td ng-bind="bell.CalculatedTime"></td>
+    <td ng-include="'/api/bells/next/' + bell.ID + '/date'"></td>
   </tr>
   <tr>
     <td>Enabled</td>
