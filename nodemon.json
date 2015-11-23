@@ -2,10 +2,11 @@
   "ignore": [
     ".git",
     "node_modules/**/node_modules",
-    "sessions"
+    "sessions",
+    "bower_components"
   ],
   "events": {
-    
+
   },
   "ext": "html css jpg png gif htm js less ejs"
 }
