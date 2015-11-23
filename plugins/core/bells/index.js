@@ -27,8 +27,8 @@ module.exports = function setup(options, imports, register) {
     toArray: function() {
       var res = []
 
-      Object.keys(bellObj.bells).forEach(function(item) {
-         res.push(bellObj.bells[item])
+      bellObj.bells.forEach(function(item) {
+         res.push(item)
       })
 
       return res
@@ -47,11 +47,11 @@ module.exports = function setup(options, imports, register) {
     saveBells: function() {
 
     },
-    get: function(bell, property) {
-      return _.get(bellObj.bells[bell], property)
+    get: function(ID) {
+      return _.where(bellObj.bells, { 'ID': ID })[0]
     },
     set: function(bell, property, value) {
-      return _.set(bellObj.bells[bell], property, value)
+      return _.set(bellObj.bells, property, value)
     },
     delete: function(bell, property) {
       // bellObj.bells = _.omit(bell, property)

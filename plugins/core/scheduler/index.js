@@ -13,34 +13,36 @@ module.exports = function setup(options, imports, register) {
     schedules: schedules,
     lastJob: lastJob,
     scheduleBells: function(bells) {
-      Object.keys(bells).forEach(function(item) {
-        if (item.indexOf("_") > -1) {
+      bells.forEach(function(item) {
+        if (item.ID.indexOf("_") > -1) {
           return
         }
-        imports.logger.log("Bell scheduled: " + item, 1)
+        imports.logger.log("Bell scheduled: " + item.ID, 1)
         later.date.localTime();
-        schedules[item] = later.parse.cron(bells[item].Time)
-        jobs[item] = later.setInterval(function() {
-          if (bells[item].Enabled == true) {
+        schedules[item.ID] = later.parse.cron(item.Time)
+        jobs[item.ID] = later.setInterval(function() {
+          if (item.Enabled == true) {
             // Trigger the job if it's enabled
-            lastJob.unshift({ name: item, date: new Date() })
-            imports.eventbus.emit("trigger", bells[item])
+            lastJob.unshift({ name: item.ID, date: new Date() })
+            imports.eventbus.emit("trigger", item)
           } else {
             // The calling code might want to know if the bell would have triggered, were it enabled, so
             // we can use 'triggerwhiledisabled' to let people know. Good for running additional calculations
-            imports.eventbus.emit("disabledtrigger", bells[item])
+            imports.eventbus.emit("disabledtrigger", item)
           }
-        }.bind(this), schedules[item])
+        }.bind(this), schedules[item.ID])
       })
     },
     // This function works out the next occurrence of bell. If no bell specified, searches all bells for the next time
-    next: function(bell) {
+    next: function(bell, amount) {
+      if(typeof amount === "undefined") { amount = 1 }
       var nextdates = []
       if (imports.validate.isNull(bell)) {
-        Object.keys(imports.bells.bells).forEach(function(item) {
+        imports.bells.bells.forEach(function(item) {
+          if(item.ID.indexOf("_") == 0) { return }
           nextdates.push({
             date: scheduler.next(item),
-            name: item
+            name: item.ID
           })
         })
 
@@ -48,16 +50,17 @@ module.exports = function setup(options, imports, register) {
           return d.date;
         })
       } else {
-        return later.schedule(schedules[bell]).next()
+        return later.schedule(schedules[bell.ID]).next(amount)
       }
     },
     previous: function(bell) {
       var prevdates = []
       if (imports.validate.isNull(bell)) {
-        Object.keys(imports.bells.bells).forEach(function(item) {
+        imports.bells.bells.forEach(function(item) {
+          if(item.indexOf("_") == 0) { return }
           prevdates.push({
             date: scheduler.previous(item),
-            name: item
+            name: item.ID
           })
         })
 
@@ -65,17 +68,17 @@ module.exports = function setup(options, imports, register) {
           return -d.date;
         })
       } else {
-        return later.schedule(schedules[bell]).prev()
+        return later.schedule(schedules[bell.ID]).prev()
       }
     },
-    toString: function(name) {
-      return moment(scheduler.next(name)).format("D MMMM YYYY, hh:mm:ssa")
+    toString: function(bell) {
+      return moment(scheduler.next(bell)).format("D MMMM YYYY, hh:mm:ssa")
     },
-    toNow: function(name) {
-      return moment().to(scheduler.next(name))
+    toNow: function(bell) {
+      return moment().to(scheduler.next(bell))
     },
-    toInt: function(name) {
-      return moment().diff(scheduler.next(name))
+    toInt: function(bell) {
+      return moment().diff(scheduler.next(bell))
     }
   }
 

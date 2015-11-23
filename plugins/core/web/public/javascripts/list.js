@@ -10,5 +10,5 @@ bellboyApp.controller('listController', function($scope, $http) {
   }
 
   $scope.loadData()
-  $scope.orderBy = '!TimeDifference';
+  $scope.orderBy = '';
 })

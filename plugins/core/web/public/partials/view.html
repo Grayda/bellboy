@@ -1,5 +1,5 @@
 <h1>Details for {{ bell.Name }}</h1>
-  <table border="1" cellpadding="10" cellspacing="0" class="list table table-bordered table-hover">
+<table border="1" cellpadding="10" cellspacing="0" class="list table table-bordered table-hover">
   <tr>
     <th>Name</th>
     <th>Value</th>
@@ -32,9 +32,16 @@
     <td>Bell Locked</td>
     <td ng-bind="bell.Locked"></td>
   </tr>
-  <tr nested-item ng-repeat="(key, value) in bell.Actions">
-    <td ng-bind="key"></td>
-    <td>{{ value }}</td>
+  <tr>
+    <td>Bell Actions</td>
+    <td>
+      <ul ng-repeat="(key, value) in bell.Actions">
+        <li ng-bind="key"></li>
+          <ul>
+            <li ng-repeat="(key1, value1) in value">{{ key1 + ": " + value1 }}</li>
+          </ul>
+      </ul>
+    </td>
   </tr>
 
 

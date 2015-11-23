@@ -1,5 +1,5 @@
-bellboyApp.controller('editController', function ($scope, $http, $routeParams) {
- $http.get('/api/bells/' + $routeParams.id).success(function(data) {
+bellboyApp.controller('viewController', function ($scope, $http, $routeParams) {
+ $http.get('/api/bells/get/' + $routeParams.id).success(function(data) {
 
    $scope.bell = data
 
