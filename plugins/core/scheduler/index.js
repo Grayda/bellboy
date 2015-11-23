@@ -73,6 +73,9 @@ module.exports = function setup(options, imports, register) {
     },
     toNow: function(name) {
       return moment().to(scheduler.next(name))
+    },
+    toInt: function(name) {
+      return moment().diff(scheduler.next(name))
     }
   }
 

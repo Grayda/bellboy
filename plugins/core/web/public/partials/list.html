@@ -1,4 +1,10 @@
-<div ng-controller="listController">
+<div ng-controller="listController" id="listController">
+  <script type="text/javascript">
+    var socket = io.connect();
+    socket.on("trigger", function() {
+      angular.element("#listController").scope().loadData()
+    })
+  </script>
   <h1>Bells</h1>
   <div class="form-horizontal">
     <div class="form-group">
@@ -9,8 +15,8 @@
       <label for="orderBy" class="col-sm-1 control-label">Order by:</label>
       <div class="col-sm-3">
         <select ng-model="orderBy" class="form-control input-sm">
-          <option value="!Time">Time (Descending)</option>
-          <option value="Time">Time (Ascending)</option>
+          <option value="!TimeDifference">Time (Descending)</option>
+          <option value="TimeDifference">Time (Ascending)</option>
           <option value="Name">Alphabetical</option>
           <option value="!Enabled">Enabled</option>
         </select>
@@ -36,8 +42,8 @@
     <tr ng-repeat="bell in bells | filter:query | orderBy:orderBy">
       <td class="ng-class: {'disabled': !bell.Enabled}" ng-bind="bell.Name"></td>
       <td ng-bind="bell.Description"></td>
-      <td>{{ bell.CalculatedTime | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
-      <td><a href="#/bells/edit/{{ bell.ID }}">Edit</a></td>
+      <td ng-bind="bell.CalculatedTime | date: 'dd/MM/yyyy hh:mm:ss'"></td>
+      <td><a href="#/bells/view/{{ bell.ID }}">View</a> | <a href="#/bells/edit/{{ bell.ID }}">Edit</a> </td>
     </tr>
   </table>
 </div>

@@ -6,16 +6,10 @@
   <title>My HTML File</title>
   <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="stylesheets/main.css">
+  <script type="text/javascript" src="jquery/dist/jquery.js"></script>
   <script src="angular/angular.js"></script>
   <script src="angular-route/angular-route.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-
-  <script type="text/javascript">
-    var socket = io.connect();
-    socket.on("trigger", function() {
-      alert("bing bong!")
-    })
-  </script>
 </head>
 
 <body>

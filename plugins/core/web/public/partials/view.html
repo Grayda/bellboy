@@ -1,0 +1,42 @@
+<h1>Details for {{ bell.Name }}</h1>
+  <table border="1" cellpadding="10" cellspacing="0" class="list table table-bordered table-hover">
+  <tr>
+    <th>Name</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>Bell ID</td>
+    <td ng-bind="bell.ID"></td>
+  </tr>
+  <tr>
+    <td>Bell Name</td>
+    <td ng-bind="bell.Name"></td>
+  </tr>
+  <tr>
+    <td>Bell Description</td>
+    <td ng-bind="bell.Description"></td>
+  </tr>
+  <tr>
+    <td>Bell Time (cron)</td>
+    <td ng-bind="bell.Time"></td>
+  </tr>
+  <tr>
+    <td>Bell Time (calculated)</td>
+    <td ng-bind="bell.CalculatedTime"></td>
+  </tr>
+  <tr>
+    <td>Enabled</td>
+    <td ng-bind="bell.Enabled"></td>
+  </tr>
+  <tr>
+    <td>Bell Locked</td>
+    <td ng-bind="bell.Locked"></td>
+  </tr>
+  <tr nested-item ng-repeat="(key, value) in bell.Actions">
+    <td ng-bind="key"></td>
+    <td>{{ value }}</td>
+  </tr>
+
+
+</table>
+<a href="/#/bells">Go back</a>

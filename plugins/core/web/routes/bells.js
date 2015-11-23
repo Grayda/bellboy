@@ -13,6 +13,7 @@ module.exports = function(imports) {
       time = imports.scheduler.next(name)
       item.CalculatedTime = imports.scheduler.toString(name)
       item.HumanReadableTime = imports.scheduler.toNow(name)
+      item.TimeDifference = imports.scheduler.toInt(name)
       item.ID = name
       data.push(item)
     }.bind(this))
@@ -21,6 +22,7 @@ module.exports = function(imports) {
 
   router.get("/bells/:bell", function(req, res, next) {
     var data = imports.bells.bells[req.params.bell]
+    data.ID = req.params.bell
     data.CalculatedTime = imports.scheduler.toString(req.params.bell)
     data.HumanReadableTime = imports.scheduler.toNow(req.params.bell)
     res.json(data)

@@ -11,6 +11,10 @@ bellboyApp.config(['$routeProvider',
         templateUrl: "partials/edit.html",
         controller: 'editController'
       }).
+      when('/bells/view/:id', {
+        templateUrl: "partials/view.html",
+        controller: 'editController'
+      }).
       otherwise({
         redirectTo: '/bells'
       });

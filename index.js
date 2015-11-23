@@ -40,7 +40,7 @@ architectApp = architect.createApp(plugins, function (err, app) {
       app.services.logger.log("Bell was triggered: " + bell.Name)
     })
 
-    app.services.config.loadConfig()
+    // app.services.config.loadConfig()
     app.services.bells.loadBells()
     app.services.scheduler.scheduleBells(app.services.bells.bells)
 
