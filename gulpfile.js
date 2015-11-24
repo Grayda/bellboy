@@ -10,6 +10,7 @@ gulp.task("default", function(callback) {
   console.log("List of available gulp tasks. Run with 'gulp [taskname]':")
   console.log()
   console.log("install          - Runs 'install-global', 'install-plugins', 'install-bower' and 'less'")
+  console.log("install-skipglobal - Same as 'install', but skips install-global")
   console.log("install-global   - Runs 'npm install' in the root folder, installs 'bower' globally, then installs 'less' globally")
   console.log("install-plugins  - Recursively runs 'npm install' in every folder in '" + __dirname + "/plugins' (except 'node_modules' and 'bower_components')")
   console.log("install-bower    - Runs 'bower install' in '" + __dirname + "/plugins/core/web'")
@@ -24,7 +25,10 @@ gulp.task("start", ["less"], function(callback) {
 })
 
 gulp.task("install", ["install-global", "install-plugins", "install-bower", "less"], function(callback) {
-  console.log("Installing all. This may take a while, please wait. ")
+  callback()
+})
+
+gulp.task("install-skipglobal", ["install-plugins", "install-bower", "less"], function(callback) {
   callback()
 })
 

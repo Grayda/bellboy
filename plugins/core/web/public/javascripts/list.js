@@ -1,4 +1,4 @@
-bellboyApp.controller('listController', function($scope, $http) {
+bellboyApp.controller('listController', function($scope, $http, $route, $templateCache) {
   $scope.loadData = function() {
     $http.get('/api/bells').success(function(data) {
 
@@ -8,6 +8,12 @@ bellboyApp.controller('listController', function($scope, $http) {
       console.log(err)
     })
   }
+
+  $scope.reloadView = function() {
+		$route.reload();
+  }
+
+  $scope.curTime = Date.now()
 
   $scope.loadData()
   $scope.orderBy = '';

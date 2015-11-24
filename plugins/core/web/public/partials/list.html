@@ -2,7 +2,7 @@
   <script type="text/javascript">
     var socket = io.connect();
     socket.on("trigger", function() {
-      angular.element("#listController").scope().loadData()
+      setTimeout(function() { angular.element("#listController").scope().reloadView() }, 1000)
     })
   </script>
   <h1>Bells</h1>
@@ -23,7 +23,7 @@
         </select>
       </div>
       <div class="col-sm-3">
-        <a ng-click="loadData()" href="#">Reload</a>
+        <a ng-click="reload()" href="#">Reload</a>
       </div>
     </div>
   </div>
@@ -43,9 +43,8 @@
     <tr ng-repeat="bell in bells | filter:query | orderBy:orderBy">
       <td class="ng-class: {'disabled': !bell.Enabled}" ng-bind="bell.Name"></td>
       <td ng-bind="bell.Description"></td>
-      <td ng-include src="'/api/bells/next/' + bell.ID + '/date'"></td>
-      <!-- <td ng-bind="bell.CalculatedTime | date: 'dd/MM/yyyy hh:mm:ss'"></td> -->
-      <td><a href="#/bells/view/{{ bell.ID }}">View</a> | <a href="#/bells/edit/{{ bell.ID }}">Edit</a> </td>
+      <td ng-include src="'/api/bells/next/' + bell.ID + '/date?a=' + curTime"></td>
+      <td><a href="#/bells/view/{{ bell.ID }}">View!</a> | <a href="#/bells/edit/{{ bell.ID }}">Edit</a> </td>
     </tr>
   </table>
 </div>
