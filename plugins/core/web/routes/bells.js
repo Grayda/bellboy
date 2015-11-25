@@ -5,7 +5,7 @@ module.exports = function(imports) {
 
   /* GET home page. */
   router.get('/bells', function(req, res, next) {
-    res.json(imports.bells.toArray())
+    res.json(imports.bells.toArray(true))
   });
 
   router.get("/bells/get/:bell", function(req, res, next) {
@@ -21,7 +21,7 @@ module.exports = function(imports) {
   })
 
   router.get("/bells/next/:bell/date", function(req, res, next) {
-    res.send(imports.scheduler.toString(imports.bells.get(req.params.bell)))
+    res.send(imports.scheduler.toString(imports.bells.get(req.params.bell)) || "test")
   })
 
   router.get("/bells/next/:bell/:amount", function(req, res, next) {

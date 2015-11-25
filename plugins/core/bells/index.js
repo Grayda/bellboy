@@ -24,10 +24,11 @@ module.exports = function setup(options, imports, register) {
 
   var bellObj = {
     bells: [],
-    toArray: function() {
+    toArray: function(omitVirtual) {
       var res = []
 
       bellObj.bells.forEach(function(item) {
+        if(item.ID.indexOf("_") == 0 && omitVirtual == true) { return }
          res.push(item)
       })
 
@@ -60,8 +61,6 @@ module.exports = function setup(options, imports, register) {
       return bellObj.set(bell, "Enabled", status)
     }
   }
-
-
 
   register(null, {
     bells: bellObj
