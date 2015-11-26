@@ -13,10 +13,11 @@ module.exports = function setup(options, imports, register) {
       // Go through each of the bells mentioned
       bell.Actions.ToggleBells.forEach(function(item) {
         // If the item has an alphanumeric name and a boolean "Enabled" flag
-        if (imports.validate.isAlphanumeric(item.Name) && imports.validate.isBoolean(item.Enabled)) {
+        // There's a BUG here: Virtual bells aren't alphanumeric, so you couldn't set _all this way!
+        if (imports.validate.isAlphanumeric(item.ID) && imports.validate.isBoolean(item.Enabled)) {
           // Set the bell's Enabled property to item.Enabled
-          imports.logger.log("Bell " + item.Name + " set to " + item.Enabled + " by " + bell.Name, 1)
-          bellObj.set(item.Name + ".Enabled", item.Enabled)
+          imports.logger.log("Bell " + item.ID + " set to " + item.Enabled + " by " + bell.Name, 1)
+          bellObj.set(item.ID + ".Enabled", item.Enabled)
         }
       })
     }
@@ -48,17 +49,17 @@ module.exports = function setup(options, imports, register) {
     saveBells: function() {
 
     },
-    get: function(ID) {
-      return _.where(bellObj.bells, { 'ID': ID })[0]
+    get: function(id) {
+      return _.where(bellObj.bells, { 'ID': id })[0]
     },
-    set: function(bell, property, value) {
-      return _.set(bellObj.bells, property, value)
+    set: function(id, property, value) {
+      return _.set(bellObj.get(id), property, value)
     },
     delete: function(bell, property) {
       // bellObj.bells = _.omit(bell, property)
     },
-    toggle: function(bell, status) {
-      return bellObj.set(bell, "Enabled", status)
+    toggle: function(id, status) {
+      return bellObj.set(bellObj.get(id), "Enabled", status)
     }
   }
 

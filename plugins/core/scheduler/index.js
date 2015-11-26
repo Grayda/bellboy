@@ -23,7 +23,7 @@ module.exports = function setup(options, imports, register) {
         jobs[item.ID] = later.setInterval(function() {
           if (item.Enabled == true) {
             // Trigger the job if it's enabled
-            lastJob.unshift({ name: item.ID, date: new Date() })
+            lastJob.unshift({ id: item.ID, date: new Date() })
             imports.eventbus.emit("trigger", item)
           } else {
             // The calling code might want to know if the bell would have triggered, were it enabled, so
@@ -39,10 +39,10 @@ module.exports = function setup(options, imports, register) {
       var nextdates = []
       if (imports.validate.isNull(bell)) {
         imports.bells.bells.forEach(function(item) {
-          if(item.ID.indexOf("_") == 0) { return }
+          if(item.ID.indexOf("_") == 0 || item.Enabled == false) { return }
           nextdates.push({
             date: scheduler.next(item),
-            name: item.ID
+            id: item.ID
           })
         })
 
@@ -57,10 +57,10 @@ module.exports = function setup(options, imports, register) {
       var prevdates = []
       if (imports.validate.isNull(bell)) {
         imports.bells.bells.forEach(function(item) {
-          if(item.indexOf("_") == 0) { return }
+          if(item.ID.indexOf("_") == 0 || item.Enabled == false) { return }
           prevdates.push({
             date: scheduler.previous(item),
-            name: item.ID
+            id: item.ID
           })
         })
 
