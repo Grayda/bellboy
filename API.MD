@@ -11,6 +11,19 @@
 		- [About bell actions](#about-bell-actions)
 		- [About Virtual Bells](#about-virtual-bells)
 	- [Plugins](#plugins)
+		- [`audio`](#audio)
+			- [Consumes](#consumes)
+			- [Options](#options)
+				- [`audioPath` _(required)_](#audiopath-required)
+			- [Variables](#variables)
+			- [Functions](#functions)
+				- [`play` _(bell)_](#play-bell)
+			- [Events](#events)
+				- [Listeners](#listeners)
+					- [`trigger` _(bell)_](#trigger-bell)
+				- [Emitters](#emitters)
+					- [`audio_started` _(file)_](#audiostarted-file)
+					- [`audio_finished` _(file)_](#audiofinished-file)
 		- [`bells`](#bells)
 			- [Consumes](#consumes)
 			- [Options](#options)
@@ -79,6 +92,35 @@
 				- [Emitters](#emitters)
 					- [`trigger` _(bell)_](#trigger-bell)
 					- [`disabledtrigger` _(bell)_](#disabledtrigger-bell)
+		- [`validate`](#validate)
+			- [Consumes](#consumes)
+			- [Options](#options)
+			- [Variables](#variables)
+			- [Functions](#functions)
+				- [`isFilename` _(str)_](#isfilename-str)
+			- [Events](#events)
+				- [Listeners](#listeners)
+				- [Emitters](#emitters)
+		- [`web`](#web)
+			- [Consumes](#consumes)
+			- [Options](#options)
+				- [`port` _(required)_](#port-required)
+			- [Variables](#variables)
+				- [`io`](#io)
+			- [Functions](#functions)
+			- [Events](#events)
+				- [Listeners](#listeners)
+					- [`trigger` _(bell)_](#trigger-bell)
+				- [Emitters](#emitters)
+			- [Endpoints](#endpoints)
+				- [`/api/bells` (GET, json)](#apibells-get-json)
+				- [`/api/bells/get/<bell>` (GET, json)](#apibellsgetbell-get-json)
+				- [`/api/bells/next` (GET, json)](#apibellsnext-get-json)
+				- [`/api/bells/next/<bell>` (GET, string)](#apibellsnextbell-get-string)
+				- [`/api/bells/next/<bell>/date` (GET, string)](#apibellsnextbelldate-get-string)
+				- [`/api/bells/next/<bell>/<amount>` (GET, json)](#apibellsnextbellamount-get-json)
+				- [`/api/bells/previous/<bell>` (GET, string)](#apibellspreviousbell-get-string)
+				- [`/api/bells/previous/<bell>/<amount>` (GET, json)](#apibellspreviousbellamount-get-json)
 		- [`Plugin`](#plugin)
 			- [Consumes](#consumes)
 			- [Options](#options)
@@ -156,6 +198,40 @@ For a practical example of a bell action, check out the `audio` plugin which bot
 
 ## Plugins
 The following plugins, variables, events and functions may change as development continues. Please check the associated plugin before calling any functions from there
+
+### `audio`
+Audio plugin. Lets you play MP3s
+NOTE: This plugin uses `mpg123` which can be downloaded from [the mpg123 website](http://www.mpg123.de/download/). If running on bellboy, use `sudo apt-get install mpg123`
+
+#### Consumes
+  - `eventbus`
+	- `validate`
+	- `logger`
+
+#### Options
+##### `audioPath` _(required)_
+The location of MP3 files to play. Usually `__dirname/audio`
+
+#### Variables
+None
+
+#### Functions
+##### `play` _(bell)_
+Plays an audio file, given a `bell`. This function looks in `Actions.Audio.File` for an array of files. It then shuffles the array, picks the first item, and runs `mpg123` to play the audio.
+
+If `Actions.Audio.Loop` is a number, the audio will loop that many times, otherwise it'll only play once.  
+
+#### Events
+##### Listeners
+###### `trigger` _(bell)_
+Waits for a bell, then calls `audio.play(bell)`
+
+##### Emitters
+###### `audio_started` _(file)_
+Indicates that `file` has started playing.
+
+###### `audio_finished` _(file)_
+Indicates that `file` has finished playing completely
 
 ### `bells`
 
@@ -352,6 +428,87 @@ Emitted when a bell is triggered (that is, when `later.setInterval` executes). T
 
 ###### `disabledtrigger` _(bell)_
 Emitted when a bell is triggered, but is disabled. Useful for performing calculations on upcoming bells. `bell` is the same as above
+
+### `validate`
+A plugin to handle validation of data. This is basically a wrapper for the `validator` npm module
+
+#### Consumes
+None
+
+#### Options
+None
+
+#### Variables
+See [validator](https://www.npmjs.org/package/validator) for all variables
+
+
+#### Functions
+See [validator](https://www.npmjs.org/package/validator) for all valid functions
+
+##### `isFilename` _(str)_
+Determines if `str`is a valid filename. A valid filename is one that doesn't include any items on [this Wikipedia list](https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words)
+
+#### Events
+##### Listeners
+None
+
+##### Emitters
+None
+
+### `web`
+A web front-end for managing and viewing bells. Uses a combination of express, bower, bootstrap, socket.io and angular to make managing bells easy.
+
+#### Consumes
+  - `bells`
+	- `scheduler`
+	- `logger`
+	- `eventbus`
+
+#### Options
+##### `port` _(required)_
+What port the web UI should be available from.
+
+#### Variables
+##### `io`
+Alias for a socket.io object
+
+#### Functions
+None
+
+#### Events
+##### Listeners
+###### `trigger` _(bell)_
+When a bell is triggered
+
+##### Emitters
+None
+
+#### Endpoints
+The `web` plugin also exposes a REST API which allows you to get and set bells.
+
+##### `/api/bells` (GET, json)
+Returns a JSON string containing an array of bells
+
+##### `/api/bells/get/<bell>` (GET, json)
+Returns a JSON string containing _`<bell>`_
+
+##### `/api/bells/next` (GET, json)
+Returns a JSON string containing all bells in chronological order (soonest first)
+
+##### `/api/bells/next/<bell>` (GET, string)
+Returns a date string with the next occurrence of _`<bell>`_
+
+##### `/api/bells/next/<bell>/date` (GET, string)
+Returns a formatted date string with the next occurrence of _`<bell>`_
+
+##### `/api/bells/next/<bell>/<amount>` (GET, json)
+Returns a JSON string array containing the next _`<amount>`_ occurrences for _`<bell>`_
+
+##### `/api/bells/previous/<bell>` (GET, string)
+Returns a date string with the previous occurrence of _`<bell>`_
+
+##### `/api/bells/previous/<bell>/<amount>` (GET, json)
+Returns a JSON string array containing the previous _`<amount>`_ occurrences for _`<bell>`_
 
 ----------------------------------------
 

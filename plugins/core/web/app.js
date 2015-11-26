@@ -16,7 +16,7 @@ module.exports = function setup(options, imports, register) {
 
   var app = express();
 
-  assert(options.port, "'Port' option for web plugin is missing!")
+  assert(options.port, "'port' option for web plugin is missing!")
 
   imports.eventbus.on("trigger", function() {
     web.io.sockets.emit("trigger")

@@ -36,12 +36,6 @@ module.exports = function(imports) {
     res.send(imports.scheduler.previous(imports.bells.get(req.params.bell), req.params.amount))
   })
 
-  router.get("/bells/view/:bell", function(req, res, next) {
-    var data = imports.bells.get(req.params.bell)
-    data.CalculatedTime = imports.scheduler.toString(req.params.bell)
-    data.HumanReadableTime = imports.scheduler.toNow(req.params.bell)
-    res.json(data)
-  })
   return router
 
 }
