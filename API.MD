@@ -201,7 +201,7 @@ The following plugins, variables, events and functions may change as development
 
 ### `audio`
 Audio plugin. Lets you play MP3s
-NOTE: This plugin uses `mpg123` which can be downloaded from [the mpg123 website](http://www.mpg123.de/download/). If running on bellboy, use `sudo apt-get install mpg123`
+NOTE: This plugin uses `mpg123` which can be downloaded from [the mpg123 website](http://www.mpg123.de/download/). If running on Linux, use `sudo apt-get install mpg123`
 
 #### Consumes
   - `eventbus`
@@ -509,6 +509,13 @@ Returns a date string with the previous occurrence of _`<bell>`_
 
 ##### `/api/bells/previous/<bell>/<amount>` (GET, json)
 Returns a JSON string array containing the previous _`<amount>`_ occurrences for _`<bell>`_
+
+##### `/api/bells/toggle/<bell>` (POST, string)
+Returns new state. If _`<bell>`_ is true, changes it to false, and vice versa.
+
+##### `/api/bells/toggle/<bell>/<state>` (POST, string)
+Returns new state. Sets _`<bell>`_ to _`<state>`_
+
 
 ----------------------------------------
 

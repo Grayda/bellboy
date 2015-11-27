@@ -9,12 +9,14 @@ var fs = require("fs")
 gulp.task("default", function(callback) {
   console.log("List of available gulp tasks. Run with 'gulp [taskname]':")
   console.log()
-  console.log("install          - Runs 'install-global', 'install-plugins', 'install-bower' and 'less'")
+  console.log("install            - Runs 'install-global', 'install-plugins', 'install-bower' and 'less'")
+  console.log("start              - Runs 'nodemon index.js'")
+  console.log("'n'blow            - Two and a half words. Named after the fast food place in The Simpsons. Runs 'install-skipglobal', then 'start'")
   console.log("install-skipglobal - Same as 'install', but skips install-global")
-  console.log("install-global   - Runs 'npm install' in the root folder, installs 'bower' globally, then installs 'less' globally")
-  console.log("install-plugins  - Recursively runs 'npm install' in every folder in '" + __dirname + "/plugins' (except 'node_modules' and 'bower_components')")
-  console.log("install-bower    - Runs 'bower install' in '" + __dirname + "/plugins/core/web'")
-  console.log("less             - Compiles all LESS files in " + __dirname + "/plugins/core/web/public/stylesheets'")
+  console.log("install-global     - Installs 'bower' globally, then installs 'less' globally")
+  console.log("install-plugins    - Runs 'npm install' in the root folder, then recursively runs 'npm install' in every folder in '" + __dirname + "/plugins' (except 'node_modules' and 'bower_components')")
+  console.log("install-bower      - Runs 'bower install' in '" + __dirname + "/plugins/core/web'")
+  console.log("less               - Compiles all LESS files in " + __dirname + "/plugins/core/web/public/stylesheets'")
   callback()
 })
 
@@ -22,6 +24,10 @@ gulp.task("start", ["less"], function(callback) {
   nodemon({
     script: 'index.js'
   })
+})
+
+gulp.task("'n'blow", ["install-skipglobal", "start"], function(callback) {
+  callback()
 })
 
 gulp.task("install", ["install-global", "install-plugins", "install-bower", "less"], function(callback) {
@@ -33,8 +39,6 @@ gulp.task("install-skipglobal", ["install-plugins", "install-bower", "less"], fu
 })
 
 gulp.task("install-global", function(callback) {
-  console.log("Installing dependencies")
-  cp.execSync("npm install")
   console.log("Installing bower globally")
   cp.execSync("npm install -g bower")
   console.log("Installing less globally")
@@ -43,6 +47,8 @@ gulp.task("install-global", function(callback) {
 })
 
 gulp.task("install-plugins", function(callback) {
+  console.log("Installing dependencies")
+  cp.execSync("npm install")
   console.log("Installing dependencies for plugins")
   dir.paths(__dirname + "/plugins", function(err, paths) {
     try {

@@ -1,4 +1,4 @@
-var bellboyApp = angular.module('bellboyApp', ["ngRoute"]);
+var bellboyApp = angular.module('bellboyApp', ["toaster", "ngRoute"]);
 
 bellboyApp.config(['$routeProvider',
   function($routeProvider) {
@@ -14,6 +14,9 @@ bellboyApp.config(['$routeProvider',
       when('/bells/view/:id', {
         templateUrl: "partials/view.html",
         controller: 'viewController'
+      }).
+      when('/bells/toggle/:id', {
+        redirectTo: "/bells"
       }).
       otherwise({
         redirectTo: '/bells'

@@ -18,8 +18,12 @@ module.exports = function setup(options, imports, register) {
 
   assert(options.port, "'port' option for web plugin is missing!")
 
-  imports.eventbus.on("trigger", function() {
-    web.io.sockets.emit("trigger")
+  imports.eventbus.on("trigger", function(bell) {
+    web.io.sockets.emit("trigger", { bell: bell })
+  })
+
+  imports.eventbus.on("bells_bellchanged", function(bell, property, value) {
+    web.io.sockets.emit("bells_bellchanged", { bell: bell, property: property, value: value })
   })
 
 

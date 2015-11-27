@@ -53,12 +53,14 @@ module.exports = function setup(options, imports, register) {
       return _.where(bellObj.bells, { 'ID': id })[0]
     },
     set: function(id, property, value) {
+      imports.eventbus.emit("bells_bellchanged", bellObj.get(id), property, value)
       return _.set(bellObj.get(id), property, value)
     },
     delete: function(bell, property) {
       // bellObj.bells = _.omit(bell, property)
     },
     toggle: function(id, status) {
+      imports.eventbus.emit("bells_bellchanged", bellObj.get(id), "Enabled", status)
       return bellObj.set(bellObj.get(id), "Enabled", status)
     }
   }

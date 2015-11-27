@@ -36,6 +36,29 @@ module.exports = function(imports) {
     res.send(imports.scheduler.previous(imports.bells.get(req.params.bell), req.params.amount))
   })
 
+  router.post("/bells/toggle/:bell", function(req, res, next) {
+    if(imports.bells.get(req.params.bell).Locked == true) {
+      res.sendStatus(423)
+      return
+    }
+
+    imports.bells.set(req.params.bell, "Enabled", !imports.bells.get(req.params.bell).Enabled)
+    res.send(imports.bells.get(req.params.bell).Enabled)
+  })
+
+  router.post("/bells/toggle/:bell/:state", function(req, res, next) {
+    if(imports.bells.get(req.params.bell).Locked == true) {
+      res.sendStatus(423)
+      return
+    }
+
+    var state = (req.params.state === "true")
+
+    console.log(state)
+    imports.bells.set(req.params.bell, "Enabled", state)
+    res.send(imports.bells.get(req.params.bell).Enabled)
+  })
+
   return router
 
 }

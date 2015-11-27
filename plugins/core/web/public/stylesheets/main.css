@@ -1,3 +1,6 @@
 .disabled {
   border-left: 6px solid orange !important;
 }
+.next {
+  border-left: 6px solid slateblue !important;
+}

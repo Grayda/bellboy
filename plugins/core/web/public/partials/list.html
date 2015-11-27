@@ -1,11 +1,17 @@
 <div ng-controller="listController" id="listController">
   <script type="text/javascript">
     var socket = io.connect();
-    socket.on("trigger", function() {
-      setTimeout(function() { angular.element("#listController").scope().reloadView() }, 1000)
+    socket.on("trigger", function(bell) {
+      angular.element("#listController").scope().loadData()
+      angular.element("#listController").scope().toast("success", bell.Name + " has been triggered", "OK!")
+    })
+
+    socket.on("bells_bellchanged", function() {
+      angular.element("#listController").scope().loadData()
     })
   </script>
   <h1>Bells</h1>
+  <p><span ng-bind="(bells | filter: { Enabled: true }).length"></span> / <span ng-bind="(bells).length"></span> bells loaded</p>
   <div class="form-horizontal">
     <div class="form-group">
       <label for="query" class="col-sm-1 control-label">Search:</label>
@@ -27,7 +33,7 @@
       </div>
     </div>
   </div>
-  <table border="1" cellpadding="10" cellspacing="0" class="list table table-bordered table-hover">
+  <table border="1" cellpadding="10" cellspacing="0" class="table table-bordered table-hover">
     <tr cellpadding="5" class="colour">
       <th>
         Name
@@ -40,11 +46,18 @@
       </th>
       <th>Actions</th>
     </tr>
-    <tr ng-repeat="bell in bells | filter:query | orderBy:orderBy">
-      <td class="ng-class: {'disabled': !bell.Enabled}" ng-bind="bell.Name"></td>
+    <tr ng-repeat="bell in bells | filter:query | orderBy:orderBy" ng-class="{ 'next': nextBell[0].id == bell.ID }">
+      <td ng-class="{'disabled': !bell.Enabled}" ng-bind="bell.Name"></td>
       <td ng-bind="bell.Description"></td>
       <td ng-include src="'/api/bells/next/' + bell.ID + '/date?a=' + curTime"></td>
-      <td><a href="#/bells/view/{{ bell.ID }}">View!</a> | <a href="#/bells/edit/{{ bell.ID }}">Edit</a> </td>
+      <td>
+        <a href="#/bells/view/{{ bell.ID }}">View</a> |
+        <a href="#/bells/edit/{{ bell.ID }}">Edit</a>
+        <span ng-if="!bell.Locked"> |
+          <a href="" ng-click="toggleBell(bell.ID, true)" ng-if="!bell.Enabled">Enable</a>
+          <a href="" ng-click="toggleBell(bell.ID, false)" ng-if="bell.Enabled">Disable</a>
+        </span>
+      </td>
     </tr>
   </table>
 </div>
