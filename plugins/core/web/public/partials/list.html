@@ -1,22 +1,27 @@
 <div ng-controller="listController" id="listController">
   <script type="text/javascript">
     var socket = io.connect();
-    socket.on("trigger", function(bell) {
-      angular.element("#listController").scope().loadData()
-      angular.element("#listController").scope().toast("success", bell.Name + " has been triggered", "OK!")
+    socket.on("trigger", function(data) {
+      angular.element("#listController").scope().reloadView()
+      angular.element("#listController").scope().toast("success", "Bell triggered", data.bell.Name, 5000)
     })
 
-    socket.on("bells_bellchanged", function() {
+    socket.on("bells_bellchanged", function(data) {
       angular.element("#listController").scope().loadData()
+      angular.element("#listController").scope().toast("success", "Bell Updated - " + data.bell.Name, "<a href='#/bells/view/" + data.bell.ID + "'>View</a>", 5000)
+    })
+
+    socket.on("bells_error_locked", function(data) {
+      angular.element("#listController").scope().toast("danger", "Error updating " + data.bell.Name, "This bell is locked and cannot be updated!", 5000)
     })
   </script>
   <h1>Bells</h1>
-  <p><span ng-bind="(bells | filter: { Enabled: true }).length"></span> / <span ng-bind="(bells).length"></span> bells loaded</p>
+
   <div class="form-horizontal">
     <div class="form-group">
       <label for="query" class="col-sm-1 control-label">Search:</label>
       <div class="col-sm-3">
-        <input ng-model="query" class="form-control input-sm">
+        <input ng-model="query.$" class="form-control input-sm">
       </div>
       <label for="orderBy" class="col-sm-1 control-label">Order by:</label>
       <div class="col-sm-3">
@@ -29,12 +34,15 @@
         </select>
       </div>
       <div class="col-sm-3">
-        <a ng-click="reload()" href="#">Reload</a>
+        <a ng-click="reload()" href="" class="btn btn-success">Reload</a>
       </div>
     </div>
   </div>
-  <table border="1" cellpadding="10" cellspacing="0" class="table table-bordered table-hover">
+  <table border="1" cellpadding="10" cellspacing="0" class="table table-bordered table-condensed table-striped table-hover">
     <tr cellpadding="5" class="colour">
+      <th>
+        &nbsp;
+      </th>
       <th>
         Name
       </th>
@@ -46,18 +54,41 @@
       </th>
       <th>Actions</th>
     </tr>
-    <tr ng-repeat="bell in bells | filter:query | orderBy:orderBy" ng-class="{ 'next': nextBell[0].id == bell.ID }">
-      <td ng-class="{'disabled': !bell.Enabled}" ng-bind="bell.Name"></td>
-      <td ng-bind="bell.Description"></td>
-      <td ng-include src="'/api/bells/next/' + bell.ID + '/date?a=' + curTime"></td>
+    <tr ng-class="{'disabled': !bell.Enabled}" ng-repeat="bell in bells | filter:query | orderBy:orderBy">
+      <td ng-class="{ 'next': nextBell[0].id == bell.ID }"><span ng-if="nextBell[0].id == bell.ID"><i class="glyphicon glyphicon-chevron-right"></i> NEXT</span></td>
       <td>
-        <a href="#/bells/view/{{ bell.ID }}">View</a> |
+        <i class="glyphicon glyphicon-ban-circle" ng-if="!bell.Enabled"></i>
+        <i class="glyphicon glyphicon-lock" ng-if="bell.Locked"></i>
+        <a href="#/bells/view/{{ bell.ID }}">{{ bell.Name }}</a>
+      </td>
+      <td ng-bind="bell.Description"></td>
+      <td ng-bind="(nextBell | filter: { id: bell.ID })[0].date | date:'medium'"></td>
+      <td>
+        <a href="" ng-click="trigger(bell.ID)">Trigger</a> |
         <a href="#/bells/edit/{{ bell.ID }}">Edit</a>
-        <span ng-if="!bell.Locked"> |
+        <!-- <span ng-if="!bell.Locked"> |
           <a href="" ng-click="toggleBell(bell.ID, true)" ng-if="!bell.Enabled">Enable</a>
           <a href="" ng-click="toggleBell(bell.ID, false)" ng-if="bell.Enabled">Disable</a>
-        </span>
+        </span> -->
       </td>
     </tr>
   </table>
+  <table class="table table-bordered">
+    <th>Legend</th>
+    <th></tj>
+    <tr>
+      <td class="disabled"><i class="glyphicon glyphicon-ban-circle"></i> Bell is disabled</td>
+      <td class="next"><i class="glyphicon glyphicon-chevron-right"></i>This bell will ring next</td>
+    </tr>
+    <tr>
+      <td><i  class="glyphicon glyphicon-lock"></i> Bell is locked</td>
+      <td></td>
+    </tr>
+
+  </table>
+
+  <p>
+    <span ng-bind="(bells | filter: { Enabled: true }).length"></span> /
+    <span ng-bind="(bells).length"></span> bells loaded
+  </p>
 </div>

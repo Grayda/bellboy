@@ -1,11 +1,64 @@
-bellboyApp.controller('editController', function ($scope, $http, $routeParams) {
- $http.get('/api/bells/' + $routeParams.id).success(function(data) {
+bellboyApp.controller('editController', function($scope, $http, $routeParams, $rootScope) {
+  $scope.loadData = function() {
+    $http.get('/api/bells/get/' + $routeParams.id).success(function(data) {
+      $scope.bell = data
+    }).error(function(err) {
+      console.log(err)
+    })
 
-   $scope.bell = data
+    $http.get("/api/bells/next").success(function(data) {
+      $scope.nextBell = data
+    }).error(function(err) {
+      console.log(err)
+    })
 
- }).error(function(err) {
-   console.log(err)
- })
 
-  $scope.orderBy = '!Time';
+  }
+
+  $scope.deleteBell = function(bell) {
+    $http.delete('/api/bells/delete/' + bell)
+  }
+
+  $scope.updateBell = function(bell) {
+    $http.put('/api/bells/update/' + bell, $scope.bell, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    })
+    console.dir($scope.bell)
+  }
+
+  $scope.reloadData = function() {
+    $scope.$digest()
+  }
+
+  $scope.trigger = function(bell) {
+    $http.post('/api/bells/trigger/' + bell)
+  }
+
+  // $scope.toast = function(toastclass, title, body, duration) {
+  //   if (typeof duration === "undefined") {
+  //     duration = 2000
+  //   }
+  //   toaster.pop(toastclass, title, body, duration)
+  // }
+
+  $scope.reloadView = function() {
+    $route.reload();
+  }
+
+  $scope.toggleBell = function(bell, status) {
+    $http.post('/api/bells/toggle/' + bell.ID + '/' + (status === "true"))
+    if (status == true) {
+      $scope.toast("success", "Bell Enabled", bell.Name + " has been enabled!")
+    } else {
+      $scope.toast("success", "Bell Disabled", bell.Name + " has been disabled!")
+    }
+
+
+  }
+  $scope.loadData()
+  $scope.curTime = Date.now()
+  $scope.formData = {}
+
 })

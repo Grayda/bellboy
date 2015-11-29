@@ -1,6 +1,6 @@
-bellboyApp.controller('listController', function($scope, $http, $route, $timeout, toaster) {
+bellboyApp.controller('listController', function($scope, $http, $route, $rootScope) {
   $scope.loadData = function() {
-      $http.get('/api/bells').success(function(data) {
+      $http.get('/api/bells/get').success(function(data) {
         $scope.bells = data
       }).error(function(err) {
         console.log(err)
@@ -19,24 +19,17 @@ bellboyApp.controller('listController', function($scope, $http, $route, $timeout
     $scope.$digest()
   }
 
-  $scope.toast = function(toastclass, title, body, duration) {
-    if(typeof duration === "undefined") { duration = 2000 }
-    toaster.pop(toastclass, title, body, duration)
+  $scope.trigger = function(bell) {
+    $http.post('/api/bells/trigger/' + bell)
   }
+
+  // $scope.toast = function(toastclass, title, body, duration) {
+  //   if(typeof duration === "undefined") { duration = 2000 }
+  //   toaster.pop(toastclass, title, body, duration)
+  // }
 
   $scope.reloadView = function() {
 		$route.reload();
-  }
-
-  $scope.toggleBell = function(bell, status) {
-    $http.post('/api/bells/toggle/' + bell + '/' + !!status)
-    if(status == true) {
-      $scope.toast("success","Bell Enabled","Bell has been enabled!")
-    } else {
-      $scope.toast("success","Bell Disabled","Bell has been disabled!")
-    }
-
-      $scope.loadData()
   }
 
   $scope.curTime = Date.now()

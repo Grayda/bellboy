@@ -1,4 +1,4 @@
-bellboyApp.controller('viewController', function($scope, $http, $routeParams, $rootScope) {
+bellboyApp.controller('statusController', function($scope, $http, $routeParams, $rootScope) {
 
   $scope.loadData = function() {
     $http.get('/api/bells/get/' + $routeParams.id).success(function(data) {
@@ -16,10 +16,6 @@ bellboyApp.controller('viewController', function($scope, $http, $routeParams, $r
 
   $scope.trigger = function(bell) {
     $http.post('/api/bells/trigger/' + bell)
-  }
-
-  $scope.deleteBell = function(bell) {
-    $http.delete('/api/bells/delete/' + bell)
   }
 
   $scope.reloadView = function() {

@@ -13,19 +13,11 @@ module.exports = function setup(options, imports, register) {
   var routes = require('./routes/index');
   var users = require('./routes/users');
   var bells = require('./routes/bells')(imports);
+  var status = require('./routes/status')(imports);
 
   var app = express();
 
   assert(options.port, "'port' option for web plugin is missing!")
-
-  imports.eventbus.on("trigger", function(bell) {
-    web.io.sockets.emit("trigger", { bell: bell })
-  })
-
-  imports.eventbus.on("bells_bellchanged", function(bell, property, value) {
-    web.io.sockets.emit("bells_bellchanged", { bell: bell, property: property, value: value })
-  })
-
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
@@ -43,6 +35,7 @@ module.exports = function setup(options, imports, register) {
   app.use(express.static(path.join(__dirname, 'public')));
 
   app.use('/api', bells);
+  app.use('/status', status);
   app.use('/', routes);
   app.use('/users', users);
 
@@ -175,6 +168,19 @@ module.exports = function setup(options, imports, register) {
   web = {
     io: io
   }
+
+  imports.eventbus.on("trigger", function(bell) {
+    web.io.sockets.emit("trigger", { bell: bell })
+  })
+
+  web.io.sockets.on("trigger", function(bell) {
+    imports.eventbus("trigger", imports.bells.get(bell))
+  })
+
+  imports.eventbus.on("bells_bellchanged", function(bell, property, value) {
+    web.io.sockets.emit("bells_bellchanged", { bell: bell, property: property, value: value })
+  })
+
 
   register(null, {
     web: web

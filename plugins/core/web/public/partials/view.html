@@ -1,4 +1,13 @@
-<h1>Details for {{ bell.Name }}</h1>
+<div ng-controller="viewController" id="viewController">
+
+<h1><i class="glyphicon glyphicon-lock" ng-if="bell.Locked"></i> Details for {{ bell.Name }}</h1>
+<p>
+  <a href="" ng-click="trigger(bell.ID)" class="btn btn-primary">Trigger</a>
+  <a ng-click="deleteBell(bell.ID)" ng-href="#" class="btn btn-danger pull-right" ng-if="!bell.Locked">Delete</a>
+  <a href="#" class="btn btn-primary" ng-click="toggleBell(bell, !bell.Enabled)" ng-if="!bell.Enabled">Enable</a>
+  <a href="#" class="btn btn-primary" ng-click="toggleBell(bell, !bell.Enabled)" ng-if="bell.Enabled">Disable</a>
+</p>
+
 <table border="1" cellpadding="10" cellspacing="0" class="list table table-bordered table-hover">
   <tr>
     <th>Name</th>
@@ -22,7 +31,7 @@
   </tr>
   <tr>
     <td>Bell Time (calculated)</td>
-    <td ng-include="'/api/bells/next/' + bell.ID + '/date'"></td>
+    <td ng-bind="(nextBell | filter: { id: bell.ID })[0].date | date:'medium'"></td>
   </tr>
   <tr>
     <td>Enabled</td>
@@ -47,3 +56,4 @@
 
 </table>
 <a href="/#/bells">Go back</a>
+</div>

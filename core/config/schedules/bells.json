@@ -79,7 +79,7 @@
   }
 }, {
   "ID": "test",
-  "Enabled": true,
+  "Enabled": false,
   "Name": "Test Bell - EVERY MINUTE",
   "Description": "RUN FOR ALL OF THE MINUTES!",
   "Locked": false,
@@ -111,7 +111,7 @@
   "Enabled": true,
   "Name": "Homeroom Bell - Warning",
   "Description": "Warning bell for homeroom",
-  "Locked": false,
+  "Locked": true,
   "Time": "45 8 * * 1-5",
   "Actions": {
     "Audio": {
@@ -176,7 +176,7 @@
   }
 }, {
   "ID": "gratitude",
-  "Enabled": false,
+  "Enabled": true,
   "Name": "Gratitude Music",
   "Description": "Plays a minute of music",
   "Locked": false,

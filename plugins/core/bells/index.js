@@ -29,8 +29,10 @@ module.exports = function setup(options, imports, register) {
       var res = []
 
       bellObj.bells.forEach(function(item) {
-        if(item.ID.indexOf("_") == 0 && omitVirtual == true) { return }
-         res.push(item)
+        if (item.ID.indexOf("_") == 0 && omitVirtual == true) {
+          return
+        }
+        res.push(item)
       })
 
       return res
@@ -50,18 +52,43 @@ module.exports = function setup(options, imports, register) {
 
     },
     get: function(id) {
-      return _.where(bellObj.bells, { 'ID': id })[0]
+      return _.where(bellObj.bells, {
+        'ID': id
+      })[0]
     },
-    set: function(id, property, value) {
-      imports.eventbus.emit("bells_bellchanged", bellObj.get(id), property, value)
-      return _.set(bellObj.get(id), property, value)
+    set: function(bell) {
+
+      bellObj.bells.forEach(function(item, index, arr) {
+        if (item.ID === bell.ID) {
+          if (item.Locked == true) {
+            imports.eventbus.emit("bells_error_locked", item)
+          } else {
+            arr[index] = bell
+          }
+        }
+      })
+
+      imports.eventbus.emit("bells_bellchanged", bell)
+
     },
-    delete: function(bell, property) {
-      // bellObj.bells = _.omit(bell, property)
+    delete: function(bell) {
+      if (bell.Locked == true) {
+        imports.eventbus.emit("bells_error_locked", item)
+        return false
+      }
+
+      _.remove(bellObj.bells, function(item) {
+        return item.ID === bell.ID
+      })
     },
-    toggle: function(id, status) {
-      imports.eventbus.emit("bells_bellchanged", bellObj.get(id), "Enabled", status)
-      return bellObj.set(bellObj.get(id), "Enabled", status)
+    toggle: function(bell, status) {
+      if (bellObj.get(bell.ID).Locked == true) {
+        imports.eventbus.emit("bells_error_locked", bell)
+        return false
+      }
+
+      bell.Enabled = imports.validate.toBoolean(status)
+      bellObj.set(bell)
     }
   }
 

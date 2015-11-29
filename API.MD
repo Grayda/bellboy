@@ -113,7 +113,7 @@
 					- [`trigger` _(bell)_](#trigger-bell)
 				- [Emitters](#emitters)
 			- [Endpoints](#endpoints)
-				- [`/api/bells` (GET, json)](#apibells-get-json)
+				- [`/api/bells/get` (GET, json)](#apibellsget-get-json)
 				- [`/api/bells/get/<bell>` (GET, json)](#apibellsgetbell-get-json)
 				- [`/api/bells/next` (GET, json)](#apibellsnext-get-json)
 				- [`/api/bells/next/<bell>` (GET, string)](#apibellsnextbell-get-string)
@@ -121,6 +121,11 @@
 				- [`/api/bells/next/<bell>/<amount>` (GET, json)](#apibellsnextbellamount-get-json)
 				- [`/api/bells/previous/<bell>` (GET, string)](#apibellspreviousbell-get-string)
 				- [`/api/bells/previous/<bell>/<amount>` (GET, json)](#apibellspreviousbellamount-get-json)
+				- [`/api/bells/toggle/<bell>` (POST, `bell`)](#apibellstogglebell-post-bell)
+				- [`/api/bells/toggle/<bell>/<state>` (POST, `bell`, boolean)](#apibellstogglebellstate-post-bell-boolean)
+				- [`/api/bells/trigger/<bell>` (POST, `bell`)](#apibellstriggerbell-post-bell)
+				- [`/api/bells/delete/<bell>` (POST, `bell`)](#apibellsdeletebell-post-bell)
+				- [`/api/bells/update/<bell>` (POST, `bell`)](#apibellsupdatebell-post-bell)
 		- [`Plugin`](#plugin)
 			- [Consumes](#consumes)
 			- [Options](#options)
@@ -486,7 +491,7 @@ None
 #### Endpoints
 The `web` plugin also exposes a REST API which allows you to get and set bells.
 
-##### `/api/bells` (GET, json)
+##### `/api/bells/get` (GET, json)
 Returns a JSON string containing an array of bells
 
 ##### `/api/bells/get/<bell>` (GET, json)
@@ -500,6 +505,7 @@ Returns a date string with the next occurrence of _`<bell>`_
 
 ##### `/api/bells/next/<bell>/date` (GET, string)
 Returns a formatted date string with the next occurrence of _`<bell>`_
+**NB: Mark for removal?**
 
 ##### `/api/bells/next/<bell>/<amount>` (GET, json)
 Returns a JSON string array containing the next _`<amount>`_ occurrences for _`<bell>`_
@@ -510,11 +516,26 @@ Returns a date string with the previous occurrence of _`<bell>`_
 ##### `/api/bells/previous/<bell>/<amount>` (GET, json)
 Returns a JSON string array containing the previous _`<amount>`_ occurrences for _`<bell>`_
 
-##### `/api/bells/toggle/<bell>` (POST, string)
-Returns new state. If _`<bell>`_ is true, changes it to false, and vice versa.
+##### `/api/bells/toggle/<bell>` (POST, `bell`)
+Takes a `bell` (not just the name!), toggles the state and returns the new state. If _`<bell>.Enabled`_ is true, changes it to false, and vice versa.
 
-##### `/api/bells/toggle/<bell>/<state>` (POST, string)
-Returns new state. Sets _`<bell>`_ to _`<state>`_
+_If `<bell>.Locked` is true, Server will return HTTP code 423_
+
+##### `/api/bells/toggle/<bell>/<state>` (POST, `bell`, boolean)
+Sets _`<bell>.Enabled`_ to _`<state>`_ then returns the new state.
+
+_If `<bell>.Locked` is true, Server will return HTTP code 423_
+
+##### `/api/bells/trigger/<bell>` (POST, `bell`)
+Triggers _`<bell>`_ immediately.
+
+##### `/api/bells/delete/<bell>` (POST, `bell`)
+Deletes _`<bell>`_ immediately. Be sure to get confirmation from the user before doing this!
+
+##### `/api/bells/update/<bell>` (POST, `bell`)
+Goes through all the bells until it finds one where the ID matches _`<bell>.ID`_, then replaces that bell with _`<bell>`_. If no match is found, a new item is **NOT** created.
+
+_IMPORTANT: _`<bell>`_ should be an entire bell, not part of one, as values don't get merged!_
 
 
 ----------------------------------------
