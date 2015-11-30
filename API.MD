@@ -535,7 +535,7 @@ Deletes _`<bell>`_ immediately. Be sure to get confirmation from the user before
 ##### `/api/bells/update/<bell>` (POST, `bell`)
 Goes through all the bells until it finds one where the ID matches _`<bell>.ID`_, then replaces that bell with _`<bell>`_. If no match is found, a new item is **NOT** created.
 
-_IMPORTANT: _`<bell>`_ should be an entire bell, not part of one, as values don't get merged!_
+_IMPORTANT: `<bell>` should be an entire bell, not part of one, as values don't get merged!_
 
 
 ----------------------------------------
