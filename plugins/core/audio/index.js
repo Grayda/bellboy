@@ -3,6 +3,7 @@ module.exports = function setup(options, imports, register) {
   var cp = require("child_process") // For running our audio player
   var assert = require("assert") // For ensuring options exist, variables are there, and so forth
   var os = require("os"); // Determines if Windows or Linux
+  var fs = require("fs") // For retrieving files in a folder
 
   // Have we not passed the audioPath option? Exit!
   assert(options.audioPath, "audioPath option required!")
@@ -18,22 +19,22 @@ module.exports = function setup(options, imports, register) {
     play: function(bell) {
 
       // If our bell object doesn't have Actions.Audio.Files, or the bell is disabled, just return. We don't need that kind of negativity in our lives!
-      if(!_.has(bell, "Actions.Audio.Files") || _.get(bell, "Actions.Audio.Enabled") == false) {
+      if (!_.has(bell, "Actions.Audio.Files") || _.get(bell, "Actions.Audio.Enabled") == false) {
         return
       }
 
       // If bell.Actions.Audio.Files is not an array, make it into one
-      if(!Array.isArray(bell.Actions.Audio.Files)) {
+      if (!Array.isArray(bell.Actions.Audio.Files)) {
         bell.Actions.Audio.Files = [bell.Actions.Audio.Files.toString()]
       }
 
       try {
         var loop
-        // Shuffle the array of music
+          // Shuffle the array of music
         file = _.shuffle(bell.Actions.Audio.Files)[0]
         assert(imports.validate.isFilename(file), "Audio file contains invalid (non filename) characters!")
 
-        if(imports.validate.isInt(bell.Actions.Audio.Loop) && loop > 0) {
+        if (imports.validate.isInt(bell.Actions.Audio.Loop) && loop > 0) {
           loop = "--loop " + bell.Actions.Audio.Loop
         } else {
           loop = ""
@@ -49,9 +50,9 @@ module.exports = function setup(options, imports, register) {
 
           // When we're truly done playing the audio, let everyone know
           proc.on("close", function(code, signal) {
-            imports.eventbus.emit("audio_finished", file)
-          })
-        // But if we're on Windows
+              imports.eventbus.emit("audio_finished", file)
+            })
+            // But if we're on Windows
         } else {
           // This is all basically the same, except the process we call to play the MP3
           imports.eventbus.emit("audio_started", file)
@@ -67,6 +68,9 @@ module.exports = function setup(options, imports, register) {
       } catch (ex) {
         imports.eventbus.error(ex)
       }
+    },
+    files: function() {
+      return fs.readdirSync(options.audioPath)
     }
   }
 

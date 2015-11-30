@@ -30,6 +30,7 @@
     "angular": "~1.4.7",
     "moment": "~2.10.6",
     "angular-route": "~1.4.8",
-    "AngularJS-Toaster": "angularjs-toaster#~0.4.16"
+    "AngularJS-Toaster": "angularjs-toaster#~0.4.16",
+    "angular-schema-form": "~0.8.12"
   }
 }
