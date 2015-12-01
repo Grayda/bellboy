@@ -1,4 +1,4 @@
-bellboyApp.controller('editController', function($scope, $http, $routeParams, $rootScope) {
+bellboyApp.controller('editController', function($scope, $http, $routeParams, $rootScope, $route) {
   $scope.loadData = function() {
     $http.get('/api/bells/get/' + $routeParams.id).success(function(data) {
       $scope.bell = data
@@ -11,9 +11,19 @@ bellboyApp.controller('editController', function($scope, $http, $routeParams, $r
     }).error(function(err) {
       console.log(err)
     })
+  }
 
+  $scope.loadSchema = function() {
+    var res = {}
+    $http.get("/api/schema").then(function(data) {
+      return data.schema
+    })
+
+    $scope.model = {}
 
   }
+
+
 
   $scope.deleteBell = function(bell) {
     $http.delete('/api/bells/delete/' + bell)
@@ -21,11 +31,10 @@ bellboyApp.controller('editController', function($scope, $http, $routeParams, $r
 
   $scope.updateBell = function(bell) {
     $http.put('/api/bells/update/' + bell, $scope.bell, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
-    console.dir($scope.bell)
   }
 
   $scope.reloadData = function() {
@@ -54,9 +63,9 @@ bellboyApp.controller('editController', function($scope, $http, $routeParams, $r
     } else {
       $scope.toast("success", "Bell Disabled", bell.Name + " has been disabled!")
     }
-
-
   }
+
+
   $scope.loadData()
   $scope.curTime = Date.now()
   $scope.formData = {}

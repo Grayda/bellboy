@@ -23,6 +23,17 @@ module.exports = function setup(options, imports, register) {
     }
   })
 
+  // For our form in web
+  imports.schema.append({
+    "ID": {
+          "title": "ID",
+          "type": "string"
+        }
+  },[
+"ID"
+] 
+)
+
   var bellObj = {
     bells: [],
     toArray: function(omitVirtual) {

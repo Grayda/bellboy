@@ -1,0 +1,77 @@
+<div ng-controller="editController" id="editController">
+  <h1 ng-if="::!bell.Locked">Editing {{ ::bell.Name }}</h1>
+  <h1 ng-if="::bell.Locked"><i class="glyphicon glyphicon-lock"></i> {{ ::bell.Name }} - Locked</h1>
+
+  <form class="form-horizontal">
+    <fieldset>
+
+      <a ng-href="#" ng-click="deleteBell(bell.ID)" class="btn btn-danger pull-right">Delete this bell</a>
+      <a href="#" class="btn btn-primary" ng-click="toggleBell(bell, true)" ng-if="!bell.Enabled">Enable</a>
+      <a href="#" class="btn btn-primary" ng-click="toggleBell(bell, false)" ng-if="bell.Enabled">Disable</a>
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="ID">Bell ID</label>
+        <div class="col-md-4">
+          <input id="ID" name="ID" type="text" placeholder="firstbell" class="form-control input-md" required="" ng-value="bell.ID">
+          <span class="help-block">Unique alphanumeric name for the bell</span>
+        </div>
+      </div>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="Name">Name</label>
+        <div class="col-md-4">
+          <input id="Name" name="Name" type="text" placeholder="First Bell" class="form-control input-md" required="" ng-value="bell.Name" ng-model="bell.Name">
+          <span class="help-block">Short name for the bell</span>
+        </div>
+      </div>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="Description">Description</label>
+        <div class="col-md-4">
+          <input id="Description" name="Description" type="text" placeholder="The first bell of the day" class="form-control input-md" required="" ng-value="bell.Description" ng-model="bell.Description">
+          <span class="help-block">Short description for this bell</span>
+        </div>
+      </div>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="Time">Time</label>
+        <div class="col-md-4">
+          <input id="Time" name="Time" type="text" placeholder="0 11 * * 1,2,3,4,5" class="form-control input-md" required="" ng-value="bell.Time" ng-model="bell.Time">
+          <span class="help-block">Scheduled time in cron syntax</span>
+        </div>
+      </div>
+
+      <!-- Select Basic -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="Enabled">Enabled</label>
+        <div class="col-md-4">
+          <select id="Enabled" name="Enabled" class="form-control" ng-model="::bell.Enabled">
+            <option value="true" ng-selected="bell.Enabled == true">Yes</option>
+            <option value="false" ng-selected="bell.Enabled == false">No</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Select Basic -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="Locked">Locked</label>
+        <div class="col-md-4">
+          <select id="Locked" name="Locked" class="form-control" ng-model="::bell.Locked">
+            <option value="true" ng-selected="bell.Locked == true">Yes</option>
+            <option value="false" ng-selected="bell.Locked == false">No</option>
+          </select>
+          <span class="help-block">NOTE: Once a bell is locked, it <b>CANNOT</b> be modified or unlocked via the web UI -- you'll need to edit the bell manually!</span>
+        </div>
+      </div>
+
+    </fieldset>
+  </form>
+
+  <div>
+    <a ng-click="updateBell(bell.ID)" ng-href="#" class="btn btn-primary">Save</a>
+    <a href="/#/bells" class="btn btn-warning">Cancel</a>
+  </div>
+</div>

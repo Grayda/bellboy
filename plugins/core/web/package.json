@@ -27,7 +27,8 @@
       "scheduler",
       "validate",
       "logger",
-      "eventbus"
+      "eventbus",
+      "schema"
     ]
   }
 }

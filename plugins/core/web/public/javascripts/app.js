@@ -1,4 +1,4 @@
-var bellboyApp = angular.module('bellboyApp', ["toaster", "ngRoute"]);
+var bellboyApp = angular.module('bellboyApp', ["toaster", "ngRoute", "schemaForm"]);
 
 bellboyApp.run(function($rootScope, toaster) {
   $rootScope.toast = function(toastclass, title, body, duration) {

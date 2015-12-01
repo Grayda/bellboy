@@ -3,6 +3,10 @@ var router = express.Router();
 
 module.exports = function(imports) {
 
+  // =====================================================================================================================
+  // Bell related API functions
+  // =====================================================================================================================
+
   // Returns a list of bells
   router.get('/bells/get', function(req, res, next) {
     res.json(imports.bells.toArray(true))
@@ -85,6 +89,14 @@ module.exports = function(imports) {
 
   router.post("/bells/create/", function(req, res, next) {
     imports.bells.create(req.body)
+  })
+
+  // =====================================================================================================================
+  // Schema related functions
+  // =====================================================================================================================
+
+  router.get("/schema", function(req, res, next) {
+    res.json(imports.schema.schema)
   })
 
   return router

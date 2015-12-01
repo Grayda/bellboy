@@ -20,7 +20,8 @@
     "consumes": [
       "eventbus",
       "validate",
-      "logger"
+      "logger",
+      "schema"
     ]
   },
   "dependencies": {

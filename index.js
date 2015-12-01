@@ -5,12 +5,11 @@ var plugins = [
   { packagePath: "./plugins/core/config", root: __dirname, configFile: __dirname + "/core/config/config_default.json" },
   { packagePath: "./plugins/core/bells", root: __dirname, bellFile: __dirname + "/core/config/schedules/bells.json" },
   // { packagePath: "./plugins/core/audio", audioPath: __dirname + "/audio/", playerPath: __dirname + "/plugins/core/audio/mpg123/mpg123.exe" },
-  // { packagePath: "./plugins/core/rest", port: 9001, useREST: true, useRSS: true },
-  // { packagePath: "./plugins/core/rssfeed", port: 9002 },
   { packagePath: "./plugins/core/logger" },
   { packagePath: "./plugins/core/web", port: 3000 },
   { packagePath: "./plugins/core/eventbus"},
   { packagePath: "./plugins/core/scheduler" },
+  { packagePath: "./plugins/core/schema" },
   { packagePath: "./plugins/core/validate" }
 ]
 

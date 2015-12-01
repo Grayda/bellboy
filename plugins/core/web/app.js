@@ -12,7 +12,7 @@ module.exports = function setup(options, imports, register) {
 
   var routes = require('./routes/index');
   var users = require('./routes/users');
-  var bells = require('./routes/bells')(imports);
+  var api = require('./routes/api')(imports);
   var status = require('./routes/status')(imports);
 
   var app = express();
@@ -34,7 +34,7 @@ module.exports = function setup(options, imports, register) {
   app.use(express.static(path.join(__dirname, 'bower_components')));
   app.use(express.static(path.join(__dirname, 'public')));
 
-  app.use('/api', bells);
+  app.use('/api', api);
   app.use('/status', status);
   app.use('/', routes);
   app.use('/users', users);
