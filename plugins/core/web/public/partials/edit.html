@@ -1,12 +1,9 @@
 <div ng-controller="editController" id="editController">
-  <script type="text/javascript">
-    var scope = angular.element("#editController").scope()
-    console.dir(scope.loadSchema())
-  </script>
+
   <h1 ng-if="::!bell.Locked">Editing {{ ::bell.Name }}</h1>
   <h1 ng-if="::bell.Locked"><i class="glyphicon glyphicon-lock"></i> {{ ::bell.Name }} - Locked</h1>
   <a ng-href="#" ng-click="deleteBell(bell.ID)" class="btn btn-danger pull-right">Delete this bell</a>
   <a href="#" class="btn btn-primary" ng-click="toggleBell(bell, true)" ng-if="!bell.Enabled">Enable</a>
   <a href="#" class="btn btn-primary" ng-click="toggleBell(bell, false)" ng-if="bell.Enabled">Disable</a>
-  <form sf-schema="scope" sf-form="form" sf-model="model"></form>
+  <form sf-schema="schema" sf-form="form" sf-model="model"></form>
 </div>

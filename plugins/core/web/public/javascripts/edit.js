@@ -1,4 +1,8 @@
-bellboyApp.controller('editController', function($scope, $http, $routeParams, $rootScope, $route) {
+bellboyApp.controller('editController', function($scope, $http, $routeParams, $rootScope, $route, loadSchema) {
+
+
+  console.dir($scope)
+
   $scope.loadData = function() {
     $http.get('/api/bells/get/' + $routeParams.id).success(function(data) {
       $scope.bell = data
@@ -11,16 +15,6 @@ bellboyApp.controller('editController', function($scope, $http, $routeParams, $r
     }).error(function(err) {
       console.log(err)
     })
-  }
-
-  $scope.loadSchema = function() {
-    var res = {}
-    $http.get("/api/schema").then(function(data) {
-      return data.schema
-    })
-
-    $scope.model = {}
-
   }
 
 
@@ -66,7 +60,9 @@ bellboyApp.controller('editController', function($scope, $http, $routeParams, $r
   }
 
 
+
   $scope.loadData()
+  $scope.data = $scope.loadSchema()
   $scope.curTime = Date.now()
   $scope.formData = {}
 

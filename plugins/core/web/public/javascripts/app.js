@@ -18,7 +18,14 @@ bellboyApp.config(['$routeProvider',
     }).
     when('/bells/edit/:id', {
       templateUrl: "partials/edit.html",
-      controller: 'editController'
+      controller: 'editController',
+      resolve: {
+        loadSchema: ["$http", function($http, editController) {
+          $http.get("/api/schema").then(function(data) {
+            return data.data
+          })
+        }]
+      }
     }).
     when('/bells/view/:id', {
       templateUrl: "partials/view.html",
