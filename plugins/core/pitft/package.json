@@ -1,0 +1,31 @@
+{
+  "name": "pitft",
+  "version": "0.0.1",
+  "description": "Plugin to control the PiTFT screen (made by Adafruit) via Bellboy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy",
+    "pitft",
+    "adafruit",
+    "touch",
+    "screen"
+  ],
+  "author": "David Gray",
+  "license": "ISC",
+  "plugin": {
+    "provides": [
+      "pitft"
+    ],
+    "consumes": [
+      "eventbus",
+      "logger"
+    ]
+  },
+  "dependencies": {
+    "assert": "^1.3.0",
+    "rpi-gpio": "^0.7.0"
+  }
+}

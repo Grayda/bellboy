@@ -8,7 +8,6 @@ module.exports = function setup(options, imports, register) {
 
   register(null, {
     config: {
-      root: options.root,
       config: config,
       loadConfig: function() {
         try {
