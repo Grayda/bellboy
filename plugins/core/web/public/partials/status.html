@@ -1,3 +1,15 @@
 <div ng-controller="statusController" id="statusController">
-  <h1>Hi!</h1>
+  <table class="table table-condensed table-striped">
+    <th></th>
+    <tr>
+      <td dynamic-text>{{ bell.Name }}</td>
+    </tr>
+    <tr>
+      <td dynamic-text>{{ (nextBell | filter: { id: bell.ID })[0].date | date:'medium' }}</td>
+    </tr>
+    <tr>
+      <td dynamic-text>{{ (nextBell | filter: { id: bell.ID })[0].date | date:'medium' }}</td>
+    </tr>
+
+  </table>
 </div>

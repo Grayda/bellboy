@@ -1,12 +1,8 @@
-var bellboyApp = angular.module('bellboyStatusApp', ["ngRoute"]);
+var bellboyStatusApp = angular.module('bellboyStatusApp', ["ngRoute", "ngFitTextDynamic"]);
 
-bellboyStatusApp.run(function($rootScope, toaster) {
-  $rootScope.toast = function(toastclass, title, body, duration) {
-    if (typeof duration === "undefined") {
-      duration = 2000
-    }
-    toaster.pop(toastclass, title, body, duration)
-  }
+bellboyStatusApp.run(function($rootScope) {
+
+
 });
 
 bellboyStatusApp.config(['$routeProvider',
