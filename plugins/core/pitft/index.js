@@ -45,9 +45,9 @@ module.exports = function setup(options, imports, register) {
             imports.eventbus.emit("backlightchanged", value / 1023 * 100)
         }
         imports.eventbus.emit("pinchange", pin, value)
-      }
+      })
 
-      pitftObj = {
+      var pitftObj = {
         isPi: function() {
           try {
             hardware = fs.readFileSync("/proc/cpuinfo")
@@ -60,7 +60,7 @@ module.exports = function setup(options, imports, register) {
             return false
           }
         },
-        setPins: function(backlight, button1, button2, button3, button4) {
+        setPin: function(pin, direction) {
           var dir
           if (direction == 0) {
             dir = gpio.DIR_OUT

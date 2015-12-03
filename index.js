@@ -36,6 +36,10 @@ architectApp = architect.createApp(plugins, function (err, app) {
       throw err
     })
 
+    app.services.eventbus.on("button1", function() {
+      app.services.eventbus.emit("trigger", app.services.bells.get("test"))
+    })
+
     app.services.eventbus.on("trigger", function(bell) {
       app.services.logger.log("Bell was triggered: " + bell.Name)
     })
