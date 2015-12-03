@@ -2,11 +2,6 @@ module.exports = function setup(options, imports, register) {
     var gpio = require("rpi-gpio");
     var fs = require("fs")
 
-    pitftObj.setPin(options.backlight, 0)
-    pitftObj.setPin(options.button1, 1);
-    pitftObj.setPin(options.button2, 1);
-    pitftObj.setPin(options.button3, 1);
-    pitftObj.setPin(options.button4, 1);
 
     gpio.on('change', function(pin, value) {
         switch (pin) {
@@ -68,7 +63,7 @@ module.exports = function setup(options, imports, register) {
             dir = gpio.DIR_IN
           }
 
-          gpio.setup(pin, dir);
+          gpio.setup(pin, dir, gpio.EDGE_BOTH);
           imports.eventbus.emit("pinsetup", pin, direction)
         },
         setBacklight: function(percentage, timeout, revertedbrightness) {
@@ -101,6 +96,13 @@ module.exports = function setup(options, imports, register) {
           })
         }
       }
+
+
+          pitftObj.setPin(options.backlight, 0)
+          pitftObj.setPin(options.button1, 1);
+          pitftObj.setPin(options.button2, 1);
+          pitftObj.setPin(options.button3, 1);
+          pitftObj.setPin(options.button4, 1);
 
       register(null, {
         pitft: pitftObj
