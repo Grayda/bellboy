@@ -1,15 +1,13 @@
 <div ng-controller="statusController" id="statusController">
   <table class="table table-condensed table-striped">
-    <th></th>
+    <th><td colspan="2">Header</td></th>
     <tr>
-      <td dynamic-text>{{ bell.Name }}</td>
+      <td dynamic-text="fittext" dynamic-text-min="12" dynamic-text-max="120"><i class="glyphicon glyphicon-chevron-right"></i></td>
+      <td dynamic-text="fittext" dynamic-text-min="12" dynamic-text-max="120">{{ bell.Name }}</td>
     </tr>
     <tr>
-      <td dynamic-text>{{ (nextBell | filter: { id: bell.ID })[0].date | date:'medium' }}</td>
+      <td dynamic-text="fittext" dynamic-text-min="12" dynamic-text-max="120"><i class="glyphicon glyphicon-time"></i></td>
+      <td dynamic-text="fittext" dynamic-text-min="12" dynamic-text-max="120">{{ (nextBell | filter: { id: bell.ID })[0].date | date:'medium' }}</td>
     </tr>
-    <tr>
-      <td dynamic-text>{{ (nextBell | filter: { id: bell.ID })[0].date | date:'medium' }}</td>
-    </tr>
-
   </table>
 </div>

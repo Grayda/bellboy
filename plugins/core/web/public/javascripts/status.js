@@ -1,4 +1,4 @@
-bellboyStatusApp.controller('statusController', function($scope, $http, $routeParams, $rootScope) {
+bellboyStatusApp.controller('statusController', function($scope, $http, $routeParams, $rootScope, $timeout) {
 
   $scope.loadData = function() {
     $http.get("/api/bells/next").success(function(data) {
@@ -31,4 +31,9 @@ bellboyStatusApp.controller('statusController', function($scope, $http, $routePa
   $scope.curTime = Date.now()
 
   $scope.loadData()
+
+  $timeout(function () {
+         $scope.$broadcast('fittext');
+       },10);
+
 })
