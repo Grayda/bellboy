@@ -4,3 +4,6 @@
 .next {
   border-left: 6px solid slateblue !important;
 }
+#statusApp {
+  overflow: hidden !important;
+}

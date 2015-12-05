@@ -1,13 +1,23 @@
 <div ng-controller="statusController" id="statusController">
-  <table class="table table-condensed table-striped">
-    <th><td colspan="2">Header</td></th>
+  <script type="text/javascript">
+    $(window).resize(function() {
+      var tcount = $(".table tr").length
+      var tsize = ($(window).width() / $(window).height() * 2)
+
+      console.log("Setting tr to " + (100 / tcount))
+      console.log("Setting tsize is " + tsize)
+      $(".table tr").css("height", (100 / tcount) + "vh")
+      $(".table tr").css("font-size", (100 / tcount / tsize) + "vh")
+      $(".table tr td").css("vertical-align", "middle")
+    }).resize()
+  </script>
+
+  <table class="table table-condensed">
     <tr>
-      <td dynamic-text="fittext" dynamic-text-min="12" dynamic-text-max="120"><i class="glyphicon glyphicon-chevron-right"></i></td>
-      <td dynamic-text="fittext" dynamic-text-min="12" dynamic-text-max="120">{{ bell.Name }}</td>
+      <td><i class="glyphicon glyphicon-chevron-right"></i> {{ bell.Name }}</td>
     </tr>
     <tr>
-      <td dynamic-text="fittext" dynamic-text-min="12" dynamic-text-max="120"><i class="glyphicon glyphicon-time"></i></td>
-      <td dynamic-text="fittext" dynamic-text-min="12" dynamic-text-max="120">{{ (nextBell | filter: { id: bell.ID })[0].date | date:'medium' }}</td>
+      <td><i class="glyphicon glyphicon-time"></i> {{ (nextBell | filter: { id: bell.ID })[0].date | date:'medium' }}</td>
     </tr>
   </table>
 </div>
