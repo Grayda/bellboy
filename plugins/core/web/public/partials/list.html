@@ -14,6 +14,10 @@
     socket.on("bells_error_locked", function(data) {
       angular.element("#listController").scope().toast("danger", "Error updating " + data.bell.Name, "This bell is locked and cannot be updated!", 5000)
     })
+
+    $("#reloadStatus").on("click", function() {
+      socket.emit("reloadstatus")
+    })
   </script>
   <h1>Bells</h1>
 
@@ -55,14 +59,14 @@
       <th>Actions</th>
     </tr>
     <tr ng-class="{'disabled': !bell.Enabled}" ng-repeat="bell in bells | filter:query | orderBy:orderBy">
-      <td ng-class="{ 'next': nextBell[0].id == bell.ID }"><span ng-if="nextBell[0].id == bell.ID"><i class="glyphicon glyphicon-chevron-right"></i> NEXT</span></td>
+      <td ng-class="{ 'next': nextBell[0].ID == bell.ID }"><span ng-if="nextBell[0].ID == bell.ID"><i class="glyphicon glyphicon-chevron-right"></i> NEXT</span></td>
       <td>
         <i class="glyphicon glyphicon-ban-circle" ng-if="!bell.Enabled"></i>
         <i class="glyphicon glyphicon-lock" ng-if="bell.Locked"></i>
         <a href="#/bells/view/{{ bell.ID }}">{{ bell.Name }}</a>
       </td>
       <td ng-bind="bell.Description"></td>
-      <td ng-bind="(nextBell | filter: { id: bell.ID })[0].date | date:'medium'"></td>
+      <td ng-bind="(nextBell | filter: { ID: bell.ID })[0].Date | date:'medium'"></td>
       <td>
         <a href="" ng-click="trigger(bell.ID)">Trigger</a> |
         <a href="#/bells/edit/{{ bell.ID }}">Edit</a>
@@ -90,5 +94,6 @@
   <p>
     <span ng-bind="(bells | filter: { Enabled: true }).length"></span> /
     <span ng-bind="(bells).length"></span> bells loaded
+    <a href="" id="reloadStatus">Reload Status Screen(s)</a>
   </p>
 </div>

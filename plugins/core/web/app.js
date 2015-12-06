@@ -173,6 +173,11 @@ module.exports = function setup(options, imports, register) {
     web.io.sockets.emit("trigger", { bell: bell })
   })
 
+  web.io.sockets.on("reloadstatus", function(bell) {
+    console.log("HI")
+    web.io.sockets.emit("reloadstatus", {})
+  })
+
   web.io.sockets.on("trigger", function(bell) {
     imports.eventbus("trigger", imports.bells.get(bell))
   })

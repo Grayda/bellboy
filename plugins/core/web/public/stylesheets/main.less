@@ -9,3 +9,62 @@
 #statusApp {
   overflow: hidden !important;
 }
+
+#statusApp th {
+  .grad(#3a75ac, darken(#3a75ac, 25%));
+  color: white;
+}
+
+.largetext td {
+    line-height: 10px !important;
+}
+
+.button {
+  text-align: center !important;
+  border: 1px solid black !important;
+  .threegrad(#244A6B, #3A78AA);
+  cursor: pointer;
+  text-overflow: ellipsis;
+  overflow:hidden;
+
+}
+
+.button:active {
+  .threegrad(red,green);
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button a:link, .button a:visited, .button a:active {
+  color: white;
+}
+
+.largetext table {
+    border-spacing:0;
+    border-collapse:collapse;
+    padding: 0;
+    margin: 0;
+    table-layout: fixed;
+}
+
+
+.threegrad(@start, @end, @startorientation: left, @endorientation: right) {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/@start+1,3a78aa+50,244a6b+100 */
+  background: @start; /* Old browsers */
+  background: -moz-linear-gradient(@startorientation,  @start 1%, @end 50%, @start 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(@startorientation,  @start 1%,@end 50%,@start 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to @endorientation,  @start 1%,@end 50%,@start 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@start', endColorstr='@start',GradientType=1 ); /* IE6-9 */
+}
+
+.grad(@start, @end, @startorientation: top, @endorientation: bottom) {
+  background: @start; /* Old browsers */
+  background: -moz-linear-gradient(@startorientation,  @start 1%, @end 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, @startorientation, @endorientation, color-stop(1%,@start), color-stop(100%,@end)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(@startorientation,  @start 1%,@end 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(@startorientation,  @start 1%,@end 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(@startorientation,  @start 1%,@end 100%); /* IE10+ */
+  background: linear-gradient(to @endorientation,  @start 1%,@end 100%); /* W3C */
+}

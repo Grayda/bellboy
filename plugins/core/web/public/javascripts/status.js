@@ -1,15 +1,19 @@
-bellboyStatusApp.controller('statusController', function($scope, $http, $routeParams, $rootScope, $timeout) {
+bellboyStatusApp.controller('statusController', function($scope, $http, $routeParams, $rootScope, $interval, $route, $location) {
 
   $scope.loadData = function() {
     $http.get("/api/bells/next").success(function(data) {
       $scope.nextBell = data
     }).then(function() {
-      $http.get('/api/bells/get/' + $scope.nextBell[0].id).success(function(data) {
-        $scope.bell = data
+      $http.get('/api/bells/all').success(function(data) {
+        $scope.bells = data
       })
     })
 
   }
+
+  $interval(function() {
+    $scope.time = Date.now()
+  }, 100)
 
   $scope.reloadData = function() {
     $scope.$digest()
@@ -29,11 +33,8 @@ bellboyStatusApp.controller('statusController', function($scope, $http, $routePa
   }
 
   $scope.curTime = Date.now()
-
+  $scope.url = $location.host()
+  $scope.port = $location.port()
   $scope.loadData()
-
-  $timeout(function () {
-         $scope.$broadcast('fittext');
-       },10);
 
 })

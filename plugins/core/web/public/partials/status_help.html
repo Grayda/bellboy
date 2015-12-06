@@ -1,0 +1,22 @@
+<div ng-controller="statusController" id="statusController">
+  <script type="text/javascript">
+    $(window).resize(function() {
+      var tcount = $(".table tr").length
+      $("img").css("height", (100 / tcount / 2) + "vh")
+    }).resize()
+  </script>
+
+  <table class="table table-condensed">
+    <tr>
+      <td width="5%"><img src="images/logo.png" /></td>
+      <td>About this system</td>
+    </tr>
+    <tr>
+      <td colspan="2">Bellboy is a digital bell timer system</td>
+    </tr>
+    <tr>
+      <td colspan="2"><a href="#/status" class="btn btn-primary">Go Back</a></td>
+    </tr>
+
+  </table>
+</div>

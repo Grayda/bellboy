@@ -2,22 +2,59 @@
   <script type="text/javascript">
     $(window).resize(function() {
       var tcount = $(".table tr").length
-      var tsize = ($(window).width() / $(window).height() * 2)
+      if ($(window).width() > $(window).height()) {
+        var tsize = ($(window).width() / $(window).height() * 3)
+      } else {
+        var tsize = ($(window).height() / $(window).width() * 3)
+      }
 
-      console.log("Setting tr to " + (100 / tcount))
-      console.log("Setting tsize is " + tsize)
-      $(".table tr").css("height", (100 / tcount) + "vh")
-      $(".table tr").css("font-size", (100 / tcount / tsize) + "vh")
-      $(".table tr td").css("vertical-align", "middle")
+      $(".largetext tr").css("height", (100 / tcount) + "vh")
+      $("img").css("height", (100 / tcount / tsize) * 2 + "vh")
+      $(".largetext tr").css("font-size", (100 / tcount / tsize * 1.75) + "vh")
+      $(".smalltext").css("font-size", (100 / tcount / tsize * 1.20) + "vh")
+    }).resize()
+
+    $(document).ready(function() {
+
+      var socket = io.connect();
+      socket.on("trigger", function(data) {
+        angular.element("#statusController").scope().reloadView()
+      })
+
+      socket.on("reloadstatus", function() {
+        alert("HG")
+        angular.element("#statusController").scope().reloadView()
+      })
+
+      socket.on("bells_bellchanged", function(data) {
+        angular.element("#statusController").scope().reloadView()
+      })
     }).resize()
   </script>
 
-  <table class="table table-condensed">
+  <table class="largetext table table-condensed" cellpadding="0" cellspacing="0">
     <tr>
-      <td><i class="glyphicon glyphicon-chevron-right"></i> {{ bell.Name }}</td>
+      <th>
+        <a href="#/help">
+          <img src="images/logo.png" />
+        </a>
+      </th>
+      <th colspan="{{ (bells | filter: { ID: '_button'}).length - 1 }}">{{ time | date:'short' }}</th>
     </tr>
     <tr>
-      <td><i class="glyphicon glyphicon-time"></i> {{ (nextBell | filter: { id: bell.ID })[0].date | date:'medium' }}</td>
+      <td colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-chevron-right"></i> {{ nextBell[0].Bell.Name }}</td>
+    </tr>
+    <tr>
+      <td colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-chevron-right"></i> {{ (nextBell | filter: { id: bell.ID })[0].Calendar }}</td>
+    </tr>
+    <tr>
+      <td colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-calendar"></i> {{ (bells | filter: { ID: '_name' })[0].Name }}</td>
+    </tr>
+    <tr>
+      <td colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-globe"></i> http://{{ url }}:{{ port }}/ </td>
+    </tr>
+    <tr>
+      <td style="width: {{ 100 / (bells | filter: { ID: '_button'}).length + 'vw' }};" class="button" ng-click="trigger(bell.ID)" ng-repeat="bell in bells | filter: { ID: '_button' }"><a href="" class="smalltext"><i ng-class="'glyphicon glyphicon-' + bell.Icon"></i><br />{{ bell.Name }}</a></td>
     </tr>
   </table>
 </div>

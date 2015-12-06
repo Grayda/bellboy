@@ -41,26 +41,31 @@ module.exports = function setup(options, imports, register) {
         imports.bells.bells.forEach(function(item) {
           if(item.ID.indexOf("_") == 0 || item.Enabled == false) { return }
           nextdates.push({
-            date: scheduler.next(item),
-            id: item.ID
+            Date: scheduler.next(item),
+            Calendar: moment(scheduler.next(item, 1)).calendar(),
+            ID: item.ID,
+            Bell: item
           })
         })
 
         return _.sortBy(nextdates, function(d) {
-          return d.date;
+          return d.Date;
         })
       } else {
         return later.schedule(schedules[bell.ID]).next(amount)
       }
     },
-    previous: function(bell) {
+    previous: function(bell, amount) {
+      if(typeof amount === "undefined") { amount = 1 }
       var prevdates = []
       if (imports.validate.isNull(bell)) {
         imports.bells.bells.forEach(function(item) {
           if(item.ID.indexOf("_") == 0 || item.Enabled == false) { return }
           prevdates.push({
-            date: scheduler.previous(item),
-            id: item.ID
+            Date: scheduler.previous(item),
+            Calendar: moment(scheduler.previous(item, 1)).calendar(),
+            ID: item.ID,
+            Bell: item
           })
         })
 

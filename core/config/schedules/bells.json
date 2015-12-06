@@ -78,6 +78,68 @@
     }
   }
 }, {
+  "ID": "_button2",
+  "Enabled": true,
+  "Name": "Ring Now",
+  "Description": "Button #1 on the PiTFT",
+  "Icon": "bell",
+  "Locked": true,
+  "Actions": {
+    "Audio": {
+      "Files": [
+        "bell.mp3"
+      ],
+      "Loop": 1
+    },
+    "External": {
+      "OnValue": 1,
+      "OffValue": 0,
+      "Duration": 5000
+    }
+  }
+}, {
+  "ID": "_button3",
+  "Enabled": true,
+  "Name": "Ring Now",
+  "Description": "Button #1 on the PiTFT",
+  "Icon": "bell",
+  "Locked": true,
+  "Actions": {
+    "Audio": {
+      "Files": [
+        "bell.mp3"
+      ],
+      "Loop": 1
+    },
+    "External": {
+      "OnValue": 1,
+      "OffValue": 0,
+      "Duration": 5000
+    }
+  }
+},
+{
+  "ID": "_button4",
+  "Enabled": true,
+  "Name": "Disable All",
+  "Description": "Button #1 on the PiTFT",
+  "Icon": "ban-circle",
+  "Locked": true,
+  "Actions": {
+    "Audio": {
+      "Files": [
+        "bell.mp3"
+      ],
+      "Loop": 1
+    },
+    "External": {
+      "OnValue": 1,
+      "OffValue": 0,
+      "Duration": 5000
+    }
+  }
+},
+{
   "ID": "test",
   "Enabled": false,
   "Name": "Test Bell - EVERY MINUTE",
@@ -111,7 +173,7 @@
   "Enabled": true,
   "Name": "Homeroom Bell - Warning",
   "Description": "Warning bell for homeroom",
-  "Locked": true,
+  "Locked": false,
   "Time": "45 8 * * 1-5",
   "Actions": {
     "Audio": {
@@ -179,7 +241,7 @@
   "Enabled": true,
   "Name": "Gratitude Music",
   "Description": "Plays a minute of music",
-  "Locked": false,
+  "Locked": true,
   "Time": "7 9 * * 1,2,3,4,5",
   "Actions": {
     "Audio": {

@@ -7,3 +7,69 @@
 #statusApp {
   overflow: hidden !important;
 }
+#statusApp th {
+  background: #3a75ac;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #3a75ac 1%, #1a344d 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, top, bottom, color-stop(1%, #3a75ac), color-stop(100%, #1a344d));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #3a75ac 1%, #1a344d 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #3a75ac 1%, #1a344d 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #3a75ac 1%, #1a344d 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #3a75ac 1%, #1a344d 100%);
+  /* W3C */
+  color: white;
+}
+.largetext td {
+  line-height: 10px !important;
+}
+.button {
+  text-align: center !important;
+  border: 1px solid black !important;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/@start+1,3a78aa+50,244a6b+100 */
+  background: #244A6B;
+  /* Old browsers */
+  background: -moz-linear-gradient(left, #244A6B 1%, #3A78AA 50%, #244A6B 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #244A6B 1%, #3A78AA 50%, #244A6B 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #244A6B 1%, #3A78AA 50%, #244A6B 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@start', endColorstr='@start', GradientType=1);
+  /* IE6-9 */
+  cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.button:active {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/@start+1,3a78aa+50,244a6b+100 */
+  background: red;
+  /* Old browsers */
+  background: -moz-linear-gradient(left, red 1%, green 50%, red 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, red 1%, green 50%, red 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, red 1%, green 50%, red 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@start', endColorstr='@start', GradientType=1);
+  /* IE6-9 */
+}
+.button:hover {
+  cursor: pointer;
+}
+.button a:link,
+.button a:visited,
+.button a:active {
+  color: white;
+}
+.largetext table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  padding: 0;
+  margin: 0;
+  table-layout: fixed;
+}

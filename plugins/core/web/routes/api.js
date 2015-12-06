@@ -8,6 +8,10 @@ module.exports = function(imports) {
   // =====================================================================================================================
 
   // Returns a list of bells
+  router.get('/bells/all', function(req, res, next) {
+    res.json(imports.bells.toArray(false))
+  });
+
   router.get('/bells/get', function(req, res, next) {
     res.json(imports.bells.toArray(true))
   });
@@ -25,7 +29,7 @@ module.exports = function(imports) {
   })
 
   router.get("/bells/next/:bell/date", function(req, res, next) {
-    res.send(imports.scheduler.toString(imports.bells.get(req.params.bell)) || "test")
+    res.send(imports.scheduler.toString(imports.bells.get(req.params.bell)))
   })
 
   router.get("/bells/next/:bell/:amount", function(req, res, next) {
