@@ -8,10 +8,10 @@
         var tsize = ($(window).height() / $(window).width() * 3)
       }
 
-      $(".largetext tr").css("height", (100 / tcount) + "vh")
-      $("img").css("height", (100 / tcount / tsize) * 2 + "vh")
-      $(".largetext tr").css("font-size", (100 / tcount / tsize * 1.75) + "vh")
-      $(".smalltext").css("font-size", (100 / tcount / tsize * 1.20) + "vh")
+      $("img").css({ "height": (100 / tcount / tsize) * 3 + "vh" })
+      $(".largetext tr").css({ "height": (100 / tcount) + "vh", "font-size": (100 / tcount / tsize * 1.75) + "vh", "vertical-align": "middle" })
+      $(".smalltext").css({ "font-size": (100 / tcount / tsize) + "vh" })
+      $(".clock").css({ "font-size": (100 / tcount / tsize * 1.5) + "vh", "vertical-align": "middle"})
     }).resize()
 
     $(document).ready(function() {
@@ -39,7 +39,7 @@
           <img src="images/logo.png" />
         </a>
       </th>
-      <th colspan="{{ (bells | filter: { ID: '_button'}).length - 1 }}">{{ time | date:'short' }}</th>
+      <th class="clock" colspan="{{ (bells | filter: { ID: '_button'}).length - 1 }}">{{ time | date:'dd/MM/yy hh:mm:ssa' }}</th>
     </tr>
     <tr>
       <td colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-chevron-right"></i> {{ nextBell[0].Bell.Name }}</td>
@@ -48,10 +48,10 @@
       <td colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-chevron-right"></i> {{ (nextBell | filter: { id: bell.ID })[0].Calendar }}</td>
     </tr>
     <tr>
-      <td colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-calendar"></i> {{ (bells | filter: { ID: '_name' })[0].Name }}</td>
-    </tr>
-    <tr>
-      <td colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-globe"></i> http://{{ url }}:{{ port }}/ </td>
+      <td ng-if="slide == 1" colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-globe"></i> http://{{ url }}:{{ port }}/ </td>
+      <td ng-if="slide == 2" colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-th-list"></i>  {{ (bells | filter: { Enabled: true, ID: "!_" }).length }} /  {{ (bells | filter: { ID: "!_" }).length }} bells loaded </td>
+      <td ng-if="slide == 3" colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-calendar"></i> {{ (bells | filter: { ID: '_name' })[0].Name }}</td>
+      <td ng-if="slide == 4" colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-globe"></i> Maybe </td>
     </tr>
     <tr>
       <td style="width: {{ 100 / (bells | filter: { ID: '_button'}).length + 'vw' }};" class="button" ng-click="trigger(bell.ID)" ng-repeat="bell in bells | filter: { ID: '_button' }"><a href="" class="smalltext"><i ng-class="'glyphicon glyphicon-' + bell.Icon"></i><br />{{ bell.Name }}</a></td>

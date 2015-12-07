@@ -8,8 +8,16 @@ bellboyStatusApp.controller('statusController', function($scope, $http, $routePa
         $scope.bells = data
       })
     })
-
   }
+
+  $scope.slide = 1
+  $interval(function() {
+    $scope.slide += 1
+    if($scope.slide == 5) {
+      $scope.slide = 1
+    }
+  },5000)
+
 
   $interval(function() {
     $scope.time = Date.now()

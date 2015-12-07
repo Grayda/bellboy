@@ -112,6 +112,7 @@ module.exports = function setup(options, imports, register) {
       }
 
       bell.Enabled = imports.validate.toBoolean(status)
+      imports.eventbus.emit("bells_bellchanged", bell)
       bellObj.set(bell)
     }
   }

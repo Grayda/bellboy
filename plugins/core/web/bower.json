@@ -33,6 +33,7 @@
     "AngularJS-Toaster": "angularjs-toaster#~0.4.16",
     "angular-schema-form": "~0.8.12",
     "ngFitTextDynamic": "~1.0.5",
-    "angular-i18n": "~1.4.8"
+    "angular-i18n": "~1.4.8",
+    "angular-animate": "~1.4.8"
   }
 }

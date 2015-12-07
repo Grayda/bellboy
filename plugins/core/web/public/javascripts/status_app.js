@@ -1,4 +1,4 @@
-var bellboyStatusApp = angular.module('bellboyStatusApp', ["ngRoute", "ngFitTextDynamic"]);
+var bellboyStatusApp = angular.module('bellboyStatusApp', ["ngRoute"]);
 
 bellboyStatusApp.config(['$routeProvider',
   function($routeProvider) {
