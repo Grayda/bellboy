@@ -1,12 +1,24 @@
 var bellboyApp = angular.module('bellboyApp', ["toaster", "ngRoute", "schemaForm"]);
 
-bellboyApp.run(function($rootScope, toaster) {
+bellboyApp.run(function($rootScope, $http, toaster) {
   $rootScope.toast = function(toastclass, title, body, duration) {
     if (typeof duration === "undefined") {
       duration = 2000
     }
     toaster.pop(toastclass, title, body, duration)
   }
+
+  $rootScope.loadSchema = function() {
+
+    $http.get("/api/schema").success(function(data) {
+      $rootScope.schema = data.schema
+      $rootScope.form = data.form[0]
+      console.dir(data)
+      $rootScope.model = {}
+    })
+  }
+
+  $rootScope.loadSchema()
 });
 
 bellboyApp.config(['$routeProvider',
@@ -18,14 +30,7 @@ bellboyApp.config(['$routeProvider',
     }).
     when('/bells/edit/:id', {
       templateUrl: "partials/edit.html",
-      controller: 'editController',
-      resolve: {
-        loadSchema: ["$http", function($http, editController) {
-          $http.get("/api/schema").then(function(data) {
-            return data.data
-          })
-        }]
-      }
+      controller: 'editController'
     }).
     when('/bells/view/:id', {
       templateUrl: "partials/view.html",

@@ -7,7 +7,7 @@ module.exports = function setup(options, imports, register) {
         "form": [],
       },
       append: function(schema, form) {
-        schemaObj.schema.schema.properties = schema
+        schemaObj.schema.schema = schema
         schemaObj.schema.form.push(form)
       }
     }

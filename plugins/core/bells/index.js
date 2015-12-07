@@ -24,14 +24,27 @@ module.exports = function setup(options, imports, register) {
   })
 
   // For our form in web
-  imports.schema.append({
-    "ID": {
-          "title": "ID",
-          "type": "string"
-        }
-  },[
-"ID"
-] 
+
+
+
+  imports.schema.append(
+    {
+   type: "object",
+   properties: {
+     name: { type: "string", minLength: 2, title: "Name", description: "Name or alias" },
+     title: {
+       type: "string",
+       enum: ['dr','jr','sir','mrs','mr','NaN','dj'],
+     },
+     default: "Hello"
+   }
+ }, [
+    "*",
+    {
+      type: "submit",
+      title: "Save",
+    }
+  ]
 )
 
   var bellObj = {
