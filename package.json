@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/Grayda/bellboy#readme",
   "dependencies": {
-    "architect": "^0.1.11"
+    "architect": "^0.1.11",
+    "cfonts": "0.0.13"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

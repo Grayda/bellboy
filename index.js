@@ -14,6 +14,24 @@ var plugins = [
   { packagePath: "./plugins/core/pitft", backlight: 18, button1: 17, button2: 22, button3: 23, button4: 27 }
 ]
 
+  console.log()
+  console.log(" Welcome to")
+  console.log()
+  var FONTS = require('cfonts');
+
+  var fonts = new FONTS({
+    'text': "Bellboy", //text to be converted
+    'font': 'block', //define the font face
+    'colors': ["white", "black"], //define all colors
+    'background': 'black', //define the background color
+
+    'space': false, //define if the output text should have empty lines on top and on the bottom
+    'maxLength': '10' //define how many character can be on one line
+  });
+  console.log("    The Bell Timer System")
+  console.log()
+  console.log()
+
 plugins = architect.resolveConfig(plugins, __dirname)
 
 // Start our app. The callback happens when all plugins have loaded, so plugin order shouldn't really matter
