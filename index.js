@@ -3,7 +3,7 @@ var architect = require("architect");
 // A list of plugins we'd like to load. Some of them require options, so be sure to check the plugin for what options are required
 var plugins = [
   { packagePath: "./plugins/core/config", configFile: __dirname + "/core/config/config_default.json" },
-  { packagePath: "./plugins/core/bells", bellFile: __dirname + "/core/config/schedules/bells.json" },
+  { packagePath: "./plugins/core/bells", bellFile: __dirname + "/core/config/schedules/bells.json", schema: __dirname + "/plugins/core/bells/schema/schema.json" },
   // { packagePath: "./plugins/core/audio", audioPath: __dirname + "/audio/", playerPath: __dirname + "/plugins/core/audio/mpg123/mpg123.exe" },
   { packagePath: "./plugins/core/logger" },
   { packagePath: "./plugins/core/web", port: 3000 },
@@ -62,7 +62,7 @@ architectApp = architect.createApp(plugins, function (err, app) {
       app.services.logger.log("Bell was triggered: " + bell.Name)
     })
 
-    // app.services.config.loadConfig()
+    app.services.config.loadConfig()
     app.services.bells.loadBells()
     app.services.scheduler.scheduleBells(app.services.bells.bells)
 

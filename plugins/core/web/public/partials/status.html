@@ -32,14 +32,14 @@
     }).resize()
   </script>
 
-  <table class="largetext table table-condensed" cellpadding="0" cellspacing="0">
+  <table class="largetext table table-condensed">
     <tr>
       <th>
         <a href="#/help">
           <img src="images/logo.png" />
         </a>
       </th>
-      <th class="clock" colspan="{{ (bells | filter: { ID: '_button'}).length - 1 }}">{{ time | date:'dd/MM/yy hh:mm:ssa' }}</th>
+      <th class="clock" colspan="{{ (bells | filter: { ID: '_button'}).length - 1 }}">{{ time | date:'dd/MM/yy - hh:mm:ssa' }}</th>
     </tr>
     <tr>
       <td colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-chevron-right"></i> {{ nextBell[0].Bell.Name }}</td>
@@ -51,10 +51,9 @@
       <td ng-if="slide == 1" colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-globe"></i> http://{{ url }}:{{ port }}/ </td>
       <td ng-if="slide == 2" colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-th-list"></i>  {{ (bells | filter: { Enabled: true, ID: "!_" }).length }} /  {{ (bells | filter: { ID: "!_" }).length }} bells loaded </td>
       <td ng-if="slide == 3" colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-calendar"></i> {{ (bells | filter: { ID: '_name' })[0].Name }}</td>
-      <td ng-if="slide == 4" colspan="{{ (bells | filter: { ID: '_button'}).length }}"><i class="glyphicon glyphicon-globe"></i> Maybe </td>
     </tr>
     <tr>
-      <td style="width: {{ 100 / (bells | filter: { ID: '_button'}).length + 'vw' }};" class="button" ng-click="trigger(bell.ID)" ng-repeat="bell in bells | filter: { ID: '_button' }"><a href="" class="smalltext"><i ng-class="'glyphicon glyphicon-' + bell.Icon"></i><br />{{ bell.Name }}</a></td>
+      <td style="width: {{ 100 / (bells | filter: { ID: '_button'}).length + 'vw' }};" class="button" ng-click="trigger(bell.ID)" ng-repeat="bell in bells | filter: { ID: '_button' }"><i ng-class="'glyphicon glyphicon-' + bell.Icon"></i><br />{{ bell.Name }}</td>
     </tr>
   </table>
 </div>

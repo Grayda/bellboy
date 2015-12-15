@@ -13,7 +13,7 @@ bellboyStatusApp.controller('statusController', function($scope, $http, $routePa
   $scope.slide = 1
   $interval(function() {
     $scope.slide += 1
-    if($scope.slide == 5) {
+    if($scope.slide == 4) {
       $scope.slide = 1
     }
   },5000)

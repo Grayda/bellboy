@@ -27,25 +27,8 @@ module.exports = function setup(options, imports, register) {
 
 
 
-  imports.schema.append(
-    {
-   type: "object",
-   properties: {
-     name: { type: "string", minLength: 2, title: "Name", description: "Name or alias" },
-     title: {
-       type: "string",
-       enum: ['dr','jr','sir','mrs','mr','NaN','dj'],
-     },
-     default: "Hello"
-   }
- }, [
-    "*",
-    {
-      type: "submit",
-      title: "Save",
-    }
-  ]
-)
+  imports.schema.append(imports.schema.load(options.schema))
+  console.dir(imports.schema.schema)
 
   var bellObj = {
     bells: [],

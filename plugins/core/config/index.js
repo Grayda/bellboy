@@ -6,23 +6,23 @@ module.exports = function setup(options, imports, register) {
 
   assert(options.configFile, "Plugin option 'configFile' is required!")
 
-  register(null, {
-    config: {
-      config: config,
-      loadConfig: function() {
-        try {
-          confFile = JSON.parse(fs.readFileSync(options.configFile, 'utf8'));
-          assert(confFile, "Configuration file is empty!")
-          this.config = confFile
-          imports.eventbus.emit("config_configloaded")
-          return true
-        } catch (ex) {
-          imports.eventbus.error(ex)
-        }
-      },
-      saveConfig: function() {
+  configObj = {
+    config: config,
+    loadConfig: function() {
 
-      }
+      confFile = JSON.parse(fs.readFileSync(options.configFile, 'utf8'));
+      assert(confFile, "Configuration file is empty!")
+      configObj.config = confFile
+      imports.eventbus.emit("config_configloaded")
+      return true
+    },
+    saveConfig: function() {
+
     }
+  }
+
+
+  register(null, {
+    config: configObj
   });
 };
