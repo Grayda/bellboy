@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/Grayda/bellboy/issues"
   },
-  "homepage": "https://github.com/Grayda/bellboy#readme"
+  "homepage": "https://github.com/Grayda/bellboy#readme",
+  "dependencies": {
+    "architect": "^0.1.11"
+  }
 }
