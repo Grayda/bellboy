@@ -1,23 +1,22 @@
 {
-  "name": "eventbus",
+  "name": "logger",
   "version": "1.0.0",
-  "description": "Event emitter plugin for Bellboy",
+  "description": "Logging plugin for Bellboy",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "eventemitter",
     "bellboy",
     "plugin",
-    "eventbus"
+    "log",
+    "logger",
+    "debug"
   ],
   "plugin": {
-    "provides": ["eventbus"]
+    "provides": ["logger"],
+    "consumes": ["eventbus"]
   },
   "author": "David Gray",
-  "license": "ISC",
-  "dependencies": {
-    "eventemitter2": "^2.0.1"
-  }
+  "license": "ISC"
 }

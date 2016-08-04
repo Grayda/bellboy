@@ -1,23 +1,24 @@
 {
-  "name": "eventbus",
+  "name": "scheduler",
   "version": "1.0.0",
-  "description": "Event emitter plugin for Bellboy",
+  "description": "Scheduler plugin for Bellboy",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "eventemitter",
     "bellboy",
-    "plugin",
-    "eventbus"
+    "scheduler",
+    "later",
+    "cron"
   ],
   "plugin": {
-    "provides": ["eventbus"]
+    "provides": ["scheduler"],
+    "consumes": ["eventbus"]
   },
   "author": "David Gray",
   "license": "ISC",
   "dependencies": {
-    "eventemitter2": "^2.0.1"
+    "later": "^1.2.0"
   }
 }

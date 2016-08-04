@@ -1,9 +1,0 @@
-[{
-  "packagePath": "./plugins/eventbus",
-  "name": "Event Bus",
-  "description": "Allows inter-plugin communication. Required for Bellboy to operate"
-}, {
-  "packagePath": "./plugins/scheduler",
-  "name": "Scheduler",
-  "description": "Runs tasks as a specified time. Required for Bellboy to operate"
-}]

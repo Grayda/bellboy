@@ -1,0 +1,20 @@
+{
+  "name": "config",
+  "version": "1.0.0",
+  "description": "Bellboy config plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy",
+    "config",
+    "plugin"
+  ],
+  "plugin": {
+    "provides": ["config"],
+    "consumes": ["eventbus"]
+  },
+  "author": "David Gray",
+  "license": "ISC"
+}

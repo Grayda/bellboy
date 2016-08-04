@@ -1,23 +1,29 @@
 {
-  "name": "eventbus",
+  "name": "validate",
   "version": "1.0.0",
-  "description": "Event emitter plugin for Bellboy",
+  "description": "Validation plugin for Bellboy",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "eventemitter",
     "bellboy",
-    "plugin",
-    "eventbus"
+    "validate",
+    "schema",
+    "json"
   ],
   "plugin": {
-    "provides": ["eventbus"]
+    "provides": [
+      "validate"
+    ],
+    "consumes": [
+      "eventbus"
+    ]
   },
   "author": "David Gray",
   "license": "ISC",
   "dependencies": {
-    "eventemitter2": "^2.0.1"
+    "jjv": "^1.0.2",
+    "validator": "^5.5.0"
   }
 }
