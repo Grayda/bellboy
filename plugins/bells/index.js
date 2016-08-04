@@ -6,12 +6,12 @@ module.exports = function setup(options, imports, register) {
     pluginDescription: "Core plugin that loads bells from a JSON file",
     bells: null,
     load: function() {
-      bellObj.bells = JSON.parse(fs.readFileSync(options.bellFile, 'utf8'))
+      bellObj.bells = JSON.parse(fs.readFileSync(options.options.bellFile, 'utf8'))
       imports.eventbus.emit("bells.loaded")
       return true
     },
     save: function() {
-      fs.writeFileSync(options.bellFile, JSON.stringify(this.bells))
+      fs.writeFileSync(options.options.bellFile, JSON.stringify(this.bells))
       imports.eventbus.emit("bells.saved")
     }
   }

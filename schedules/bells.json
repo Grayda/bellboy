@@ -1,225 +1,226 @@
 [{
-  "id": 0,
-  "name": "Homeroom Warning",
-  "description": "Warning bell for homeroom",
-  "time": "45 8 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "test",
+    "name": "Sample Bell",
+    "description": "Runs every minute",
+    "time": "* * * * *",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 1,
-  "name": "Homeroom Start",
-  "description": "The start of homeroom",
-  "time": "50 8 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "homeroomwarning",
+    "name": "Homeroom Warning",
+    "description": "Warning bell for homeroom",
+    "time": "45 8 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 2,
-  "name": "Homeroom End",
-  "description": "The end of homeroom",
-  "time": "11 9 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "homeroomstart",
+    "name": "Homeroom Start",
+    "description": "The start of homeroom",
+    "time": "50 8 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 3,
-  "name": "Period 1",
-  "description": "The start of Period 1",
-  "time": "16 9 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "homeroomend",
+    "name": "Homeroom End",
+    "description": "The end of homeroom",
+    "time": "11 9 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 4,
-  "name": "Recess",
-  "description": "The start of recess",
-  "time": "26 10 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "period1",
+    "name": "Period 1",
+    "description": "The start of Period 1",
+    "time": "16 9 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 5,
-  "name": "End of recess",
-  "description": "The end of recess - 5 minutes until Period 2",
-  "time": "46 10 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "recess",
+    "name": "Recess",
+    "description": "The start of recess",
+    "time": "26 10 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 6,
-  "name": "Period 2",
-  "description": "The start of Period 2",
-  "time": "51 10 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "recessend",
+    "name": "End of recess",
+    "description": "The end of recess - 5 minutes until Period 2",
+    "time": "46 10 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 7,
-  "name": "End of Period 2",
-  "description": "End of Period 2 - 5 minutes until Period 3",
-  "time": "16 9 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "period2",
+    "name": "Period 2",
+    "description": "The start of Period 2",
+    "time": "51 10 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 8,
-  "name": "Period 3",
-  "description": "The start of Period 3",
-  "time": "6 12 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "period2end",
+    "name": "End of Period 2",
+    "description": "End of Period 2 - 5 minutes until Period 3",
+    "time": "16 9 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 9,
-  "name": "Lunchtime",
-  "description": "The start of lunch",
-  "time": "16 13 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "period3",
+    "name": "Period 3",
+    "description": "The start of Period 3",
+    "time": "6 12 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 10,
-  "name": "First Lunch Bell",
-  "description": "Half way through lunchtime",
-  "time": "41 13 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "lunchtime",
+    "name": "Lunchtime",
+    "description": "The start of lunch",
+    "time": "16 13 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 11,
-  "name": "End of Lunchtime",
-  "description": "End of lunchtime - 5 minutes until period 4",
-  "time": "2 14 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "halflunchtime",
+    "name": "First Lunch Bell",
+    "description": "Half way through lunchtime",
+    "time": "41 13 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 12,
-  "name": "Period 4",
-  "description": "The start of Period 4",
-  "time": "5 14 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "lunchtimeend",
+    "name": "End of Lunchtime",
+    "description": "End of lunchtime - 5 minutes until period 4",
+    "time": "2 14 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
 }, {
-  "id": 13,
-  "name": "End of the day",
-  "description": "The end of the day",
-  "time": "15 15 * * 1-5",
-  "enabled": true,
-  "locked": false,
-  "actions": {
-    "audio": {
-      "enabled": true,
-      "files": [{
-        "filename": "bell.mp3",
-        "loop": 1
-      }]
+    "id": "period4",
+    "name": "Period 4",
+    "description": "The start of Period 4",
+    "time": "5 14 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
     }
-  }
+}, {
+    "id": "dayend",
+    "name": "End of the day",
+    "description": "The end of the day",
+    "time": "15 15 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+        "audio": {
+            "files": [{
+                "filename": "bell.mp3",
+                "loop": 1
+            }]
+        }
+    }
 }]

@@ -14,9 +14,16 @@
     "debug"
   ],
   "plugin": {
-    "provides": ["logger"],
-    "consumes": ["eventbus"]
+    "provides": [
+      "logger"
+    ],
+    "consumes": [
+      "eventbus"
+    ]
   },
   "author": "David Gray",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.14.1"
+  }
 }

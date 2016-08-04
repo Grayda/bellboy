@@ -1,7 +1,7 @@
 module.exports = function setup(options, imports, register) {
   var later = require("later")
 
-  var scheduler = {
+  var schedulerObj = {
     pluginName: "Scheduler Plugin",
     pluginDescription: "Core plugin that schedules bells to trigger",
     jobs: [],
@@ -18,25 +18,25 @@ module.exports = function setup(options, imports, register) {
         // Use local time for our scheduling
         later.date.localTime();
         // Create a new schedule out of the time
-        schedules[item.id] = later.parse.cron(item.time)
+        schedulerObj.schedules[item.id] = later.parse.cron(item.time)
         imports.eventbus.emit("scheduler.scheduled", item)
           // And create a new interval out of the schedule
-        jobs[item.id] = later.setInterval(function() {
+        schedulerObj.jobs[item.id] = later.setInterval(function() {
           if (item.enabled == true) {
             // Trigger the job if it's enabled
-            history.unshift(item)
+            schedulerObj.history.unshift(item)
             imports.eventbus.emit("scheduler.trigger", item)
           } else {
             // The calling code might want to know if the bell would have triggered, were it enabled, so
             // we can use 'triggerwhiledisabled' to let people know. Good for running additional calculations
             imports.eventbus.emit("scheduler.trigger.disabled", item)
           }
-        }.bind(this), schedules[item.id])
+        }.bind(this), schedulerObj.schedules[item.id])
       })
     }
 
   }
   register(null, {
-    scheduler: scheduler
+    scheduler: schedulerObj
   })
 }
