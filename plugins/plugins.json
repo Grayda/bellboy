@@ -39,4 +39,8 @@
   "description": "Provides JSON schema validation, plus other checks",
   "schemaPath": "./schemas",
   "packagePath": "./plugins/validate"
+}, {
+  "name": "REST",
+  "description": "REST server for Bellboy",
+  "packagePath": "./plugins/rest"
 }]

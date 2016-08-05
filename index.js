@@ -17,7 +17,7 @@ architectApp = architect.createApp(plugins, function (err, app) {
     })
 
     app.services.eventbus.on("bells.loaded", function(bells) {
-      app.services.logger.log(app.services.bells.bells.length + " bells loaded")
+      app.services.logger.log(Object.keys(app.services.bells.bells).length + " bells loaded")
       app.services.scheduler.load(app.services.bells.bells)
     })
 

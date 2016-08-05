@@ -13,12 +13,18 @@
     "cron"
   ],
   "plugin": {
-    "provides": ["scheduler"],
-    "consumes": ["eventbus"]
+    "provides": [
+      "scheduler"
+    ],
+    "consumes": [
+      "eventbus",
+      "bells"
+    ]
   },
   "author": "David Gray",
   "license": "ISC",
   "dependencies": {
-    "later": "^1.2.0"
+    "later": "^1.2.0",
+    "lodash": "^4.14.1"
   }
 }

@@ -1,0 +1,27 @@
+{
+  "name": "rest",
+  "version": "1.0.0",
+  "description": "REST plugin for Bellboy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy",
+    "rest",
+    "api",
+    "restify",
+    "plugin"
+  ],
+  "plugin": {
+    "provides": ["rest"],
+    "consumes": ["eventbus", "bells", "logger", "scheduler"]
+  },
+  "author": "David Gray",
+  "license": "ISC",
+  "dependencies": {
+    "passport": "^0.3.2",
+    "passport-http-bearer": "^1.0.1",
+    "restify": "^4.1.1"
+  }
+}
