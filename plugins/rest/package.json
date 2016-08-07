@@ -15,7 +15,7 @@
   ],
   "plugin": {
     "provides": ["rest"],
-    "consumes": ["eventbus", "bells", "logger", "scheduler"]
+    "consumes": ["eventbus", "bells", "logger", "scheduler", "users"]
   },
   "author": "David Gray",
   "license": "ISC",
