@@ -44,6 +44,15 @@ architectApp = architect.createApp(plugins, function (err, app) {
       app.services.logger.log("Bell triggered: " + item.name)
     })
 
+    app.services.eventbus.on("users.authenticate.success", function(key) {
+      app.services.logger.log("A user has logged in")
+    })
+
+    app.services.eventbus.on("users.authenticate.fail", function(key) {
+      app.services.logger.log("A failed login attempt was detected using key " + key, "WARN")
+    })
+
+
     console.log()
     app.services.bells.load()
 
