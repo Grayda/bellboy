@@ -2,6 +2,7 @@ module.exports = function setup(options, imports, register) {
   var later = require("later")
   var _ = require("lodash")
   later.date.localTime();
+
   var schedulerObj = {
     pluginName: "Scheduler Plugin",
     pluginDescription: "Core plugin that schedules bells to trigger",
@@ -20,7 +21,11 @@ module.exports = function setup(options, imports, register) {
 
         // Create a new schedule out of the time
         schedulerObj.schedules[bells[item].id] = later.parse.cron(bells[item].time)
-        imports.eventbus.emit("scheduler.scheduled", bells[item])
+        if (bells[item].enabled == true) {
+          imports.eventbus.emit("scheduler.scheduled", bells[item])
+        } else {
+          imports.eventbus.emit("scheduler.scheduled.disabled", bells[item])
+        }
           // And create a new interval out of the schedule
         schedulerObj.jobs[bells[item].id] = later.setInterval(function() {
           if (bells[item].enabled == true) {
@@ -44,7 +49,7 @@ module.exports = function setup(options, imports, register) {
 
         nextdates.push({
           date: later.schedule(schedulerObj.schedules[imports.bells.bells[item].id]).next(),
-          id: imports.bells.bells[item].id
+          bell: imports.bells.bells[item]
         })
 
       })
@@ -72,6 +77,11 @@ module.exports = function setup(options, imports, register) {
       })[0]
     }
   }
+
+  imports.eventbus.on("bells.loaded", function() {
+    schedulerObj.load(imports.bells.bells)
+  })
+
   register(null, {
     scheduler: schedulerObj
   })
