@@ -16,10 +16,29 @@ architectApp = architect.createApp(plugins, function (err, app) {
       app.services.logger.log("Bell scheduled: " + item.name)
     })
 
+    app.services.eventbus.on("scheduler.scheduled.disabled", function(item) {
+      app.services.logger.log("Bell disabled, but scheduled: " + item.name)
+    })
+
     app.services.eventbus.on("bells.loaded", function(bells) {
       app.services.logger.log(Object.keys(app.services.bells.bells).length + " bells loaded")
-      app.services.scheduler.load(app.services.bells.bells)
     })
+
+    app.services.eventbus.on("bells.enabled", function(id) {
+      app.services.logger.log("Bell enabled: " + app.services.bells.bells[id].name)
+    }.bind(this))
+
+    app.services.eventbus.on("bells.disabled", function(id) {
+      app.services.logger.log("Bell disabled: " + app.services.bells.bells[id].name)
+    }.bind(this))
+
+    app.services.eventbus.on("bells.all.disabled", function() {
+      app.services.logger.log("All bells disabled!", "WARN")
+    }.bind(this))
+
+    app.services.eventbus.on("bells.all.enabled", function() {
+      app.services.logger.log("All bells enabled!", "WARN")
+    }.bind(this))
 
     app.services.eventbus.on("scheduler.trigger", function(item) {
       app.services.logger.log("Bell triggered: " + item.name)
