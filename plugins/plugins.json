@@ -1,46 +1,28 @@
 [{
-  "name": "Event Bus",
-  "description": "Inter-plugin communication using node.js emitters",
-  "packagePath": "./plugins/eventbus"
+    "packagePath": "./plugins/eventbus"
 }, {
-  "name": "Configuration Loader",
-  "description": "Loads configuration files",
-  "packagePath": "./plugins/config",
-  "options": {
-    "configFile": "./config/config.json",
-    "schema": "./schemas/config.json"
-  }
+    "packagePath": "./plugins/config",
+    "options": {
+        "configFile": "./config/config.json",
+        "schema": "./schemas/config.json"
+    }
 }, {
-  "name": "Bell Loader",
-  "description": "Loads bells from a JSON file",
-  "packagePath": "./plugins/bells",
-  "options": {
-    "bellFile": "./schedules/bells.json",
-    "schema": "./schemas/bells.json"
-  }
+    "packagePath": "./plugins/bells",
+    "options": {
+        "bellFile": "./schedules/bells.json",
+        "schema": "./schemas/bells.json"
+    }
 }, {
-  "name": "Audio Player",
-  "description": "Plays audio via a command-line player",
-  "packagePath": "./plugins/audio",
-  "options": {
-    "audioPath": "./audio/",
-    "playerPath": "./plugins/audio/mpg123/mpg123.exe"
-  }
+    "packagePath": "./plugins/audio",
+    "options": {
+        "audioPath": "./audio/",
+        "playerPath": "./plugins/audio/mpg123/mpg123.exe"
+    }
 }, {
-  "name": "Logger",
-  "description": "Logs information to the screen and / or file",
-  "packagePath": "./plugins/logger"
+    "packagePath": "./plugins/logger"
 }, {
-  "name": "Scheduler",
-  "description": "Turns bell times into tasks that run at the specified time",
-  "packagePath": "./plugins/scheduler"
+    "packagePath": "./plugins/scheduler"
 }, {
-  "name": "Validation",
-  "description": "Provides JSON schema validation, plus other checks",
-  "schemaPath": "./schemas",
-  "packagePath": "./plugins/validate"
-}, {
-  "name": "REST",
-  "description": "REST server for Bellboy",
-  "packagePath": "./plugins/rest"
+    "schemaPath": "./schemas",
+    "packagePath": "./plugins/validate"
 }]
