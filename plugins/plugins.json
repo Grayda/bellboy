@@ -25,4 +25,8 @@
 }, {
     "schemaPath": "./schemas",
     "packagePath": "./plugins/validate"
+}, {
+    "packagePath": "./plugins/rest"
+}, {
+    "packagePath": "./plugins/users"
 }]
