@@ -9,7 +9,6 @@ module.exports = function setup(options, imports, register) {
         restify: restify,
         get: {
             bells: function(req, res, next) {
-                passport.authenticate('bearer', { session: false })
                 res.json(imports.bells.bells)
                 next()
             },
@@ -44,6 +43,9 @@ module.exports = function setup(options, imports, register) {
                 imports.bells.disableAll()
                 res.send(true)
             }
+        },
+        trigger: function(req, res, next) {
+          imports.bells.trigger(req.params.id)
         }
     }
 
@@ -66,12 +68,13 @@ module.exports = function setup(options, imports, register) {
       )
 
     restObj.server.get('/bells', passport.authenticate('bearer', { session: false }), restObj.get.bells);
-    restObj.server.get('/bells/next', restObj.get.nextbell);
-    restObj.server.get('/bells/enable/all', restObj.set.enableAll);
-    restObj.server.get('/bells/disable/all', restObj.set.disableAll);
-    restObj.server.get('/bells/enable/:id', restObj.set.enable);
-    restObj.server.get('/bells/disable/:id', restObj.set.disable);
-    restObj.server.get('/bells/prev', restObj.get.prevbell);
+    restObj.server.get('/bells/next', passport.authenticate('bearer', { session: false }), restObj.get.nextbell);
+    restObj.server.get('/bells/enable/all', passport.authenticate('bearer', { session: false }), restObj.set.enableAll);
+    restObj.server.get('/bells/disable/all', passport.authenticate('bearer', { session: false }), restObj.set.disableAll);
+    restObj.server.get('/bells/enable/:id', passport.authenticate('bearer', { session: false }), restObj.set.enable);
+    restObj.server.get('/bells/trigger/:id', passport.authenticate('bearer', { session: false }), restObj.trigger);
+    restObj.server.get('/bells/disable/:id', passport.authenticate('bearer', { session: false }), restObj.set.disable);
+    restObj.server.get('/bells/prev', passport.authenticate('bearer', { session: false }), restObj.get.prevbell);
     // restObj.server.post('/bells/:id', restObj.set.bell);
 
 
