@@ -40,6 +40,20 @@ module.exports = function setup(options, imports, register) {
         }.bind(this), schedulerObj.schedules[bells[item].id])
       })
     },
+    trigger: function(id) {
+      if(typeof imports.bells.bells[id] === "undefined") {
+        imports.eventbus.emit("scheduler.invalidtrigger", id)
+        return false
+      } else {
+        if(imports.bells.bells[id].enabled == true) {
+          imports.eventbus.emit("scheduler.trigger", imports.bells.bells[id])
+          imports.eventbus.emit("scheduler.trigger.manual", imports.bells.bells[id])
+        } else {
+          imports.eventbus.emit("scheduler.trigger.disabled", imports.bells.bells[id])
+          imports.eventbus.emit("scheduler.trigger.manual.disabled", imports.bells.bells[id])
+        }
+      }
+    },
     next: function() {
       nextdates = []
       Object.keys(imports.bells.bells).forEach(function(item) {
