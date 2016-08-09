@@ -45,7 +45,8 @@ module.exports = function setup(options, imports, register) {
             }
         },
         trigger: function(req, res, next) {
-          imports.bells.trigger(req.params.id)
+          res.send(imports.scheduler.trigger(req.params.id))
+
         }
     }
 
