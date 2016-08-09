@@ -48,9 +48,11 @@ module.exports = function setup(options, imports, register) {
         if(imports.bells.bells[id].enabled == true) {
           imports.eventbus.emit("scheduler.trigger", imports.bells.bells[id])
           imports.eventbus.emit("scheduler.trigger.manual", imports.bells.bells[id])
+          return true
         } else {
           imports.eventbus.emit("scheduler.trigger.disabled", imports.bells.bells[id])
-          imports.eventbus.emit("scheduler.trigger.manual.disabled", imports.bells.bells[id])
+          imports.eventbus.emit("scheduler.trigger.disabled.manual", imports.bells.bells[id])
+          return true
         }
       }
     },
