@@ -14,13 +14,20 @@ module.exports = function setup(options, imports, register) {
       imports.eventbus.emit("bells.saved", this.bells)
       this.load()
     },
+    get: function(id) {
+      if(typeof bellObj.bells[id] !== "undefined") {
+        return bellObj.bells[id]
+      } else {
+        return false
+      }
+    },
     enable: function(id) {
-      bellObj.bells[id].enabled = true
+      this.get(id).enabled = true
       imports.eventbus.emit("bells.enabled", id)
       return true
     },
     disable: function(id) {
-      bellObj.bells[id].enabled = false
+      this.get(id).enabled = false
       imports.eventbus.emit("bells.disabled", id)
       return true
     },

@@ -13,9 +13,17 @@
     "authentication"
   ],
   "plugin": {
-    "provides": ["users"],
-    "consumes": ["eventbus", "logger"]
+    "provides": [
+      "users"
+    ],
+    "consumes": [
+      "eventbus",
+      "logger"
+    ]
   },
   "author": "David Gray",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.14.2"
+  }
 }

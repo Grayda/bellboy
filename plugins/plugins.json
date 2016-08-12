@@ -28,5 +28,10 @@
 }, {
     "packagePath": "./plugins/rest"
 }, {
-    "packagePath": "./plugins/users"
+    "packagePath": "./plugins/users",
+    "options": {
+      "usersFile": "./config/users.json",
+      "groupsFile": "./config/groups.json",
+      "permissionsFile": "./config/permissions.json"
+    }
 }]

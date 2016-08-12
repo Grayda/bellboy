@@ -1,0 +1,12 @@
+{
+  "administrators": {
+    "name": "Administrator Account",
+    "description": "Super accounts that can do anything",
+    "permissions": ["all"]
+  },
+  "guests": {
+    "name": "Guest Accounts",
+    "description": "Accounts that can view bells",
+    "permissions": ["view"]
+  }
+}

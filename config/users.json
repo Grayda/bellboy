@@ -1,0 +1,7 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "ABC123",
+    "groups": ["administrators"]
+  }
+}

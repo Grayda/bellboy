@@ -13,23 +13,27 @@ architectApp = architect.createApp(plugins, function (err, app) {
     }
 
     app.services.eventbus.on("scheduler.scheduled", function(item) {
-      app.services.logger.log("Bell scheduled: " + item.name)
-    })
-
-    app.services.eventbus.on("scheduler.scheduled.disabled", function(item) {
-      app.services.logger.log("Bell disabled, but scheduled: " + item.name)
+      // app.services.logger.log("Bell scheduled: " + item.name)
     })
 
     app.services.eventbus.on("bells.loaded", function(bells) {
       app.services.logger.log(Object.keys(app.services.bells.bells).length + " bells loaded")
     })
 
+    app.services.eventbus.on("scheduler.scheduled.finish", function(item) {
+      app.services.logger.log(Object.keys(app.services.scheduler.schedules).length + " bells scheduled")
+    })
+
+    app.services.eventbus.on("scheduler.scheduled.disabled", function(item) {
+      // app.services.logger.log("Bell disabled, but scheduled: " + item.name)
+    })
+
     app.services.eventbus.on("bells.enabled", function(id) {
-      app.services.logger.log("Bell enabled: " + app.services.bells.bells[id].name)
+      app.services.logger.log("Bell enabled: " + app.services.bells.get(id).name)
     }.bind(this))
 
     app.services.eventbus.on("bells.disabled", function(id) {
-      app.services.logger.log("Bell disabled: " + app.services.bells.bells[id].name)
+      app.services.logger.log("Bell disabled: " + app.services.bells.get(id).name)
     }.bind(this))
 
     app.services.eventbus.on("bells.all.disabled", function() {
