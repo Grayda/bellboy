@@ -13,7 +13,11 @@
   ],
   "plugin": {
     "provides": ["config"],
-    "consumes": ["eventbus"]
+    "consumes": ["eventbus"],
+    "options": {
+      "configFile": "./config/config.json",
+      "schema": "./schemas/config.json"
+    }
   },
   "author": "David Gray",
   "license": "ISC"

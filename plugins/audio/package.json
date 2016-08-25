@@ -15,7 +15,11 @@
   ],
   "plugin": {
     "provides": ["audio"],
-    "consumes": ["eventbus", "logger"]
+    "consumes": ["eventbus", "logger"],
+    "options": {
+      "audioPath": "./audio/",
+      "playerPath": "./plugins/audio/mpg123/mpg123.exe"
+    }
   },
   "author": "David Gray",
   "license": "ISC"

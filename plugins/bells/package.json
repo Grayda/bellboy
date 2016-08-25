@@ -13,7 +13,11 @@
   ],
   "plugin": {
     "provides": ["bells"],
-    "consumes": ["eventbus"]
+    "consumes": ["eventbus"],
+    "options": {
+      "bellFile": "./schedules/bells.json",
+      "schema": "./schemas/bells.json"
+    }
   },
   "author": "David Gray",
   "license": "ISC"

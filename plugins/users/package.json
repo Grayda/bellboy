@@ -19,7 +19,12 @@
     "consumes": [
       "eventbus",
       "logger"
-    ]
+    ],
+    "options": {
+      "usersFile": "./config/users.json",
+      "groupsFile": "./config/groups.json",
+      "permissionsFile": "./config/permissions.json"
+    }
   },
   "author": "David Gray",
   "license": "ISC",
