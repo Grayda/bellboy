@@ -40,12 +40,12 @@ gulp.task('install-plugins', function() {
         cp.execSync("npm install", {
          cwd: item
         })
-      }.bind(this))
+      })
       fs.writeFileSync(__dirname + "/plugins/plugins.json", JSON.stringify(plugins, null, "\t"))
     } catch (ex) {
-      gutil.log(gutil.color.red("Failed to run 'npm install'. Error was: " + ex))
+      gutil.log(gutil.colors.red("Failed to run 'npm install'. Error was: ") + ex)
     }
-  }.bind(this))
+  })
 
 
 });
