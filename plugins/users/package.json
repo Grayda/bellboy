@@ -1,5 +1,5 @@
 {
-  "name": "users",
+  "name": "bellboy-users",
   "version": "1.0.0",
   "description": "User plugin for Bellboy",
   "main": "index.js",

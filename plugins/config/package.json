@@ -1,5 +1,5 @@
 {
-  "name": "config",
+  "name": "bellboy-config",
   "version": "1.0.0",
   "description": "Bellboy config plugin",
   "main": "index.js",

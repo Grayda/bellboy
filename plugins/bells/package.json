@@ -1,5 +1,5 @@
 {
-  "name": "bells",
+  "name": "bellboy-bells",
   "version": "1.0.0",
   "description": "Bell plugin for Bellboy",
   "main": "index.js",

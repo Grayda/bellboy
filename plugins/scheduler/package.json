@@ -1,5 +1,5 @@
 {
-  "name": "scheduler",
+  "name": "bellboy-scheduler",
   "version": "1.0.0",
   "description": "Scheduler plugin for Bellboy",
   "main": "index.js",

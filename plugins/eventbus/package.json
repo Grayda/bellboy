@@ -1,5 +1,5 @@
 {
-  "name": "eventbus",
+  "name": "bellboy-eventbus",
   "version": "1.0.0",
   "description": "Event emitter plugin for Bellboy",
   "main": "index.js",

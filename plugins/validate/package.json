@@ -1,5 +1,5 @@
 {
-  "name": "validate",
+  "name": "bellboy-validate",
   "version": "1.0.0",
   "description": "Validation plugin for Bellboy",
   "main": "index.js",
