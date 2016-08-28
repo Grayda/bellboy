@@ -17,7 +17,7 @@
     "provides": ["audio"],
     "consumes": ["eventbus", "logger"],
     "options": {
-      "audioPath": "./audio/",
+      "audioPath": "../../../audio/",
       "playerPath": "./plugins/audio/mpg123/mpg123.exe"
     }
   },
