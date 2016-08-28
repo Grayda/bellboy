@@ -12,6 +12,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -27,6 +28,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -43,6 +45,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -58,6 +61,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -73,6 +77,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -88,6 +93,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -103,6 +109,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -118,6 +125,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -133,6 +141,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -148,6 +157,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -163,6 +173,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -178,6 +189,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -193,6 +205,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -208,6 +221,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
@@ -223,6 +237,7 @@
     "locked": false,
     "actions": {
       "audio": {
+        "enabled": true,
         "files": [{
           "filename": "bell.mp3",
           "loop": 1
