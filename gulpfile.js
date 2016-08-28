@@ -38,12 +38,11 @@ gulp.task('install-plugins', function() {
         gutil.log(gutil.colors.red("Plugin path not found! Check that it exists"))
         process.exit(1)
     }
-    sh.cd("./plugins/")
-    paths = sh.ls("-A")
-    console.dir(paths)
+
+    paths = sh.ls("-d", "./plugins/*")
     try {
         paths.forEach(function(item) {
-            if (item.indexOf("node_modules") > -1 || item.indexOf("bower_components") > -1 || item.indexOf(".git") > -1) {
+            if (item.indexOf("node_modules") > -1 || item.indexOf("bower_components") > -1 || item.indexOf(".git") > -1 || item.indexOf("plugins.json") > -1) {
                 return
             } else if (sh.test("-f", item + "/package.json") == false) {
                 gutil.log(item + " doesn't contain a valid package.json, skipping")
@@ -62,6 +61,7 @@ gulp.task('install-plugins', function() {
             })
         })
         fs.writeFileSync(__dirname + "/plugins/plugins.json", JSON.stringify(plugins, null, "\t"))
+        gutil.log(gutil.colors.green("Installation complete. You may need to adjust plugins.json if your values were overwritten"))
     } catch (ex) {
         gutil.log(gutil.colors.red("Failed to run 'npm install'. Error was: ") + ex)
     }
