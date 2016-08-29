@@ -6,7 +6,17 @@ module.exports = function setup(options, imports, register) {
 
 
     // Whenever a bell is triggered, we want to respond.
-    imports.eventbus.on("scheduler.trigger", function(bell) {
+    imports.eventbus.on("scheduler.trigger.enabled*", function(bell) {
+        // If the audio action is enabled
+        if (bell.actions.audio.enabled == true) {
+            // Shuffle the list of audio
+            file = _.shuffle(bell.actions.audio.files)[0]
+                // Play the filename, and loop it.
+            audio.play(file.filename, file.loop)
+        }
+    })
+
+    imports.eventbus.on("scheduler.trigger.disabled.manual", function(bell) {
         // If the audio action is enabled
         if (bell.actions.audio.enabled == true) {
             // Shuffle the list of audio
@@ -33,7 +43,11 @@ module.exports = function setup(options, imports, register) {
                     proc = cp.exec("mpg123 --loop " + loop + " \"" + options.options.audioPath + "/" + file + "\"", {
                         cwd: __dirname + "/mpg123"
                     }, function(error, stdout, stderr) {
-                        imports.logger.log(stdout || stderr || error, 1)
+                      if(error || stderr) {
+                        imports.logger.error(stderr)
+                      } else if(stdout) {
+                        imports.logger.log(stdout)
+                      }
                     })
 
                     // When we're truly done playing the audio, let everyone know
@@ -54,7 +68,11 @@ module.exports = function setup(options, imports, register) {
                     proc = cp.exec("\"" + __dirname + "\\mpg123\\mpg123.exe\" --loop " + loop + " " + options.options.audioPath + "/" + file + "\"", {
                         cwd: __dirname + "/mpg123"
                     }, function(error, stdout, stderr) {
-                        imports.logger.log(stdout || stderr || error)
+                      if(error || stderr) {
+                        imports.logger.error(stderr)
+                      } else if(stdout) {
+                        imports.logger.log(stdout)
+                      }
                     })
 
                     proc.on("close", function(code, signal) {
