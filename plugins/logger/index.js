@@ -9,7 +9,7 @@ module.exports = function setup(options, imports, register) {
                 type = "log"
             }
             console.log("[" + type.toUpperCase() + "] " + moment().format("Y-MM-DD HH:mm:ss") + " - " + text)
-            imports.eventbus.emit("logger.".type, text)
+            imports.eventbus.emit("logger." + type, text)
         },
         error: function(text) {
             this.log(text, "error")
