@@ -31,12 +31,11 @@ module.exports = function setup(options, imports, register) {
           if (bells[item].enabled == true) {
             // Trigger the job if it's enabled
             schedulerObj.history.unshift(imports.bells.get(item))
-            imports.eventbus.emit("scheduler.trigger", imports.bells.get(item))
             imports.eventbus.emit("scheduler.trigger.enabled", imports.bells.get(item))
           } else {
             // The calling code might want to know if the bell would have triggered, were it enabled, so
             // we can use 'triggerwhiledisabled' to let people know. Good for running additional calculations
-            imports.eventbus.emit("scheduler.trigger.disabled", bells[item])
+            imports.eventbus.emit("scheduler.trigger.disabled", imports.bells.get(item))
           }
         }.bind(this), schedulerObj.schedules[item])
       })
@@ -48,12 +47,9 @@ module.exports = function setup(options, imports, register) {
         return false
       } else {
         if(imports.bells.get(id).enabled == true) {
-          imports.eventbus.emit("scheduler.trigger", imports.bells.get(id))
           imports.eventbus.emit("scheduler.trigger.enabled.manual", imports.bells.get(id))
-          imports.eventbus.emit("scheduler.trigger.manual", imports.bells.get(id))
           return true
         } else {
-          imports.eventbus.emit("scheduler.trigger.disabled", imports.bells.get(id))
           imports.eventbus.emit("scheduler.trigger.disabled.manual", imports.bells.get(id))
           return true
         }
