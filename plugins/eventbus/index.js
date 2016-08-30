@@ -1,12 +1,14 @@
-var EventEmitter2 = require("eventemitter2").EventEmitter2
+var EventEmitter = require("pattern-emitter")
 
 module.exports = function setup(options, imports, register) {
-    var emitter = new EventEmitter2({ wildcard: true })
+    var emitter = new EventEmitter()
     eventbusObj = {
       pluginName: "Event Bus Plugin",
       pluginDescription: "Core plugin that provides inter-plugin communication",
-      emit: emitter.emit,
-      on: emitter.on,
+      emitter: emitter,
+      emit: emitter.emit.bind(emitter),
+      on: emitter.on.bind(emitter),
+      once: emitter.once.bind(emitter),
       error: function(err, module) {
         eventbusObj.emit("error", err, module)
       }

@@ -13,11 +13,13 @@
     "eventbus"
   ],
   "plugin": {
-    "provides": ["eventbus"]
+    "provides": [
+      "eventbus"
+    ]
   },
   "author": "David Gray",
   "license": "ISC",
   "dependencies": {
-    "eventemitter2": "^2.0.1"
+    "pattern-emitter": "^1.0.0"
   }
 }
