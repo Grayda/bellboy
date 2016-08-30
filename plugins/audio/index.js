@@ -4,7 +4,7 @@ module.exports = function setup(options, imports, register) {
     var os = require("os"); // Determines if Windows or Linux
     var fs = require("fs") // For retrieving files in a folder
 
-    imports.eventbus.on(/(scheduler\.trigger\.enabled.*|scheduler\.trigger\.disabled.*)/, function(bell) {
+    imports.eventbus.on(/(scheduler\.trigger\.enabled.*|scheduler\.trigger\.disabled\.manual)/, function(bell) {
         imports.logger.log("A bell is triggered. Checking to see if it should play", "debug")
         // If the audio action is enabled
         if (bell.actions.audio.enabled == true) {
