@@ -4,21 +4,11 @@ module.exports = function setup(options, imports, register) {
     var os = require("os"); // Determines if Windows or Linux
     var fs = require("fs") // For retrieving files in a folder
 
-
-    // Whenever a bell is triggered, we want to respond.
-    imports.eventbus.on("scheduler.trigger.enabled*", function(bell) {
+    imports.eventbus.on(/(scheduler\.trigger\.enabled.*|scheduler\.trigger\.disabled.*)/, function(bell) {
+        imports.logger.log("A bell is triggered. Checking to see if it should play", "debug")
         // If the audio action is enabled
         if (bell.actions.audio.enabled == true) {
-            // Shuffle the list of audio
-            file = _.shuffle(bell.actions.audio.files)[0]
-                // Play the filename, and loop it.
-            audio.play(file.filename, file.loop)
-        }
-    })
-
-    imports.eventbus.on("scheduler.trigger.disabled.manual", function(bell) {
-        // If the audio action is enabled
-        if (bell.actions.audio.enabled == true) {
+            imports.logger.log("Audio needs to be played. Shuffling and playing file", "debug")
             // Shuffle the list of audio
             file = _.shuffle(bell.actions.audio.files)[0]
                 // Play the filename, and loop it.
@@ -31,8 +21,8 @@ module.exports = function setup(options, imports, register) {
         pluginName: "Audio Plugin",
         pluginDescription: "Plugin that provides audio playback",
         play: function(file, loop) {
-
             try {
+                imports.logger.log("Attempting to play " + file + " " + loop + " times", "debug")
                 // If we're on a non-Windows platform
                 if (os.platform() !== "win32") {
                     // Let anyone who is interested, know that we're starting to play some audio
