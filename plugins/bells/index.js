@@ -22,22 +22,32 @@ module.exports = function setup(options, imports, register) {
       }
     },
     enable: function(id) {
+      if(this.get(id).locked == true) {
+        return false
+      }
       this.get(id).enabled = true
       imports.eventbus.emit("bells.enabled", id)
+      bellObj.save()
       return true
     },
     disable: function(id) {
+      if(this.get(id).locked == true) {
+        return false
+      }
       this.get(id).enabled = false
       imports.eventbus.emit("bells.disabled", id)
+      bellObj.save()
       return true
     },
     enableAll: function() {
       this.enable("_all")
       imports.eventbus.emit("bells.all.enabled")
+      bellObj.save()
     },
     disableAll: function() {
       this.disable("_all")
       imports.eventbus.emit("bells.all.disabled")
+      bellObj.save()
     }
   }
 
