@@ -52,12 +52,12 @@ architectApp = architect.createApp(plugins, function (err, app) {
       app.services.logger.log("A user has logged in")
     })
 
-    // app.services.eventbus.on(/(.*)/, function() {
+    // app.services.eventbus.on(/^(?!logger\..*).*$/m, function() {
     //   app.services.logger.log("Event emitted: " + this.event, "debug")
     // })
 
     app.services.eventbus.on("users.authenticate.fail", function(key) {
-      app.services.logger.log("A failed login attempt was detected using key " + key, "WARN")
+      app.services.logger.log("A failed login attempt was detected", "WARN")
     })
 
 
