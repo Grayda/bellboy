@@ -1,7 +1,7 @@
 module.exports = function setup(options, imports, register) {
     var winston = require('winston');
     winston.remove(winston.transports.Console);
-    winston.add(winston.transports.Console, {'timestamp':true});
+    winston.add(winston.transports.Console, {'timestamp': true, 'colorize': true });
 
     winston.level = process.env.LOG_LEVEL || 'debug'
     loggerObj = {
