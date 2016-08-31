@@ -44,21 +44,17 @@ architectApp = architect.createApp(plugins, function (err, app) {
       app.services.logger.log("All bells enabled!", "WARN")
     }.bind(this))
 
-    app.services.eventbus.on("scheduler.trigger", function(item) {
+    app.services.eventbus.on("scheduler.trigger.enabled", function(item) {
       app.services.logger.log("Bell triggered: " + item.name)
-    })
-
-    app.services.eventbus.on("scheduler.trigger.manual", function(item) {
-      app.services.logger.log("Bell manually triggered: " + item.name, "WARN")
-    })
-
-    app.services.eventbus.on("scheduler.trigger.disabled.manual", function(item) {
-      app.services.logger.log("Disabled bell manually triggered: " + item.name, "WARN")
     })
 
     app.services.eventbus.on("users.authenticate.success", function(key) {
       app.services.logger.log("A user has logged in")
     })
+
+    // app.services.eventbus.on(/(.*)/, function() {
+    //   app.services.logger.log("Event emitted: " + this.event, "debug")
+    // })
 
     app.services.eventbus.on("users.authenticate.fail", function(key) {
       app.services.logger.log("A failed login attempt was detected using key " + key, "WARN")
