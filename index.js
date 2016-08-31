@@ -2,8 +2,10 @@ var fs = require("fs")
 var architect = require("architect")
 var cfonts = require("cfonts")
 
-console.log(" Welcome to")
-cfonts.say('bellboy', {
+console.log()
+console.log()
+console.log("    Welcome to")
+cfonts.say(' bellboy', {
     font: 'block',        //define the font face
     align: 'left',        //define text alignment
     colors: ["white", "black"], //define all colors
@@ -12,7 +14,7 @@ cfonts.say('bellboy', {
     space: false,          //define if the output text should have empty lines on top and on the bottom
     maxLength: '0'        //define how many character can be on one line
 })
-console.log("    The Bell Timer System")
+console.log("        The Bell Timer System")
 console.log()
 console.log()
 
