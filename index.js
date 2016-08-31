@@ -1,10 +1,25 @@
 var fs = require("fs")
 var architect = require("architect")
+var cfonts = require("cfonts")
+
+console.log(" Welcome to")
+cfonts.say('bellboy', {
+    font: 'block',        //define the font face
+    align: 'left',        //define text alignment
+    colors: ["white", "black"], //define all colors
+    background: 'black', //define the background color    letterSpacing: 1,     //define letter spacing
+    lineHeight: 1,        //define the line height
+    space: false,          //define if the output text should have empty lines on top and on the bottom
+    maxLength: '0'        //define how many character can be on one line
+})
+console.log("    The Bell Timer System")
+console.log()
+console.log()
 
 // A list of plugins we'd like to load. Some of them require options, so be sure to check the plugin for what options are required
 plugins = architect.resolveConfig(JSON.parse(fs.readFileSync("./plugins/plugins.json", 'utf8')), __dirname);
 
-console.log("Welcome to Bellboy! Loading plugins..")
+console.log("Loading plugins..")
 console.log()
 // Start our app. The callback happens when all plugins have loaded, so plugin order shouldn't really matter
 architectApp = architect.createApp(plugins, function (err, app) {
@@ -46,21 +61,25 @@ architectApp = architect.createApp(plugins, function (err, app) {
       app.services.logger.log("All bells enabled!", "WARN")
     }.bind(this))
 
-    app.services.eventbus.on("scheduler.trigger.enabled", function(item) {
+    app.services.eventbus.on("scheduler.trigger", function(item) {
       app.services.logger.log("Bell triggered: " + item.name)
       app.services.logger.log("Next bell: ", "info", app.services.scheduler.next().bell.name)
+    })
+
+    app.services.eventbus.on("scheduler.trigger.manual", function(item) {
+      app.services.logger.log("Bell manually triggered: " + item.name, "WARN")
+    })
+
+    app.services.eventbus.on("scheduler.trigger.disabled.manual", function(item) {
+      app.services.logger.log("Disabled bell manually triggered: " + item.name, "WARN")
     })
 
     app.services.eventbus.on("users.authenticate.success", function(key) {
       app.services.logger.log("A user has logged in")
     })
 
-    // app.services.eventbus.on(/^(?!logger\..*).*$/m, function() {
-    //   app.services.logger.log("Event emitted: " + this.event, "debug")
-    // })
-
     app.services.eventbus.on("users.authenticate.fail", function(key) {
-      app.services.logger.log("A failed login attempt was detected", "WARN")
+      app.services.logger.log("A failed login attempt was detected using key " + key, "WARN")
     })
 
 

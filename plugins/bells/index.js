@@ -10,7 +10,7 @@ module.exports = function setup(options, imports, register) {
       imports.eventbus.emit("bells.loaded", this.bells)
     },
     save: function() {
-      fs.writeFileSync(options.options.bellFile, JSON.stringify(this.bells))
+      fs.writeFileSync(options.options.bellFile, JSON.stringify(this.bells, null, 2))
       imports.eventbus.emit("bells.saved", this.bells)
       this.load()
     },

@@ -4,7 +4,7 @@ module.exports = function setup(options, imports, register) {
     var os = require("os"); // Determines if Windows or Linux
     var fs = require("fs") // For retrieving files in a folder
 
-    imports.eventbus.on(/(scheduler\.trigger\.enabled|scheduler\.trigger\.disabled\.manual)/, function(bell) {
+    imports.eventbus.on(/(scheduler\.trigger\.enabled.*|scheduler\.trigger\.disabled\.manual)/, function(bell) {
         imports.logger.log("A bell is triggered. Checking to see if it should play", "debug")
         // If the audio action is enabled
         if (bell.actions.audio.enabled == true) {
@@ -30,7 +30,7 @@ module.exports = function setup(options, imports, register) {
                         file: file,
                         loop: loop
                     })
-                    proc = cp.exec("mpg123 -q --loop " + loop + " \"" + options.options.audioPath + "/" + file + "\"", {
+                    proc = cp.exec("mpg123 --loop " + loop + " \"" + options.options.audioPath + "/" + file + "\"", {
                         cwd: __dirname + "/mpg123"
                     }, function(error, stdout, stderr) {
                       if(error || stderr) {
@@ -55,7 +55,7 @@ module.exports = function setup(options, imports, register) {
                         file: file,
                         loop: loop
                     })
-                    proc = cp.exec("\"" + __dirname + "\\mpg123\\mpg123.exe\" -q --loop " + loop + " " + options.options.audioPath + "/" + file + "\"", {
+                    proc = cp.exec("\"" + __dirname + "\\mpg123\\mpg123.exe\" --loop " + loop + " " + options.options.audioPath + "/" + file + "\"", {
                         cwd: __dirname + "/mpg123"
                     }, function(error, stdout, stderr) {
                       if(error || stderr) {

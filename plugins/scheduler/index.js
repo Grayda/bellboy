@@ -64,7 +64,6 @@ module.exports = function setup(options, imports, register) {
         }
 
         nextdates.push({
-          id: item,
           date: later.schedule(schedulerObj.schedules[item]).next(),
           bell: imports.bells.get(item)
         })
@@ -84,7 +83,6 @@ module.exports = function setup(options, imports, register) {
         }
 
         prevdates.push({
-          id: item,
           date: later.schedule(schedulerObj.schedules[item]).prev(),
           bell: imports.bells.get(item)
         })
