@@ -16,3 +16,6 @@ gulp install-plugins
 echo Installation complete. Set your hostname to the following using sudoedit /etc/hostname:
 echo
 date | md5sum | head -c 6 ; echo
+echo
+echo nodemon will start in 10 seconds
+sleep 10
