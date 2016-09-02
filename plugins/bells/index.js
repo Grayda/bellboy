@@ -21,6 +21,15 @@ module.exports = function setup(options, imports, register) {
         return false
       }
     },
+    create: function(bell) {
+      bellObj.bells[Object.keys(bell)] = bell[Object.keys(bell)]
+      this.save()
+      return true
+    },
+    delete: function(id) {
+      delete bellObj.bells[id]
+      this.save()
+    },
     enable: function(id) {
       if(this.get(id).locked == true) {
         return false
