@@ -6,12 +6,11 @@ epiphany
 # Install git
 sudo apt-get install git
 
-# make and cd into the bellboy directory
-mkdir ~/bellboy
-cd ~/bellboy
+# cd into home
+cd ~/
 
 # Clone Bellboy
-git clone http://github.com/grayda/bellboy ~/bellboy
+git clone http://github.com/grayda/bellboy
 
 # Get the latest version of node
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash
@@ -36,3 +35,5 @@ date | md5sum | head -c 6 ; echo
 echo
 echo nodemon will start in 10 seconds
 sleep 10
+cd ~/bellboy
+nodemon index.js
