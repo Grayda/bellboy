@@ -39,8 +39,6 @@ architectApp = architect.createApp(plugins, function (err, app) {
 
     app.services.eventbus.on("scheduler.scheduled.finish", function(item) {
       app.services.logger.log(Object.keys(app.services.scheduler.schedules).length + " bells scheduled")
-      nextBell = app.services.scheduler.next()
-      app.services.logger.log("Next bell to ring will be: " + nextBell.bell.name + " at " + nextBell.date)
     })
 
     app.services.eventbus.on("scheduler.scheduled.disabled", function(item) {
@@ -63,9 +61,13 @@ architectApp = architect.createApp(plugins, function (err, app) {
       app.services.logger.log("All bells enabled!", "WARN")
     }.bind(this))
 
-    app.services.eventbus.on("scheduler.trigger", function(item) {
+    app.services.eventbus.on("scheduler.trigger.enabled", function(item) {
       app.services.logger.log("Bell triggered: " + item.name)
-      app.services.logger.log("Next bell: ", "info", app.services.scheduler.next().bell.name)
+    })
+
+    app.services.eventbus.on("audio.stopped", function() {
+      nextBell = app.services.scheduler.next()
+      app.services.logger.log("Next bell to ring will be: " + nextBell.bell.name + " at " + nextBell.date)
     })
 
     app.services.eventbus.on("scheduler.trigger.manual", function(item) {
@@ -96,4 +98,9 @@ architectApp.on("service", function(name, service) {
 
 architectApp.on("error", function(err) {
   console.log(err)
+})
+
+architectApp.on("ready", function(app) {
+  nextBell = app.services.scheduler.next()
+  app.services.logger.log("Next bell to ring will be: " + nextBell.bell.name + " at " + nextBell.date)
 })
