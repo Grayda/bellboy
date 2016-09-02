@@ -1,3 +1,5 @@
+#! /bin/sh
+
 # Start epiphany. Use this to authenticate to the internet
 epiphany
 # Clone Bellboy
