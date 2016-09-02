@@ -26,7 +26,12 @@ module.exports = function setup(options, imports, register) {
         } else {
           imports.eventbus.emit("scheduler.scheduled.disabled", imports.bells.get(item))
         }
-          // And create a new interval out of the schedule
+
+        // Clear existing jobs
+        if (typeof schedulerObj.jobs[item] !== "undefined") {
+          schedulerObj.jobs[item].clear()
+        }
+        // And create a new interval out of the schedule
         schedulerObj.jobs[item] = later.setInterval(function() {
           if (bells[item].enabled == true) {
             // Trigger the job if it's enabled
@@ -42,11 +47,11 @@ module.exports = function setup(options, imports, register) {
       imports.eventbus.emit("scheduler.scheduled.finish")
     },
     trigger: function(id) {
-      if(imports.bells.get(id) === "undefined") {
+      if (imports.bells.get(id) === "undefined") {
         imports.eventbus.emit("scheduler.invalidtrigger", id)
         return false
       } else {
-        if(imports.bells.get(id).enabled == true) {
+        if (imports.bells.get(id).enabled == true) {
           imports.eventbus.emit("scheduler.trigger.enabled.manual", imports.bells.get(id))
           return true
         } else {
