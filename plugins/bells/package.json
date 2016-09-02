@@ -13,7 +13,7 @@
   ],
   "plugin": {
     "provides": ["bells"],
-    "consumes": ["eventbus"],
+    "consumes": ["eventbus", "logger"],
     "options": {
       "bellFile": "./schedules/bells.json",
       "schema": "./schemas/bells.json"
