@@ -27,7 +27,7 @@ module.exports = function setup(options, imports, register) {
       }
     },
     set: {
-      bell: function(req, res, next) {
+      update: function(req, res, next) {
 
       },
       enable: function(req, res, next) {
@@ -48,9 +48,18 @@ module.exports = function setup(options, imports, register) {
       },
       enableAll: function(req, res, next) {
         res.send(imports.bells.enableAll())
+        next()
       },
       disableAll: function(req, res, next) {
         res.send(imports.bells.disableAll())
+        next()
+      },
+      create: function(req, res, next) {
+        res.send(imports.bells.create(req.body))
+        next()
+      },
+      delete: function(req, res, next) {
+        res.send(imports.bells.delete(req.params.id))
       }
     },
     trigger: function(req, res, next) {
@@ -63,6 +72,7 @@ module.exports = function setup(options, imports, register) {
 
 
   restObj.server.use(passport.initialize());
+  restObj.server.use(restify.bodyParser());
 
   passport.use(new Strategy(
     function(token, cb) {
@@ -82,19 +92,19 @@ module.exports = function setup(options, imports, register) {
     session: false,
     scope: ["read"]
   }), restObj.get.nextbell);
-  restObj.server.get('/bells/enable/all', passport.authenticate('bearer', {
+  restObj.server.post('/bells/enable/all', passport.authenticate('bearer', {
     session: false
   }), restObj.set.enableAll);
-  restObj.server.get('/bells/disable/all', passport.authenticate('bearer', {
+  restObj.server.post('/bells/disable/all', passport.authenticate('bearer', {
     session: false
   }), restObj.set.disableAll);
-  restObj.server.get('/bells/enable/:id', passport.authenticate('bearer', {
+  restObj.server.post('/bells/enable/:id', passport.authenticate('bearer', {
     session: false
   }), restObj.set.enable);
-  restObj.server.get('/bells/trigger/:id', passport.authenticate('bearer', {
+  restObj.server.post('/bells/trigger/:id', passport.authenticate('bearer', {
     session: false
   }), restObj.trigger);
-  restObj.server.get('/bells/disable/:id', passport.authenticate('bearer', {
+  restObj.server.post('/bells/disable/:id', passport.authenticate('bearer', {
     session: false
   }), restObj.set.disable);
   restObj.server.get('/bells/prev', passport.authenticate('bearer', {
@@ -106,6 +116,13 @@ module.exports = function setup(options, imports, register) {
   restObj.server.get('/bells', passport.authenticate('bearer', {
     session: false
   }), restObj.get.bells);
+  restObj.server.del('/bells/:id', passport.authenticate('bearer', {
+    session: false
+  }), restObj.set.delete);
+  restObj.server.post('/bells/create', passport.authenticate('bearer', {
+    session: false
+  }), restObj.set.create);
+
 
   restObj.server.listen(9001, function() {
     imports.logger.log("REST server started. Access it via " + restObj.server.url)
