@@ -3,7 +3,7 @@ epiphany
 # Clone Bellboy
 git clone http://github.com/grayda/bellboy ~/
 # Get the latest version of node
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash
+curl -skL https://deb.nodesource.com/setup_6.x | sudo -E bash
 # Install everything
 sudo npm install -g gulp nodemon
 # cd into the bellboy directory
