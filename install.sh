@@ -2,6 +2,8 @@
 
 # Start epiphany. Use this to authenticate to the internet
 epiphany
+# Install git
+sudo apt-get install git
 # Clone Bellboy
 git clone http://github.com/grayda/bellboy ~/
 # Get the latest version of node
