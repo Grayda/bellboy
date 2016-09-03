@@ -1,11 +1,11 @@
 module.exports = function setup(options, imports, register) {
+  var package = require("./package.json")
   var restify = require("restify")
   var passport = require("passport")
   var Strategy = require('passport-http-bearer').Strategy;
 
   var restObj = {
-    pluginName: "REST Plugin",
-    pluginDescription: "Plugin that provides RESTful access to Bellboy",
+    plugin: package,
     restify: restify,
     get: {
       bells: function(req, res, next) {

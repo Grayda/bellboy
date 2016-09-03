@@ -1,11 +1,11 @@
 module.exports = function setup(options, imports, register) {
+  var package = require("./package.json")
   var later = require("later")
   var _ = require("lodash")
   later.date.localTime();
 
   var schedulerObj = {
-    pluginName: "Scheduler Plugin",
-    pluginDescription: "Core plugin that schedules bells to trigger",
+    plugin: package,
     jobs: [],
     schedules: [],
     history: [],

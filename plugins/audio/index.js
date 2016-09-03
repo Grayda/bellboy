@@ -1,4 +1,5 @@
 module.exports = function setup(options, imports, register) {
+    var package = require("./package.json")
     var _ = require("lodash") // For shuffling arrays
     var cp = require("child_process") // For running our audio player
     var os = require("os"); // Determines if Windows or Linux
@@ -18,8 +19,7 @@ module.exports = function setup(options, imports, register) {
 
     // Define our plugin and functions
     var audio = {
-        pluginName: "Audio Plugin",
-        pluginDescription: "Plugin that provides audio playback",
+        plugin: package,
         play: function(file, loop) {
             try {
                 imports.logger.log("Attempting to play " + file + " " + loop + " times", "debug")

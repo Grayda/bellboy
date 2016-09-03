@@ -1,10 +1,10 @@
 module.exports = function setup(options, imports, register) {
+  var package = require("./package.json")
   var validator = require("validator")
   var jjv = require("jjv")
   var fs = require("fs")
 
-  validator.pluginName = "Validator Plugin"
-  validator.pluginDescription = "Core plugin that validates JSON schemas and other information. Extends the 'validator' package"
+  validator.plugin = package
 
   validator.isFilename = function(str) {
     return /^[^\\\/:"*?<>|]+$/i.test(str);

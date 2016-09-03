@@ -1,9 +1,9 @@
 module.exports = function setup(options, imports, register) {
+  var package = require("./package.json")
   var fs = require("fs")
 
   bellObj = {
-    pluginName: "Bell Plugin",
-    pluginDescription: "Core plugin that loads bells from a JSON file",
+    plugin: package,
     bells: null,
     load: function() {
       bellObj.bells = JSON.parse(fs.readFileSync(options.options.bellFile, 'utf8'))

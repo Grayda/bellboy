@@ -1,9 +1,9 @@
 module.exports = function setup(options, imports, register) {
+  var package = require("./package.json")
   var fs = require("fs")
 
   configObj = {
-    pluginName: "Config Plugin",
-    pluginDescription: "Core plugin that loads configuration information from a JSON file",
+    plugin: package,
     config: null,
     load: function() {
       configObj.config = JSON.parse(fs.readFileSync(options.options.configFile, 'utf8'))
