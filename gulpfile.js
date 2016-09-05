@@ -7,6 +7,12 @@ var nodemon = require('gulp-nodemon')
 var path = require('path');
 var fs = require("fs")
 
+gulp.task('update', function() {
+  cp.execSync("git stash")
+  cp.execSync("git pull")
+  cp.execSync("git stash pop")
+})
+
 gulp.task('add-plugin', ['clone-plugin', 'install-plugins'], function() {
 
 })
@@ -42,7 +48,7 @@ gulp.task('install-plugins', function() {
     paths = sh.ls("-d", "./plugins/*")
     try {
         paths.forEach(function(item) {
-            if (item.indexOf("node_modules") > -1 || item.indexOf("bower_components") > -1 || item.indexOf(".git") > -1 || item.indexOf("plugins.json") > -1) {
+            if (item.indexOf("node_modules") > -1 || item.indexOf("bower_components") > -1 || item.indexOf(".git") > -1 || item.indexOf("plugins.json") > -1 || item.indexOf("README.md") > -1) {
                 return
             } else if (sh.test("-f", item + "/package.json") == false) {
                 gutil.log(item + " doesn't contain a valid package.json, skipping")
