@@ -17,8 +17,8 @@
     "provides": ["audio"],
     "consumes": ["eventbus", "logger"],
     "options": {
-      "audioPath": "../../../audio/",
-      "playerPath": "./plugins/audio/mpg123/mpg123.exe"
+      "audioPath": "./audio/",
+      "playerPath": "./plugins/audio/mpg123/"
     }
   },
   "author": "David Gray",

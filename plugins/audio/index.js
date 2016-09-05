@@ -55,8 +55,8 @@ module.exports = function setup(options, imports, register) {
                         file: file,
                         loop: loop
                     })
-                    proc = cp.exec("\"" + __dirname + "\\mpg123\\mpg123.exe\" --loop " + loop + " " + options.options.audioPath + "/" + file + "\"", {
-                        cwd: __dirname + "/mpg123"
+                    proc = cp.exec("\"" + process.cwd() + options.options.playerPath + "\\mpg123.exe\" --loop " + loop + " " + process.cwd() + "/" + options.options.audioPath + "/" + file + "\"", {
+                        cwd: options.options.playerPath
                     }, function(error, stdout, stderr) {
                       if(error || stderr) {
                         imports.logger.error(stderr)
@@ -80,7 +80,7 @@ module.exports = function setup(options, imports, register) {
         },
         // Retrieve a list of files
         files: function() {
-            return fs.readdirSync(options.options.audioPath)
+            return fs.readdirSync(process.cwd() + "/" + options.options.audioPath)
         }
     }
 
