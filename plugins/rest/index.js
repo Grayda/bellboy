@@ -77,6 +77,9 @@ module.exports = function setup(options, imports, register) {
             },
             delete: function(req, res, next) {
                 res.send(imports.bells.delete(req.params.id))
+            },
+            appUpdate: function(req, res, next) {
+                res.send(imports.updater.update())
             }
         },
         trigger: function(req, res, next) {
@@ -145,6 +148,9 @@ restObj.server.get('/files/audio', passport.authenticate('bearer', {
 restObj.server.post('/files/logs', passport.authenticate('bearer', {
     session: false
 }), restObj.get.logs);
+restObj.server.post('/app/update', passport.authenticate('bearer', {
+    session: false
+}), restObj.set.appUpdate);
 
 
 restObj.server.listen(9001, function() {
