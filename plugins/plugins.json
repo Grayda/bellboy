@@ -1,37 +1,32 @@
-[{
-    "packagePath": "./plugins/eventbus"
-}, {
-    "packagePath": "./plugins/config",
-    "options": {
-        "configFile": "./config/config.json",
-        "schema": "./schemas/config.json"
-    }
-}, {
-    "packagePath": "./plugins/bells",
-    "options": {
-        "bellFile": "./schedules/bells.json",
-        "schema": "./schemas/bells.json"
-    }
-}, {
-    "packagePath": "./plugins/audio",
-    "options": {
-        "audioPath": "./audio/",
-        "playerPath": "./plugins/audio/mpg123/mpg123.exe"
-    }
-}, {
-    "packagePath": "./plugins/logger"
-}, {
-    "packagePath": "./plugins/scheduler"
-}, {
-    "schemaPath": "./schemas",
-    "packagePath": "./plugins/validate"
-}, {
-    "packagePath": "./plugins/rest"
-}, {
-    "packagePath": "./plugins/users",
-    "options": {
-      "usersFile": "./config/users.json",
-      "groupsFile": "./config/groups.json",
-      "permissionsFile": "./config/permissions.json"
-    }
-}]
+[
+	{
+		"packagePath": "./plugins/audio"
+	},
+	{
+		"packagePath": "./plugins/bells"
+	},
+	{
+		"packagePath": "./plugins/config"
+	},
+	{
+		"packagePath": "./plugins/eventbus"
+	},
+	{
+		"packagePath": "./plugins/logger"
+	},
+	{
+		"packagePath": "./plugins/rest"
+	},
+	{
+		"packagePath": "./plugins/scheduler"
+	},
+	{
+		"packagePath": "./plugins/updater"
+	},
+	{
+		"packagePath": "./plugins/users"
+	},
+	{
+		"packagePath": "./plugins/validate"
+	}
+]
