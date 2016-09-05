@@ -24,6 +24,10 @@ module.exports = function setup(options, imports, register) {
       prevbell: function(req, res, next) {
         res.json(imports.scheduler.prev())
         next()
+      },
+      audiofiles: function(res, res, next) {
+        res.json(imports.audio.files())
+        next()
       }
     },
     set: {
@@ -122,6 +126,9 @@ module.exports = function setup(options, imports, register) {
   restObj.server.post('/bells/create', passport.authenticate('bearer', {
     session: false
   }), restObj.set.create);
+  restObj.server.get('/files/audio', passport.authenticate('bearer', {
+    session: false
+  }), restObj.get.audiofiles);
 
 
   restObj.server.listen(9001, function() {
