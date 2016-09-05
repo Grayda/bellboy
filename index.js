@@ -108,7 +108,7 @@ architectApp = architect.createApp(plugins, function (err, app) {
 });
 
 architectApp.on("service", function(name, service) {
-  console.log("Loaded plugin: " + service.pluginName)
+  console.log("Loaded plugin: " + service.plugin.description)
 })
 
 architectApp.on("error", function(err) {
