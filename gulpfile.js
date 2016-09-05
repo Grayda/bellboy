@@ -52,8 +52,7 @@ gulp.task('install-plugins', function() {
             gutil.log("Installing " + gutil.colors.green(plugin.description))
 
             plugins.push({
-                packagePath: item,
-                options: plugin.plugin.options || {}
+                packagePath: item
             })
 
             cp.execSync("npm install", {
@@ -61,7 +60,7 @@ gulp.task('install-plugins', function() {
             })
         })
         fs.writeFileSync(__dirname + "/plugins/plugins.json", JSON.stringify(plugins, null, "\t"))
-        gutil.log(gutil.colors.green("Installation complete. You may need to adjust plugins.json if your values were overwritten"))
+        gutil.log(gutil.colors.green("Installation complete. Please edit plugins.json if you need to overwrite any of the defaults"))
     } catch (ex) {
         gutil.log(gutil.colors.red("Failed to run 'npm install'. Error was: ") + ex)
     }
