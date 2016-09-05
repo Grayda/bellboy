@@ -19,7 +19,10 @@
     ],
     "consumes": [
       "eventbus"
-    ]
+    ],
+    "options": {
+      "logfile": "./logs/logs.txt"
+    }
   },
   "author": "David Gray",
   "license": "ISC",
