@@ -20,6 +20,7 @@
   "author": "David Gray",
   "license": "ISC",
   "dependencies": {
-    "pattern-emitter": "^1.0.0"
+    "pattern-emitter": "^1.0.0",
+    "socket.io": "^1.4.8"
   }
 }
