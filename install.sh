@@ -12,6 +12,9 @@ cd ~/
 # Clone Bellboy
 git clone http://github.com/grayda/bellboy
 
+# cd into the directory
+cd ~/bellboy
+
 # Get the latest version of node
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash
 
@@ -19,13 +22,16 @@ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash
 sudo apt-get install nodejs
 
 # Install everything
-sudo npm install -g gulp nodemon
+sudo npm install -g gulp nodemon node-autostart
 
 # Install stuff for bellboy
 npm install
 
 # Run the gulp task to set stuff up
 gulp install-plugins
+
+# Set up autostart
+autostart enable -n "bellboy" -p "~/bellboy" -c "nodemon index"
 
 # Set your hostname
 echo Installation complete. Set your hostname to the following using sudoedit /etc/hostname:
