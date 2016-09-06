@@ -1,5 +1,5 @@
 # Bellboy
-Bellboy is a node.js based system designed to replace automated (or manual) bells in schools and factories. It uses cron-like syntax to schedule bells and a plugin system to extend it's capabilities
+Bellboy is an event-based node.js based system designed to replace automated (or manual) bells in schools and factories. It uses cron-like syntax to schedule bells and a plugin system to extend it's capabilities
 
 ## About this software
 This software is still in alpha. It's been through three versions, and is expected to change frequently as it develops. Many plugins are incomplete or insecure. Use at your own risk
@@ -13,6 +13,12 @@ Plugins are written as C9 Architect plugins and use EventEmitter events to perfo
 4. Put your audio in `./audio`
 5. Edit `./schedules/bells.json` accordingly.
 6. Run `nodemon index.js`
+
+## Writing a plugin
+See ./plugins/demo for a basic plugin demo.
+
+## Overriding plugins
+Currently there is no way to "override" a plugin from another plugin. You'll need to edit (or replace) the plugin, then run `gulp install-plugins` accordingly
 
 ## What's left to do?
 * Finish users plugin
