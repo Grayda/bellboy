@@ -1,0 +1,30 @@
+{
+  "name": "bellboy-demo",
+  "version": "1.0.0",
+  "description": "A non-functioning sample plugin for Bellboy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bellboy",
+    "plugin",
+    "test",
+    "demo",
+    "sample"
+  ],
+  "plugin": {
+    "provides": [
+      "demo"
+    ],
+    "consumes": [
+      "eventbus",
+      "logger"
+    ],
+    "options": {
+      "hello": "world"
+    }
+  },
+  "author": "David Gray",
+  "license": "ISC"
+}
