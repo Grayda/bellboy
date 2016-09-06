@@ -7,10 +7,13 @@ var nodemon = require('gulp-nodemon')
 var path = require('path');
 var fs = require("fs")
 
-gulp.task('update', function() {
-  cp.execSync("git stash")
+gulp.task('update-git', function() {
+  cp.execSync("git reset --hard")
   cp.execSync("git pull")
-  cp.execSync("git stash pop")
+})
+
+gulp.task("update", ['update-git', 'install-plugins'], function() {
+
 })
 
 gulp.task('add-plugin', ['clone-plugin', 'install-plugins'], function() {
