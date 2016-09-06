@@ -25,6 +25,10 @@ module.exports = function setup(options, imports, register) {
                     res.send(imports.scheduler.next(true))
                     next()
                 },
+                allprevbells: function(req, res, next) {
+                    res.send(imports.scheduler.prev(true))
+                    next()
+                },
                 prevbell: function(req, res, next) {
                     res.json(imports.scheduler.prev())
                     next()
@@ -123,6 +127,9 @@ restObj.server.get('/bells/next/all', passport.authenticate('bearer', {
 restObj.server.get('/bells/prev', passport.authenticate('bearer', {
     session: false
 }), restObj.get.prevbell);
+restObj.server.get('/bells/prev/all', passport.authenticate('bearer', {
+    session: false
+}), restObj.get.allprevbells);
 restObj.server.get('/bells/:id', passport.authenticate('bearer', {
     session: false
 }), restObj.get.bells);

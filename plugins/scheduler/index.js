@@ -86,7 +86,7 @@ module.exports = function setup(options, imports, register) {
       }
 
     },
-    prev: function() {
+    prev: function(all) {
       prevdates = []
 
       Object.keys(imports.bells.bells).forEach(function(item) {
@@ -101,9 +101,15 @@ module.exports = function setup(options, imports, register) {
 
       })
 
-      return _.sortBy(prevdates, function(d) {
-        return -d.date
-      })[0]
+      if (typeof all === "undefined") {
+        return _.sortBy(prevdates, function(d) {
+          return -d.date
+        })[0]
+      } else {
+        return _.sortBy(prevdates, function(d) {
+          return -d.date
+        })
+      }
     }
   }
 
