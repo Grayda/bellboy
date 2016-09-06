@@ -132,6 +132,9 @@ restObj.server.get('/bells', passport.authenticate('bearer', {
 restObj.server.get('/files/audio', passport.authenticate('bearer', {
     session: false
 }), restObj.get.audiofiles);
+restObj.server.get('/files/logs', passport.authenticate('bearer', {
+    session: false
+}), restObj.get.logs);
 restObj.server.post('/bells/create', passport.authenticate('bearer', {
     session: false
 }), restObj.set.create);
@@ -150,9 +153,7 @@ restObj.server.post('/bells/trigger/:id', passport.authenticate('bearer', {
 restObj.server.post('/bells/disable/:id', passport.authenticate('bearer', {
     session: false
 }), restObj.set.disable);
-restObj.server.post('/files/logs', passport.authenticate('bearer', {
-    session: false
-}), restObj.get.logs);
+
 restObj.server.post('/app/update', passport.authenticate('bearer', {
     session: false
 }), restObj.set.appUpdate);
