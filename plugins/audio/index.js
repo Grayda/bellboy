@@ -81,6 +81,35 @@ module.exports = function setup(options, imports, register) {
     // Retrieve a list of files
     files: function() {
       return fs.readdirSync(process.cwd() + "/" + options.options.audioPath)
+    },
+    volume: function(value) {
+      percent = 0
+      // Get the volume
+      if (typeof volume === "undefined") {
+        if (os.platform() !== "win32") {
+          // Run the command to get our percentage. Timeout after 1 second if nothing returned.
+          percent = cp.execSync("amixer sget PCM|grep -o [0-9]*%", {
+            "timeout": 1000
+          }).toString().split("%")[0]
+          imports.eventbus.emit("audio.volume.get", percent)
+          return percent
+        } else {
+          imports.eventbus.emit("audio.volume.set", 100)
+          return 100
+        }
+      } else {
+        // Set the volume
+        if (os.platform() !== "win32") {
+          cp.exec("amixer sset PCM,0 " + percent + "%", function(error, stdout, stderr) {
+            imports.eventbus.emit("audio.volume.set", percent)
+          }.bind(this))
+          cp.exec("alsactl store")
+          return percent
+        } else {
+          imports.eventbus.emit("audio.volume.set", percent)
+          return percent
+        }
+      }
     }
   }
 
