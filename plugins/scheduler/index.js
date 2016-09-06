@@ -60,7 +60,7 @@ module.exports = function setup(options, imports, register) {
         }
       }
     },
-    next: function() {
+    next: function(all) {
       nextdates = []
 
       Object.keys(imports.bells.bells).forEach(function(item) {
@@ -75,9 +75,16 @@ module.exports = function setup(options, imports, register) {
 
       })
 
-      return _.sortBy(nextdates, function(d) {
-        return d.date
-      })[0]
+      if (typeof all === "undefined") {
+        return _.sortBy(nextdates, function(d) {
+          return d.date
+        })[0]
+      } else {
+        return _.sortBy(nextdates, function(d) {
+          return d.date
+        })
+      }
+
     },
     prev: function() {
       prevdates = []

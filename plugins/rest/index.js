@@ -21,6 +21,10 @@ module.exports = function setup(options, imports, register) {
                     res.send(imports.scheduler.next())
                     next()
                 },
+                allbells: function(req, res, next) {
+                    res.send(imports.scheduler.next(true))
+                    next()
+                },
                 prevbell: function(req, res, next) {
                     res.json(imports.scheduler.prev())
                     next()
@@ -112,6 +116,25 @@ restObj.server.get('/bells/next', passport.authenticate('bearer', {
     session: false,
     scope: ["read"]
 }), restObj.get.nextbell);
+restObj.server.get('/bells/next/all', passport.authenticate('bearer', {
+    session: false,
+    scope: ["read"]
+}), restObj.get.allbells);
+restObj.server.get('/bells/prev', passport.authenticate('bearer', {
+    session: false
+}), restObj.get.prevbell);
+restObj.server.get('/bells/:id', passport.authenticate('bearer', {
+    session: false
+}), restObj.get.bells);
+restObj.server.get('/bells', passport.authenticate('bearer', {
+    session: false
+}), restObj.get.bells);
+restObj.server.get('/files/audio', passport.authenticate('bearer', {
+    session: false
+}), restObj.get.audiofiles);
+restObj.server.post('/bells/create', passport.authenticate('bearer', {
+    session: false
+}), restObj.set.create);
 restObj.server.post('/bells/enable/all', passport.authenticate('bearer', {
     session: false
 }), restObj.set.enableAll);
@@ -127,30 +150,16 @@ restObj.server.post('/bells/trigger/:id', passport.authenticate('bearer', {
 restObj.server.post('/bells/disable/:id', passport.authenticate('bearer', {
     session: false
 }), restObj.set.disable);
-restObj.server.get('/bells/prev', passport.authenticate('bearer', {
-    session: false
-}), restObj.get.prevbell);
-restObj.server.get('/bells/:id', passport.authenticate('bearer', {
-    session: false
-}), restObj.get.bells);
-restObj.server.get('/bells', passport.authenticate('bearer', {
-    session: false
-}), restObj.get.bells);
-restObj.server.del('/bells/:id', passport.authenticate('bearer', {
-    session: false
-}), restObj.set.delete);
-restObj.server.post('/bells/create', passport.authenticate('bearer', {
-    session: false
-}), restObj.set.create);
-restObj.server.get('/files/audio', passport.authenticate('bearer', {
-    session: false
-}), restObj.get.audiofiles);
 restObj.server.post('/files/logs', passport.authenticate('bearer', {
     session: false
 }), restObj.get.logs);
 restObj.server.post('/app/update', passport.authenticate('bearer', {
     session: false
 }), restObj.set.appUpdate);
+restObj.server.del('/bells/:id', passport.authenticate('bearer', {
+    session: false
+}), restObj.set.delete);
+
 
 
 restObj.server.listen(9001, function() {
