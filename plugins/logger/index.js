@@ -1,10 +1,12 @@
 module.exports = function setup(options, imports, register) {
     var package = require("./package.json")
     var winston = require('winston');
+
     winston.remove(winston.transports.Console);
-    winston.add(winston.transports.File, {
-        filename: options.options.logfile
-    });
+    winston.add(require('winston-daily-rotate-file'), {
+        filename: options.options.logfile,
+        prepend: true
+    })
     winston.add(winston.transports.Console, {
         'timestamp': true,
         'colorize': true
