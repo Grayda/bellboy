@@ -13,14 +13,14 @@ module.exports = function setup(options, imports, register) {
         // Shuffle the list of audio
       file = _.shuffle(bell.actions.audio.files)[0]
         // Play the filename, and loop it.
-      audio.play(file.filename, file.loop)
+      audio.play(file.filename, file.loop, file.timeout)
     }
   })
 
   // Define our plugin and functions
   var audio = {
     plugin: package,
-    play: function(file, loop) {
+    play: function(file, loop, timeout) {
       try {
         imports.logger.log("Attempting to play " + file + " " + loop + " times", "debug")
           // If we're on a non-Windows platform
@@ -31,7 +31,7 @@ module.exports = function setup(options, imports, register) {
             loop: loop
           })
           proc = cp.exec("mpg123 --loop " + loop + " \"" + options.options.audioPath + "/" + file + "\"", {
-            cwd: __dirname + "/mpg123"
+            cwd: __dirname + "/mpg123",
           }, function(error, stdout, stderr) {
             if (error || stderr) {
               imports.logger.error(stderr)
@@ -39,6 +39,14 @@ module.exports = function setup(options, imports, register) {
               imports.logger.log(stdout)
             }
           })
+
+          if(typeof timeout !== "undefined") {
+            imports.logger.log("Audio has a timeout. Will stop ringing after " + timeout + " milliseconds")
+            setTimeout(function() {
+              imports.logger.log("Attempting to kill mpg123")
+              proc.kill("SIGINT")
+            }, timeout)
+          }
 
           // When we're truly done playing the audio, let everyone know
           proc.on("close", function(code, signal) {
@@ -64,6 +72,14 @@ module.exports = function setup(options, imports, register) {
               imports.logger.log(stdout)
             }
           })
+
+          if(typeof timeout !== "undefined") {
+            imports.logger.log("Audio has a timeout. Will stop ringing after " + timeout + " milliseconds")
+            setTimeout(function() {
+              imports.logger.log("Attempting to kill mpg123", "debug")
+              proc.kill("SIGINT")
+            }, timeout)
+          }
 
           proc.on("close", function(code, signal) {
             imports.eventbus.emit("audio.stopped", {
