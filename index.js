@@ -3,13 +3,21 @@ var architect = require("architect")
 var cfonts = require("cfonts")
 var _ = require("lodash")
 var messages = [
-  "reticulating spines",
-  "hurting llamas",
+  "reticulating splines",
+  "herding llamas",
   "installing dingdongs",
-  "giving jobs to others",
   "delagating tasks to Architect",
   "giving standing orders to plugins",
-  "starting micromanagement service"
+  "starting micromanagement service",
+  "retrieving task lists and priorities from plugins",
+  "making some last minute changes",
+  "deflecting bad plugins",
+  "airlocking plugins to Architect",
+  "wheeling plugins over to Architect",
+  "becoming asset rich",
+  "becoming cache rich",
+  "leasing plugins to Architect"
+
 ]
 
 
