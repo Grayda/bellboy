@@ -42,6 +42,10 @@ module.exports = function setup(options, imports, register) {
         res.json({percent: percent})
         next()
       },
+      time: function(req, res, next) {
+        res.send(new Date)
+        next()
+      },
       logs: function(req, res, next) {
         imports.logger.query({
           from: req.body.start || new Date - 24 * 60 * 60 * 1000,
@@ -144,7 +148,7 @@ module.exports = function setup(options, imports, register) {
   restObj.server.get('/bells', passport.authenticate('bearer', {
     session: false
   }), restObj.get.bells);
-  restObj.server.get('/audio/files', passport.authenticate('bearer', {
+  restObj.server.get('/files/audio', passport.authenticate('bearer', {
     session: false
   }), restObj.get.audiofiles);
   restObj.server.get('/audio/volume', passport.authenticate('bearer', {
@@ -153,6 +157,9 @@ module.exports = function setup(options, imports, register) {
   restObj.server.get('/files/logs', passport.authenticate('bearer', {
     session: false
   }), restObj.get.logs);
+  restObj.server.get('/time', passport.authenticate('bearer', {
+    session: false
+  }), restObj.get.time);
   restObj.server.post('/bells/create', passport.authenticate('bearer', {
     session: false
   }), restObj.set.create);
@@ -174,7 +181,6 @@ module.exports = function setup(options, imports, register) {
   restObj.server.post('/audio/volume', passport.authenticate('bearer', {
     session: false
   }), restObj.set.volume);
-
   restObj.server.post('/app/update', passport.authenticate('bearer', {
     session: false
   }), restObj.set.appUpdate);
