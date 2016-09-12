@@ -93,7 +93,12 @@ module.exports = function setup(options, imports, register) {
         next()
       },
       delete: function(req, res, next) {
-        res.send(imports.bells.delete(req.params.id))
+        delRes = imports.bells.delete(req.params.id)
+        if (delRes == false) {
+          res.send(423, new Error("Can't delete bell. Perhaps " + req.params.id + " is locked?"))
+        } else {
+          res.send(delRes)
+        }
       },
       appUpdate: function(req, res, next) {
         res.send(imports.updater.update())
