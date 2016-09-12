@@ -1,0 +1,241 @@
+{
+  "_all": {
+    "name": "All Bells",
+    "description": "A virtual bell that controls all others",
+    "enabled": true
+  },
+  "test": {
+    "name": "Sample Bell",
+    "description": "Runs every minute",
+    "time": "* * * * *",
+    "enabled": false,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "period1warning": {
+    "name": "Period 1 Warning",
+    "description": "Warning bell for period 1",
+    "time": "45 8 * * 1,3,5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "1s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "period1start": {
+    "name": "Period 1 Start",
+    "description": "The start of period 1",
+    "time": "50 8 * * 1,3,5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "homeroom": {
+    "name": "Homeroom",
+    "description": "The start of homeroom",
+    "time": "0 10 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "8s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "recess": {
+    "name": "Recess",
+    "description": "The start of recess",
+    "time": "30 10 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "recessend": {
+    "name": "End of recess",
+    "description": "The end of recess",
+    "time": "53 10 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "period2": {
+    "name": "Start of Period 2",
+    "description": "The start of period 2 or LA",
+    "time": "53 10 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "8s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "period3": {
+    "name": "Period 3",
+    "description": "The start of Period 3",
+    "time": "5 12 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "lunchstart": {
+    "name": "Staf of lunch",
+    "description": "The start of lunchtime",
+    "time": "18 13 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "halflunchtime": {
+    "name": "Half Lunch",
+    "description": "Half way through lunchtime",
+    "time": "43 13 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "lunchend": {
+    "name": "End of Lunch",
+    "description": "The end of lunchtime",
+    "time": "7 14 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "dayend": {
+    "name": "End of the day",
+    "description": "The end of the day",
+    "time": "19 15 * * 1-5",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  },
+  "studentchoice": {
+    "name": "End of Lunchtime",
+    "description": "End of lunchtime - 5 minutes until period 4",
+    "time": "17 9 * * 2,4",
+    "enabled": true,
+    "locked": false,
+    "actions": {
+      "audio": {
+        "enabled": true,
+        "files": [
+          {
+            "filename": "8s_bell.mp3",
+            "loop": 1
+          }
+        ]
+      }
+    }
+  }
+}
