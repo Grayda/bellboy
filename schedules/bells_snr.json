@@ -221,8 +221,8 @@
     }
   },
   "studentchoice": {
-    "name": "End of Lunchtime",
-    "description": "End of lunchtime - 5 minutes until period 4",
+    "name": "Student Choice",
+    "description": "The end of student choice",
     "time": "17 9 * * 2,4",
     "enabled": true,
     "locked": false,
