@@ -13,10 +13,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -29,14 +31,15 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "8s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
-
   "homeroomstart": {
     "name": "Homeroom Start",
     "description": "The start of homeroom",
@@ -46,10 +49,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -62,10 +67,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "8s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -78,10 +85,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -94,10 +103,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -110,10 +121,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "8s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -126,10 +139,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -142,10 +157,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -158,10 +175,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -174,10 +193,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -190,10 +211,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -206,10 +229,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "8s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -222,10 +247,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "4s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   },
@@ -238,10 +265,12 @@
     "actions": {
       "audio": {
         "enabled": true,
-        "files": [{
-          "filename": "bell.mp3",
-          "loop": 1
-        }]
+        "files": [
+          {
+            "filename": "8s_bell.mp3",
+            "loop": 1
+          }
+        ]
       }
     }
   }
