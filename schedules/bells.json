@@ -9,7 +9,7 @@
     "description": "Runs every minute",
     "time": "* * * * *",
     "enabled": false,
-    "locked": false,
+    "locked": true,
     "actions": {
       "audio": {
         "enabled": true,
