@@ -17,6 +17,19 @@ module.exports = function setup(options, imports, register) {
     }
   })
 
+  imports.eventbus.on(/(scheduler\.scheduled\.enabled|scheduler\.scheduled\.disabled)/, function(bell) {
+    if (typeof bell.actions.audio.files !== "undefined") {
+      bell.actions.audio.files.forEach(function(item) {
+        fs.access(options.options.audioPath + "/" + item.filename, fs.F_OK, function(err){
+          if(err) {
+            throw new Error("File not found: " + item.filename)
+          }
+        })
+      })
+    }
+
+  })
+
   // Define our plugin and functions
   var audio = {
     plugin: package,
