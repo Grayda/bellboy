@@ -1,0 +1,507 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Bellboy API",
+		"_postman_id": "ea03755a-ab6d-df4b-1b9c-4d66f8bdd6f8",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Audio",
+			"description": "Auto-related endpoints",
+			"item": [
+				{
+					"name": "Get list of audio files",
+					"request": {
+						"url": "{{server}}:{{port}}/files/audio",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Lists files in the ./audio folder"
+					},
+					"response": []
+				},
+				{
+					"name": "Get current volume",
+					"request": {
+						"url": "{{server}}:{{port}}/audio/volume",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Gets volume from the system"
+					},
+					"response": []
+				},
+				{
+					"name": "Set current volume",
+					"request": {
+						"url": "{{server}}:{{port}}/audio/volume",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "percent",
+									"value": "12",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": "Sets volume"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logs",
+			"description": "",
+			"item": [
+				{
+					"name": "Get logs",
+					"request": {
+						"url": "{{server}}:{{port}}/files/logs",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Scheduling",
+			"description": "Functions related to bell schedules",
+			"item": [
+				{
+					"name": "Get next bell",
+					"request": {
+						"url": "{{server}}:{{port}}/bells/next",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Shows the next bell that will ring"
+					},
+					"response": []
+				},
+				{
+					"name": "Get previous bell",
+					"request": {
+						"url": "{{server}}:{{port}}/bells/prev",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Shows the last bell that (should have) rung"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all upcoming bells",
+					"request": {
+						"url": "{{server}}:{{port}}/bells/next/all",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Goes through all bells and works out when they will ring next, sorted by ring date"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all previous bells",
+					"request": {
+						"url": "{{server}}:{{port}}/bells/prev/all",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Shows the last bells that (should have) rung"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test Bells",
+			"description": "Gets and sets test bells",
+			"item": [
+				{
+					"name": "Get test bell",
+					"request": {
+						"url": "{{server}}:{{port}}/bells/test",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Get the test bell"
+					},
+					"response": []
+				},
+				{
+					"name": "Enable test bell",
+					"request": {
+						"url": "{{server}}:{{port}}/bells/enable/test",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Enable the test bell"
+					},
+					"response": []
+				},
+				{
+					"name": "Disable test bell",
+					"request": {
+						"url": "{{server}}:{{port}}/bells/disable/test",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Disable the test bell"
+					},
+					"response": []
+				},
+				{
+					"name": "Trigger test bell",
+					"request": {
+						"url": "{{server}}:{{port}}/bells/trigger/test",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Trigger the test bell"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete test bell",
+					"request": {
+						"url": "{{server}}:{{port}}/bells/test",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Deletes the test bell"
+					},
+					"response": []
+				},
+				{
+					"name": "Create test bell",
+					"request": {
+						"url": "{{server}}:{{port}}/bells/create",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{apikey}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"test\": {\n    \"name\": \"Sample Bell\",\n    \"description\": \"Runs every minute\",\n    \"time\": \"* * * * *\",\n    \"enabled\": false,\n    \"locked\": false,\n    \"actions\": {\n      \"audio\": {\n        \"enabled\": true,\n        \"files\": [{\n          \"filename\": \"bell.mp3\",\n          \"loop\": 1\n        }]\n      }\n    }\n  }\n}"
+						},
+						"description": "Creates a test bell"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get all bells",
+			"request": {
+				"url": "{{server}}:{{port}}/bells",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{apikey}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Get all bells"
+			},
+			"response": []
+		},
+		{
+			"name": "Bad Password",
+			"request": {
+				"url": "{{server}}:{{port}}/bells",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer badpassword",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Tries to get all bells, but with a bad password"
+			},
+			"response": []
+		},
+		{
+			"name": "Test Function",
+			"request": {
+				"url": "{{server}}:{{port}}/test",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{apikey}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update bellboy",
+			"request": {
+				"url": "{{server}}:{{port}}/app/update",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{apikey}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Runs the gulp task to update. Stashes, pulls and the restores the stash"
+			},
+			"response": []
+		},
+		{
+			"name": "Get current time",
+			"request": {
+				"url": "{{server}}:{{port}}/time",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{apikey}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Get the current time from the device that Bellboy is running on"
+			},
+			"response": []
+		}
+	]
+}
