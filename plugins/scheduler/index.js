@@ -22,7 +22,7 @@ module.exports = function setup(options, imports, register) {
         // Create a new schedule out of the time
         schedulerObj.schedules[item] = later.parse.cron(imports.bells.get(item).time)
         if (bells[item].enabled == true) {
-          imports.eventbus.emit("scheduler.scheduled", imports.bells.get(item))
+          imports.eventbus.emit("scheduler.scheduled.enabled", imports.bells.get(item))
         } else {
           imports.eventbus.emit("scheduler.scheduled.disabled", imports.bells.get(item))
         }
