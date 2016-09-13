@@ -31,7 +31,7 @@ module.exports = function setup(options, imports, register) {
     bonjour.find({
         type: 'http'
     }, function(service) {
-        if (service.txt.bellboy === true) {
+        if (service.txt.bellboy === "true") {
             imports.logger.log("rest", "Found another Bellboy instance", "info", {
                 ip: service.addresses[0],
                 host: service.host
