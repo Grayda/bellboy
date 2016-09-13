@@ -12,8 +12,8 @@ module.exports = function setup(options, imports, register) {
   server.on('message', (msg, rinfo) => {
     console.dir(msg.toString('ascii'))
     if(msg.toString('ascii') == "hello_bellboy") {
-      imports.logger.log("Got a hello from " + rinfo.address + ", sending a response on port " + rinfo.port, "debug")
-      server.send("hello_client", rinfo.port, rinfo.address)
+      imports.logger.log("Got a hello from " + rinfo.address + ", sending a response on port 9003", "debug")
+      server.send("hello_client", 9003, rinfo.address)
     }
 
   });
