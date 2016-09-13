@@ -22,14 +22,14 @@ module.exports = function setup(options, imports, register) {
             winston.log(type, "(" + module + ") " + text, obj || null)
             imports.eventbus.emit("logger." + type, text, module, obj)
         },
-        error: function(text) {
-            this.log(text, "error")
+        error: function(module, text) {
+            this.log(module, text, "error")
         },
-        warn: function(text) {
-            this.log(text, "warn")
+        warn: function(module, text) {
+            this.log(module, text, "warn")
         },
-        debug: function(text) {
-            this.log(text, "debug")
+        debug: function(module, text) {
+            this.log(module, text, "debug")
         },
         query: winston.query.bind(winston)
     }
