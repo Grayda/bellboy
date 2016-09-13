@@ -123,7 +123,7 @@ module.exports = function setup(options, imports, register) {
           imports.eventbus.emit("audio.volume.get", percent)
           return percent
         } else {
-          imports.eventbus.emit("audio.volume.set", 100)
+          imports.eventbus.emit("audio.volume.get", 100)
           return 100
         }
       } else {
@@ -135,7 +135,7 @@ module.exports = function setup(options, imports, register) {
           cp.exec("alsactl store")
           return percent
         } else {
-          imports.eventbus.emit("audio.volume.set", percent)
+          imports.eventbus.emit("audio.volume.set", 100)
           return percent
         }
       }
