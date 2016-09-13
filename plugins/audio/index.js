@@ -131,9 +131,10 @@ module.exports = function setup(options, imports, register) {
         // Set the volume
         if (os.platform() !== "win32") {
           cp.exec("amixer sset PCM,0 " + percent + "%", function(error, stdout, stderr) {
+            cp.exec("alsactl store")
             imports.eventbus.emit("audio.volume.set", percent)
           }.bind(this))
-          cp.exec("alsactl store")
+
           return percent
         } else {
           imports.eventbus.emit("audio.volume.set", 100)
