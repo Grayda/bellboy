@@ -12,9 +12,6 @@
 		"packagePath": "./plugins/demo"
 	},
 	{
-		"packagePath": "./plugins/discover"
-	},
-	{
 		"packagePath": "./plugins/eventbus"
 	},
 	{
