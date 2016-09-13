@@ -35,6 +35,7 @@
   "license": "ISC",
   "dependencies": {
     "bonjour": "^3.5.0",
+    "getmac": "^1.2.1",
     "passport": "^0.3.2",
     "passport-http-bearer": "^1.0.1",
     "restify": "^4.1.1"

@@ -4,17 +4,25 @@ module.exports = function setup(options, imports, register) {
     var passport = require("passport")
     var Strategy = require('passport-http-bearer').Strategy;
     var bonjour = require("bonjour")()
+    var mac = require("getmac")
 
     imports.eventbus.on("app.ready", function() {
         if (options.options.bonjour == true) {
-            imports.logger.log("rest", "Publishing bellboy via bonjour", "info")
-            bonjour.publish({
-                name: 'Bellboy',
-                type: 'http',
-                txt: {
-                    bellboy: true
-                },
-                port: options.options.port
+            mac.getMac(function(err, macAddress) {
+                if (err) {
+                    throw err
+                } else {
+                    imports.logger.log("rest", "Publishing bellboy via bonjour", "info")
+                    bonjour.publish({
+                        name: 'bellboy_' + macAddress.replace(/(:|-)/g, ""),
+                        type: 'http',
+                        txt: {
+                            bellboy: "true",
+                            mac: macAddress
+                        },
+                        port: options.options.port
+                    })
+                }
             })
         }
     })
@@ -28,7 +36,6 @@ module.exports = function setup(options, imports, register) {
                 ip: service.addresses[0],
                 host: service.host
             })
-            imports.eventbus.emit("rest.")
         }
     })
 
