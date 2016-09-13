@@ -115,7 +115,7 @@ module.exports = function setup(options, imports, register) {
         volume: function(value) {
             percent = 0
                 // Get the volume. We can't get the volume in Windows, so we just return 100
-            if (typeof volume === "undefined") {
+            if (typeof value === "undefined") {
                 if (os.platform() !== "win32") {
                     // Run the command to get our percentage. Timeout after 1 second if nothing returned.
                     percent = cp.execSync("amixer sget PCM|grep -o [0-9]*%", {
