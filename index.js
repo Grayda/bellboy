@@ -17,7 +17,6 @@ var messages = [
   "becoming asset rich",
   "becoming cache rich",
   "leasing plugins to Architect"
-
 ]
 
 
@@ -125,5 +124,6 @@ architectApp.on("error", function(err) {
 
 architectApp.on("ready", function(app) {
   nextBell = app.services.scheduler.next()
+  app.services.eventbus.emit("app.ready")
   app.services.logger.log("Next bell to ring will be: " + nextBell.bell.name + " at " + nextBell.date)
 })
