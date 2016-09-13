@@ -12,12 +12,16 @@ gulp.task('update-git', function() {
   cp.execSync("git pull")
 })
 
-gulp.task("update", ['update-git', 'install-plugins'], function() {
-  cp.execSync("sudo reboot")
+gulp.task("update", ['update-git', 'install-plugins', 'reboot'], function() {
+
 })
 
 gulp.task('add-plugin', ['clone-plugin', 'install-plugins'], function() {
 
+})
+
+gulp.task('reboot', function() {
+  cp.execSync("sudo reboot")
 })
 
 gulp.task('clone-plugin', function() {
