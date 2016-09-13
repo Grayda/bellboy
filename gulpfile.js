@@ -13,7 +13,7 @@ gulp.task('update-git', function() {
 })
 
 gulp.task("update", ['update-git', 'install-plugins'], function() {
-
+  cp.execSync("sudo reboot")
 })
 
 gulp.task('add-plugin', ['clone-plugin', 'install-plugins'], function() {
