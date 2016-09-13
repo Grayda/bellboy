@@ -9,6 +9,12 @@
 		"packagePath": "./plugins/config"
 	},
 	{
+		"packagePath": "./plugins/demo"
+	},
+	{
+		"packagePath": "./plugins/discover"
+	},
+	{
 		"packagePath": "./plugins/eventbus"
 	},
 	{
