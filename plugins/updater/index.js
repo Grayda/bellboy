@@ -7,12 +7,12 @@ module.exports = function setup(options, imports, register) {
     var updaterObj = {
         plugin: package,
         update: function() {
-          imports.logger.log("Attempting to update", "warn")
+          imports.logger.log("updater", "Attempting to update", "warn")
           imports.eventbus.emit("updater.update.start")
-          imports.logger.log(cp.execSync("gulp update", { cwd: process.cwd() }), "info")
+          imports.logger.log("updater", cp.execSync("gulp update", { cwd: process.cwd() }), "info")
           // If the update takes, nodemon should reload the files.
           imports.eventbus.emit("updater.update.finished")
-          imports.logger.log("Update complete. Either nothing to update, or nodemon doesn't need to restart", "info")
+          imports.logger.log("updater", "Update complete. Either nothing to update, or nodemon doesn't need to restart", "info")
         }
     }
 

@@ -6,10 +6,10 @@ module.exports = function setup(options, imports, register) {
   var fs = require("fs") // For retrieving files in a folder
 
   imports.eventbus.on(/(scheduler\.trigger\.enabled.*|scheduler\.trigger\.disabled\.manual)/, function(bell) {
-    imports.logger.log("A bell is triggered. Checking to see if it should play", "debug")
+    imports.logger.log("audio", "A bell is triggered. Checking to see if it should play", "debug")
       // If the audio action is enabled
     if (bell.actions.audio.enabled == true) {
-      imports.logger.log("Audio needs to be played. Shuffling and playing file", "debug")
+      imports.logger.log("audio", "Audio needs to be played. Shuffling and playing file", "debug")
         // Shuffle the list of audio
       file = _.shuffle(bell.actions.audio.files)[0]
         // Play the filename, and loop it.
@@ -35,7 +35,7 @@ module.exports = function setup(options, imports, register) {
     plugin: package,
     play: function(file, loop, timeout) {
       try {
-        imports.logger.log("Attempting to play " + file + " " + loop + " times", "debug")
+        imports.logger.log("audio", "Attempting to play " + file + " " + loop + " times", "debug")
           // If we're on a non-Windows platform
         if (os.platform() !== "win32") {
           // Let anyone who is interested, know that we're starting to play some audio
@@ -47,16 +47,16 @@ module.exports = function setup(options, imports, register) {
             cwd: __dirname + "/mpg123",
           }, function(error, stdout, stderr) {
             if (error || stderr) {
-              imports.logger.error(stderr)
+              imports.logger.error("audio", stderr)
             } else if (stdout) {
-              imports.logger.log(stdout)
+              imports.logger.log("audio", stdout)
             }
           })
 
           if(typeof timeout !== "undefined") {
-            imports.logger.log("Audio has a timeout. Will stop ringing after " + timeout + " milliseconds")
+            imports.logger.log("audio", "Audio has a timeout. Will stop ringing after " + timeout + " milliseconds")
             setTimeout(function() {
-              imports.logger.log("Attempting to kill mpg123")
+              imports.logger.log("audio", "Attempting to kill mpg123")
               proc.kill("SIGINT")
             }, timeout)
           }
@@ -80,16 +80,16 @@ module.exports = function setup(options, imports, register) {
             cwd: options.options.playerPath
           }, function(error, stdout, stderr) {
             if (error || stderr) {
-              imports.logger.error(stderr)
+              imports.logger.error("audio", stderr)
             } else if (stdout) {
-              imports.logger.log(stdout)
+              imports.logger.log("audio", stdout)
             }
           })
 
           if(typeof timeout !== "undefined") {
-            imports.logger.log("Audio has a timeout. Will stop ringing after " + timeout + " milliseconds")
+            imports.logger.log("audio", "Audio has a timeout. Will stop ringing after " + timeout + " milliseconds")
             setTimeout(function() {
-              imports.logger.log("Attempting to kill mpg123", "debug")
+              imports.logger.log("audio", "Attempting to kill mpg123", "debug")
               proc.kill("SIGINT")
             }, timeout)
           }
@@ -113,7 +113,7 @@ module.exports = function setup(options, imports, register) {
     },
     volume: function(value) {
       percent = 0
-      // Get the volume
+      // Get the volume. We can't get the volume in Windows, so we just return 100
       if (typeof volume === "undefined") {
         if (os.platform() !== "win32") {
           // Run the command to get our percentage. Timeout after 1 second if nothing returned.

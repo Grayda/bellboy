@@ -7,10 +7,15 @@ module.exports = function setup(options, imports, register) {
 
   imports.eventbus.on("app.ready", function() {
     if(options.options.bonjour == true) {
-      imports.logger.log("Publishing bellboy via bonjour", "info")
+      imports.logger.log("rest", "Publishing bellboy via bonjour", "info")
       bonjour.publish({ name: 'Bellboy', type: 'bellboy', port: options.options.port })
     }
   })
+
+  // browse for all http services
+bonjour.find({ type: 'bellboy' }, function (service) {
+  imports.logger.log("rest", "Found another Bellboy instance", "info", { ip: service.addresses[0], host: service.host })
+})
 
   var restObj = {
     plugin: package,
@@ -204,7 +209,7 @@ module.exports = function setup(options, imports, register) {
 
 
   restObj.server.listen(options.options.port, function() {
-    imports.logger.log("REST server started. Access it via " + restObj.server.url)
+    imports.logger.log("rest", "REST server started. Access it via " + restObj.server.url)
   });
 
 

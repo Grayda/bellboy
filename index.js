@@ -52,60 +52,60 @@ architectApp = architect.createApp(plugins, function (err, app) {
     }
 
     app.services.eventbus.on("scheduler.scheduled", function(item) {
-      // app.services.logger.log("Bell scheduled: " + item.name)
+      // app.services.logger.log("scheduler", "Bell scheduled: " + item.name)
     })
 
     app.services.eventbus.on("bells.loaded", function(bells) {
-      app.services.logger.log(Object.keys(app.services.bells.bells).length + " bells loaded")
+      app.services.logger.log("bells", Object.keys(app.services.bells.bells).length + " bells loaded")
     })
 
     app.services.eventbus.on("scheduler.scheduled.finish", function(item) {
-      app.services.logger.log(Object.keys(app.services.scheduler.schedules).length + " bells scheduled")
+      app.services.logger.log("scheduler", Object.keys(app.services.scheduler.schedules).length + " bells scheduled")
     })
 
     app.services.eventbus.on("scheduler.scheduled.disabled", function(item) {
-      // app.services.logger.log("Bell disabled, but scheduled: " + item.name)
+      // app.services.logger.logger("Bell disabled, but scheduled: " + item.name)
     })
 
     app.services.eventbus.on("bells.enabled", function(id) {
-      app.services.logger.log("Bell enabled: " + app.services.bells.get(id).name)
+      app.services.logger.log("bells", "Bell enabled: " + app.services.bells.get(id).name)
     }.bind(this))
 
     app.services.eventbus.on("bells.disabled", function(id) {
-      app.services.logger.log("Bell disabled: " + app.services.bells.get(id).name)
+      app.services.logger.log("bells", "Bell disabled: " + app.services.bells.get(id).name)
     }.bind(this))
 
     app.services.eventbus.on("bells.all.disabled", function() {
-      app.services.logger.log("All bells disabled!", "WARN")
+      app.services.logger.log("bells", "All bells disabled!", "WARN")
     }.bind(this))
 
     app.services.eventbus.on("bells.all.enabled", function() {
-      app.services.logger.log("All bells enabled!", "WARN")
+      app.services.logger.log("bells", "All bells enabled!", "WARN")
     }.bind(this))
 
     app.services.eventbus.on("scheduler.trigger.enabled", function(item) {
-      app.services.logger.log("Bell triggered: " + item.name)
+      app.services.logger.log("scheduler", "Bell triggered: " + item.name)
     })
 
     app.services.eventbus.on("audio.stopped", function() {
       nextBell = app.services.scheduler.next()
-      app.services.logger.log("Next bell to ring will be: " + nextBell.bell.name + " at " + nextBell.date)
+      app.services.logger.log("audio", "Next bell to ring will be: " + nextBell.bell.name + " at " + nextBell.date)
     })
 
     app.services.eventbus.on("scheduler.trigger.manual", function(item) {
-      app.services.logger.log("Bell manually triggered: " + item.name, "WARN")
+      app.services.logger.log("scheduler", "Bell manually triggered: " + item.name, "WARN")
     })
 
     app.services.eventbus.on("scheduler.trigger.disabled.manual", function(item) {
-      app.services.logger.log("Disabled bell manually triggered: " + item.name, "WARN")
+      app.services.logger.log("scheduler", "Disabled bell manually triggered: " + item.name, "WARN")
     })
 
     app.services.eventbus.on("users.authenticate.success", function(key) {
-      app.services.logger.log("A user has logged in")
+      app.services.logger.log("users", "A user has logged in")
     })
 
     app.services.eventbus.on("users.authenticate.fail", function(key) {
-      app.services.logger.log("A failed login attempt was detected using key " + key, "WARN")
+      app.services.logger.log("users", "A failed login attempt was detected using key " + key, "WARN")
     })
 
 
@@ -125,5 +125,5 @@ architectApp.on("error", function(err) {
 architectApp.on("ready", function(app) {
   nextBell = app.services.scheduler.next()
   app.services.eventbus.emit("app.ready")
-  app.services.logger.log("Next bell to ring will be: " + nextBell.bell.name + " at " + nextBell.date)
+  app.services.logger.log("scheduler", "Next bell to ring will be: " + nextBell.bell.name + " at " + nextBell.date)
 })

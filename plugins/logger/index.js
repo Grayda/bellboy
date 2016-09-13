@@ -15,12 +15,12 @@ module.exports = function setup(options, imports, register) {
     winston.level = process.env.LOG_LEVEL || 'debug'
     loggerObj = {
         plugin: package,
-        log: function(text, type, obj) {
+        log: function(module, text, type, obj) {
             if (typeof type === "undefined") {
                 type = "info"
             }
-            winston.log(type, text, obj || null)
-            imports.eventbus.emit("logger." + type, text)
+            winston.log(type, "(" + module + ") " + text, obj || null)
+            imports.eventbus.emit("logger." + type, text, module, obj)
         },
         error: function(text) {
             this.log(text, "error")
