@@ -4,6 +4,7 @@ module.exports = function setup(options, imports, register) {
   var cp = require("child_process") // For running our audio player
   var os = require("os"); // Determines if Windows or Linux
   var fs = require("fs") // For retrieving files in a folder
+  var path = require("path")
 
   imports.eventbus.on(/(scheduler\.trigger\.enabled.*|scheduler\.trigger\.disabled\.manual)/, function(bell) {
     imports.logger.log("audio", "A bell is triggered. Checking to see if it should play", "debug")
@@ -20,7 +21,7 @@ module.exports = function setup(options, imports, register) {
   imports.eventbus.on(/(scheduler\.scheduled\.enabled|scheduler\.scheduled\.disabled)/, function(bell) {
     if (typeof bell.actions.audio.files !== "undefined") {
       bell.actions.audio.files.forEach(function(item) {
-        fs.access(options.options.audioPath + "/" + item.filename, fs.F_OK, function(err){
+        fs.access(path.resolve(options.options.audioPath + "/" + item.filename), fs.F_OK, function(err){
           if(err) {
             throw new Error("File not found: " + item.filename)
           }
@@ -35,7 +36,7 @@ module.exports = function setup(options, imports, register) {
     plugin: package,
     play: function(file, loop, timeout) {
       try {
-        imports.logger.log("audio", "Attempting to play " + file + " " + loop + " times", "debug")
+        imports.logger.log("audio", "Attempting to play " + path.resolve(options.options.audioPath + "/" + file) + " " + loop + " times", "debug")
           // If we're on a non-Windows platform
         if (os.platform() !== "win32") {
           // Let anyone who is interested, know that we're starting to play some audio
@@ -43,7 +44,7 @@ module.exports = function setup(options, imports, register) {
             file: file,
             loop: loop
           })
-          proc = cp.exec("mpg123 --loop " + loop + " \"" + options.options.audioPath + "/" + file + "\"", {
+          proc = cp.exec("mpg123 --loop " + loop + " \"" + path.resolve(options.options.audioPath + "/" + file) + "\"", {
             cwd: __dirname + "/mpg123",
           }, function(error, stdout, stderr) {
             if (error || stderr) {
@@ -76,7 +77,7 @@ module.exports = function setup(options, imports, register) {
             file: file,
             loop: loop
           })
-          proc = cp.exec("\"" + process.cwd() + options.options.playerPath + "\\mpg123.exe\" --loop " + loop + " " + process.cwd() + "/" + options.options.audioPath + "/" + file + "\"", {
+          proc = cp.exec("\"" + path.resolve(process.cwd() + options.options.playerPath + "\\mpg123.exe\"") + " --loop " + loop + " " + path.resolve(process.cwd() + "/" + options.options.audioPath + "/" + file) + "\"", {
             cwd: options.options.playerPath
           }, function(error, stdout, stderr) {
             if (error || stderr) {
@@ -109,7 +110,7 @@ module.exports = function setup(options, imports, register) {
     },
     // Retrieve a list of files
     files: function() {
-      return fs.readdirSync(process.cwd() + "/" + options.options.audioPath)
+      return fs.readdirSync(path.resolve(process.cwd() + "/" + options.options.audioPath))
     },
     volume: function(value) {
       percent = 0
