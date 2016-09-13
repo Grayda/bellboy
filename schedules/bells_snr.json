@@ -149,7 +149,7 @@
     }
   },
   "lunchstart": {
-    "name": "Staf of lunch",
+    "name": "Start of lunch",
     "description": "The start of lunchtime",
     "time": "18 13 * * 1-5",
     "enabled": true,
