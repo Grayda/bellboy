@@ -14,12 +14,27 @@
     "plugin"
   ],
   "plugin": {
-    "provides": ["rest"],
-    "consumes": ["eventbus", "bells", "logger", "scheduler", "updater", "users", "audio"]
+    "provides": [
+      "rest"
+    ],
+    "consumes": [
+      "eventbus",
+      "bells",
+      "logger",
+      "scheduler",
+      "updater",
+      "users",
+      "audio"
+    ],
+    "options": {
+      "port": 9001,
+      "bonjour": true
+    }
   },
   "author": "David Gray",
   "license": "ISC",
   "dependencies": {
+    "bonjour": "^3.5.0",
     "passport": "^0.3.2",
     "passport-http-bearer": "^1.0.1",
     "restify": "^4.1.1"

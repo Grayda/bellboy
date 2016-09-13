@@ -3,6 +3,14 @@ module.exports = function setup(options, imports, register) {
   var restify = require("restify")
   var passport = require("passport")
   var Strategy = require('passport-http-bearer').Strategy;
+  var bonjour = require("bonjour")()
+
+  imports.eventbus.on("app.ready", function() {
+    if(options.options.bonjour == true) {
+      imports.logger.log("Publishing bellboy via bonjour", "info")
+      bonjour.publish({ name: 'Bellboy', type: 'bellboy', port: options.options.port })
+    }
+  })
 
   var restObj = {
     plugin: package,
@@ -195,7 +203,7 @@ module.exports = function setup(options, imports, register) {
 
 
 
-  restObj.server.listen(9001, function() {
+  restObj.server.listen(options.options.port, function() {
     imports.logger.log("REST server started. Access it via " + restObj.server.url)
   });
 
