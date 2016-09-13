@@ -121,6 +121,7 @@ module.exports = function setup(options, imports, register) {
                     percent = cp.execSync("amixer sget PCM|grep -o [0-9]*%", {
                         "timeout": 1000
                     }).toString().split("%")[0]
+                    imports.logger.log("audio", "Volume obtained: " + percent + "%")
                     imports.eventbus.emit("audio.volume.get", percent)
                     return percent
                 } else {
@@ -130,11 +131,17 @@ module.exports = function setup(options, imports, register) {
             } else {
                 // Set the volume
                 if (os.platform() !== "win32") {
-                    cp.execSync("amixer sset PCM,0 " + percent + "%")
-                    cp.execSync("alsactl store")
-                    imports.eventbus.emit("audio.volume.set", percent)
-                    return percent
+                    imports.logger.log("audio", "Setting audio to " + value + "%")
+                    cp.execSync("amixer sset PCM,0 " + value + "%", {
+                        "timeout": 1000
+                    })
+                    cp.execSync("alsactl store", {
+                        "timeout": 1000
+                    })
+                    imports.eventbus.emit("audio.volume.set", value)
+                    return value
                 } else {
+                    imports.logger.log("audio", "Attempting to set volume on Windows to " + percent + "%. Windows doesn't support setting volume yet. Returning 100%", "warn")
                     imports.eventbus.emit("audio.volume.set", 100)
                     return percent
                 }
