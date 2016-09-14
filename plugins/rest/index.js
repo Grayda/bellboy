@@ -138,8 +138,8 @@ module.exports = function setup(options, imports, register) {
                 }
             },
             appUpdate: function(req, res, next) {
+                res.send("true")
                 imports.updater.update()
-                res.send(true)
             },
             volume: function(req, res, next) {
                 res.json({
