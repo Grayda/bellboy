@@ -21,7 +21,7 @@ gulp.task('add-plugin', ['clone-plugin', 'install-plugins'], function() {
 })
 
 gulp.task('reboot', function() {
-  cp.execSync("sudo reboot")
+  cp.spawn("sudo reboot")
 })
 
 gulp.task('clone-plugin', function() {
