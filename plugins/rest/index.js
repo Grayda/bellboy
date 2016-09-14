@@ -3,7 +3,7 @@ module.exports = function setup(options, imports, register) {
     var restify = require("restify")
     var passport = require("passport")
     var Strategy = require('passport-http-bearer').Strategy;
-    var bonjour = require("bonjour")()
+    var bonjour = require("bonjour")({ loopback: false })
     var mac = require("getmac")
 
     imports.eventbus.on("app.ready", function() {
