@@ -2,6 +2,7 @@ module.exports = function setup(options, imports, register) {
     var package = require("./package.json")
     var winston = require('winston');
 
+    winston.level = process.env.LOG_LEVEL || 'debug'
     winston.remove(winston.transports.Console);
     winston.add(require('winston-daily-rotate-file'), {
         filename: options.options.logfile,
@@ -12,7 +13,7 @@ module.exports = function setup(options, imports, register) {
         'colorize': true
     });
 
-    winston.level = process.env.LOG_LEVEL || 'debug'
+
     loggerObj = {
         plugin: package,
         log: function(module, text, type, obj) {
