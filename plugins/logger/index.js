@@ -19,7 +19,7 @@ module.exports = function setup(options, imports, register) {
             if (typeof type === "undefined") {
                 type = "info"
             }
-            winston.log(type, "(" + module + ") " + text, obj || null)
+            winston.log(type, text + " |", Object.assign({module: module }, obj) || null)
             imports.eventbus.emit("logger." + type, text, module, obj)
         },
         error: function(module, text) {
