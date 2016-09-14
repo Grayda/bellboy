@@ -45,7 +45,7 @@ echo * Set your timezone
 echo * Force the Pi to play audio from the 3.5mm audio jack
 echo -n * Set your hostname (optional) to
 echo -n bellboy\_
-date | md5sum | head -c 6 ; echo
+cat /sys/class/net/eth0/address | tr -d :
 
 read -p "Press enter to continue"
 
