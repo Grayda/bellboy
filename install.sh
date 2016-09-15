@@ -17,11 +17,11 @@ cd ~/
 # Clone Bellboy
 git clone -b v2 http://github.com/grayda/bellboy
 
-# cd into the directory
-cd ~/bellboy
-
 # Get the latest version of node
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash
+
+# cd into the directory
+cd ~/bellboy
 
 # Install node
 sudo apt-get install nodejs
