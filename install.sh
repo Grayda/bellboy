@@ -41,9 +41,9 @@ autostart enable -n "bellboy" -p "~/bellboy" -c "nodemon index"
 # Post-installation instructions
 echo Installation is nearly complete. On the next screen you will need to do the following:
 echo
-echo * Set your timezone
-echo * Force the Pi to play audio from the 3.5mm audio jack
-echo -n * Set your hostname (optional) to
+echo Set your timezone
+echo Force the Pi to play audio from the 3.5mm audio jack
+echo -n Set your hostname, optional, to
 echo -n bellboy\_
 cat /sys/class/net/eth0/address | tr -d :
 
