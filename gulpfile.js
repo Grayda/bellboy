@@ -8,8 +8,8 @@ var path = require('path');
 var fs = require("fs")
 
 gulp.task('update-git', function() {
-  cp.execSync("git reset --hard")
-  cp.execSync("git pull")
+  cp.spawnSync("git reset --hard")
+  cp.spawnSync("git pull")
 })
 
 gulp.task("update", ['update-git', 'install-plugins', 'reboot'], function() {
@@ -21,7 +21,7 @@ gulp.task('add-plugin', ['clone-plugin', 'install-plugins'], function() {
 })
 
 gulp.task('reboot', function() {
-  cp.spawn("sudo reboot")
+  cp.spawnSync("sudo reboot")
 })
 
 gulp.task('clone-plugin', function() {
