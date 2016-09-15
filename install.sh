@@ -24,7 +24,7 @@ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash
 cd ~/bellboy
 
 # Install node
-sudo apt-get install nodejs
+sudo apt-get install nodejs mpg123
 
 # Install everything
 sudo npm install -g gulp nodemon node-autostart
