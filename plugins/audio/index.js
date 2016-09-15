@@ -135,7 +135,7 @@ module.exports = function setup(options, imports, register) {
                     cp.execSync("amixer sset PCM,0 " + value + "%", {
                         "timeout": 1000
                     })
-                    cp.execSync("alsactl store", {
+                    cp.execSync("sudo alsactl store", {
                         "timeout": 1000
                     })
                     imports.eventbus.emit("audio.volume.set", value)
