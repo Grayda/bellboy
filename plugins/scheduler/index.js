@@ -2,7 +2,6 @@ module.exports = function setup(options, imports, register) {
   var package = require("./package.json")
   var later = require("later")
   var _ = require("lodash")
-  later.date.localTime();
 
   var schedulerObj = {
     plugin: package,
@@ -18,7 +17,7 @@ module.exports = function setup(options, imports, register) {
         }
 
         // Use local time for our scheduling
-
+        later.date.localTime();
         // Create a new schedule out of the time
         schedulerObj.schedules[item] = later.parse.cron(imports.bells.get(item).time)
         if (bells[item].enabled == true) {
