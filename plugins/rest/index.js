@@ -101,6 +101,11 @@ module.exports = function setup(options, imports, register) {
             update: function(req, res, next) {
 
             },
+            reloadbells: function(req, res, next) {
+                res.send(true)
+                imports.bells.load()
+                next()
+            },
             enable: function(req, res, next) {
                 if (imports.bells.enable(req.params.id) == false) {
                     res.send(423, new Error("Can't enable bell. Perhaps " + req.params.id + " is locked?"))
@@ -229,11 +234,12 @@ module.exports = function setup(options, imports, register) {
     restObj.server.post('/app/update', passport.authenticate('bearer', {
         session: false
     }), restObj.set.appUpdate);
+    restObj.server.post('/bells/reload/', passport.authenticate('bearer', {
+        session: false
+    }), restObj.set.reloadbells);
     restObj.server.del('/bells/:id', passport.authenticate('bearer', {
         session: false
     }), restObj.set.delete);
-
-
 
     restObj.server.listen(options.options.port, function() {
         imports.logger.log("rest", "REST server started. Access it via " + restObj.server.url)
