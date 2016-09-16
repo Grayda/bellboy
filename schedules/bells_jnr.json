@@ -1,4 +1,9 @@
 {
+  "_info": {
+    "name": "Junior Campus Bells",
+    "description": "Bell file for the junior campus",
+    "author": "David Gray"
+  },
   "_all": {
     "name": "All Bells",
     "description": "A virtual bell that controls all others",
